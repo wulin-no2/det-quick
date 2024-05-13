@@ -9,9 +9,9 @@ Currently, two official plugins are available:
 
 - create vite react app with yarn:
 
-//Create a New React Project with Vite
+--//Create a New React Project with Vite
 
-yarn create vite det-quick --template react
+--yarn create vite det-quick --template react
 
 //Navigate to Your Project Directory
 
