@@ -1,57 +1,43 @@
-# React + Vite
+# React + Vite DET Project
 
+## Create a New React Project
 
-# create vite react app with yarn:
+Use the following commands to set up a new React project with Vite:
 
-//Create a New React Project with Vite
-
+```bash
+# Create a new React project with Vite
 yarn create vite det-quick --template react
 
-//Navigate to Your Project Directory
+# Navigate to your project directory
+cd det-quick
 
-cd my-react-app
-
-//Install Dependencies
-
+# Install dependencies
 yarn install
 
-//Start the Development Server
-
+# Start the development server
 yarn dev
 
-//Build and Optimize for Production
-
+# Build the project for production
 yarn build
 
-//Preview the Production Build Locally
-
+# Preview the production build locally
 yarn preview
+```
 
-
-#add dependencies:
-
-//install axios
-  
+## add dependencies
+```bash
+# Install axios for making API requests
 yarn add axios
 
-//Install react-router-dom
-
+# Install react-router-dom for routing support
 yarn add react-router-dom
 
-//Install MUI/Material
+# Install Material-UI for UI components
+yarn add @mui/material @emotion/react @emotion/styled
 
-yarn add @mui/material
-
-//Install Emotion or Styled-components
-
-yarn add @emotion/react @emotion/styled
-
-// Styled-components
-
+# Optionally, install styled-components (if not using Emotion)
 yarn add styled-components
- 
-// Install MUI Icons
 
+# Install MUI icons for Material-UI icons
 yarn add @mui/icons-material
-
-
+```
