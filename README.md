@@ -8,21 +8,27 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 - create vite react app with yarn:
--
-- //Create a New React Project with Vite
+
+//Create a New React Project with Vite
+
 yarn create vite det-quick --template react
 
 //Navigate to Your Project Directory
+
 cd my-react-app
 
 //Install Dependencies
+
 yarn install
 
 //Start the Development Server
+
 yarn dev
 
 //Build and Optimize for Production
+
 yarn build
 
 //Preview the Production Build Locally
+
 yarn preview
