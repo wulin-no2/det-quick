@@ -59,8 +59,8 @@
 /* .navbar-logo,
 .login-btn {
   /* 用于对齐 logo 和登录按钮 */
-/* flex-shrink: 0; */
-/* } */
+/* flex-shrink: 0;
+} */
 
 .login-btn {
   padding: 10px 20px;
@@ -76,3 +76,5 @@
 .active-link {
   color: #007bff !important;
 }
+
+/* flex-direction: column-reverse; */

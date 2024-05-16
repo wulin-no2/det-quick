@@ -14,14 +14,14 @@ function App() {
       <AuthProvider>
         <Router>
           <Navbar />
-          <div
+          {/* <div
             style={{
               width: 720,
               height: 600,
               backgroundColor: "#90caf9",
               margin: "auto",
             }}
-          ></div>
+          ></div> */}
           <Routes>
             <Route path="/" element={<HomePage />} />
             {/* Route for the HomePage at the root */}
