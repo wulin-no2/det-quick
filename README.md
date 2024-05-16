@@ -1,8 +1,43 @@
-# React + Vite
+# React + Vite DET Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Create a New React Project
 
-Currently, two official plugins are available:
+Use the following commands to set up a new React project with Vite:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+# Create a new React project with Vite
+yarn create vite det-quick --template react
+
+# Navigate to your project directory
+cd det-quick
+
+# Install dependencies
+yarn install
+
+# Start the development server
+yarn dev
+
+# Build the project for production
+yarn build
+
+# Preview the production build locally
+yarn preview
+```
+
+## add dependencies
+```bash
+# Install axios for making API requests
+yarn add axios
+
+# Install react-router-dom for routing support
+yarn add react-router-dom
+
+# Install Material-UI for UI components
+yarn add @mui/material @emotion/react @emotion/styled
+
+# Optionally, install styled-components (if not using Emotion)
+yarn add styled-components
+
+# Install MUI icons for Material-UI icons
+yarn add @mui/icons-material
+```
