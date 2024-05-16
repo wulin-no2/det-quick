@@ -11,6 +11,13 @@ const theme = createTheme({
   },
 
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#ffffff", // This will set it globally for all AppBars
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

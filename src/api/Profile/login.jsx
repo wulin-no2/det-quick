@@ -1,4 +1,4 @@
-// copied from Zain
+// copied from Zain. haven't used it
 import apiClient from "..";
 
 export const sendVerificationCode = async (phone) => {

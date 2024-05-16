@@ -1,4 +1,4 @@
-// copied from Zain
+// copied from Zain. haven't used it
 import axios from "axios";
 
 const apiClient = axios.create({

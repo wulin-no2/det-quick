@@ -1,0 +1,76 @@
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  background-color: #01053a;
+  width: 100%;
+}
+
+.language-button {
+  background-color: #01053a;
+  color: white;
+  padding: 10px 0px;
+  border: none;
+  font-size: medium;
+  cursor: pointer;
+  /* border-radius: 4px; */
+  transition: background-color 0.3s;
+  margin-left: 100px;
+  text-align: left;
+  /* padding: 0;  
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;  */
+}
+
+.language-button:hover {
+  /* background-color: #45a049; */
+  color: #45a049;
+  background-color: #01053a;
+}
+
+.language-dropdown {
+  display: block;
+  position: absolute;
+  top: calc(100% + 2px);
+  /* top: 100%; */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  left: 100px; /* Align to 100px from the left side of the browser as per user's requirement */
+  width: 200px;
+  background-color: #f9f9f9;
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+  z-index: 1001;
+  border-radius: 8px; /* Increased border-radius as per user's requirement */
+}
+
+.language-dropdown button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+  position: relative; /* Added to position the ::after pseudo-element */
+  padding-left: 20px; /* Align text with the left edge of the divider */
+}
+
+.language-dropdown button:hover {
+  /* background-color: #ddd; */
+  color: #007bff;
+}
+
+.language-dropdown button:not(:last-child) {
+  box-sizing: border-box; /* To include padding in total width */
+}
+
+.language-dropdown button:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 0;
+  border-bottom: 1px solid #ccc;
+}

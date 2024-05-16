@@ -1,5 +1,4 @@
-// copied from Zain
-import React from "react";
+// copied from Zain. haven't used it
 
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
