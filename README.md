@@ -41,3 +41,6 @@ yarn add styled-components
 # Install MUI icons for Material-UI icons
 yarn add @mui/icons-material
 ```
+
+## development suggestions
+https://www.notion.so/74c6d6fce9254901ac8da6b02ff8fe25
