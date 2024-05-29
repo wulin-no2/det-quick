@@ -1,23 +1,32 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 const QuestionFilterButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(buttons[0]);
 
-  const handleButtonClick = button => {
+  const handleButtonClick = (button) => {
     setSelectedButton(button);
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 1 }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-start",
+        mb: 1,
+        alignItems: "end",
+      }}
+    >
       {buttons.map((button, index) => (
         <Button
           key={index}
-          variant={selectedButton === button ? 'contained' : 'outlined'}
-          sx={{ mr: 1 }}
+          variant={selectedButton === button ? "contained" : "outlined"}
+          sx={{ mr: 1 ,
+            height:'32px',
+          }}
           onClick={() => handleButtonClick(button)}
         >
           {button}

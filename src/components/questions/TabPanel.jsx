@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
-const TabPanel = props => {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -15,7 +15,7 @@ const TabPanel = props => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box >
           <Typography>{children}</Typography>
         </Box>
       )}
