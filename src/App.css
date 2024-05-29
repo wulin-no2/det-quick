@@ -1,9 +1,4 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
+/* App.css */
 body,
 html,
 #root {
@@ -23,16 +18,20 @@ html,
 }
 
 .content {
+  padding-top: 70px; /* Adjust this value to match the height of your Navbar */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: calc(
-    100vh - 64px
-  ); /* Adjust 64px based on the navbar's actual height */
+    100vh - 70px
+  ); /* Adjust 70px based on the navbar's actual height */
   text-align: center;
+  margin: 16px;
+  align-content: baseline;
+  flex-wrap: wrap;
 }
 
-/* Remaining styles unchanged */
+/* Other styles remain unchanged */
 
 .logo {
   height: 6em;

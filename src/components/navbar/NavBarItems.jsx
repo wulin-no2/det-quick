@@ -1,4 +1,4 @@
-import "./NewNavBar.css";
+import "./NavBar.css";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 

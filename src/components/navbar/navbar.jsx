@@ -1,10 +1,10 @@
 import { AppBar, Toolbar, IconButton } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import "./NewNavBar.css";
+import "./NavBar.css";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import LanguageButton from "../languageButton/LanguageButton";
+import LanguageButton from "../common/LanguageButton";
 import NavBarItems from "./NavBarItems";
 
 function Navbar() {

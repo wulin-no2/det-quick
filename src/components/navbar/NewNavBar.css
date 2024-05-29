@@ -1,18 +1,16 @@
 .new-navbar {
   display: flex;
-  justify-content: space-between; /* 使元素在导航栏中两端对齐 */
+  justify-content: space-between;
   align-items: center;
-  padding: 0 100px; /* 这里设置导航栏的左右内边距为100px */
+  padding: 0 100px;
   background-color: #ffffff !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 70px;
+  height: 70px; /* Make sure this height is consistent */
   width: 100%;
-
   position: sticky;
-  /* top: 0; */
+  top: 0;
   z-index: 1000;
 }
-
 .new-navbar .navbar-logo {
   font-weight: bold;
   font-size: 32px;
