@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -23,7 +24,7 @@ function a11yProps(index) {
   };
 }
 
-const QuestionListCard = () => {
+const QuestionListCard = ({questionList}) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
 
@@ -58,12 +59,16 @@ const QuestionListCard = () => {
       {/* <Box sx={{ borderColor: "red", border: "1px solid", p: 0 }}> */}
       {types.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SuperQuestionTypeContent type={type} indexSubType={type.id}/>
+          <SuperQuestionTypeContent type={type} indexSubType={type.id} questionList={questionList}/>
         </TabPanel>
       ))}
       {/* </Box> */}
     </Box>
   );
+};
+QuestionListCard.propTypes = {
+  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
+    .isRequired,
 };
 
 export default QuestionListCard;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -6,71 +7,9 @@ import ListItem from "@mui/material/ListItem";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { Typography } from "@mui/material";
+import Link from "@mui/material/Link";
 
-const questions = [
-  {
-    id: 0,
-    question: "Question 0",
-    detail: "Detail 0",
-    additionalInfo: "Additional Info 0",
-  },
-  {
-    id: 1,
-    question: "Question 1",
-    detail: "Detail 1",
-    additionalInfo: "Additional Info 1",
-  },
-  {
-    id: 2,
-    question: "Question 2",
-    detail: "Detail 2",
-    additionalInfo: "Additional Info 2",
-  },
-  {
-    id: 3,
-    question: "Question 3",
-    detail: "Detail 3",
-    additionalInfo: "Additional Info 3",
-  },
-  {
-    id: 4,
-    question: "Question 4",
-    detail: "Detail 4",
-    additionalInfo: "Additional Info 4",
-  },
-  {
-    id: 5,
-    question: "Question 5",
-    detail: "Detail 5",
-    additionalInfo: "Additional Info 5",
-  },
-  {
-    id: 6,
-    question: "Question 6",
-    detail: "Detail 6",
-    additionalInfo: "Additional Info 6",
-  },
-  {
-    id: 7,
-    question: "Question 7",
-    detail: "Detail 7",
-    additionalInfo: "Additional Info 7",
-  },
-  {
-    id: 8,
-    question: "Question 8",
-    detail: "Detail 8",
-    additionalInfo: "Additional Info 8",
-  },
-  {
-    id: 9,
-    question: "Question 9",
-    detail: "Detail 9",
-    additionalInfo: "Additional Info 9",
-  },
-];
-
-export default function QuestionList() {
+export default function QuestionList({ questionsArr }) {
   return (
     <Box
       sx={{
@@ -82,7 +21,7 @@ export default function QuestionList() {
     >
       <Grid
         container
-        spacing={2}
+        // spacing={2}
         sx={{
           width: "100%",
           // border: "1px solid magenta"
@@ -103,36 +42,41 @@ export default function QuestionList() {
               // border: "1px solid red"
             }}
           >
-            {questions.map((question, index) => (
+            {questionsArr.map((question, index) => (
               <React.Fragment key={question.id}>
                 <ListItem
                   sx={{
-                    width: "100%",
+                    mx: "auto",
+                    width: "96%",
                     // border: "1px solid black",
+                    // px:0,
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    },
                   }}
+                  component={Link}
+                  href={`/question/${question.type}`}
                 >
                   <Grid
                     container
                     display="flex"
-                    alignItems="center"
+                    // alignItems="center"
                     justifyContent="space-between"
                     // md={12}
                     sx={{
-                      p: 1.5,
-                      pl: 2,
-                      pr: 2,
-                      // border: "1px solid black",
+                      pt: 1.5,
+                      pb: 1.5,
+                      // border: "1px solid blue",
                     }}
                   >
                     <Grid
                       item
                       md={6}
-                      sx={{
-                        // width: "100%",
-                        // border: "1px solid blue",
-                        // display: "flex",
-                        // justifyContent: "space-around",
-                      }}
+                      sx={
+                        {
+                          // border: "1px solid blue",
+                        }
+                      }
                     >
                       <Typography variant="body1" color="text.primary">
                         {question.question}
@@ -141,12 +85,6 @@ export default function QuestionList() {
                     <Grid
                       item
                       md={4}
-                      sx={{
-                        // width: "100%",
-                        // border: "1px solid magenta",
-                        // display: "flex",
-                        // justifyContent: "space-around",
-                      }}
                     >
                       <Box
                         sx={{
@@ -166,7 +104,7 @@ export default function QuestionList() {
                     </Grid>
                   </Grid>
                 </ListItem>
-                {index < questions.length - 1 && (
+                {index < questionsArr.length - 1 && (
                   <Divider
                     variant="middle"
                     component="li"
@@ -184,3 +122,9 @@ export default function QuestionList() {
     </Box>
   );
 }
+
+QuestionList.propTypes = {
+  questionsArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
+    .isRequired,
+  count: PropTypes.number.isRequired,
+};

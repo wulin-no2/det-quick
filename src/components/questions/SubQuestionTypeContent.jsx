@@ -2,6 +2,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
+import PropTypes from "prop-types";
 
 import QuestionFilterMenu from "./qustion-card-components/QuestionFilterMenu";
 import QuestionList from "./qustion-card-components/QuestionList";
@@ -24,7 +25,7 @@ const buttonGroups = [
 ];
 const count = 500;
 
-const SubQuestionTypeContent = () => {
+const SubQuestionTypeContent = ({questionList}) => {
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
       <Stack spacing={3}>
@@ -32,7 +33,7 @@ const SubQuestionTypeContent = () => {
           <QuestionFilterMenu buttonGroups={buttonGroups} count={count} />
         </Item>
         <Item sx={{ boxShadow: "none" }}>
-          <QuestionList />
+          <QuestionList questionsArr={questionList}/>
         </Item>
         <Item
           sx={{ display: "flex", justifyContent: "center", boxShadow: "none" }}
@@ -42,6 +43,10 @@ const SubQuestionTypeContent = () => {
       </Stack>
     </Box>
   );
+};
+SubQuestionTypeContent.propTypes = {
+  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
+    .isRequired,
 };
 
 export default SubQuestionTypeContent;

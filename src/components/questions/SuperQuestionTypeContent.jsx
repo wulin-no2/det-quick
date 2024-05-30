@@ -38,7 +38,7 @@ function a11yProps(index) {
   };
 }
 
-const SuperQuestionTypeContent = ({indexSubType}) => {
+const SuperQuestionTypeContent = ({indexSubType, questionList}) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const currentTypes = subTypesArr[indexSubType];
@@ -72,7 +72,7 @@ const SuperQuestionTypeContent = ({indexSubType}) => {
       </Box>
       {currentTypes.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SubQuestionTypeContent type={type} />
+          <SubQuestionTypeContent type={type} questionList={questionList}/>
         </TabPanel>
       ))}
     </Box>
@@ -80,6 +80,8 @@ const SuperQuestionTypeContent = ({indexSubType}) => {
 };
 SuperQuestionTypeContent.propTypes = {
     indexSubType: PropTypes.number.isRequired,
-  };
+    questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+};
+
 
 export default SuperQuestionTypeContent;

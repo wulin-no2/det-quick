@@ -29,13 +29,34 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/practice" element={<PracticePage />} />
                 <Route path="*" element={<h1>Page not found</h1>} />
-                <Route path="/complete-the-passage" element={<CompleteThePassageCard />} />
-                <Route path="/complete-the-sentence" element={<CompleteTheSentencesCard />} />
-                <Route path="/fill-in-the-blanks" element={<FillInTheBlanksCard />} />
-                <Route path="/highlight-the-answer" element={<HighlightTheAnswerCard />} />
-                <Route path="/identify-the-idea" element={<IdentifyTheIdeaCard />} />
-                <Route path="/read-and-select" element={<ReadAndSelectCard />} />
-                <Route path="/title-the-passage" element={<TitleThePassageCard />} />
+                <Route
+                  path="/question/complete-the-passage"
+                  element={<CompleteThePassageCard />}
+                />
+                <Route
+                  path="/question/complete-the-sentence"
+                  element={<CompleteTheSentencesCard />}
+                />
+                <Route
+                  path="/question/fill-in-the-blanks"
+                  element={<FillInTheBlanksCard />}
+                />
+                <Route
+                  path="/question/highlight-the-answer"
+                  element={<HighlightTheAnswerCard />}
+                />
+                <Route
+                  path="/question/identify-the-idea"
+                  element={<IdentifyTheIdeaCard />}
+                />
+                <Route
+                  path="/question/read-and-select"
+                  element={<ReadAndSelectCard />}
+                />
+                <Route
+                  path="/question/title-the-passage"
+                  element={<TitleThePassageCard />}
+                />
               </Routes>
             </Box>
           </Container>
