@@ -94,6 +94,7 @@ const CompleteThePassageCard = () => {
         textAlign: 'left',
         border: '1px solid lightgray',
         borderRadius: '8px',
+        backgroundColor:'white'
       }}
     >
       {/* CardHeader */}

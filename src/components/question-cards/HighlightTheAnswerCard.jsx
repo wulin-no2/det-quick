@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Grid,
   Typography,
@@ -46,6 +46,7 @@ const HighlightTheAnswerCard = () => {
         textAlign: 'left',
         border: '1px solid lightgray',
         borderRadius: '8px',
+        backgroundColor:'white',
       }}
     >
       {/* CardHeader */}

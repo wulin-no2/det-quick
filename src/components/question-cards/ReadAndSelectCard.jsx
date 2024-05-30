@@ -65,6 +65,7 @@ const ReadAndSelectCard = () => {
         textAlign: 'center',
         border: '1px solid lightgray',
         borderRadius: '8px',
+        backgroundColor:'white',
       }}
     >
       {/* CardHeader */}
