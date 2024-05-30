@@ -25,7 +25,12 @@ function Navbar() {
   }, []);
 
   return (
-    <AppBar className="new-navbar">
+    <AppBar
+      className="new-navbar"
+      sx={{ boxShadow: "none", 
+      borderBottom: 0.5, 
+      borderColor: "lightgrey" }}
+    >
       <Toolbar className="flex justify-between items-center w-full">
         {/* logo */}
         <NavLink to="/" className="navbar-logo-link">

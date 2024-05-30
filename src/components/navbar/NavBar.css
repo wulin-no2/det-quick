@@ -1,73 +1,72 @@
 /* NewNavBar.css */
 .new-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 100px;
-    background-color: #ffffff !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    height: 70px; /* Ensure this height is consistent */
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  
-  .new-navbar .navbar-logo {
-    font-weight: bold;
-    font-size: 32px;
-  }
-  
-  .new-navbar .navbar-logo span {
-    margin-left: 5px;
-    font-style: italic;
-  }
-  
-  .new-navbar .navbar-items {
-    display: flex;
-    gap: 20px;
-    flex: 1;
-    justify-content: center;
-  }
-  
-  .new-navbar .navbar-items a {
-    text-decoration: none;
-    color: #333;
-    transition: color 0.3s;
-    font-size: 18px;
-  }
-  
-  .new-navbar .navbar-items a:hover {
-    color: #007bff;
-  }
-  
-  .new-navbar .navbar-logo-link {
-    text-decoration: none;
-    color: #000;
-    transition: color 0.3s;
-  }
-  
-  .navbar-items li {
-    display: inline-block;
-    margin-right: 30px;
-  }
-  
-  .navbar-items li:last-child {
-    margin-right: 0;
-  }
-  
-  .login-btn {
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 18px;
-  }
-  
-  .active-link {
-    color: #007bff !important;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  background-color: #ffffff !important;
+  box-shadow: 0 0.5px 0.5px lightgrey;
+  height: 70px; /* Ensure this height is consistent */
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.new-navbar .navbar-logo {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.new-navbar .navbar-logo span {
+  margin-left: 5px;
+  font-style: italic;
+}
+
+.new-navbar .navbar-items {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  justify-content: center;
+}
+
+.new-navbar .navbar-items a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+  font-size: 18px;
+}
+
+.new-navbar .navbar-items a:hover {
+  color: #007bff;
+}
+
+.new-navbar .navbar-logo-link {
+  text-decoration: none;
+  color: #000;
+  transition: color 0.3s;
+}
+
+.navbar-items li {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+.navbar-items li:last-child {
+  margin-right: 0;
+}
+
+.login-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.active-link {
+  color: #007bff !important;
+}

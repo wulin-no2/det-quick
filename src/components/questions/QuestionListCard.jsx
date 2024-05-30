@@ -5,7 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-import TabPanel from "./TabPanel";
+import TabPanel from "./qustion-card-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 
 const types = [
@@ -13,6 +13,7 @@ const types = [
   { id: 1, title: "Vocabulary" },
   { id: 2, title: "Speaking" },
   { id: 3, title: "Listening" },
+  { id: 4, title: "Writing" },
 ];
 
 function a11yProps(index) {
@@ -32,7 +33,7 @@ const QuestionListCard = () => {
 
   return (
     <Box>
-      <Box sx={{ borderColor: "divider" ,mb:1}}>
+      <Box sx={{ borderColor: "divider", mb: 1 }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -57,7 +58,7 @@ const QuestionListCard = () => {
       {/* <Box sx={{ borderColor: "red", border: "1px solid", p: 0 }}> */}
       {types.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SuperQuestionTypeContent type={type} />
+          <SuperQuestionTypeContent type={type} indexSubType={type.id}/>
         </TabPanel>
       ))}
       {/* </Box> */}
