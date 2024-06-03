@@ -12,23 +12,31 @@ import TabPanel from "./qustion-card-components/TabPanel";
 
 const subTypesArr = [
         [
-        { id: 0, title: "Read And Select" },
-        { id: 1, title: "Fill In The Blanks" },
+          { id:0,submodule_id: 1, name: "Read & Select" },
         ],
         [
-            { id: 0, title: "Complete The Passage" },
-            { id: 1, title: "Complete The Sentences" },
-            ],
+          { id:0,submodule_id: 2, name:"Read Aloud" },
+          { id:1,submodule_id: 3, name:"Read, Then Speak" },
+          { id:2,submodule_id: 4, name:"Listen, Then Speak" },
+          { id:3,submodule_id: 5, name:"Speak About The Photo" },
+        ],
         [
-            { id: 0, title: "Title The Passage" },
-            { id: 1, title: "Identify The Idea" },
-            ],
+          { id:0,submodule_id: 6, name: "Listen & Type" },
+          { id:1,submodule_id: 7, name:"Interactive Listening" },
+          ],
         [
-            { id: 0, title: "HighlightTheAnswer" },
-            ],
-            [
-                { id: 0, title: "Fill In The Blanks" },
-                ],
+          { id:0,submodule_id: 8, name: "Read & Complete" },
+          { id:1,submodule_id: 9, name:"Interactive Reading" },
+          { id:2,submodule_id: 10, name: "Fill In The Blanks" },
+          ],
+        [
+          { id:0,submodule_id: 11, name:"Write About The Photo" },
+          { id:1,submodule_id: 12, name:"Interactive Writing" },
+          ],
+        [
+          { id:0,submodule_id: 13, name:"Speaking Sample" },
+          { id:1,submodule_id: 14, name:"Writing Sample" },
+          ]
 ];
 
 function a11yProps(index) {
@@ -63,7 +71,7 @@ const SuperQuestionTypeContent = ({indexSubType, questionList}) => {
           {currentTypes.map((type) => (
             <Tab
               key={type.id}
-              label={t(type.title)}
+              label={t(type.name)}
               {...a11yProps(type.id)}
               sx={{
                 fontSize: "18px",

@@ -1,0 +1,124 @@
+{
+    "success": true,
+    "message": "",
+    "data": {
+        "content": [
+            {
+                "questionId": 20405,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Easy",
+                "templateType": null,
+                "word": "climbing",
+                "correct": true
+            },
+            {
+                "questionId": 20404,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Hard",
+                "templateType": null,
+                "word": "sympathize",
+                "correct": true
+            },
+            {
+                "questionId": 20403,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Hard",
+                "templateType": null,
+                "word": "turnousy",
+                "correct": false
+            },
+            {
+                "questionId": 20402,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Hard",
+                "templateType": null,
+                "word": "geans",
+                "correct": true
+            },
+            {
+                "questionId": 20401,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Medium",
+                "templateType": null,
+                "word": "teamwork",
+                "correct": true
+            },
+            {
+                "questionId": 20400,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Hard",
+                "templateType": null,
+                "word": "sphere",
+                "correct": true
+            },
+            {
+                "questionId": 20399,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Medium",
+                "templateType": null,
+                "word": "pansoly",
+                "correct": false
+            },
+            {
+                "questionId": 20398,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Easy",
+                "templateType": null,
+                "word": "cheer",
+                "correct": true
+            },
+            {
+                "questionId": 20397,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Medium",
+                "templateType": null,
+                "word": "unite",
+                "correct": true
+            },
+            {
+                "questionId": 20396,
+                "moduleId": 1,
+                "submoduleId": 1,
+                "difficultyLevel": "Easy",
+                "templateType": null,
+                "word": "require",
+                "correct": true
+            }
+        ],
+        "pageable": {
+            "pageNumber": 0,
+            "pageSize": 10,
+            "sort": {
+                "empty": false,
+                "sorted": true,
+                "unsorted": false
+            },
+            "offset": 0,
+            "paged": true,
+            "unpaged": false
+        },
+        "totalElements": 8517,
+        "totalPages": 852,
+        "last": false,
+        "size": 10,
+        "number": 0,
+        "sort": {
+            "empty": false,
+            "sorted": true,
+            "unsorted": false
+        },
+        "first": true,
+        "numberOfElements": 10,
+        "empty": false
+    },
+    "statusCode": 200
+}

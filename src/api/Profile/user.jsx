@@ -1,5 +1,5 @@
 // copied from Zain. haven't used it
-import apiClient from "..";
+import apiClient from "../ApiClient";
 
 export const getUserDetailApi = async (phone) => {
   try {

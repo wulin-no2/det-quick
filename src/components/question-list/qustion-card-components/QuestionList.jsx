@@ -43,7 +43,7 @@ export default function QuestionList({ questionsArr }) {
             }}
           >
             {questionsArr.map((question, index) => (
-              <React.Fragment key={question.id}>
+              <React.Fragment key={question.questionId}>
                 <ListItem
                   sx={{
                     mx: "auto",
@@ -55,7 +55,8 @@ export default function QuestionList({ questionsArr }) {
                     },
                   }}
                   component={Link}
-                  href={`/question/${question.type}`}
+                  // href={`/question/${question.type}`}
+                  href={`/questions/list`}
                 >
                   <Grid
                     container
@@ -79,13 +80,10 @@ export default function QuestionList({ questionsArr }) {
                       }
                     >
                       <Typography variant="body1" color="text.primary">
-                        {question.question}
+                        submoduleId {question.submoduleId}
                       </Typography>
                     </Grid>
-                    <Grid
-                      item
-                      md={4}
-                    >
+                    <Grid item md={4}>
                       <Box
                         sx={{
                           // width: "100%",
@@ -95,10 +93,10 @@ export default function QuestionList({ questionsArr }) {
                         }}
                       >
                         <Typography variant="body2" color="text.secondary">
-                          {question.detail}
+                          {question.difficultyLevel}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          {question.additionalInfo}
+                          questionId:{question.questionId}
                         </Typography>
                       </Box>
                     </Grid>

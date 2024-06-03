@@ -2,7 +2,7 @@
 // AuthContext.js
 import { createContext, useContext, useEffect, useState } from "react";
 import { loginApi, logoutApi } from "../api/Profile/login";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getUserDetailApi } from "../api/Profile/user";
 
 const AuthContext = createContext(null);

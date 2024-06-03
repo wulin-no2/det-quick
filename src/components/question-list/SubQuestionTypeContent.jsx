@@ -17,11 +17,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const buttonGroups = [
-  ["Button 1-1", "Button 1-2", "Button 1-3", "Button 1-4"],
-  ["Button 2-1", "Button 2-2", "Button 2-3", "Button 2-4"],
-  ["Button 3-1", "Button 3-2", "Button 3-3", "Button 3-4"],
-  ["Button 4-1", "Button 4-2", "Button 4-3"],
-  ["Button 5-1", "Button 5-2", "Button 5-3"],
+  ["isAsc", "true", "false"],
+  ["difficultyLevel", "Easy", "Medium", "Hard"],
+  ["isCorrect", 'true', 'false'],
+  ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
+  ["isCollected", "true", "false"],
+  ["isPracticed", "true", "false"],
 ];
 const count = 500;
 
