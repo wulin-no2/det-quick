@@ -33,8 +33,12 @@ const QuestionListCard = ({questionList}) => {
   };
 
   return (
-    <Box>
-      <Box sx={{ borderColor: "divider", mb: 1 }}>
+    <Box sx={{ 
+    // border:'1px solid blue',
+  }}>
+      <Box sx={{ borderColor: "divider", mb: 1 ,
+        // border:'1px solid blue',
+      }}>
         <Tabs
           value={value}
           onChange={handleChange}

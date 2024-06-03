@@ -6,8 +6,7 @@ html,
   padding: 0;
   height: 100%;
   overflow-x: hidden; /* Prevent horizontal scroll */
-  background-color:#f5f5f5 ; /* grey 100 in MUI */
-
+  background-color: #f5f5f5; /* grey 100 in MUI */
 }
 
 .MuiAppBar-root {
@@ -19,11 +18,14 @@ html,
 }
 
 .content {
+  margin: auto;
   padding-top: 70px; /* Adjust this value to match the height of your Navbar */
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: calc(100vh - 70px); /* Adjust 70px based on the navbar's actual height */
+  height: calc(
+    100vh - 70px
+  ); /* Adjust 70px based on the navbar's actual height */
   text-align: center;
   margin: 16px;
   flex-wrap: wrap;

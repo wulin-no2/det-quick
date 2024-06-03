@@ -27,7 +27,9 @@ const count = 500;
 
 const SubQuestionTypeContent = ({questionList}) => {
   return (
-    <Box sx={{ width: "100%", mb: 4 }}>
+    <Box sx={{ width: "100%", mb: 4 ,
+      // border:'1px solid blue',
+    }}>
       <Stack spacing={3}>
         <Item sx={{ boxShadow: "none" }}>
           <QuestionFilterMenu buttonGroups={buttonGroups} count={count} />

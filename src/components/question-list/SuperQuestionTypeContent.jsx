@@ -47,8 +47,14 @@ const SuperQuestionTypeContent = ({indexSubType, questionList}) => {
     setValue(newValue);
   };
   return (
-    <Box>
-      <Box sx={{ borderColor: "divider", backgroundColor: "#ffffff", p: 1 }}>
+    <Box
+    sx={{
+      // border:'1px solid blue',
+    }}>
+      <Box sx={{ borderColor: "divider", backgroundColor: "#ffffff", 
+      // border:'1px solid blue',
+      p: 1 
+      }}>
         <Tabs
           value={value}
           onChange={handleChange}

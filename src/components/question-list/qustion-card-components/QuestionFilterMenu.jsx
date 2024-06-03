@@ -4,7 +4,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 import QuestionFilterButtonGroup from "./QuestionFilterButtonGroup";
 
 const QuestionFilterMenu = ({ buttonGroups, count }) => (
-  <Container maxWidth="lg" sx={{ p: 3,}}>
+  <Container maxWidth="lg" sx={{ 
+    // border:'1px solid blue',
+    p: 3,
+    }}>
     <Grid container spacing={2}>
       {buttonGroups.map((group, index) => (
         <Grid xs={6} key={index}>

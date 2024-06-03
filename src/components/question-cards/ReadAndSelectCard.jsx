@@ -63,9 +63,9 @@ const ReadAndSelectCard = () => {
         width: '1200px',
         margin: 'auto',
         textAlign: 'center',
-        border: '1px solid lightgray',
-        borderRadius: '8px',
-        backgroundColor:'white',
+        // border: '1px solid lightgray',
+        // borderRadius: '8px',
+        // backgroundColor:'white',
       }}
     >
       {/* CardHeader */}

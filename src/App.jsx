@@ -3,18 +3,19 @@ import theme from "./theme"; // import from theme.jsx
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import LoginPage from "./pages/Login/LoginPage";
-import HomePage from "./pages/Home/HomePage";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 import "./utils/languageSwitcher/i18n"; // import i18n to translate
 import Navbar from "./components/navbar/navbar";
-import ReadAndSelectCard from "./components/question-cards/ReadAndSelectCard";
-import CompleteThePassageCard from "./components/question-cards/CompleteThePassageCard";
-import CompleteTheSentencesCard from "./components/question-cards/CompleteTheSentencesCard";
-import FillInTheBlanksCard from "./components/question-cards/FillInTheBlanksCard";
-import HighlightTheAnswerCard from "./components/question-cards/HighlightTheAnswerCard";
-import IdentifyTheIdeaCard from "./components/question-cards/IdentifyTheIdeaCard";
-import TitleThePassageCard from "./components/question-cards/TitleThePassageCard";
-import PracticePage from "./pages/practicePage/PracticePage";
+// import ReadAndSelectCard from "./components/question-cards/ReadAndSelectCard";
+// import CompleteThePassageCard from "./components/question-cards/CompleteThePassageCard";
+// import CompleteTheSentencesCard from "./components/question-cards/CompleteTheSentencesCard";
+// import FillInTheBlanksCard from "./components/question-cards/FillInTheBlanksCard";
+// import HighlightTheAnswerCard from "./components/question-cards/HighlightTheAnswerCard";
+// import IdentifyTheIdeaCard from "./components/question-cards/IdentifyTheIdeaCard";
+// import TitleThePassageCard from "./components/question-cards/TitleThePassageCard";
+import PracticeListPage from "./pages/PracticeListPage";
+import QuestionPage from "./pages/QuestionPage";
 
 function App() {
   return (
@@ -27,36 +28,38 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/practice" element={<PracticePage />} />
+                <Route path="/practice" element={<PracticeListPage />} />
+                {/* <Route path="/question" element={<QuestionPage />} /> */}
+                <Route path="/question/:type" element={<QuestionPage />} />
                 <Route path="*" element={<h1>Page not found</h1>} />
-                <Route
-                  path="/question/complete-the-passage"
+                {/* <Route
+                  path="/questions/complete-the-passage"
                   element={<CompleteThePassageCard />}
                 />
                 <Route
-                  path="/question/complete-the-sentence"
+                  path="/questions/complete-the-sentence"
                   element={<CompleteTheSentencesCard />}
                 />
                 <Route
-                  path="/question/fill-in-the-blanks"
+                  path="/questions/fill-in-the-blanks"
                   element={<FillInTheBlanksCard />}
                 />
                 <Route
-                  path="/question/highlight-the-answer"
+                  path="/questions/highlight-the-answer"
                   element={<HighlightTheAnswerCard />}
                 />
                 <Route
-                  path="/question/identify-the-idea"
+                  path="/questions/identify-the-idea"
                   element={<IdentifyTheIdeaCard />}
                 />
                 <Route
-                  path="/question/read-and-select"
+                  path="/questions/read-and-select"
                   element={<ReadAndSelectCard />}
                 />
                 <Route
-                  path="/question/title-the-passage"
+                  path="/questions/title-the-passage"
                   element={<TitleThePassageCard />}
-                />
+                /> */}
               </Routes>
             </Box>
           </Container>
