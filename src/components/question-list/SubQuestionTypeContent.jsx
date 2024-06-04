@@ -4,8 +4,8 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
 
-import QuestionFilterMenu from "./qustion-card-components/QuestionFilterMenu";
-import QuestionList from "./qustion-card-components/QuestionList";
+import QuestionFilterMenu from "./question-card-components/QuestionFilterMenu";
+import QuestionList from "./question-card-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,29 +19,33 @@ const Item = styled(Paper)(({ theme }) => ({
 const buttonGroups = [
   ["isAsc", "true", "false"],
   ["difficultyLevel", "Easy", "Medium", "Hard"],
-  ["isCorrect", 'true', 'false'],
+  ["isCorrect", "true", "false"],
   ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
   ["isCollected", "true", "false"],
   ["isPracticed", "true", "false"],
 ];
-const count = 500;
+// const count = 500;
 
-const SubQuestionTypeContent = ({questionList}) => {
+const SubQuestionTypeContent = ({ questionList, pages, count }) => {
   return (
-    <Box sx={{ width: "100%", mb: 4 ,
-      // border:'1px solid blue',
-    }}>
+    <Box
+      sx={{
+        width: "100%",
+        mb: 4,
+        // border:'1px solid blue',
+      }}
+    >
       <Stack spacing={3}>
         <Item sx={{ boxShadow: "none" }}>
           <QuestionFilterMenu buttonGroups={buttonGroups} count={count} />
         </Item>
         <Item sx={{ boxShadow: "none" }}>
-          <QuestionList questionsArr={questionList}/>
+          <QuestionList questionsArr={questionList} />
         </Item>
         <Item
           sx={{ display: "flex", justifyContent: "center", boxShadow: "none" }}
         >
-          <PaginationRounded />
+          <PaginationRounded pages={pages}/>
         </Item>
       </Stack>
     </Box>
@@ -50,6 +54,8 @@ const SubQuestionTypeContent = ({questionList}) => {
 SubQuestionTypeContent.propTypes = {
   questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
     .isRequired,
+  pages: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
 };
 
 export default SubQuestionTypeContent;

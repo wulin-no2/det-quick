@@ -6,7 +6,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-import TabPanel from "./qustion-card-components/TabPanel";
+import TabPanel from "./question-card-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 
 const types = [
@@ -25,7 +25,7 @@ function a11yProps(index) {
   };
 }
 
-const QuestionListCard = ({questionList}) => {
+const QuestionListCard = ({ questionList, pages, count }) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
 
@@ -34,12 +34,20 @@ const QuestionListCard = ({questionList}) => {
   };
 
   return (
-    <Box sx={{ 
-    // border:'1px solid blue',
-  }}>
-      <Box sx={{ borderColor: "divider", mb: 1 ,
-        // border:'1px solid blue',
-      }}>
+    <Box
+      sx={
+        {
+          // border:'1px solid blue',
+        }
+      }
+    >
+      <Box
+        sx={{
+          borderColor: "divider",
+          mb: 1,
+          // border:'1px solid blue',
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -63,8 +71,18 @@ const QuestionListCard = ({questionList}) => {
       </Box>
       {/* <Box sx={{ borderColor: "red", border: "1px solid", p: 0 }}> */}
       {types.map((type) => (
-        <TabPanel value={value} index={type.module_id-1} key={type.module_id-1}>
-          <SuperQuestionTypeContent type={type} indexSubType={type.module_id-1} questionList={questionList}/>
+        <TabPanel
+          value={value}
+          index={type.module_id - 1}
+          key={type.module_id - 1}
+        >
+          <SuperQuestionTypeContent
+            type={type}
+            indexSubType={type.module_id - 1}
+            questionList={questionList}
+            pages={pages} 
+            count={count}
+          />
         </TabPanel>
       ))}
       {/* </Box> */}
@@ -74,6 +92,8 @@ const QuestionListCard = ({questionList}) => {
 QuestionListCard.propTypes = {
   questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
     .isRequired,
+    pages: PropTypes.number.isRequired,
+    count: PropTypes.number.isRequired,
 };
 
 export default QuestionListCard;

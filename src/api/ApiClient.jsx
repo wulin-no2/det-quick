@@ -1,20 +1,13 @@
-// copied from Zain.
+
 import axios from "axios";
 
 const ApiClient = axios.create({
-  // CORS problems
-  // baseURL:"ec2-54-255-147-213.ap-southeast-1.compute.amazonaws.com:6688/api/v1"
-  // ec2-13-229-207-39.ap-southeast-1.compute.amazonaws.com
-  // baseURL: "http://ec2-54-151-143-192.ap-southeast-1.compute.amazonaws.com:6688/api/v1",
-  // 其他你想设置的默认配置
-  // headers: ...
-  // baseURL: "http://54.255.147.213:6688/api/v1",
   baseURL: 'http://54.159.192.226:8080',
   headers: {
     'Content-Type': 'application/json'
   }
 });
-
+export default ApiClient;
 // ApiClient.interceptors.request.use(
 //   (config) => {
 //     // 获取token
@@ -82,4 +75,4 @@ const ApiClient = axios.create({
 //   }
 // );
 
-export default ApiClient;
+

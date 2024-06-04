@@ -53,32 +53,6 @@ function QuestionPage() {
 export default QuestionPage;
 
 
-// function QuestionPage() {
-//   return (
-//     <Container
-//       sx={{
-//         maxWidth: "xl",
-//         // border: "1px solid magenta" ,
-//         display: "flex",
-//         justifyContent: "center",
-//         boxSizing: "border-box",
-//       }}
-//     >
-//       <Box
-//         sx={{
-//           // border: "1px solid blue",
-//           backgroundColor: "white",
-//           borderRadius: 1,
-//           //   boxSizing: "inherit",
-//         }}
-//       >
-//         <ReadAndSelectCard />
-//       </Box>
-//     </Container>
-//   );
-// }
-
-// export default QuestionPage;
 
 
 

@@ -80,7 +80,7 @@ export default function QuestionList({ questionsArr }) {
                       }
                     >
                       <Typography variant="body1" color="text.primary">
-                        submoduleId {question.submoduleId}
+                        {question.word}
                       </Typography>
                     </Grid>
                     <Grid item md={4}>
