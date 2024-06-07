@@ -101,32 +101,44 @@ const PracticeListPage = () => {
   const [pages, setPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // used for send data to backend
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState({
+    isAsc: true,
+    submoduleId: 1,
+    difficultyLevel: "Hard",
+    templateType: "NARRATIVE",
+    isCorrect: true,
+  });
 
   useEffect(() => {
-    const getQuestions = async () => {
-      setLoading(true);
-      
-      const resultData = await FetchQuestionListResponseData();
-      console.log('fetched result in PracticeListPage',resultData);
-      const totalResult = resultData.totalElements;
-      const totalPages = resultData.totalPages;
-      const fetchedQuestions = resultData.content;
-      console.log('fetched question list in PracticeListPage',fetchedQuestions);
-      
-      if (fetchedQuestions && fetchedQuestions.length > 0) {
-        setQuestions(fetchedQuestions);
-        setCount(totalResult);
-        setPages(totalPages);
-        setError(''); // Clear any previous errors
-      } else {
-        setError('No questions found or failed to fetch questions.');
-        // setQuestions(testQuestions); // for test
-      }
-      setLoading(false);
-    };
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const postData = {
+          ...filters,
+          page: currentPage,
+          size: 10,
+        };
+        console.log("postData in practice list page ", postData);
+        const result = await FetchQuestionListResponseData(postData);
+        console.log("result in practice list page ", result);
 
-    getQuestions();
-  }, []);  // Run only once after the component mounts
+        setQuestions(result.content);
+        setPages(result.totalPages);
+        setCount(result.totalElements);
+        console.log("questions in practice list page ", result.content);
+        console.log("Pages in practice list page ", result.totalPages);
+        console.log("Count in practice list page ", result.totalElements);
+        setError("");
+      } catch (error) {
+        setError(`Error: ${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [currentPage, filters]);
 
   if (loading) {
     return <div>Loading questions...</div>;
@@ -138,7 +150,14 @@ const PracticeListPage = () => {
 
   return (
     <>
-      <QuestionListCard questionList={questions} pages={pages} count={count}/>
+      <QuestionListCard
+        questionList={questions}
+        pages={pages}
+        count={count}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setFilters={setFilters}
+      />
     </>
   );
 };

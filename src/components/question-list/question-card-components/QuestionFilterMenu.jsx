@@ -1,45 +1,42 @@
 import PropTypes from "prop-types";
-import { Container, Typography} from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Container, Typography, Grid } from "@mui/material";
 import QuestionFilterButtonGroup from "./QuestionFilterButtonGroup";
 
-const QuestionFilterMenu = ({ buttonGroups, count }) => (
+const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) => {
+  const handleSelectionChange = (category, selection) => {
+    const newFilters = { ...filters, [category]: selection };
+    onFiltersChange(newFilters);
+  };
 
-  <Container maxWidth="lg" sx={{ 
-    // border:'1px solid blue',
-    p: 3,
-    }}>
-    <Grid container spacing={2}>
-      {buttonGroups.map((group, index) => (
-        <Grid xs={6} key={index}>
-          <QuestionFilterButtonGroup buttons={group} />
+  return (
+    <Container maxWidth="lg" sx={{ p: 3 }}>
+      <Grid container spacing={2}>
+        {buttonGroups.map((group, index) => (
+          <Grid item xs={6} key={index}>
+            <QuestionFilterButtonGroup
+              label={group[0]}
+              buttons={group.slice(1)}
+              selected={filters[group[0]]}
+              onSelectionChange={(selection) => handleSelectionChange(group[0], selection)}
+            />
+          </Grid>
+        ))}
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          <Typography>total:</Typography>
+          <Typography sx={{ color: "primary.main", pl: 1, pr: 1 }}>{count}</Typography>
+          <Typography>results</Typography>
         </Grid>
-      ))}
-      <Grid
-        xs={6}
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-        }}
-      >
-        <Typography>total:</Typography>
-        <Typography
-          sx={{ color: (theme) => theme.palette.primary.main, pl: 1, pr: 1 }}
-        >
-          {count}
-        </Typography>
-        <Typography>results</Typography>
       </Grid>
-    </Grid>
-  </Container>
-);
+    </Container>
+  );
+};
 
-// Define prop types for validation
 QuestionFilterMenu.propTypes = {
-  buttonGroups: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-    .isRequired,
+  buttonGroups: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   count: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  filters: PropTypes.object.isRequired,
+  onFiltersChange: PropTypes.func.isRequired,
 };
 
 export default QuestionFilterMenu;

@@ -1,61 +1,82 @@
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import  { useEffect } from "react";
+import { Box, Stack, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
+
 
 import QuestionFilterMenu from "./question-card-components/QuestionFilterMenu";
 import QuestionList from "./question-card-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
 
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  boxShadow: "none"
 }));
 
 const buttonGroups = [
-  ["isAsc", "true", "false"],
-  ["difficultyLevel", "Easy", "Medium", "Hard"],
-  ["isCorrect", "true", "false"],
-  ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
-  ["isCollected", "true", "false"],
-  ["isPracticed", "true", "false"],
+  ["Is Asc", "true", "false"],
+  ["Difficulty Level", "Easy", "Medium", "Hard"],
+  ["Is Correct", "true", "false"],
+  ["Template Type", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
+  ["Is Collected", "true", "false"],
+  ["Is Practiced", "true", "false"],
 ];
-// const count = 500;
 
-const SubQuestionTypeContent = ({ questionList, pages, count }) => {
+const SubQuestionTypeContent = ({ questionList, pages, count, 
+  currentPage, setCurrentPage,
+  filters, 
+  setFilters }) => {
+  // const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    console.log('currentPage has been updated in effect: ', currentPage);
+  }, [currentPage]);  
+
+  const handlePageChange = (newPage) => {
+    console.log('Attempting to set new page: ', newPage);
+    setCurrentPage(newPage);
+  };
+
+  const handleFiltersChange = (newFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1);  // Reset to the first page when filters change
+  };
+
   return (
-    <Box
-      sx={{
-        width: "100%",
-        mb: 4,
-        // border:'1px solid blue',
-      }}
-    >
+    <Box sx={{ width: "100%", mb: 4 }}>
       <Stack spacing={3}>
-        <Item sx={{ boxShadow: "none" }}>
-          <QuestionFilterMenu buttonGroups={buttonGroups} count={count} />
+        <Item>
+          <QuestionFilterMenu
+            buttonGroups={buttonGroups}
+            count={count}
+            currentPage={currentPage}
+            filters={filters}
+            onFiltersChange={handleFiltersChange}
+          />
         </Item>
-        <Item sx={{ boxShadow: "none" }}>
+        <Item>
           <QuestionList questionsArr={questionList} />
         </Item>
-        <Item
-          sx={{ display: "flex", justifyContent: "center", boxShadow: "none" }}
-        >
-          <PaginationRounded pages={pages}/>
+        <Item>
+          <PaginationRounded pages={pages} onPageChange={handlePageChange} currentPage={currentPage} />
         </Item>
       </Stack>
     </Box>
   );
 };
+
 SubQuestionTypeContent.propTypes = {
-  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
-    .isRequired,
+  questionList: PropTypes.array.isRequired,
   pages: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setFilters: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  filters: PropTypes.object.isRequired,
 };
+
 
 export default SubQuestionTypeContent;

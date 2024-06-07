@@ -44,10 +44,21 @@ function a11yProps(index) {
   };
 }
 
-const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count }) => {
+const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
+  currentPage,
+  setCurrentPage,
+  setFilters }) => {
+  // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const currentTypes = subTypesArr[indexSubType];
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    console.log('super question type content中的页面更新为:', page);
+    // 如果需要，此处还可以触发数据获取或其他操作
+  };
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -91,7 +102,14 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count }) 
       </Box>
       {currentTypes.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SubQuestionTypeContent type={type} questionList={questionList} pages={pages} count={count}/>
+          <SubQuestionTypeContent type={type} questionList={questionList} pages={pages} count={count}
+          setCurrentPage={handlePageChange}
+          currentPage={currentPage}
+          // setCurrentPage={setCurrentPage}
+          setFilters={setFilters}
+          // currentPage={1}  // 默认传递第一页
+            filters={{}}     // 默认传递空的筛选器
+            />
         </TabPanel>
       ))}
     </Box>
@@ -103,6 +121,9 @@ SuperQuestionTypeContent.propTypes = {
     .isRequired,
     pages: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
+    setCurrentPage:PropTypes.func.isRequired,
+    setFilters:PropTypes.func.isRequired,
+    currentPage: PropTypes.number.isRequired,
 };
 
 export default SuperQuestionTypeContent;

@@ -1,11 +1,9 @@
-import { useState } from "react";
+import  { useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
 import TabPanel from "./question-card-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 
@@ -25,7 +23,11 @@ function a11yProps(index) {
   };
 }
 
-const QuestionListCard = ({ questionList, pages, count }) => {
+const QuestionListCard = ({ questionList, pages, count,
+  currentPage,
+  setCurrentPage, 
+  setFilters}) => {
+  // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
 
@@ -34,66 +36,36 @@ const QuestionListCard = ({ questionList, pages, count }) => {
   };
 
   return (
-    <Box
-      sx={
-        {
-          // border:'1px solid blue',
-        }
-      }
-    >
-      <Box
-        sx={{
-          borderColor: "divider",
-          mb: 1,
-          // border:'1px solid blue',
-        }}
-      >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          {types.map((type) => (
-            <Tab
-              key={type.module_id}
-              label={t(type.name)}
-              {...a11yProps(type.module_id)}
-              sx={{
-                fontSize: "18px",
-                textTransform: "none", // Ensure the text remains in its original case
-                "&:focus": {
-                  outline: "none", // Remove the default focus outline
-                },
-              }}
-            />
-          ))}
-        </Tabs>
-      </Box>
-      {/* <Box sx={{ borderColor: "red", border: "1px solid", p: 0 }}> */}
-      {types.map((type) => (
-        <TabPanel
-          value={value}
-          index={type.module_id - 1}
-          key={type.module_id - 1}
-        >
+    <Box sx={{ borderColor: "divider" }}>
+      <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+        {types.map((type, index) => (
+          <Tab key={type.module_id} label={t(type.name)} {...a11yProps(index)} />
+        ))}
+      </Tabs>
+      {types.map((type, index) => (
+        <TabPanel value={value} index={index} key={type.module_id}>
           <SuperQuestionTypeContent
-            type={type}
-            indexSubType={type.module_id - 1}
+            indexSubType={index}
             questionList={questionList}
-            pages={pages} 
+            pages={pages}
             count={count}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setFilters={setFilters}
           />
         </TabPanel>
       ))}
-      {/* </Box> */}
     </Box>
   );
 };
+
 QuestionListCard.propTypes = {
-  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
-    .isRequired,
-    pages: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
+  questionList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  pages: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage:PropTypes.func.isRequired,
+  setFilters:PropTypes.func.isRequired,
 };
 
 export default QuestionListCard;

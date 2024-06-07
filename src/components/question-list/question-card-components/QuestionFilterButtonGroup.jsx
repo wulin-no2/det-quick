@@ -1,33 +1,25 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import { Button, Box, Typography } from '@mui/material';
 
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-
-const QuestionFilterButtonGroup = ({ buttons }) => {
-  const [selectedButton, setSelectedButton] = useState(buttons[0]);
-
-  const handleButtonClick = (button) => {
-    setSelectedButton(button);
-  };
-
+const QuestionFilterButtonGroup = ({ label, buttons, selected, onSelectionChange }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "flex-start",
-        mb: 1,
-        alignItems: "end",
+        display: 'flex',
+        flexDirection: 'row', // Ensure layout direction is row for side-by-side arrangement
+        alignItems: 'center', // Vertically center align the items
+        mb: 1
       }}
     >
+      <Typography variant="subtitle1" sx={{ mr: 2 }}>
+        {label}  {/* Display the label */}
+      </Typography>
       {buttons.map((button, index) => (
         <Button
           key={index}
-          variant={selectedButton === button ? "contained" : "outlined"}
-          sx={{ mr: 1 ,
-            height:'32px',
-          }}
-          onClick={() => handleButtonClick(button)}
+          variant={selected === button ? 'contained' : 'outlined'}
+          sx={{ mr: 1, height: '32px' }} // Margin right for spacing, height set for uniformity
+          onClick={() => onSelectionChange(button)} // Use the provided onSelectionChange prop
         >
           {button}
         </Button>
@@ -37,7 +29,10 @@ const QuestionFilterButtonGroup = ({ buttons }) => {
 };
 
 QuestionFilterButtonGroup.propTypes = {
+  label: PropTypes.string.isRequired,
   buttons: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selected: PropTypes.string.isRequired,
+  onSelectionChange: PropTypes.func.isRequired
 };
 
 export default QuestionFilterButtonGroup;
