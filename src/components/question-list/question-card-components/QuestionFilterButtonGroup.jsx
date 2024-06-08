@@ -17,7 +17,7 @@ const QuestionFilterButtonGroup = ({ label, buttons, selected, onSelectionChange
       {buttons.map((button, index) => (
         <Button
           key={index}
-          variant={selected === button ? 'contained' : 'outlined'}
+          variant={String(selected) === String(button) ? 'contained' : 'outlined'}
           sx={{ mr: 1, height: '32px' }} // Margin right for spacing, height set for uniformity
           onClick={() => onSelectionChange(button)} // Use the provided onSelectionChange prop
         >

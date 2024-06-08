@@ -17,7 +17,7 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
             <QuestionFilterButtonGroup
               label={group[0]}
               buttons={group.slice(1)}
-              selected={filters[group[1]]}
+              selected={filters[group[0]]}
               onSelectionChange={(selection) => handleSelectionChange(group[0], selection)}
             />
           </Grid>
@@ -42,6 +42,9 @@ QuestionFilterMenu.propTypes = {
 
 export default QuestionFilterMenu;
 
+// convert false & true to boolean 
 function convertToBoolean(value) {
-  return value === "true";  // if value === "true"，return true，else return false
+  if(value === "true") return true;
+  else if(value === "false") return false;
+  else return value;
 }
