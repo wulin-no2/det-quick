@@ -13,9 +13,9 @@ const PracticeListPage = () => {
   const [filters, setFilters] = useState({
     isAsc: true,
     submoduleId: 1,
-    difficultyLevel: "Hard",
-    templateType: "NARRATIVE",
-    isCorrect: true,
+    difficultyLevel: "Easy",
+    // templateType: "NARRATIVE",
+    // isCorrect: true,
   });
 
   useEffect(() => {

@@ -80,7 +80,7 @@ export default function QuestionList({ questionsArr }) {
                       }
                     >
                       <Typography variant="body1" color="text.primary">
-                        {question.word}
+                      questionId:{question.questionId}
                       </Typography>
                     </Grid>
                     <Grid item md={4}>
@@ -96,7 +96,7 @@ export default function QuestionList({ questionsArr }) {
                           {question.difficultyLevel}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          questionId:{question.questionId}
+                          moduleId:{question.moduleId}+submoduleId:{question.submoduleId}
                         </Typography>
                       </Box>
                     </Grid>

@@ -20,10 +20,10 @@ const Item = styled(Paper)(({ theme }) => ({
 const buttonGroups = [
   ["isAsc", "true", "false"],
   ["difficultyLevel", "Easy", "Medium", "Hard"],
-  ["isCorrect", "true", "false"],
-  ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
-  ["isCollected", "true", "false"],
-  ["isPracticed", "true", "false"],
+  // ["isCorrect", "true", "false"],
+  // ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
+  // ["isCollected", "true", "false"],
+  // ["isPracticed", "true", "false"],
 ];
 
 const SubQuestionTypeContent = ({ questionList, pages, count, 
