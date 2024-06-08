@@ -4,7 +4,8 @@ import QuestionFilterButtonGroup from "./QuestionFilterButtonGroup";
 
 const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) => {
   const handleSelectionChange = (category, selection) => {
-    const newFilters = { ...filters, [category]: selection };
+    const newValue = convertToBoolean(selection); 
+    const newFilters = { ...filters, [category]: newValue };
     onFiltersChange(newFilters);
   };
 
@@ -16,7 +17,7 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
             <QuestionFilterButtonGroup
               label={group[0]}
               buttons={group.slice(1)}
-              selected={filters[group[0]]}
+              selected={filters[group[1]]}
               onSelectionChange={(selection) => handleSelectionChange(group[0], selection)}
             />
           </Grid>
@@ -40,3 +41,7 @@ QuestionFilterMenu.propTypes = {
 };
 
 export default QuestionFilterMenu;
+
+function convertToBoolean(value) {
+  return value === "true";  // if value === "true"，return true，else return false
+}

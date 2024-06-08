@@ -26,6 +26,7 @@ function a11yProps(index) {
 const QuestionListCard = ({ questionList, pages, count,
   currentPage,
   setCurrentPage, 
+  filters,
   setFilters}) => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
@@ -51,6 +52,7 @@ const QuestionListCard = ({ questionList, pages, count,
             count={count}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
+            filters={filters}
             setFilters={setFilters}
           />
         </TabPanel>
@@ -65,6 +67,7 @@ QuestionListCard.propTypes = {
   count: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   setCurrentPage:PropTypes.func.isRequired,
+  filters:PropTypes.object.isRequired,
   setFilters:PropTypes.func.isRequired,
 };
 

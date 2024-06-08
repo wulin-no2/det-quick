@@ -47,6 +47,7 @@ function a11yProps(index) {
 const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
   currentPage,
   setCurrentPage,
+  filters,
   setFilters }) => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
@@ -55,8 +56,7 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    console.log('super question type content中的页面更新为:', page);
-    // 如果需要，此处还可以触发数据获取或其他操作
+    console.log('super question type content updated current page :', page);
   };
 
 
@@ -105,10 +105,8 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
           <SubQuestionTypeContent type={type} questionList={questionList} pages={pages} count={count}
           setCurrentPage={handlePageChange}
           currentPage={currentPage}
-          // setCurrentPage={setCurrentPage}
           setFilters={setFilters}
-          // currentPage={1}  // 默认传递第一页
-            filters={{}}     // 默认传递空的筛选器
+          filters={filters}
             />
         </TabPanel>
       ))}
@@ -122,6 +120,7 @@ SuperQuestionTypeContent.propTypes = {
     pages: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
     setCurrentPage:PropTypes.func.isRequired,
+    filters:PropTypes.object.isRequired,
     setFilters:PropTypes.func.isRequired,
     currentPage: PropTypes.number.isRequired,
 };

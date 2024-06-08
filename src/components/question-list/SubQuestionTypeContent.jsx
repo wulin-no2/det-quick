@@ -18,19 +18,18 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const buttonGroups = [
-  ["Is Asc", "true", "false"],
-  ["Difficulty Level", "Easy", "Medium", "Hard"],
-  ["Is Correct", "true", "false"],
-  ["Template Type", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
-  ["Is Collected", "true", "false"],
-  ["Is Practiced", "true", "false"],
+  ["isAsc", "true", "false"],
+  ["difficultyLevel", "Easy", "Medium", "Hard"],
+  ["isCorrect", "true", "false"],
+  ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
+  ["isCollected", "true", "false"],
+  ["isPracticed", "true", "false"],
 ];
 
 const SubQuestionTypeContent = ({ questionList, pages, count, 
   currentPage, setCurrentPage,
   filters, 
   setFilters }) => {
-  // const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     console.log('currentPage has been updated in effect: ', currentPage);
   }, [currentPage]);  
@@ -80,3 +79,4 @@ SubQuestionTypeContent.propTypes = {
 
 
 export default SubQuestionTypeContent;
+
