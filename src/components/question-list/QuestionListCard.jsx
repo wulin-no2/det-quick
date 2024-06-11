@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useState,useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -62,6 +62,13 @@ const QuestionListCard = ({ questionList, pages, count,
 }) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
+  // when moduleId changes, update value
+  useEffect(() => {
+    const index = types.findIndex((type) => type.module_id === moduleId);
+    if (index !== -1) {
+      setValue(index);
+    }
+  }, [moduleId]);
 
 
   const handleChange = (event, newValue) => {
@@ -93,9 +100,9 @@ const QuestionListCard = ({ questionList, pages, count,
             filters={filters}
             setFilters={setFilters}
 
-            moduleId={moduleId} // 传递 moduleId
-            submoduleId={submoduleId} // 传递 submoduleId
-            setSubmoduleId={setSubmoduleId} // 传递 setSubmoduleId
+            moduleId={moduleId} //  moduleId
+            submoduleId={submoduleId} //  submoduleId
+            setSubmoduleId={setSubmoduleId} //  setSubmoduleId
 
           />
         </TabPanel>

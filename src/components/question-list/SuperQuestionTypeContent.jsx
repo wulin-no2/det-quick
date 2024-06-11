@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 
 import SubQuestionTypeContent from "./SubQuestionTypeContent";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import Tabs from "@mui/material/Tabs";
@@ -49,12 +49,19 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
   setCurrentPage,
   filters,
   setFilters,
-  moduleId, submoduleId, setSubmoduleId 
+  submoduleId, setSubmoduleId 
  }) => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const currentTypes = subTypesArr[indexSubType];
+  // when submoduleId changes, update value
+  useEffect(() => {
+    const index = currentTypes.findIndex((type) => type.submodule_id === submoduleId);
+    if (index !== -1) {
+      setValue(index);
+    }
+  }, [submoduleId, currentTypes]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
