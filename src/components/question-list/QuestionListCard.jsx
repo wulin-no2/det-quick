@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useState,useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -16,6 +16,33 @@ const types = [
   { module_id: 6, name: "Sample" },
 ];
 
+const subTypesArr = [
+  [{ id: 0, submodule_id: 1, name: "Read & Select" }],
+  [
+    { id: 0, submodule_id: 2, name: "Read Aloud" },
+    { id: 1, submodule_id: 3, name: "Read, Then Speak" },
+    { id: 2, submodule_id: 4, name: "Listen, Then Speak" },
+    { id: 3, submodule_id: 5, name: "Speak About The Photo" },
+  ],
+  [
+    { id: 0, submodule_id: 6, name: "Listen & Type" },
+    { id: 1, submodule_id: 7, name: "Interactive Listening" },
+  ],
+  [
+    { id: 0, submodule_id: 8, name: "Read & Complete" },
+    { id: 1, submodule_id: 9, name: "Interactive Reading" },
+    { id: 2, submodule_id: 10, name: "Fill In The Blanks" },
+  ],
+  [
+    { id: 0, submodule_id: 11, name: "Write About The Photo" },
+    { id: 1, submodule_id: 12, name: "Interactive Writing" },
+  ],
+  [
+    { id: 0, submodule_id: 13, name: "Speaking Sample" },
+    { id: 1, submodule_id: 14, name: "Writing Sample" },
+  ],
+];
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -27,13 +54,30 @@ const QuestionListCard = ({ questionList, pages, count,
   currentPage,
   setCurrentPage, 
   filters,
-  setFilters}) => {
-  // const [currentPage, setCurrentPage] = useState(1);
+  setFilters,
+  moduleId,
+  submoduleId,
+  setModuleId,
+  setSubmoduleId
+}) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
+  // when moduleId changes, update value
+  useEffect(() => {
+    const index = types.findIndex((type) => type.module_id === moduleId);
+    if (index !== -1) {
+      setValue(index);
+    }
+  }, [moduleId]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    // Update the module_id in filters when a new tab is selected
+    const selectedModuleId = types[newValue].module_id;
+    setModuleId(selectedModuleId);
+    // Update the moduleId based on default submoduleId
+    const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
+    setSubmoduleId(defaultSubmoduleId);
   };
 
   return (
@@ -54,6 +98,12 @@ const QuestionListCard = ({ questionList, pages, count,
             setCurrentPage={setCurrentPage}
             filters={filters}
             setFilters={setFilters}
+
+            moduleId={moduleId} //  moduleId
+            submoduleId={submoduleId} //  submoduleId
+            setSubmoduleId={setSubmoduleId} //  setSubmoduleId
+            subTypesArr={subTypesArr}
+
           />
         </TabPanel>
       ))}
@@ -69,6 +119,11 @@ QuestionListCard.propTypes = {
   setCurrentPage:PropTypes.func.isRequired,
   filters:PropTypes.object.isRequired,
   setFilters:PropTypes.func.isRequired,
+
+  moduleId: PropTypes.number.isRequired,
+  setModuleId: PropTypes.func.isRequired,
+  submoduleId: PropTypes.number.isRequired,
+  setSubmoduleId: PropTypes.func.isRequired,
 };
 
 export default QuestionListCard;

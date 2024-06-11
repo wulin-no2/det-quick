@@ -1,4 +1,4 @@
-import  { useEffect } from "react";
+// import  { useEffect } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
@@ -23,19 +23,19 @@ const buttonGroups = [
   // ["isCorrect", "true", "false"],
   // ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
   // ["isCollected", "true", "false"],
-  // ["isPracticed", "true", "false"],
+  ["isPracticed", "true", "false"],
 ];
 
 const SubQuestionTypeContent = ({ questionList, pages, count, 
   currentPage, setCurrentPage,
   filters, 
   setFilters }) => {
-  useEffect(() => {
-    console.log('currentPage has been updated in effect: ', currentPage);
-  }, [currentPage]);  
+  // useEffect(() => {
+  //   console.log('currentPage has been updated in effect: ', currentPage);
+  // }, [currentPage]);  
 
   const handlePageChange = (newPage) => {
-    console.log('Attempting to set new page: ', newPage);
+    // console.log('Attempting to set new page: ', newPage);
     setCurrentPage(newPage);
   };
 

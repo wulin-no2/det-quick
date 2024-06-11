@@ -18,7 +18,8 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
               label={group[0]}
               buttons={group.slice(1)}
               selected={filters[group[0]]}
-              onSelectionChange={(selection) => handleSelectionChange(group[0], selection)}
+              onSelectionChange={(
+                selection) => handleSelectionChange(group[0], selection)}
             />
           </Grid>
         ))}

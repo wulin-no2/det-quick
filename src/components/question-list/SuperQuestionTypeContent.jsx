@@ -2,40 +2,13 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 
 import SubQuestionTypeContent from "./SubQuestionTypeContent";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 import TabPanel from "./question-card-components/TabPanel";
-
-const subTypesArr = [
-  [{ id: 0, submodule_id: 1, name: "Read & Select" }],
-  [
-    { id: 0, submodule_id: 2, name: "Read Aloud" },
-    { id: 1, submodule_id: 3, name: "Read, Then Speak" },
-    { id: 2, submodule_id: 4, name: "Listen, Then Speak" },
-    { id: 3, submodule_id: 5, name: "Speak About The Photo" },
-  ],
-  [
-    { id: 0, submodule_id: 6, name: "Listen & Type" },
-    { id: 1, submodule_id: 7, name: "Interactive Listening" },
-  ],
-  [
-    { id: 0, submodule_id: 8, name: "Read & Complete" },
-    { id: 1, submodule_id: 9, name: "Interactive Reading" },
-    { id: 2, submodule_id: 10, name: "Fill In The Blanks" },
-  ],
-  [
-    { id: 0, submodule_id: 11, name: "Write About The Photo" },
-    { id: 1, submodule_id: 12, name: "Interactive Writing" },
-  ],
-  [
-    { id: 0, submodule_id: 13, name: "Speaking Sample" },
-    { id: 1, submodule_id: 14, name: "Writing Sample" },
-  ],
-];
 
 function a11yProps(index) {
   return {
@@ -48,20 +21,31 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
   currentPage,
   setCurrentPage,
   filters,
-  setFilters }) => {
+  setFilters,
+  submoduleId, setSubmoduleId,subTypesArr 
+ }) => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const currentTypes = subTypesArr[indexSubType];
+  // when submoduleId changes, update value
+  useEffect(() => {
+    const index = currentTypes.findIndex((type) => type.submodule_id === submoduleId);
+    if (index !== -1) {
+      setValue(index);
+    }
+  }, [submoduleId, currentTypes]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    console.log('super question type content updated current page :', page);
+    // console.log('super question type content updated current page :', page);
   };
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    // update submoduleId
+    const selectedSubmoduleId = currentTypes[newValue].submodule_id;
+    setSubmoduleId(selectedSubmoduleId);
   };
   return (
     <Box
@@ -115,14 +99,18 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
 };
 SuperQuestionTypeContent.propTypes = {
   indexSubType: PropTypes.number.isRequired,
-  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
-    .isRequired,
+  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  subTypesArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
     pages: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
     setCurrentPage:PropTypes.func.isRequired,
     filters:PropTypes.object.isRequired,
     setFilters:PropTypes.func.isRequired,
     currentPage: PropTypes.number.isRequired,
+
+    moduleId: PropTypes.number.isRequired,
+    submoduleId: PropTypes.number.isRequired,
+    setSubmoduleId: PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;
