@@ -70,7 +70,6 @@ const QuestionListCard = ({ questionList, pages, count,
     }
   }, [moduleId]);
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
     // Update the module_id in filters when a new tab is selected
@@ -103,6 +102,7 @@ const QuestionListCard = ({ questionList, pages, count,
             moduleId={moduleId} //  moduleId
             submoduleId={submoduleId} //  submoduleId
             setSubmoduleId={setSubmoduleId} //  setSubmoduleId
+            subTypesArr={subTypesArr}
 
           />
         </TabPanel>

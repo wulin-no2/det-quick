@@ -13,7 +13,7 @@ const PracticeListPage = () => {
   const [moduleId, setModuleId] = useState(1); // Add moduleId state
   const [submoduleId, setSubmoduleId] = useState(1); // Add submoduleId state
   const [filters, setFilters] = useState({
-    isAsc: true,
+    isAsc: false,
     submoduleId: 1,
     difficultyLevel: "Easy",
     // templateType: "NARRATIVE",
@@ -38,9 +38,9 @@ const PracticeListPage = () => {
         setQuestions(result.content);
         setPages(result.totalPages);
         setCount(result.totalElements);
-        console.log("questions in practice list page ", result.content);
-        console.log("Pages in practice list page ", result.totalPages);
-        console.log("Count in practice list page ", result.totalElements);
+        // console.log("questions in practice list page ", result.content);
+        // console.log("Pages in practice list page ", result.totalPages);
+        // console.log("Count in practice list page ", result.totalElements);
         setError("");
       } catch (error) {
         setError(`Error: ${error.message}`);
@@ -49,7 +49,7 @@ const PracticeListPage = () => {
       }
     }
     fetchData();
-  }, [currentPage, filters,moduleId, submoduleId,]);
+  }, [currentPage, filters, moduleId, submoduleId,]);
 
   if (loading) {
     return <div>Loading questions...</div>;

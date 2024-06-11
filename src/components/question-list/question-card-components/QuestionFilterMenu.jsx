@@ -5,10 +5,8 @@ import QuestionFilterButtonGroup from "./QuestionFilterButtonGroup";
 const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) => {
   const handleSelectionChange = (category, selection) => {
     const newValue = convertToBoolean(selection); 
-    console.log(`Category: ${category}, Selection: ${selection}, Converted Value: ${newValue}`);
     const newFilters = { ...filters, [category]: newValue };
     onFiltersChange(newFilters);
-    // console.log('newFilters in QuestionFilterMenu',newFilters)
   };
 
   return (
@@ -20,7 +18,8 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
               label={group[0]}
               buttons={group.slice(1)}
               selected={filters[group[0]]}
-              onSelectionChange={(selection) => handleSelectionChange(group[0], selection)}
+              onSelectionChange={(
+                selection) => handleSelectionChange(group[0], selection)}
             />
           </Grid>
         ))}
