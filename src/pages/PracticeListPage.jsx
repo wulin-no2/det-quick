@@ -10,6 +10,8 @@ const PracticeListPage = () => {
   const [error, setError] = useState("");
   // used for send data to backend
   const [currentPage, setCurrentPage] = useState(1);
+  const [moduleId, setModuleId] = useState(1); // Add moduleId state
+  const [submoduleId, setSubmoduleId] = useState(1); // Add submoduleId state
   const [filters, setFilters] = useState({
     isAsc: true,
     submoduleId: 1,
@@ -24,6 +26,8 @@ const PracticeListPage = () => {
         setLoading(true);
         const postData = {
           ...filters,
+          moduleId,
+          submoduleId,
           page: currentPage,
           size: 10,
         };
@@ -45,7 +49,7 @@ const PracticeListPage = () => {
       }
     }
     fetchData();
-  }, [currentPage, filters]);
+  }, [currentPage, filters,moduleId, submoduleId,]);
 
   if (loading) {
     return <div>Loading questions...</div>;
@@ -65,6 +69,10 @@ const PracticeListPage = () => {
         setCurrentPage={setCurrentPage}
         filters={filters}
         setFilters={setFilters}
+        moduleId={moduleId} // Pass moduleId
+        setModuleId={setModuleId} // Pass setModuleId
+        submoduleId={submoduleId} // Pass submoduleId
+        setSubmoduleId={setSubmoduleId} // Pass setSubmoduleId
       />
     </>
   );

@@ -48,7 +48,9 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
   currentPage,
   setCurrentPage,
   filters,
-  setFilters }) => {
+  setFilters,
+  moduleId, submoduleId, setSubmoduleId 
+ }) => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
@@ -61,12 +63,9 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    // Update the submodule_id in filters when a new tab is selected
-    const selectedSubModuleId = currentTypes[newValue].submodule_id;
-    setFilters({
-      ...filters,
-      submoduleId: selectedSubModuleId
-    });
+    // update submoduleId
+    const selectedSubmoduleId = currentTypes[newValue].submodule_id;
+    setSubmoduleId(selectedSubmoduleId);
   };
   return (
     <Box
@@ -128,6 +127,10 @@ SuperQuestionTypeContent.propTypes = {
     filters:PropTypes.object.isRequired,
     setFilters:PropTypes.func.isRequired,
     currentPage: PropTypes.number.isRequired,
+
+    moduleId: PropTypes.number.isRequired,
+    submoduleId: PropTypes.number.isRequired,
+    setSubmoduleId: PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;

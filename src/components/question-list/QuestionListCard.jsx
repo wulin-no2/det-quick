@@ -54,18 +54,24 @@ const QuestionListCard = ({ questionList, pages, count,
   currentPage,
   setCurrentPage, 
   filters,
-  setFilters}) => {
+  setFilters,
+  moduleId,
+  submoduleId,
+  setModuleId,
+  setSubmoduleId
+}) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     // Update the module_id in filters when a new tab is selected
     const selectedModuleId = types[newValue].module_id;
-    setFilters({
-      ...filters,
-      submoduleId: selectedModuleId === 1 ? 1 : subTypesArr[selectedModuleId - 1][0].submodule_id
-    });
+    setModuleId(selectedModuleId);
+    // Update the moduleId based on default submoduleId
+    const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
+    setSubmoduleId(defaultSubmoduleId);
   };
 
   return (
@@ -86,6 +92,11 @@ const QuestionListCard = ({ questionList, pages, count,
             setCurrentPage={setCurrentPage}
             filters={filters}
             setFilters={setFilters}
+
+            moduleId={moduleId} // 传递 moduleId
+            submoduleId={submoduleId} // 传递 submoduleId
+            setSubmoduleId={setSubmoduleId} // 传递 setSubmoduleId
+
           />
         </TabPanel>
       ))}
@@ -101,6 +112,11 @@ QuestionListCard.propTypes = {
   setCurrentPage:PropTypes.func.isRequired,
   filters:PropTypes.object.isRequired,
   setFilters:PropTypes.func.isRequired,
+
+  moduleId: PropTypes.number.isRequired,
+  setModuleId: PropTypes.func.isRequired,
+  submoduleId: PropTypes.number.isRequired,
+  setSubmoduleId: PropTypes.func.isRequired,
 };
 
 export default QuestionListCard;
