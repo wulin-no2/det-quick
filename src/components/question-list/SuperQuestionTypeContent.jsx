@@ -59,9 +59,14 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
     console.log('super question type content updated current page :', page);
   };
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    // Update the submodule_id in filters when a new tab is selected
+    const selectedSubModuleId = currentTypes[newValue].submodule_id;
+    setFilters({
+      ...filters,
+      submoduleId: selectedSubModuleId
+    });
   };
   return (
     <Box
