@@ -1,3 +1,6 @@
+// handle page change, handle submoduleId change
+// Manages the state of filters and currentPage and passes them to SubQuestionTypeContent
+
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 
@@ -10,24 +13,23 @@ import Tab from "@mui/material/Tab";
 
 import TabPanel from "./question-card-components/TabPanel";
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
-const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
-  currentPage,
-  setCurrentPage,
-  filters,
-  setFilters,
-  submoduleId, setSubmoduleId,subTypesArr 
+const SuperQuestionTypeContent = ({ 
+  moduleId,
+  submoduleId, setSubmoduleId,
+  subTypesArr 
  }) => {
-  // const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
-  const currentTypes = subTypesArr[indexSubType];
+  const currentTypes = subTypesArr[moduleId-1];
+
+  // handle filters and currentPage change
+  const [filters, setFilters] = useState({
+    isAsc: true,
+    difficultyLevel: "Easy",
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+
   // when submoduleId changes, update value
   useEffect(() => {
     const index = currentTypes.findIndex((type) => type.submodule_id === submoduleId);
@@ -38,7 +40,6 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // console.log('super question type content updated current page :', page);
   };
 
   const handleChange = (event, newValue) => {
@@ -48,21 +49,9 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
     setSubmoduleId(selectedSubmoduleId);
   };
   return (
-    <Box
-      sx={
-        {
-          // border:'1px solid blue',
-        }
-      }
-    >
+    <Box>
       <Box
-        sx={{
-          borderColor: "divider",
-          backgroundColor: "#ffffff",
-          // border:'1px solid blue',
-          p: 1,
-        }}
-      >
+      sx={{ borderColor: "divider", backgroundColor: "#ffffff", p: 1, minWidth: '1220px' }}      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -72,7 +61,6 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
             <Tab
               key={type.id}
               label={t(type.name)}
-              {...a11yProps(type.id)}
               sx={{
                 fontSize: "18px",
                 textTransform: "none", // Ensure the text remains in its original case
@@ -86,7 +74,9 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
       </Box>
       {currentTypes.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SubQuestionTypeContent type={type} questionList={questionList} pages={pages} count={count}
+          <SubQuestionTypeContent 
+          type={type} 
+          submoduleId={submoduleId}
           setCurrentPage={handlePageChange}
           currentPage={currentPage}
           setFilters={setFilters}
@@ -98,19 +88,10 @@ const SuperQuestionTypeContent = ({ indexSubType, questionList, pages, count,
   );
 };
 SuperQuestionTypeContent.propTypes = {
-  indexSubType: PropTypes.number.isRequired,
-  questionList: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   subTypesArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
-    pages: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
-    setCurrentPage:PropTypes.func.isRequired,
-    filters:PropTypes.object.isRequired,
-    setFilters:PropTypes.func.isRequired,
-    currentPage: PropTypes.number.isRequired,
-
-    moduleId: PropTypes.number.isRequired,
-    submoduleId: PropTypes.number.isRequired,
-    setSubmoduleId: PropTypes.func.isRequired,
+  moduleId: PropTypes.number.isRequired,
+  submoduleId: PropTypes.number.isRequired,
+  setSubmoduleId: PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;

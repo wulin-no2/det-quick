@@ -1,13 +1,14 @@
-// import  { useEffect } from "react";
+// Get data based on filters and currentPage, 
+// refresh QuestionList when the data changes
+
+import { useEffect, useState } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
-
-
 import QuestionFilterMenu from "./question-card-components/QuestionFilterMenu";
 import QuestionList from "./question-card-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
-
+import { FetchQuestionListResponseData } from "../../api/FetchQuestionList";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -26,13 +27,41 @@ const buttonGroups = [
   ["isPracticed", "true", "false"],
 ];
 
-const SubQuestionTypeContent = ({ questionList, pages, count, 
+const SubQuestionTypeContent = ({ 
+  submoduleId,
+  // questionList, pages, count, 
   currentPage, setCurrentPage,
   filters, 
   setFilters }) => {
-  // useEffect(() => {
-  //   console.log('currentPage has been updated in effect: ', currentPage);
-  // }, [currentPage]);  
+  const [questions, setQuestions] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // get data from backend
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const postData = {
+          ...filters,
+          submoduleId,
+          page: currentPage,
+          size: 10,
+        };
+        const result = await FetchQuestionListResponseData(postData);
+        setQuestions(result.content);
+        setPages(result.totalPages);
+        setCount(result.totalElements);
+      } catch (error) {
+        setError(`Error: ${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [filters, currentPage, submoduleId]);
 
   const handlePageChange = (newPage) => {
     // console.log('Attempting to set new page: ', newPage);
@@ -43,6 +72,9 @@ const SubQuestionTypeContent = ({ questionList, pages, count,
     setFilters(newFilters);
     setCurrentPage(1);  // Reset to the first page when filters change
   };
+
+  if (loading) {return <div></div>;}
+  if (error) {return <div>Error: {error}</div>;}
 
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
@@ -57,7 +89,7 @@ const SubQuestionTypeContent = ({ questionList, pages, count,
           />
         </Item>
         <Item>
-          <QuestionList questionsArr={questionList} />
+          <QuestionList questionsArr={questions} />
         </Item>
         <Item>
           <PaginationRounded pages={pages} onPageChange={handlePageChange} currentPage={currentPage} />
@@ -75,6 +107,7 @@ SubQuestionTypeContent.propTypes = {
   setFilters: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
+  submoduleId: PropTypes.number.isRequired,
 };
 
 

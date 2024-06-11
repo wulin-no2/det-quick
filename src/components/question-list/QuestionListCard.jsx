@@ -1,3 +1,6 @@
+// handle moduleId change,
+// and pass moduleId and submoduleId to SuperQuestionTypeContent
+
 import  { useState,useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
@@ -43,18 +46,7 @@ const subTypesArr = [
   ],
 ];
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-const QuestionListCard = ({ questionList, pages, count,
-  currentPage,
-  setCurrentPage, 
-  filters,
-  setFilters,
+const QuestionListCard = ({ 
   moduleId,
   submoduleId,
   setModuleId,
@@ -83,27 +75,18 @@ const QuestionListCard = ({ questionList, pages, count,
   return (
     <Box sx={{ borderColor: "divider" }}>
       <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-        {types.map((type, index) => (
-          <Tab key={type.module_id} label={t(type.name)} {...a11yProps(index)} />
+        {types.map((type) => (
+          <Tab key={type.module_id} label={t(type.name)} />
         ))}
       </Tabs>
       {types.map((type, index) => (
         <TabPanel value={value} index={index} key={type.module_id}>
           <SuperQuestionTypeContent
-            indexSubType={index}
-            questionList={questionList}
-            pages={pages}
-            count={count}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            filters={filters}
-            setFilters={setFilters}
-
+            // indexSubType={index}
             moduleId={moduleId} //  moduleId
             submoduleId={submoduleId} //  submoduleId
             setSubmoduleId={setSubmoduleId} //  setSubmoduleId
             subTypesArr={subTypesArr}
-
           />
         </TabPanel>
       ))}
@@ -112,14 +95,6 @@ const QuestionListCard = ({ questionList, pages, count,
 };
 
 QuestionListCard.propTypes = {
-  questionList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  pages: PropTypes.number.isRequired,
-  count: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  setCurrentPage:PropTypes.func.isRequired,
-  filters:PropTypes.object.isRequired,
-  setFilters:PropTypes.func.isRequired,
-
   moduleId: PropTypes.number.isRequired,
   setModuleId: PropTypes.func.isRequired,
   submoduleId: PropTypes.number.isRequired,
