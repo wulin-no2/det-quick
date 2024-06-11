@@ -76,7 +76,14 @@ const QuestionListCard = ({
     <Box sx={{ borderColor: "divider" }}>
       <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
         {types.map((type) => (
-          <Tab key={type.module_id} label={t(type.name)} />
+          <Tab key={type.module_id} label={t(type.name)} 
+          sx={{fontSize:'18px',
+          textTransform: "none", // Ensure the text remains in its original case
+          "&:focus": {
+            outline: "none", // Remove the default focus outline
+          },
+            
+          }}/>
         ))}
       </Tabs>
       {types.map((type, index) => (

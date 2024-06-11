@@ -8,12 +8,13 @@ const PaginationRounded = ({ pages, onPageChange, currentPage }) => {
     console.log('currentPage has been updated in pagination rounded: ', currentPage);
   }, [currentPage]);
   return (
-    <Stack spacing={2}>
+    <Stack>
       <Pagination 
+      color="primary"
+      size='large'
       count={pages} 
       shape="rounded" 
       variant="outlined"
-      // onChange={onPageChange} 
       onChange={(event, page) => {
         console.log('PaginationRounded onChange triggered, new value: ', page);
         onPageChange(page)}}

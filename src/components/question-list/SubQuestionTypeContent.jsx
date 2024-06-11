@@ -91,7 +91,7 @@ const SubQuestionTypeContent = ({
         <Item>
           <QuestionList questionsArr={questions} />
         </Item>
-        <Item>
+        <Item sx={{width: "100%", display: 'flex', justifyContent: 'center' ,p:2}}>
           <PaginationRounded pages={pages} onPageChange={handlePageChange} currentPage={currentPage} />
         </Item>
       </Stack>

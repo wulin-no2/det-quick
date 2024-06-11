@@ -7,8 +7,8 @@ const getDisplayLabel = (label) => {
       return "Sort";
     case "isCollected":
       return "Collection";
-    case "isPractice":
-      return "Practice";
+    case "isPracticed":
+      return "Practiced";
     case "difficultyLevel":
       return "Difficulty";
     default:
