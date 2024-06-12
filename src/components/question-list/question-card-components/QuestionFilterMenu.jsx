@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
 import { Container, Typography, Grid } from "@mui/material";
 import QuestionFilterButtonGroup from "./QuestionFilterButtonGroup";
+import { useTranslation } from "react-i18next";
 
 const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) => {
+  
   const handleSelectionChange = (category, selection) => {
     const newValue = convertToBoolean(selection); 
     const newFilters = { ...filters, [category]: newValue };
     onFiltersChange(newFilters);
   };
+  const { t } = useTranslation();
 
   return (
     <Container maxWidth="lg" sx={{ p: 3 }}>
@@ -24,9 +27,9 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
           </Grid>
         ))}
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-          <Typography>total:</Typography>
+          <Typography>{t('Show items per page: ')}</Typography>
           <Typography sx={{ color: "primary.main", pl: 1, pr: 1 }}>{count}</Typography>
-          <Typography>results</Typography>
+          {/* <Typography>results</Typography> */}
         </Grid>
       </Grid>
     </Container>

@@ -23,9 +23,9 @@ const subTypesArr = [
   [{ id: 0, submodule_id: 1, name: "Read & Select" }],
   [
     { id: 0, submodule_id: 2, name: "Read Aloud" },
-    { id: 1, submodule_id: 3, name: "Read, Then Speak" },
-    { id: 2, submodule_id: 4, name: "Listen, Then Speak" },
-    { id: 3, submodule_id: 5, name: "Speak About The Photo" },
+    { id: 1, submodule_id: 3, name: "Read Then Speak" },
+    { id: 2, submodule_id: 4, name: "Listen Then Speak" },
+    { id: 3, submodule_id: 5, name: "Speak About the Photo" },
   ],
   [
     { id: 0, submodule_id: 6, name: "Listen & Type" },
@@ -34,10 +34,10 @@ const subTypesArr = [
   [
     { id: 0, submodule_id: 8, name: "Read & Complete" },
     { id: 1, submodule_id: 9, name: "Interactive Reading" },
-    { id: 2, submodule_id: 10, name: "Fill In The Blanks" },
+    { id: 2, submodule_id: 10, name: "Fill In the Blanks" },
   ],
   [
-    { id: 0, submodule_id: 11, name: "Write About The Photo" },
+    { id: 0, submodule_id: 11, name: "Write About the Photo" },
     { id: 1, submodule_id: 12, name: "Interactive Writing" },
   ],
   [

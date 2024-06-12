@@ -1,18 +1,23 @@
 import PropTypes from "prop-types";
 import { Button, Box, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-const getDisplayLabel = (label) => {
-  switch (label) {
-    case "isAsc":
-      return "Sort";
-    case "isCollected":
-      return "Collection";
-    case "isPracticed":
-      return "Practiced";
-    case "difficultyLevel":
-      return "Difficulty";
-    default:
-      return label;
+const displayMapping = {
+  isAsc: {
+    label: "Order",
+    true: "Question Number",
+    false: "Latest"
+  },
+  difficultyLevel: {
+    label: "Difficulty",
+    Easy: "Easy (95-)",
+    Medium: "Medium (100~125)",
+    Hard: "Hard (130+)"
+  },
+  isPracticed: {
+    label: "Practice",
+    true: "Practiced",
+    false: "Unpracticed"
   }
 };
 
@@ -22,6 +27,7 @@ const QuestionFilterButtonGroup = ({
   selected,
   onSelectionChange,
 }) => {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -32,7 +38,8 @@ const QuestionFilterButtonGroup = ({
       }}
     >
       <Typography variant="subtitle1" sx={{ mr: 2 }}>
-        {getDisplayLabel(label)} {/* Display the label */}
+      {t(displayMapping[label].label)}
+       {/*Display the label*/}
       </Typography>
       {buttons.map((button, index) => (
         <Button
@@ -40,10 +47,10 @@ const QuestionFilterButtonGroup = ({
           variant={
             String(selected) === String(button) ? "contained" : "outlined"
           }
-          sx={{ mr: 1, height: "32px" }} // Margin right for spacing, height set for uniformity
+          sx={{ mr: 1, height: "32px" , textTransform:"none"}} // Margin right for spacing, height set for uniformity
           onClick={() => onSelectionChange(button)} // Use the provided onSelectionChange prop
         >
-          {button}
+          {t(displayMapping[label][button]) || t(button)} {/* Use the display mapping */}
         </Button>
       ))}
     </Box>
