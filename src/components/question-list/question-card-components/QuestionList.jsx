@@ -16,34 +16,26 @@ export default function QuestionList({ questionsArr ,
 }) {
   const { t } = useTranslation();
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
+    <Box sx={{flexGrow: 1,
         // maxWidth: "100vw",
         width: "100%",
         // border: "1px solid blue",
       }}
     >
-      <Grid
-        container
+      <Grid container
         // spacing={2}
         sx={{
           width: "100%",
           // border: "1px solid magenta"
         }}
       >
-        <Grid
-          item
-          xs={6}
-          md={12}
-          sx={{
+        <Grid item xs={6} md={12} sx={{
             width: "100%",
             // border: "1px solid green"
           }}
         >
           <List
-            sx={{
-              width: "100%",
+            sx={{width: "100%",
               // border: "1px solid red"
             }}
           >
@@ -54,40 +46,27 @@ export default function QuestionList({ questionsArr ,
                     mx: "auto",
                     width: "96%",
                     // border: "1px solid black",
-                    // px:0,
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.1)",
                     },
                   }}
-                  component={Link}
-                  // href={`/question/${question.type}`}
-                  href={`/questions/list`}
+                  component={Link} href={`/questions/list`}
                 >
                   <Grid
                     container
                     display="flex"
                     alignItems="center"
                     justifyContent="space-between"
-                    sx={{
-                      pt: 0.8,
-                      pb: 0.8,
+                    sx={{pt: 0.8,pb: 0.8,
                       // border: "1px solid blue",
                     }}
                   >
-                    <Grid
-                      item
-                      md={6}
-                      sx={
-                        {
-                          // border: "1px solid blue",
-                        }
-                      }
-                    >
+                    <Grid item md={6}>
                       <Typography variant="body1" color="text.primary">
-                      {t(getNameBySubmoduleId(question.submoduleId))} - {question.questionId}
-                      </Typography>
-                      <Typography variant="body1" color="text.primary">
-                      
+                        <Box component="span" sx={{ fontWeight: 'bold' }}>
+                          {t(getNameBySubmoduleId(question.submoduleId))}
+                        </Box> 
+                        {" - "}{question.questionId}
                       </Typography>
                     </Grid>
                     <Grid item md={4}>

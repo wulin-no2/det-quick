@@ -28,7 +28,6 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
             // pr:8
           }} 
           > 
-          
             <QuestionFilterButtonGroup
               label={group[0]}
               buttons={group.slice(1)}
@@ -38,13 +37,12 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
             />
           </Grid>
         ))}
-        <Grid item 
-        xs={6} 
+        <Grid item xs={6} 
         sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" ,
           // border:'1px solid red'
         }}>
           <Typography>{t('Total Result: ')}</Typography>
-          <Typography sx={{ color: "primary.main", pl: 1, pr: 1 }}>{count}</Typography>
+          <Typography sx={{ color: "primary.main", pl: 1, pr: 2 }}>{count}</Typography>
         </Grid>
       </Grid>
     </Container>
