@@ -1,20 +1,32 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
-import { Typography } from "@mui/material";
-import Link from "@mui/material/Link";
+import { Box, Typography, List, ListItem, Grid, Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import DifficultyButton from "../../common/common-card-components/CardHeaderComponents/DifficultyButton";
 
+const baseQuestionsDetailURL = "questions/detail";
+
 export default function QuestionList({ questionsArr ,
-  getNameBySubmoduleId
+  getNameBySubmoduleId,
+  filters,
+  count
 }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleItemClick = (question, index) => {
+    navigate(baseQuestionsDetailURL, {
+      state: {
+        questionId: question.questionId,
+        submoduleId: question.submoduleId,
+        filters,
+        count,
+        currentIndex: index
+      }
+    });
+  };
   return (
     <Box sx={{flexGrow: 1,
         // maxWidth: "100vw",
@@ -46,11 +58,14 @@ export default function QuestionList({ questionsArr ,
                     mx: "auto",
                     width: "96%",
                     // border: "1px solid black",
+                    cursor: 'pointer', // Set mouse hover effect
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.1)",
                     },
                   }}
-                  component={Link} href={`/questions/list`}
+                  // component={Link} href={baseQuestionsDetailURL}
+                  component='div'
+                  onClick={() => handleItemClick(question, index)}
                 >
                   <Grid
                     container
@@ -105,4 +120,5 @@ QuestionList.propTypes = {
   questionsArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   count: PropTypes.number.isRequired,
   getNameBySubmoduleId:PropTypes.func.isRequired,
+  filters: PropTypes.object.isRequired,
 };

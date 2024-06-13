@@ -88,11 +88,14 @@ const SubQuestionTypeContent = ({
             currentPage={currentPage}
             filters={filters}
             onFiltersChange={handleFiltersChange}
+            
           />
         </Item>
         <Item>
           <QuestionList questionsArr={questions} 
           getNameBySubmoduleId={getNameBySubmoduleId} 
+          count={count}
+          filters={filters}
           />
         </Item>
         <Item sx={{width: "100%", display: 'flex', justifyContent: 'center' ,p:2}}>

@@ -1,58 +1,43 @@
+
+import PropTypes from "prop-types";
 import { Box, Typography } from '@mui/material';
-import { useState } from 'react';
+// import { useState } from 'react';
+import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
-const words = [
-  {
-    id: 4233,
-    // type_id: 2,
-    text: 'somether',
-    isReal: 0,
-    difficulty: 3,
-    time_limit: 10,
-    type: 'Read and Select',
-    type_question: 'Is this a real English word?',
-  },
-  {
-    id: 4234,
-    // type_id: 3,
-    text: 'diversity',
-    isReal: 1,
-    difficulty: 1,
-    time_limit: 10,
-    type: 'Read and Select',
-    type_question: 'Is this a real English word?',
-  },
-  {
-    id: 4235,
-    // type_id: 4,
-    text: 'simultaneously',
-    isReal: 1,
-    difficulty: 2,
-    time_limit: 10,
-    type: 'Read and Select',
-    type_question: 'Is this a real English word?',
-  },
-  // Add more words as needed
-];
 
-const ReadAndSelectCard = () => {
+const ReadAndSelectCard = ({
+  // questionId,
+  // setCurrentQuestionId,
+  // setCurrentSubmoduleId,
+  // filters,
+  count,
+  currentIndex,
+  questionDetail
+}) => {
+  const { t } = useTranslation();
+  if (!questionDetail) {
+    return <div>Loading...</div>;
+  }
   // handle answer buttons
   const handleAnswer = (isReal) => {
     console.log(`Answered: ${isReal}`);
   };
   // handle jump buttons
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const word = words[currentIndex];
+  // const [currentIndex, setCurrentIndex] = useState(0);
+  // const word = questionDetail.word;
+
   const handleNext = () => {
-    if (currentIndex < words.length - 1) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
+    if (currentIndex < count - 1) {
+      // setCurrentQuestionId(/* 下一个问题的ID，根据需要进行修改 */);
+      // setCurrentSubmoduleId(/* 下一个问题的submoduleId，根据需要进行修改 */);
     }
   };
 
   const handleLast = () => {
     if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
+      // setCurrentQuestionId(/* 上一个问题的ID，根据需要进行修改 */);
+      // setCurrentSubmoduleId(/* 上一个问题的submoduleId，根据需要进行修改 */);
     }
   };
 
@@ -70,11 +55,11 @@ const ReadAndSelectCard = () => {
     >
       {/* CardHeader */}
       <CardHeader
-        word={word}
+        questionDetail={questionDetail}
         onNext={handleNext}
         onLast={handleLast}
         currentIndex={currentIndex}
-        totalWords={words.length}
+        totalWords={count}
       />
       {/* question */}
       <Box
@@ -87,7 +72,7 @@ const ReadAndSelectCard = () => {
           gutterBottom
           sx={{ fontWeight: "bold", opacity: 0.92 }}
         >
-          {word.type_question}
+          {t('Is this a real English word?')}
         </Typography>
       </Box>
       {/* word */}
@@ -97,7 +82,7 @@ const ReadAndSelectCard = () => {
           gutterBottom
           sx={{ fontWeight: 'bold', opacity: 0.78 }}
         >
-          {word.text}
+          {questionDetail.word}
         </Typography>
       </Box>
       {/* answer buttons */}
@@ -114,6 +99,16 @@ const ReadAndSelectCard = () => {
       </Box>
     </Box>
   );
+};
+
+ReadAndSelectCard.propTypes = {
+  questionId: PropTypes.number.isRequired,
+  setCurrentQuestionId: PropTypes.func.isRequired,
+  setCurrentSubmoduleId: PropTypes.func.isRequired,
+  filters: PropTypes.object.isRequired,
+  count: PropTypes.number.isRequired,
+  currentIndex: PropTypes.number.isRequired,
+  questionDetail: PropTypes.object, 
 };
 
 export default ReadAndSelectCard;

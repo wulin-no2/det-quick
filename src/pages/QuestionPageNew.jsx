@@ -1,6 +1,9 @@
 import { Box, Container } from "@mui/material";
 // import { useParams } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect,
+  // useRef 
+} from "react";
+import { useLocation } from "react-router-dom";
 import { FetchQuestionDetail } from "../api/FetchQuestionDetail";
 
 // Import card components
@@ -13,25 +16,38 @@ import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
 import TitleThePassageCard from "../components/question-cards/TitleThePassageCard";
 
 function QuestionPageNew() {
+  // const { questionId } = useParams();
+  const location = useLocation();
+  const {
+    questionId,
+    submoduleId,
+    filters,
+    count,
+    currentIndex,
+  } = location.state || {};
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // use for store fetchData result
+  const [questionDetail, setQuestionDetail] = useState(null);
+
+
   // used for send data to backend
-  const [currentQuestionId, setCurrentQuestionId] = useState(1);
-  const [currentSubmoduleId, setCurrentSubmoduleId] = useState(1);
+  const [currentQuestionId, setCurrentQuestionId] = useState(questionId || 1);
+  const [currentSubmoduleId, setCurrentSubmoduleId] = useState(submoduleId || 1);
+
+  // const prevQuestionId = useRef(currentQuestionId);
+  // const prevSubmoduleId = useRef(currentSubmoduleId);
 
   useEffect(() => {
     async function fetchData() {
       try {
         setLoading(true);
-        const postData = {
-          questionId: currentQuestionId,
-          submoduleId: currentSubmoduleId,
-        };
-        console.log("postData in question page new ", postData);
-        const result = await FetchQuestionDetail(postData, "http://54.159.192.226:8080/questions/detail");
+        console.log("currentQuestionId and currentSubmoduleId in question page new ", currentQuestionId, currentSubmoduleId);
+        const result = await FetchQuestionDetail(currentQuestionId, currentSubmoduleId);
         console.log("result in question page new ", result);
+        setQuestionDetail(result);  // get question detail
         setError("");
       } catch (error) {
         setError(`Error: ${error.message}`);
@@ -41,6 +57,10 @@ function QuestionPageNew() {
     }
     fetchData();
   }, [currentQuestionId, currentSubmoduleId]);
+
+  useEffect(() => {
+    console.log('question detail in use effect is ', questionDetail, currentQuestionId, currentSubmoduleId);
+  }, []);
 
   if (loading) {
     return <div>Loading questions...</div>;
@@ -84,6 +104,10 @@ function QuestionPageNew() {
         questionId={currentQuestionId}
         setCurrentQuestionId={setCurrentQuestionId}
         setCurrentSubmoduleId={setCurrentSubmoduleId}
+        filters={filters} // pass filters
+        count={count} // pass totalResults
+        currentIndex={currentIndex} // pass currentIndex
+        questionDetail={questionDetail} // pass questionDetail from fetchData()
         /> : <div>No question found for this submodule id.</div>}
       </Box>
     </Container>

@@ -1,12 +1,12 @@
 import ApiClient from "./ApiClient";
 
 
-export const FetchQuestionDetail = async (postData) => {
+export const FetchQuestionDetail = async (questionId, submoduleId) => {
   try {
-    // const postData ={
-    //   "questionId": 20400,
-    //   "submoduleId": 1
-    // }
+    const postData ={
+      questionId: questionId,
+      submoduleId: submoduleId
+    }
 
     console.log('this is postData log from fetch question detail ', postData);
 
@@ -17,11 +17,11 @@ export const FetchQuestionDetail = async (postData) => {
       return response.data.data; 
     } else {
       throw new Error(
-        response.message || "An error occurred while fetching the question detail data"
+        response.message || "There was an error fetching the question detail!"
       );
     }
   } catch (error) {
-    console.error("Error fetching total results:", error.message);
-    return []; // Return an empty array or handle the error as needed
+    console.error("Error fetching total results: ", error.message);
+    return null; // Return an empty array or handle the error as needed
   }
 };

@@ -5,28 +5,42 @@ import ProgressBar from "./CardHeaderComponents/ProgressBar";
 import Timer from "./CardHeaderComponents/Timer";
 import JumpButton from "./CardHeaderComponents/JumpButton";
 import TitleBar from "./CardHeaderComponents/TitleBar";
-const CardHeader = ({ word, onLast, onNext, currentIndex, totalWords }) => {
-  // set timer and progressBar based on word.time_limit
+
+const timeLimit = (submoduleId)=>{
+  switch(submoduleId){
+    case 1: return 10;
+    case 2: return 20;
+    case 3: return 30;
+    case 4: return 15;
+    case 5: return 10;
+    case 6: return 15;
+    default: return 10;
+  }
+}
+const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords }) => {
+  const time_limit = timeLimit(questionDetail.submoduleId);
+
+  // set timer and progressBar based on time_limit
   const [timer, setTimer] = useState(0);
 
   useEffect(() => {
     setTimer(0); // Reset timer when word changes
     const timerInterval = setInterval(() => {
       setTimer((prev) => {
-        if (prev < word.time_limit) {
+        if (prev < time_limit) {
           return prev + 1;
         } else {
           clearInterval(timerInterval);
           onNext();
-          return word.time_limit;
+          return time_limit;
         }
       });
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [word.time_limit, onNext]);
+  }, [time_limit, onNext]);
 
-  const progress = (timer / word.time_limit) * 100;
+  const progress = (timer / time_limit) * 100;
 
   const handleExit = () => {
     console.log("Exit test");
@@ -35,9 +49,9 @@ const CardHeader = ({ word, onLast, onNext, currentIndex, totalWords }) => {
     <>
       {/* title bar */}
       <TitleBar
-        id={word.id}
-        type={word.type}
-        difficulty={word.difficulty}
+        id={questionDetail.questionId}
+        // type={word.type}
+        difficulty={questionDetail.difficultyLevel}
         onClick={handleExit}
       />
       {/* Timer, JumpButton and ProgressBar */}
@@ -59,8 +73,6 @@ const CardHeader = ({ word, onLast, onNext, currentIndex, totalWords }) => {
         >
           <Timer timer={timer} />
           <JumpButton
-            number={word.type_id}
-            total={word.type_total}
             onLast={onLast}
             onNext={onNext}
             currentIndex={currentIndex}
