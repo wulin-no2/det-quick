@@ -66,12 +66,11 @@ export default function QuestionList({ questionsArr ,
                   <Grid
                     container
                     display="flex"
-                    // alignItems="center"
+                    alignItems="center"
                     justifyContent="space-between"
-                    // md={12}
                     sx={{
-                      pt: 1.5,
-                      pb: 1.5,
+                      pt: 0.8,
+                      pb: 0.8,
                       // border: "1px solid blue",
                     }}
                   >
@@ -94,19 +93,12 @@ export default function QuestionList({ questionsArr ,
                     <Grid item md={4}>
                       <Box
                         sx={{
-                          // width: "100%",
-                          // border: "1px solid red",
                           display: "flex",
-                          justifyContent: "space-around",
+                          justifyContent: "end",
+                          pr:2
                         }}
                       >
-                        {/* <Typography variant="body2" color="text.secondary">
-                          {question.difficultyLevel}
-                        </Typography> */}
                         <DifficultyButton difficulty={question.difficultyLevel}/>
-                        {/* <Typography variant="body2" color="text.secondary">
-                          moduleId:{question.moduleId}+submoduleId:{question.submoduleId}
-                        </Typography> */}
                       </Box>
                     </Grid>
                   </Grid>

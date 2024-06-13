@@ -50,5 +50,6 @@
   "Order": "Order",
   "Latest": "Latest",
   "Question Number": "Question Number",
-  "Show items per page: ": "Show items per page: "
+  "Show items per page: ": "Show items per page: ",
+  "Total Result: ": "Total Result: "
 }

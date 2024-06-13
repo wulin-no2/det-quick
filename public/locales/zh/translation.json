@@ -48,5 +48,6 @@
   "Order": "排序",
   "Latest": "最新",
   "Question Number": "题号",
-  "Show items per page: ": "每页显示条目数："
+  "Show items per page: ": "每页显示条目数：",
+  "Total Result: ": "总结果数："
 }

@@ -42,8 +42,10 @@ const DifficultyButton = ({ difficulty }) => {
         alignItems: "center",
         color: boxProps.color,
         opacity: 0.68,
+        pl: 1,
+        pr: 1,
         backgroundColor: boxProps.backgroundColor, // Apply background color
-        borderRadius:'4px'
+        borderRadius:1
       }}
     >
       {t(boxProps.text)}

@@ -13,10 +13,22 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
   const { t } = useTranslation();
 
   return (
-    <Container maxWidth="lg" sx={{ p: 3 }}>
+    <Container maxWidth="lg" 
+    sx={{ pt: 2 ,pb:2, 
+      // border:'1px solid black'
+    }}
+    >
       <Grid container spacing={2}>
         {buttonGroups.map((group, index) => (
-          <Grid item xs={6} key={index}>
+          <Grid item 
+          xs={6} 
+          key={index}
+          sx={{
+            // border:'1px solid black',
+            // pr:8
+          }} 
+          > 
+          
             <QuestionFilterButtonGroup
               label={group[0]}
               buttons={group.slice(1)}
@@ -26,10 +38,13 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
             />
           </Grid>
         ))}
-        <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-          <Typography>{t('Show items per page: ')}</Typography>
+        <Grid item 
+        xs={6} 
+        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" ,
+          // border:'1px solid red'
+        }}>
+          <Typography>{t('Total Result: ')}</Typography>
           <Typography sx={{ color: "primary.main", pl: 1, pr: 1 }}>{count}</Typography>
-          {/* <Typography>results</Typography> */}
         </Grid>
       </Grid>
     </Container>
