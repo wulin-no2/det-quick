@@ -17,7 +17,8 @@ import TabPanel from "./question-card-components/TabPanel";
 const SuperQuestionTypeContent = ({ 
   moduleId,
   submoduleId, setSubmoduleId,
-  subTypesArr 
+  subTypesArr,
+  getNameBySubmoduleId
  }) => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
@@ -81,6 +82,7 @@ const SuperQuestionTypeContent = ({
           currentPage={currentPage}
           setFilters={setFilters}
           filters={filters}
+          getNameBySubmoduleId={getNameBySubmoduleId} 
             />
         </TabPanel>
       ))}
@@ -92,6 +94,7 @@ SuperQuestionTypeContent.propTypes = {
   moduleId: PropTypes.number.isRequired,
   submoduleId: PropTypes.number.isRequired,
   setSubmoduleId: PropTypes.func.isRequired,
+  getNameBySubmoduleId:PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;

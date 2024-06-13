@@ -11,6 +11,7 @@ const TitleBar = ({ id, type, onClick, difficulty }) => {
         borderRadius: "8px",
         backgroundColor: "#fff3e0",
         justifyContent: "flex-start",
+        alignItems: "center",
         alignContent: "center",
         m: 2,
       }}

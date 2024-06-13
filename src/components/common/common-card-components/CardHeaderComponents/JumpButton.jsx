@@ -10,7 +10,7 @@ const JumpButton = ({ onLast, onNext, currentIndex, totalWords }) => {
       sx={{
         // p: 1,
         display: "flex",
-        border: "1px solid #1976d2",
+        // border: "1px solid #1976d2",
         borderRadius: "8px",
         justifyContent: "right",
         alignItems: "center",
@@ -20,7 +20,8 @@ const JumpButton = ({ onLast, onNext, currentIndex, totalWords }) => {
         onClick={onLast}
         disabled={currentIndex === 0}
         startIcon={<ArrowBackIcon />}
-        sx={{ textTransform: "none", fontSize: "16px" }}
+        sx={{ textTransform: "none", fontSize: "16px",}}
+        
       >
         Last
       </Button>

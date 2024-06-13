@@ -32,7 +32,9 @@ const SubQuestionTypeContent = ({
   // questionList, pages, count, 
   currentPage, setCurrentPage,
   filters, 
-  setFilters }) => {
+  setFilters,
+  getNameBySubmoduleId
+ }) => {
   const [questions, setQuestions] = useState([]);
   const [pages, setPages] = useState(0);
   const [count, setCount] = useState(0);
@@ -89,7 +91,9 @@ const SubQuestionTypeContent = ({
           />
         </Item>
         <Item>
-          <QuestionList questionsArr={questions} />
+          <QuestionList questionsArr={questions} 
+          getNameBySubmoduleId={getNameBySubmoduleId} 
+          />
         </Item>
         <Item sx={{width: "100%", display: 'flex', justifyContent: 'center' ,p:2}}>
           <PaginationRounded pages={pages} onPageChange={handlePageChange} currentPage={currentPage} />
@@ -108,6 +112,7 @@ SubQuestionTypeContent.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   submoduleId: PropTypes.number.isRequired,
+  getNameBySubmoduleId:PropTypes.func.isRequired,
 };
 
 

@@ -8,8 +8,13 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
+import { useTranslation } from "react-i18next";
+import DifficultyButton from "../../common/common-card-components/CardHeaderComponents/DifficultyButton";
 
-export default function QuestionList({ questionsArr }) {
+export default function QuestionList({ questionsArr ,
+  getNameBySubmoduleId
+}) {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -80,7 +85,10 @@ export default function QuestionList({ questionsArr }) {
                       }
                     >
                       <Typography variant="body1" color="text.primary">
-                      questionId:{question.questionId}
+                      {t(getNameBySubmoduleId(question.submoduleId))} - {question.questionId}
+                      </Typography>
+                      <Typography variant="body1" color="text.primary">
+                      
                       </Typography>
                     </Grid>
                     <Grid item md={4}>
@@ -92,12 +100,13 @@ export default function QuestionList({ questionsArr }) {
                           justifyContent: "space-around",
                         }}
                       >
-                        <Typography variant="body2" color="text.secondary">
+                        {/* <Typography variant="body2" color="text.secondary">
                           {question.difficultyLevel}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        </Typography> */}
+                        <DifficultyButton difficulty={question.difficultyLevel}/>
+                        {/* <Typography variant="body2" color="text.secondary">
                           moduleId:{question.moduleId}+submoduleId:{question.submoduleId}
-                        </Typography>
+                        </Typography> */}
                       </Box>
                     </Grid>
                   </Grid>
@@ -122,7 +131,7 @@ export default function QuestionList({ questionsArr }) {
 }
 
 QuestionList.propTypes = {
-  questionsArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
-    .isRequired,
+  questionsArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   count: PropTypes.number.isRequired,
+  getNameBySubmoduleId:PropTypes.func.isRequired,
 };

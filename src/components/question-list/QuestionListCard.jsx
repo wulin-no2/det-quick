@@ -46,6 +46,17 @@ const subTypesArr = [
   ],
 ];
 
+// Convert subTypesArr to a flat object map
+const submoduleMap = subTypesArr.flat().reduce((acc, submodule) => {
+  acc[submodule.submodule_id] = submodule.name;
+  return acc;
+}, {});
+
+// get Name By SubmoduleId
+const getNameBySubmoduleId = function(submoduleId) {
+  return submoduleMap[submoduleId] || "Unknown Submodule"; // Default case if submoduleId is not found
+};
+
 const QuestionListCard = ({ 
   moduleId,
   submoduleId,
@@ -94,6 +105,7 @@ const QuestionListCard = ({
             submoduleId={submoduleId} //  submoduleId
             setSubmoduleId={setSubmoduleId} //  setSubmoduleId
             subTypesArr={subTypesArr}
+            getNameBySubmoduleId={getNameBySubmoduleId} 
           />
         </TabPanel>
       ))}
