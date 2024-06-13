@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
 
-const ReadAndSelectCard = ({
+const ReadThenSpeakCard = ({
   // questionId,
   // setCurrentQuestionId,
   // setCurrentSubmoduleId,
@@ -100,7 +100,7 @@ const ReadAndSelectCard = ({
   );
 };
 
-ReadAndSelectCard.propTypes = {
+ReadThenSpeakCard.propTypes = {
   questionId: PropTypes.number.isRequired,
   setCurrentQuestionId: PropTypes.func.isRequired,
   setCurrentSubmoduleId: PropTypes.func.isRequired,
@@ -110,4 +110,4 @@ ReadAndSelectCard.propTypes = {
   questionDetail: PropTypes.object, 
 };
 
-export default ReadAndSelectCard;
+export default ReadThenSpeakCard;

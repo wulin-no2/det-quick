@@ -17,7 +17,9 @@ const timeLimit = (submoduleId)=>{
     default: return 10;
   }
 }
-const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords }) => {
+const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords,
+  // getNameBySubmoduleId
+}) => {
   const time_limit = timeLimit(questionDetail.submoduleId);
 
   // set timer and progressBar based on time_limit
@@ -49,10 +51,12 @@ const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords }
     <>
       {/* title bar */}
       <TitleBar
+        
         id={questionDetail.questionId}
         // type={word.type}
         difficulty={questionDetail.difficultyLevel}
         onClick={handleExit}
+        name={questionDetail.submoduleId}
       />
       {/* Timer, JumpButton and ProgressBar */}
       <Box

@@ -14,6 +14,8 @@ import HighlightTheAnswerCard from "../components/question-cards/HighlightTheAns
 import IdentifyTheIdeaCard from "../components/question-cards/IdentifyTheIdeaCard";
 import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
 import TitleThePassageCard from "../components/question-cards/TitleThePassageCard";
+import ReadAloudCard from "../components/question-cards/ReadAloudCard";
+import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
 
 function QuestionPageNew() {
   // const { questionId } = useParams();
@@ -24,6 +26,7 @@ function QuestionPageNew() {
     filters,
     count,
     currentIndex,
+    getNameBySubmoduleId,
   } = location.state || {};
 
   const [loading, setLoading] = useState(true);
@@ -73,12 +76,14 @@ function QuestionPageNew() {
   // Map submoduleId to corresponding component
   const questionCardComponents = {
     1: ReadAndSelectCard,
-    2: FillInTheBlanksCard,
-    3: HighlightTheAnswerCard,
+    2: ReadAloudCard,
+    3: ReadThenSpeakCard,
     4: CompleteThePassageCard,
     5: CompleteTheSentencesCard,
     6: IdentifyTheIdeaCard,
     7: TitleThePassageCard,
+    8: FillInTheBlanksCard,
+    9: HighlightTheAnswerCard,
   };
 
   // Determine which component to render based on the currentSubmoduleId
@@ -97,6 +102,7 @@ function QuestionPageNew() {
         sx={{
           backgroundColor: "white",
           borderRadius: 1,
+          mb:2
         }}
       >
         {/* Render the corresponding question card component or a default message */}
@@ -108,6 +114,7 @@ function QuestionPageNew() {
         count={count} // pass totalResults
         currentIndex={currentIndex} // pass currentIndex
         questionDetail={questionDetail} // pass questionDetail from fetchData()
+        getNameBySubmoduleId={getNameBySubmoduleId}
         /> : <div>No question found for this submodule id.</div>}
       </Box>
     </Container>

@@ -23,7 +23,7 @@ export default function QuestionList({ questionsArr ,
         submoduleId: question.submoduleId,
         filters,
         count,
-        currentIndex: index
+        currentIndex: index,
       }
     });
   };

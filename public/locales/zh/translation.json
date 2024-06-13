@@ -49,5 +49,9 @@
   "Latest": "最新",
   "Question Number": "题号",
   "Show items per page: ": "每页显示条目数：",
-  "Total Result: ": "总结果数："
+  "Total Result: ": "总结果数：",
+
+
+    "Record yourself saying the statement below: ": "请录音并读出以下句子： ",
+    "Reference Audio":"示范读音"
 }

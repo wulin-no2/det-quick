@@ -1,26 +1,26 @@
 import PropTypes from "prop-types";
-import { Box, Typography } from '@mui/material';
-// import { useState } from 'react';
+import { Box, Typography, Divider } from '@mui/material';
+
 import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
 
-const ReadAndSelectCard = ({
+const ReadAloudCard = ({
   // questionId,
   // setCurrentQuestionId,
   // setCurrentSubmoduleId,
   // filters,
   count,
   currentIndex,
-  questionDetail
+  questionDetail,
 }) => {
   const { t } = useTranslation();
   if (!questionDetail) {
     return <div>Loading...</div>;
   }
   // handle answer buttons
-  const handleAnswer = (isReal) => {
-    console.log(`Answered: ${isReal}`);
+  const handleRecord = () => {
+    console.log('record..');
   };
   // handle jump buttons
   // const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,13 +43,10 @@ const ReadAndSelectCard = ({
   return (
     <Box
       sx={{
-        // p: 2,
         width: '1200px',
         margin: 'auto',
         textAlign: 'center',
-        // border: '1px solid lightgray',
-        // borderRadius: '8px',
-        // backgroundColor:'white',
+        // mb:10
       }}
     >
       {/* CardHeader */}
@@ -71,17 +68,18 @@ const ReadAndSelectCard = ({
           gutterBottom
           sx={{ fontWeight: "bold", opacity: 0.92 }}
         >
-          {t('Is this a real English word?')}
+          {t('Record yourself saying the statement below: ')}
         </Typography>
       </Box>
-      {/* word */}
-      <Box sx={{m:8}}>
+      {/* question text */}
+      <Box sx={{mt:6, display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <img src="/ReadAloud.png" style={{ width: '200px', mr:4}} />
         <Typography
-          variant='h3'
+          variant='h5'
           gutterBottom
-          sx={{ fontWeight: 'bold', opacity: 0.78 }}
+          sx={{ fontWeight:"bold", opacity: 0.88,maxWidth:"500px" }}
         >
-          {questionDetail.word}
+          {`"${questionDetail.questionText}"`}
         </Typography>
       </Box>
       {/* answer buttons */}
@@ -89,18 +87,42 @@ const ReadAndSelectCard = ({
         gutterBottom
         sx={{
           display: 'flex',
-          p: 8,
+          p: 4,
           justifyContent: 'space-evenly',
         }}
       >
-        <AnswerButton text='Yes' onClick={() => handleAnswer(true)} />
-        <AnswerButton text='No' onClick={() => handleAnswer(false)} />
+        <AnswerButton text='Record Now' onClick={handleRecord} />
+      </Box>
+      {/* Divider */}
+      <Divider sx={{ bgcolor: 'grey.100',width:'96%', mx:'auto'}} />
+      {/* reference audio */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          m: 2,
+        //   border:'1px black solid'
+        }}
+      >
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
+          {t('Reference Audio')}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {/* <IconButton aria-label="play/pause">
+            <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+          </IconButton> */}
+          <audio controls>
+            <source src={questionDetail.referenceAudioLink} type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+        </Box>
       </Box>
     </Box>
   );
 };
 
-ReadAndSelectCard.propTypes = {
+ReadAloudCard.propTypes = {
   questionId: PropTypes.number.isRequired,
   setCurrentQuestionId: PropTypes.func.isRequired,
   setCurrentSubmoduleId: PropTypes.func.isRequired,
@@ -108,6 +130,7 @@ ReadAndSelectCard.propTypes = {
   count: PropTypes.number.isRequired,
   currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object, 
+  getNameBySubmoduleId:PropTypes.func.isRequired,
 };
 
-export default ReadAndSelectCard;
+export default ReadAloudCard;
