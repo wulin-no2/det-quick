@@ -21,11 +21,11 @@ const QuestionFilterMenu = ({ buttonGroups, count, filters, onFiltersChange }) =
       <Grid container spacing={2}>
         {buttonGroups.map((group, index) => (
           <Grid item 
-          xs={6} 
+          // xs={6} 
           key={index}
           sx={{
             // border:'1px solid black',
-            // pr:8
+            pr:12
           }} 
           > 
             <QuestionFilterButtonGroup

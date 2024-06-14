@@ -6,16 +6,19 @@ import { grey } from '@mui/material/colors';
 const displayMapping = {
   isAsc: {
     label: "Order",
+    null: "All",
     true: "Question Number",
     false: "Latest"
   },
   difficultyLevel: {
     label: "Difficulty",
+    null: "All",
     Easy: "Easy (95-)",
     Medium: "Medium (100~125)",
     Hard: "Hard (130+)"
   },
   isPracticed: {
+    null: "All",
     label: "Practice",
     true: "Practiced",
     false: "Unpracticed"
@@ -51,7 +54,7 @@ const QuestionFilterButtonGroup = ({
           }
           sx={{ 
             mr: 1, 
-            fontSize:'16px',
+            fontSize:'14px',
             height: "32px" , textTransform:"none",
             borderRadius: 1
           }} // Margin right for spacing, height set for uniformity

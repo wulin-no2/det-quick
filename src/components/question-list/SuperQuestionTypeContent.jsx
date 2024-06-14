@@ -26,8 +26,8 @@ const SuperQuestionTypeContent = ({
 
   // handle filters and currentPage change
   const [filters, setFilters] = useState({
-    isAsc: true,
-    difficultyLevel: "Easy",
+    isAsc: false,
+    difficultyLevel: "null",
   });
   const [currentPage, setCurrentPage] = useState(1);
 

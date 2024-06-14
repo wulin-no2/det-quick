@@ -20,11 +20,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const buttonGroups = [
   ["isAsc", "true", "false"],
-  ["difficultyLevel", "Easy", "Medium", "Hard"],
-  // ["isCorrect", "true", "false"],
+  ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
+  // ["isCorrect", "null", "true", "false"],
   // ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
-  // ["isCollected", "true", "false"],
-  ["isPracticed", "true", "false"],
+  // ["isCollected", "null", "true", "false"],
+  ["isPracticed", "null", "true", "false"],
 ];
 
 const SubQuestionTypeContent = ({ 
@@ -41,13 +41,25 @@ const SubQuestionTypeContent = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Function to remove "null" values from filters
+  const cleanFilters = (filters) => {
+    const cleanedFilters = {};
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== "null") {
+        cleanedFilters[key] = value;
+      }
+    });
+    return cleanedFilters;
+  };
+
   // get data from backend
   useEffect(() => {
     async function fetchData() {
       try {
         setLoading(true);
+        const cleanedFilters = cleanFilters(filters);
         const postData = {
-          ...filters,
+          ...cleanedFilters,
           submoduleId,
           page: currentPage,
           size: 10,
