@@ -3,7 +3,7 @@ import { Box, Container } from "@mui/material";
 import { useState, useEffect,
   // useRef 
 } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FetchQuestionDetail } from "../api/FetchQuestionDetail";
 
 // Import card components
@@ -20,6 +20,7 @@ import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
 function QuestionPageNew() {
   // const { questionId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const {
     questionId,
     submoduleId,
@@ -27,6 +28,8 @@ function QuestionPageNew() {
     count,
     currentIndex,
     getNameBySubmoduleId,
+    moduleId, 
+    currentPage
   } = location.state || {};
 
   const [loading, setLoading] = useState(true);
@@ -64,6 +67,11 @@ function QuestionPageNew() {
   useEffect(() => {
     console.log('question detail in use effect is ', questionDetail, currentQuestionId, currentSubmoduleId);
   }, []);
+
+  // used for handle back operation with React Router
+  const handleBack = () => {
+    navigate(-1, { state: { moduleId, submoduleId, filters, currentPage } });
+  };
 
   if (loading) {
     return <div>Loading questions...</div>;
@@ -115,6 +123,7 @@ function QuestionPageNew() {
         currentIndex={currentIndex} // pass currentIndex
         questionDetail={questionDetail} // pass questionDetail from fetchData()
         getNameBySubmoduleId={getNameBySubmoduleId}
+        handleBack={handleBack} // pass handleBack to question Card until back button
         /> : <div>No question found for this submodule id.</div>}
       </Box>
     </Container>

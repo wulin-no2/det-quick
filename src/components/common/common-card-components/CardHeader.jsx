@@ -18,6 +18,7 @@ const timeLimit = (submoduleId)=>{
   }
 }
 const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords,
+  handleBack,
   // getNameBySubmoduleId
 }) => {
   const time_limit = timeLimit(questionDetail.submoduleId);
@@ -44,9 +45,9 @@ const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords,
 
   const progress = (timer / time_limit) * 100;
 
-  const handleExit = () => {
-    console.log("Exit test");
-  };
+  // const handleExit = () => {
+  //   console.log("Exit test");
+  // };
   return (
     <>
       {/* title bar */}
@@ -55,7 +56,7 @@ const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords,
         id={questionDetail.questionId}
         // type={word.type}
         difficulty={questionDetail.difficultyLevel}
-        onClick={handleExit}
+        onClick={handleBack}
         name={questionDetail.submoduleId}
       />
       {/* Timer, JumpButton and ProgressBar */}

@@ -11,11 +11,13 @@ const baseQuestionsDetailURL = "questions/detail";
 export default function QuestionList({ questionsArr ,
   getNameBySubmoduleId,
   filters,
-  count
+  count,
+  currentPage
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  // remember the state with React Router for later use in QuestionPage
   const handleItemClick = (question, index) => {
     navigate(baseQuestionsDetailURL, {
       state: {
@@ -24,6 +26,8 @@ export default function QuestionList({ questionsArr ,
         filters,
         count,
         currentIndex: index,
+        moduleId: question.moduleId,
+        currentPage: currentPage,
       }
     });
   };
@@ -121,4 +125,5 @@ QuestionList.propTypes = {
   count: PropTypes.number.isRequired,
   getNameBySubmoduleId:PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };

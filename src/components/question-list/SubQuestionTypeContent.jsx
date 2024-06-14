@@ -77,6 +77,8 @@ const SubQuestionTypeContent = ({
     fetchData();
   }, [filters, currentPage, submoduleId]);
 
+  
+
   const handlePageChange = (newPage) => {
     // console.log('Attempting to set new page: ', newPage);
     setCurrentPage(newPage);
@@ -108,6 +110,7 @@ const SubQuestionTypeContent = ({
           getNameBySubmoduleId={getNameBySubmoduleId} 
           count={count}
           filters={filters}
+          currentPage={currentPage}
           />
         </Item>
         <Item sx={{width: "100%", display: 'flex', justifyContent: 'center' ,p:2}}>

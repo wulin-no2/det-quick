@@ -12,7 +12,8 @@ const ReadAndSelectCard = ({
   // filters,
   count,
   currentIndex,
-  questionDetail
+  questionDetail,
+  handleBack,
 }) => {
   const { t } = useTranslation();
   if (!questionDetail) {
@@ -59,6 +60,7 @@ const ReadAndSelectCard = ({
         onLast={handleLast}
         currentIndex={currentIndex}
         totalWords={count}
+        handleBack={handleBack}
       />
       {/* question */}
       <Box
@@ -108,6 +110,7 @@ ReadAndSelectCard.propTypes = {
   count: PropTypes.number.isRequired,
   currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object, 
+  handleBack:PropTypes.func.isRequired,
 };
 
 export default ReadAndSelectCard;
