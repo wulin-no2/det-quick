@@ -3,11 +3,13 @@ import ApiClient from "./ApiClient";
 // Utility function to remove null values and send API request
 const sendApiRequest = async (endpoint, postData) => {
   try {
-    // Remove null or undefined values
+    // Remove null, undefined or "null" values
     const cleanData = Object.entries(postData).reduce((acc, [key, value]) => {
-      if (value != null) acc[key] = value;
+      if (value != null && value !== "null") acc[key] = value;
       return acc;
     }, {});
+    // print postData
+    console.log('postData after clean null is ',cleanData)
 
     const response = await ApiClient.post(endpoint, cleanData);
     console.log(`Data from ${endpoint}:`, response.data);

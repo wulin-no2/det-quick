@@ -4,7 +4,7 @@ import { Box, Typography , Divider, List, ListItem, Paper} from '@mui/material';
 import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
-import { useEffect, useState} from "react";
+import { useState} from "react";
 
 const ReadThenSpeakCard = ({
     // questionId,
@@ -26,13 +26,6 @@ const ReadThenSpeakCard = ({
     const firstBulletIndex = questionDetail.questionText.indexOf('•');
     const mainQuestion = questionDetail.questionText.slice(0, firstBulletIndex).trim();
     const subQuestions = questionDetail.questionText.slice(firstBulletIndex).split('•').map(item => item.trim()).filter(item => item);
-
-    // print questionText
-    useEffect(()=>{
-        console.log('question detail ',questionDetail)
-        console.log('mainQuestion', mainQuestion);
-        console.log('subQuestions', subQuestions);
-    },[questionDetail,mainQuestion,subQuestions])   
 
     if (!questionDetail) {
         return <div></div>;

@@ -74,7 +74,7 @@ function QuestionPage() {
   // used for handle back operation with React Router
   const handleBack = () => {
     navigate(-1, { state: { moduleId, submoduleId, filters, currentPage, count, globalIndex } });
-    console.log('state in question page new - handleBack is ', state)
+    console.log('state in question page- handleBack is ', state)
   };
 
 // handle next
@@ -83,6 +83,7 @@ const handleNext = async () => {
     const newGlobalIndex = currentGlobalIndex + 1;
     setCurrentGlobalIndex(newGlobalIndex);
     localStorage.setItem("globalIndex", newGlobalIndex);
+    console.log('filters in question page handleNext is', filters)
     try {
       const nextQuestion = await fetchNextQuestion(currentQuestionId, currentSubmoduleId, filters.difficultyLevel, filters.templateType, filters.isCorrect, filters.isAsc);
       if (nextQuestion) {

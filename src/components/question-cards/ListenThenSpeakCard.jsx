@@ -4,7 +4,7 @@ import { Box, Typography , Divider} from '@mui/material';
 import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
-import { useEffect, useState, useRef} from "react";
+import {useState, useRef} from "react";
 
 const ListenThenSpeakCard = ({
     // questionId,
@@ -23,15 +23,7 @@ const ListenThenSpeakCard = ({
     const [showReferenceQuestion, setShowReferenceQuestion] = useState(false);
     const { t } = useTranslation();
 
-    const audioRef = useRef(null); // Create a reference for the audio element
-
-    // Reset showReferenceAnswer and showReferenceQuestion when questionDetail changes
-    useEffect(()=>{
-        setShowReferenceAnswer(false);
-        setShowReferenceQuestion(false);
-        console.log('question detail ',questionDetail)
-        console.log('reset showReferenceAnswer and showReferenceQuestion to false ')
-    },[questionDetail])   
+    const audioRef = useRef(null); // Create a reference for the audio element 
 
     if (!questionDetail) {
         return <div></div>;
