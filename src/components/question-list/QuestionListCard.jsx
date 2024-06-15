@@ -63,13 +63,20 @@ const QuestionListCard = ({
   setModuleId,
   setSubmoduleId
 }) => {
-  const [value, setValue] = useState(0);
+  // get moduleId value from localStorage first
+  const [value, setValue] = useState(() => {
+    const saved = localStorage.getItem("tabIndex");
+    return saved ? JSON.parse(saved) : 0;
+  });
+
   const { t } = useTranslation();
   // when moduleId changes, update value
   useEffect(() => {
     const index = types.findIndex((type) => type.module_id === moduleId);
     if (index !== -1) {
       setValue(index);
+      // store tabIndex
+      localStorage.setItem("tabIndex", JSON.stringify(index));
     }
   }, [moduleId]);
 

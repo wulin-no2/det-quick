@@ -20,22 +20,44 @@ const SuperQuestionTypeContent = ({
   subTypesArr,
   getNameBySubmoduleId
  }) => {
-  const [value, setValue] = useState(0);
+  // get submoduleId value from localStorage first
+    const [value, setValue] = useState(() => {
+    const saved = localStorage.getItem("subTabIndex");
+    return saved ? JSON.parse(saved) : 0;
+  });
+  // const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const currentTypes = subTypesArr[moduleId-1];
 
   // handle filters and currentPage change
-  const [filters, setFilters] = useState({
-    isAsc: false,
-    difficultyLevel: "null",
+  const [filters, setFilters] = useState(() => {
+    const saved = localStorage.getItem("filters");
+    return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
   });
-  const [currentPage, setCurrentPage] = useState(1);
+
+  // handle currentPage
+  const [currentPage, setCurrentPage] = useState(() => {
+    const saved = localStorage.getItem("currentPage");
+    return saved ? JSON.parse(saved) : 1;
+  });
+
+  // store filters and currentPage
+  useEffect(() => {
+    localStorage.setItem("filters", JSON.stringify(filters));
+  }, [filters]);
+
+  useEffect(() => {
+    localStorage.setItem("currentPage", JSON.stringify(currentPage));
+  }, [currentPage]);
+
 
   // when submoduleId changes, update value
   useEffect(() => {
     const index = currentTypes.findIndex((type) => type.submodule_id === submoduleId);
     if (index !== -1) {
       setValue(index);
+      // store subTabIndex
+      localStorage.setItem("subTabIndex", JSON.stringify(index));
     }
   }, [submoduleId, currentTypes]);
 

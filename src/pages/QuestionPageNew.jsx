@@ -18,9 +18,11 @@ import ReadAloudCard from "../components/question-cards/ReadAloudCard";
 import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
 
 function QuestionPageNew() {
-  // const { questionId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const state = location.state || JSON.parse(localStorage.getItem("questionPageState")) || {};
+
   const {
     questionId,
     submoduleId,
@@ -30,7 +32,7 @@ function QuestionPageNew() {
     getNameBySubmoduleId,
     moduleId, 
     currentPage
-  } = location.state || {};
+  } = state;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -38,13 +40,9 @@ function QuestionPageNew() {
   // use for store fetchData result
   const [questionDetail, setQuestionDetail] = useState(null);
 
-
   // used for send data to backend
   const [currentQuestionId, setCurrentQuestionId] = useState(questionId || 1);
   const [currentSubmoduleId, setCurrentSubmoduleId] = useState(submoduleId || 1);
-
-  // const prevQuestionId = useRef(currentQuestionId);
-  // const prevSubmoduleId = useRef(currentSubmoduleId);
 
   useEffect(() => {
     async function fetchData() {
