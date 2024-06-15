@@ -18,7 +18,10 @@ const SuperQuestionTypeContent = ({
   moduleId,
   submoduleId, setSubmoduleId,
   subTypesArr,
-  getNameBySubmoduleId
+  getNameBySubmoduleId,
+  currentPage,
+  setCurrentPage
+
  }) => {
   // get submoduleId value from localStorage first
     const [value, setValue] = useState(() => {
@@ -35,20 +38,17 @@ const SuperQuestionTypeContent = ({
     return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
   });
 
-  // handle currentPage
-  const [currentPage, setCurrentPage] = useState(() => {
-    const saved = localStorage.getItem("currentPage");
-    return saved ? JSON.parse(saved) : 1;
-  });
+  // // handle currentPage
+  // const [currentPage, setCurrentPage] = useState(() => {
+  //   const saved = localStorage.getItem("currentPage");
+  //   return saved ? JSON.parse(saved) : 1;
+  // });
 
   // store filters and currentPage
   useEffect(() => {
     localStorage.setItem("filters", JSON.stringify(filters));
   }, [filters]);
 
-  useEffect(() => {
-    localStorage.setItem("currentPage", JSON.stringify(currentPage));
-  }, [currentPage]);
 
 
   // when submoduleId changes, update value
@@ -70,6 +70,7 @@ const SuperQuestionTypeContent = ({
     // update submoduleId
     const selectedSubmoduleId = currentTypes[newValue].submodule_id;
     setSubmoduleId(selectedSubmoduleId);
+    setCurrentPage(1);  // Reset to the first page when submoduleId change
   };
   return (
     <Box>
@@ -117,6 +118,8 @@ SuperQuestionTypeContent.propTypes = {
   submoduleId: PropTypes.number.isRequired,
   setSubmoduleId: PropTypes.func.isRequired,
   getNameBySubmoduleId:PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;

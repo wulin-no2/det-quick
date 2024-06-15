@@ -70,6 +70,17 @@ const QuestionListCard = ({
   });
 
   const { t } = useTranslation();
+
+   // handle currentPage
+   const [currentPage, setCurrentPage] = useState(() => {
+    const saved = localStorage.getItem("currentPage");
+    return saved ? JSON.parse(saved) : 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("currentPage", JSON.stringify(currentPage));
+  }, [currentPage]);
+
   // when moduleId changes, update value
   useEffect(() => {
     const index = types.findIndex((type) => type.module_id === moduleId);
@@ -88,6 +99,7 @@ const QuestionListCard = ({
     // Update the moduleId based on default submoduleId
     const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
     setSubmoduleId(defaultSubmoduleId);
+    setCurrentPage(1);  // Reset to the first page when moduleId change
   };
 
   return (
@@ -113,6 +125,8 @@ const QuestionListCard = ({
             setSubmoduleId={setSubmoduleId} //  setSubmoduleId
             subTypesArr={subTypesArr}
             getNameBySubmoduleId={getNameBySubmoduleId} 
+            currentPage={currentPage} // pass currentPage
+            setCurrentPage={setCurrentPage} // pass setCurrentPage 
           />
         </TabPanel>
       ))}
