@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import QuestionFilterMenu from "./question-card-components/QuestionFilterMenu";
 import QuestionList from "./question-card-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
-import { FetchQuestionListResponseData } from "../../api/FetchQuestionList";
+import { fetchQuestionListResponseData } from "../../api/api-fetchQuestionList";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -64,7 +64,7 @@ const SubQuestionTypeContent = ({
           page: currentPage,
           size: 10,
         };
-        const result = await FetchQuestionListResponseData(postData);
+        const result = await fetchQuestionListResponseData(postData);
         setQuestions(result.content);
         setPages(result.totalPages);
         setCount(result.totalElements);

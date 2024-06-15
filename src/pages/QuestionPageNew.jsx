@@ -4,7 +4,7 @@ import { useState, useEffect,
   // useRef 
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FetchQuestionDetail } from "../api/FetchQuestionDetail";
+import { fetchQuestionDetail } from "../api/api-fetchQuestionDetail";
 
 // Import card components
 import CompleteThePassageCard from "../components/question-cards/CompleteThePassageCard";
@@ -50,7 +50,7 @@ function QuestionPageNew() {
       try {
         setLoading(true);
         console.log("currentQuestionId and currentSubmoduleId in question page new ", currentQuestionId, currentSubmoduleId);
-        const result = await FetchQuestionDetail(currentQuestionId, currentSubmoduleId);
+        const result = await fetchQuestionDetail(currentQuestionId, currentSubmoduleId);
         console.log("result in question page new ", result);
         setQuestionDetail(result);  // get question detail
         setError("");
