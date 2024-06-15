@@ -22,6 +22,7 @@ import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
 import TitleThePassageCard from "../components/question-cards/TitleThePassageCard";
 import ReadAloudCard from "../components/question-cards/ReadAloudCard";
 import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
+import ListenThenSpeakCard from "../components/question-cards/ListenThenSpeakCard";
 
 function QuestionPage() {
   const location = useLocation();
@@ -129,12 +130,13 @@ const handleLast = async () => {
     1: ReadAndSelectCard,
     2: ReadAloudCard,
     3: ReadThenSpeakCard,
-    4: CompleteThePassageCard,
+    4: ListenThenSpeakCard,
     5: CompleteTheSentencesCard,
     6: IdentifyTheIdeaCard,
     7: TitleThePassageCard,
     8: FillInTheBlanksCard,
     9: HighlightTheAnswerCard,
+    10: CompleteThePassageCard,
   };
 
   // Determine which component to render based on the currentSubmoduleId

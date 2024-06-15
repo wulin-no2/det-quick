@@ -10,8 +10,8 @@ const timeLimit = (submoduleId)=>{
   switch(submoduleId){
     case 1: return 10;
     case 2: return 20;
-    case 3: return 30;
-    case 4: return 15;
+    case 3: return 90;
+    case 4: return 90;
     case 5: return 10;
     case 6: return 15;
     default: return 10;
