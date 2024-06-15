@@ -53,5 +53,8 @@
 
 
     "Record yourself saying the statement below: ": "请录音并读出以下句子： ",
-    "Reference Audio":"示范读音"
+    "Reference Audio":"示范读音",
+    "Record Now":"开始录音",
+    "Speak about the topic below for 90 seconds.":"就以下话题谈论90秒",
+    "Reference Answer": "参考答案"
 }

@@ -55,5 +55,8 @@
 
 
   "Record yourself saying the statement below: ": "Record yourself saying the statement below: ",
-  "Reference Audio":"Reference Audio"
+  "Reference Audio":"Reference Audio",
+  "Record Now":"Record Now",
+  "Speak about the topic below for 90 seconds.": "Speak about the topic below for 90 seconds.",
+  "Reference Answer": "Reference Answer"
 }

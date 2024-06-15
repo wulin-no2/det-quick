@@ -36,7 +36,7 @@ const CardHeader = ({ questionDetail, totalWords,
           return prev - 1;
         } else {
           clearInterval(timerInterval);
-          handleNext(); // Automatically go to next question when timer ends
+          // handleNext(); // Automatically go to next question when timer ends
           console.log("globalIndex ",globalIndex)
           return time_limit; 
         }

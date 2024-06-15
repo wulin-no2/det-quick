@@ -1,104 +1,155 @@
 import PropTypes from "prop-types";
-import { Box, Typography } from '@mui/material';
+import { Box, Typography , Divider, List, ListItem, Paper} from '@mui/material';
 // import { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
+import { useEffect, useState} from "react";
 
 const ReadThenSpeakCard = ({
-  // questionId,
-  // setCurrentQuestionId,
-  // setCurrentSubmoduleId,
-  // filters,
-  count,
-  currentIndex,
-  questionDetail
-}) => {
-  const { t } = useTranslation();
-  if (!questionDetail) {
-    return <div>Loading...</div>;
-  }
-  // handle answer buttons
-  const handleAnswer = (isReal) => {
-    console.log(`Answered: ${isReal}`);
-  };
-  // handle jump buttons
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // const word = questionDetail.word;
+    // questionId,
+    // setCurrentQuestionId,
+    // setCurrentSubmoduleId,
+    // filters,
+    count,
+    currentIndex,
+    questionDetail,
+    handleBack,
+    globalIndex,
+    handleLast,
+    handleNext,
+  }) => {
+    const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
+    const { t } = useTranslation();
 
-  const handleNext = () => {
-    if (currentIndex < count - 1) {
-      // setCurrentQuestionId(/* 下一个问题的ID，根据需要进行修改 */);
-      // setCurrentSubmoduleId(/* 下一个问题的submoduleId，根据需要进行修改 */);
-    }
-  };
+    // Split the question text by the first bullet point
+    const firstBulletIndex = questionDetail.questionText.indexOf('•');
+    const mainQuestion = questionDetail.questionText.slice(0, firstBulletIndex).trim();
+    const subQuestions = questionDetail.questionText.slice(firstBulletIndex).split('•').map(item => item.trim()).filter(item => item);
 
-  const handleLast = () => {
-    if (currentIndex > 0) {
-      // setCurrentQuestionId(/* 上一个问题的ID，根据需要进行修改 */);
-      // setCurrentSubmoduleId(/* 上一个问题的submoduleId，根据需要进行修改 */);
-    }
-  };
+    // print questionText
+    useEffect(()=>{
+        console.log('question detail ',questionDetail)
+        console.log('mainQuestion', mainQuestion);
+        console.log('subQuestions', subQuestions);
+    },[questionDetail,mainQuestion,subQuestions])   
 
-  return (
-    <Box
-      sx={{
-        // p: 2,
-        width: '1200px',
-        margin: 'auto',
-        textAlign: 'center',
-        // border: '1px solid lightgray',
-        // borderRadius: '8px',
-        // backgroundColor:'white',
-      }}
-    >
-      {/* CardHeader */}
-      <CardHeader
-        questionDetail={questionDetail}
-        onNext={handleNext}
-        onLast={handleLast}
-        currentIndex={currentIndex}
-        totalWords={count}
-      />
-      {/* question */}
+    if (!questionDetail) {
+        return <div></div>;
+      }
+    
+    // Handle reference answer button click
+    const handleReferenceAnswerClick = () => {
+        setShowReferenceAnswer(!showReferenceAnswer);
+    };
+   
+    // handle answer buttons
+    const handleRecord = () => {
+      console.log('record..');
+    };
+
+    return (
       <Box
         sx={{
-          m: 4,
+          width: '1200px',
+          margin: 'auto',
+          textAlign: 'center',
+          mb:2
         }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", opacity: 0.92 }}
+        {/* CardHeader */}
+        <CardHeader
+          questionDetail={questionDetail}
+          handleNext={handleNext}
+          handleLast={handleLast}
+          currentIndex={currentIndex}
+          totalWords={count}
+          handleBack={handleBack}
+          globalIndex={globalIndex}
+        />
+        {/* question */}
+        <Box
+          sx={{
+            m: 4,
+          }}
         >
-          {t('Is this a real English word?')}
-        </Typography>
-      </Box>
-      {/* word */}
-      <Box sx={{m:8}}>
-        <Typography
-          variant='h3'
+          <Typography
+            variant="h4"
+            gutterBottom
+            sx={{ fontWeight: "bold", opacity: 0.92 }}
+          >
+            {t('Speak about the topic below for 90 seconds.')}
+          </Typography>
+        </Box>
+        {/* question text */}
+        <Box sx={{ my: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Paper variant="outlined" sx={{ py: 2, px:6, maxWidth: '600px' }}>
+                    <Typography
+                        variant='h6'
+                        gutterBottom
+                        sx={{ 
+                            fontWeight: "bold", 
+                            opacity: 0.88, textAlign: 'left' }}
+                    >
+                        {mainQuestion}
+                    </Typography>
+                    <List sx={{ textAlign: 'left' }}>
+                        {subQuestions.map((line, index) => (
+                            <ListItem key={index} sx={{ px:1,py:0.6 }}>
+                                <Typography variant='h8' sx={{ 
+                                    fontWeight: "medium", 
+                                    opacity: 1 }}>
+                                    • {line}
+                                </Typography>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Paper>
+            </Box>
+        {/* answer button */}
+        <Box
           gutterBottom
-          sx={{ fontWeight: 'bold', opacity: 0.78 }}
+          sx={{
+            display: 'flex',
+            pt: 2,
+            pb: 4,
+            justifyContent: 'space-evenly',
+          }}
         >
-          {questionDetail.word}
-        </Typography>
+          <AnswerButton text='Record Now' onClick={handleRecord} />
+        </Box>
+        {/* Divider */}
+        <Divider sx={{ bgcolor: 'grey.100',width:'96%', mx:'auto'}} />
+
+        {/* reference answer */}
+        <Box
+                sx={{
+                display: 'flex',
+                flexDirection:'column',
+                alignItems: 'start',
+                justifyContent: 'end',
+                m: 2, p: 2,
+                bgcolor: 'grey.100', width: '96%', mx: 'auto', borderRadius: 1
+                }}>
+                <AnswerButton text='Reference Answer' onClick={handleReferenceAnswerClick}/>
+                {showReferenceAnswer && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            m: 2,
+                        }}
+                    >
+                        <Typography variant="subtitle1" sx={{textAlign:'left', px:6}}>
+                            {questionDetail.referenceAnswer}
+                        </Typography>
+                    </Box>
+            )}
+        </Box>
       </Box>
-      {/* answer buttons */}
-      <Box
-        gutterBottom
-        sx={{
-          display: 'flex',
-          p: 8,
-          justifyContent: 'space-evenly',
-        }}
-      >
-        <AnswerButton text='Yes' onClick={() => handleAnswer(true)} />
-        <AnswerButton text='No' onClick={() => handleAnswer(false)} />
-      </Box>
-    </Box>
-  );
-};
+    );
+  };
 
 ReadThenSpeakCard.propTypes = {
   questionId: PropTypes.number.isRequired,
@@ -108,6 +159,10 @@ ReadThenSpeakCard.propTypes = {
   count: PropTypes.number.isRequired,
   currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object, 
+  handleBack:PropTypes.func.isRequired,
+  globalIndex:PropTypes.number.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  handleLast: PropTypes.func.isRequired,
 };
 
 export default ReadThenSpeakCard;
