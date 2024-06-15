@@ -20,7 +20,9 @@ const SuperQuestionTypeContent = ({
   subTypesArr,
   getNameBySubmoduleId,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
+  globalIndex,
+  setGlobalIndex,
 
  }) => {
   // get submoduleId value from localStorage first
@@ -37,12 +39,6 @@ const SuperQuestionTypeContent = ({
     const saved = localStorage.getItem("filters");
     return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
   });
-
-  // // handle currentPage
-  // const [currentPage, setCurrentPage] = useState(() => {
-  //   const saved = localStorage.getItem("currentPage");
-  //   return saved ? JSON.parse(saved) : 1;
-  // });
 
   // store filters and currentPage
   useEffect(() => {
@@ -71,6 +67,7 @@ const SuperQuestionTypeContent = ({
     const selectedSubmoduleId = currentTypes[newValue].submodule_id;
     setSubmoduleId(selectedSubmoduleId);
     setCurrentPage(1);  // Reset to the first page when submoduleId change
+    setGlobalIndex(1); // Reset globalIndex when submoduleId changes
   };
   return (
     <Box>
@@ -106,6 +103,8 @@ const SuperQuestionTypeContent = ({
           setFilters={setFilters}
           filters={filters}
           getNameBySubmoduleId={getNameBySubmoduleId} 
+          globalIndex={globalIndex}
+          setGlobalIndex={setGlobalIndex}
             />
         </TabPanel>
       ))}
@@ -120,6 +119,8 @@ SuperQuestionTypeContent.propTypes = {
   getNameBySubmoduleId:PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
+  globalIndex: PropTypes.number.isRequired,
+  setGlobalIndex: PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;

@@ -12,7 +12,9 @@ export default function QuestionList({ questionsArr ,
   getNameBySubmoduleId,
   filters,
   count,
-  currentPage
+  currentPage,
+  globalIndex,
+  setGlobalIndex,
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -20,8 +22,9 @@ export default function QuestionList({ questionsArr ,
 
   // remember the state with React Router for later use in QuestionPage
   const handleItemClick = (question, index) => {
-    const globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
-    localStorage.setItem('globalIndex', globalIndex);
+    globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+    setGlobalIndex(globalIndex);
+    localStorage.setItem("globalIndex", globalIndex);
 
     navigate(baseQuestionsDetailURL, {
       state: {
@@ -32,7 +35,7 @@ export default function QuestionList({ questionsArr ,
         currentIndex: index,
         moduleId: question.moduleId,
         currentPage: currentPage,
-        globalIndex
+        globalIndex: globalIndex,
       }
     });
   };
@@ -61,7 +64,7 @@ export default function QuestionList({ questionsArr ,
             }}
           >
             {questionsArr.map((question, index) => {
-              const globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+              globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
               return (
               
               <React.Fragment key={question.questionId}>
@@ -135,4 +138,6 @@ QuestionList.propTypes = {
   getNameBySubmoduleId:PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   currentPage: PropTypes.number.isRequired,
+  globalIndex: PropTypes.number.isRequired,
+  setGlobalIndex: PropTypes.func.isRequired,
 };

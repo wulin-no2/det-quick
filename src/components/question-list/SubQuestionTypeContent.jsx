@@ -33,7 +33,9 @@ const SubQuestionTypeContent = ({
   currentPage, setCurrentPage,
   filters, 
   setFilters,
-  getNameBySubmoduleId
+  getNameBySubmoduleId,
+  globalIndex,
+  setGlobalIndex,
  }) => {
   const [questions, setQuestions] = useState([]);
   const [pages, setPages] = useState(0);
@@ -87,6 +89,7 @@ const SubQuestionTypeContent = ({
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters);
     setCurrentPage(1);  // Reset to the first page when filters change
+    setGlobalIndex(1); // Reset globalIndex when filters change
   };
 
   if (loading) {return <div></div>;}
@@ -111,6 +114,9 @@ const SubQuestionTypeContent = ({
           count={count}
           filters={filters}
           currentPage={currentPage}
+          globalIndex={globalIndex}
+          setGlobalIndex={setGlobalIndex}
+
           />
         </Item>
         <Item sx={{width: "100%", display: 'flex', justifyContent: 'center' ,p:2}}>
@@ -131,6 +137,8 @@ SubQuestionTypeContent.propTypes = {
   filters: PropTypes.object.isRequired,
   submoduleId: PropTypes.number.isRequired,
   getNameBySubmoduleId:PropTypes.func.isRequired,
+  globalIndex: PropTypes.number.isRequired,
+  setGlobalIndex: PropTypes.func.isRequired,
 };
 
 

@@ -9,7 +9,6 @@ import "./utils/languageSwitcher/i18n"; // import i18n to translate
 import Navbar from "./components/navbar/navbar";
 import PracticeListPage from "./pages/PracticeListPage";
 import QuestionPage from "./pages/QuestionPage";
-import QuestionPageNew from "./pages/QuestionPageNew";
 
 
 function App() {
@@ -26,7 +25,7 @@ function App() {
                 {/* <Route path="/filter" element={<FilterComponent />} /> */}
                 <Route path="/practice" element={<PracticeListPage />} />
                 <Route path="/question/:type" element={<QuestionPage />} />
-                <Route path="/practice/questions/detail" element={<QuestionPageNew />} />
+                <Route path="/practice/questions/detail" element={<QuestionPage />} />
                 <Route path="*" element={<h1>Page not found</h1>} />
               </Routes>
             </Box>

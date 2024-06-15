@@ -61,7 +61,9 @@ const QuestionListCard = ({
   moduleId,
   submoduleId,
   setModuleId,
-  setSubmoduleId
+  setSubmoduleId,
+  globalIndex,
+  setGlobalIndex,
 }) => {
   // get moduleId value from localStorage first
   const [value, setValue] = useState(() => {
@@ -100,6 +102,7 @@ const QuestionListCard = ({
     const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
     setSubmoduleId(defaultSubmoduleId);
     setCurrentPage(1);  // Reset to the first page when moduleId change
+    setGlobalIndex(1); // Reset globalIndex when moduleId changes
   };
 
   return (
@@ -127,6 +130,8 @@ const QuestionListCard = ({
             getNameBySubmoduleId={getNameBySubmoduleId} 
             currentPage={currentPage} // pass currentPage
             setCurrentPage={setCurrentPage} // pass setCurrentPage 
+            globalIndex={globalIndex}
+            setGlobalIndex={setGlobalIndex}
           />
         </TabPanel>
       ))}
@@ -139,6 +144,8 @@ QuestionListCard.propTypes = {
   setModuleId: PropTypes.func.isRequired,
   submoduleId: PropTypes.number.isRequired,
   setSubmoduleId: PropTypes.func.isRequired,
+  globalIndex: PropTypes.number.isRequired,
+  setGlobalIndex: PropTypes.func.isRequired,
 };
 
 export default QuestionListCard;

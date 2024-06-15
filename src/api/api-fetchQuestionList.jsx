@@ -1,6 +1,6 @@
 import ApiClient from "./ApiClient";
 
-export const FetchQuestionListResponseData = async (postData) => {
+export const fetchQuestionListResponseData = async (postData) => {
   try {
 
     console.log('this is postData log from fetch question list ', postData);

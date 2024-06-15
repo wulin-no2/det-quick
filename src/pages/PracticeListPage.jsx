@@ -14,6 +14,10 @@ const PracticeListPage = () => {
     const saved = localStorage.getItem("submoduleId");
     return saved ? JSON.parse(saved) : 1;
   });
+  const [globalIndex, setGlobalIndex] = useState(() => {
+    const saved = localStorage.getItem("globalIndex");
+    return saved ? JSON.parse(saved) : 1;
+  });
 
   useEffect(() => {
     localStorage.setItem("moduleId", JSON.stringify(moduleId));
@@ -23,6 +27,10 @@ const PracticeListPage = () => {
     localStorage.setItem("submoduleId", JSON.stringify(submoduleId));
   }, [submoduleId]);
 
+  useEffect(() => {
+    localStorage.setItem("globalIndex", JSON.stringify(globalIndex));
+  }, [globalIndex]);
+
   return (
     <>
       <QuestionListCard
@@ -30,6 +38,8 @@ const PracticeListPage = () => {
         setModuleId={setModuleId}
         submoduleId={submoduleId}
         setSubmoduleId={setSubmoduleId}
+        globalIndex={globalIndex}
+        setGlobalIndex={setGlobalIndex}
       />
     </>
   );

@@ -17,9 +17,10 @@ const timeLimit = (submoduleId)=>{
     default: return 10;
   }
 }
-const CardHeader = ({ questionDetail, onLast, onNext, totalWords,
+const CardHeader = ({ questionDetail, totalWords,
   handleBack,
   globalIndex,
+  handleLast, handleNext,
   // getNameBySubmoduleId
 }) => {
   const time_limit = timeLimit(questionDetail.submoduleId);
@@ -35,20 +36,17 @@ const CardHeader = ({ questionDetail, onLast, onNext, totalWords,
           return prev + 1;
         } else {
           clearInterval(timerInterval);
-          onNext();
+          handleNext();
           return time_limit;
         }
       });
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [time_limit, onNext]);
+  }, [time_limit, handleNext]);
 
   const progress = (timer / time_limit) * 100;
 
-  // const handleExit = () => {
-  //   console.log("Exit test");
-  // };
   return (
     <>
       {/* title bar */}
@@ -79,8 +77,8 @@ const CardHeader = ({ questionDetail, onLast, onNext, totalWords,
         >
           <Timer timer={timer} />
           <JumpButton
-            onLast={onLast}
-            onNext={onNext}
+            onLast={handleLast}
+            onNext={handleNext}
             globalIndex={globalIndex}
             totalWords={totalWords}
           />
