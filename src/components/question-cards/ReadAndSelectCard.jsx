@@ -14,6 +14,7 @@ const ReadAndSelectCard = ({
   currentIndex,
   questionDetail,
   handleBack,
+  globalIndex,
 }) => {
   const { t } = useTranslation();
   if (!questionDetail) {
@@ -61,6 +62,7 @@ const ReadAndSelectCard = ({
         currentIndex={currentIndex}
         totalWords={count}
         handleBack={handleBack}
+        globalIndex={globalIndex}
       />
       {/* question */}
       <Box
@@ -111,6 +113,7 @@ ReadAndSelectCard.propTypes = {
   currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object, 
   handleBack:PropTypes.func.isRequired,
+  globalIndex:PropTypes.number.isRequired,
 };
 
 export default ReadAndSelectCard;

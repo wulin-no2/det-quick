@@ -3,7 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PropTypes from "prop-types";
 
-const JumpButton = ({ onLast, onNext, currentIndex, totalWords }) => {
+const JumpButton = ({ onLast, onNext, globalIndex, totalWords }) => {
   
   return (
     <Box
@@ -18,7 +18,7 @@ const JumpButton = ({ onLast, onNext, currentIndex, totalWords }) => {
     >
       <Button
         onClick={onLast}
-        disabled={currentIndex === 0}
+        disabled={globalIndex === 1}
         startIcon={<ArrowBackIcon />}
         sx={{ textTransform: "none", fontSize: "16px",}}
         
@@ -26,11 +26,11 @@ const JumpButton = ({ onLast, onNext, currentIndex, totalWords }) => {
         Last
       </Button>
       <Typography sx={{ mx: 2, fontSize: "16px", color: "#1976d2" }}>
-        {currentIndex + 1}/{totalWords}
+        {globalIndex}/{totalWords}
       </Typography>
       <Button
         onClick={onNext}
-        disabled={currentIndex === totalWords - 1}
+        disabled={globalIndex === totalWords}
         endIcon={<ArrowForwardIcon />}
         sx={{ textTransform: "none", fontSize: "16px" }}
       >
@@ -46,6 +46,7 @@ JumpButton.propTypes = {
   total: PropTypes.number.isRequired,
   onLast: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired,
+  globalIndex:PropTypes.number.isRequired,
 };
 
 export default JumpButton;

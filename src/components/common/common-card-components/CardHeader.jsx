@@ -17,8 +17,9 @@ const timeLimit = (submoduleId)=>{
     default: return 10;
   }
 }
-const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords,
+const CardHeader = ({ questionDetail, onLast, onNext, totalWords,
   handleBack,
+  globalIndex,
   // getNameBySubmoduleId
 }) => {
   const time_limit = timeLimit(questionDetail.submoduleId);
@@ -80,7 +81,7 @@ const CardHeader = ({ questionDetail, onLast, onNext, currentIndex, totalWords,
           <JumpButton
             onLast={onLast}
             onNext={onNext}
-            currentIndex={currentIndex}
+            globalIndex={globalIndex}
             totalWords={totalWords}
           />
         </Box>

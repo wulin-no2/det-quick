@@ -31,7 +31,8 @@ function QuestionPageNew() {
     currentIndex,
     getNameBySubmoduleId,
     moduleId, 
-    currentPage
+    currentPage,
+    globalIndex
   } = state;
 
   const [loading, setLoading] = useState(true);
@@ -68,7 +69,8 @@ function QuestionPageNew() {
 
   // used for handle back operation with React Router
   const handleBack = () => {
-    navigate(-1, { state: { moduleId, submoduleId, filters, currentPage } });
+    navigate(-1, { state: { moduleId, submoduleId, filters, currentPage, count, globalIndex } });
+    console.log('state in question page new - handleBack is ', state)
   };
 
   if (loading) {
@@ -122,6 +124,7 @@ function QuestionPageNew() {
         questionDetail={questionDetail} // pass questionDetail from fetchData()
         getNameBySubmoduleId={getNameBySubmoduleId}
         handleBack={handleBack} // pass handleBack to question Card until back button
+        globalIndex={globalIndex}
         /> : <div>No question found for this submodule id.</div>}
       </Box>
     </Container>

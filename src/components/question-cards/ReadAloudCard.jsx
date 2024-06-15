@@ -13,6 +13,7 @@ const ReadAloudCard = ({
   count,
   currentIndex,
   questionDetail,
+  handleBack,
 }) => {
   const { t } = useTranslation();
   if (!questionDetail) {
@@ -56,6 +57,7 @@ const ReadAloudCard = ({
         onLast={handleLast}
         currentIndex={currentIndex}
         totalWords={count}
+        handleBack={handleBack}
       />
       {/* question */}
       <Box
@@ -131,6 +133,7 @@ ReadAloudCard.propTypes = {
   currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object, 
   getNameBySubmoduleId:PropTypes.func.isRequired,
+  handleBack:PropTypes.func.isRequired,
 };
 
 export default ReadAloudCard;

@@ -16,9 +16,13 @@ export default function QuestionList({ questionsArr ,
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const itemsPerPage = 10; 
 
   // remember the state with React Router for later use in QuestionPage
   const handleItemClick = (question, index) => {
+    const globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+    localStorage.setItem('globalIndex', globalIndex);
+
     navigate(baseQuestionsDetailURL, {
       state: {
         questionId: question.questionId,
@@ -28,6 +32,7 @@ export default function QuestionList({ questionsArr ,
         currentIndex: index,
         moduleId: question.moduleId,
         currentPage: currentPage,
+        globalIndex
       }
     });
   };
@@ -55,7 +60,10 @@ export default function QuestionList({ questionsArr ,
               // border: "1px solid red"
             }}
           >
-            {questionsArr.map((question, index) => (
+            {questionsArr.map((question, index) => {
+              const globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+              return (
+              
               <React.Fragment key={question.questionId}>
                 <ListItem
                   sx={{
@@ -67,7 +75,7 @@ export default function QuestionList({ questionsArr ,
                       backgroundColor: "rgba(0, 0, 0, 0.1)",
                     },
                   }}
-                  // component={Link} href={baseQuestionsDetailURL}
+                  
                   component='div'
                   onClick={() => handleItemClick(question, index)}
                 >
@@ -82,6 +90,7 @@ export default function QuestionList({ questionsArr ,
                   >
                     <Grid item md={6}>
                       <Typography variant="body1" color="text.primary">
+                        {globalIndex}{"  "}
                         <Box component="span" sx={{ fontWeight: 'bold' }}>
                           {t(getNameBySubmoduleId(question.submoduleId))}
                         </Box> 
@@ -112,7 +121,7 @@ export default function QuestionList({ questionsArr ,
                   />
                 )}
               </React.Fragment>
-            ))}
+            )})}
           </List>
         </Grid>
       </Grid>
