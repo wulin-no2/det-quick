@@ -70,11 +70,6 @@ function QuestionPage() {
     fetchData();
   }, [currentQuestionId, currentSubmoduleId]);
 
-
-  useEffect(() => {
-    console.log('question detail in use effect is ', questionDetail, currentQuestionId, currentSubmoduleId);
-  }, []);
-
   // used for handle back operation with React Router
   const handleBack = () => {
     navigate(-1, { state: { moduleId, submoduleId, filters, currentPage, count, globalIndex } });
@@ -84,7 +79,7 @@ function QuestionPage() {
 // handle next
 const handleNext = async () => {
   if (currentGlobalIndex  < count) {
-    const newGlobalIndex = globalIndex + 1;
+    const newGlobalIndex = currentGlobalIndex + 1;
     setCurrentGlobalIndex(newGlobalIndex);
     localStorage.setItem("globalIndex", newGlobalIndex);
     try {

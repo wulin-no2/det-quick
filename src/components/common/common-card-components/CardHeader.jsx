@@ -26,26 +26,27 @@ const CardHeader = ({ questionDetail, totalWords,
   const time_limit = timeLimit(questionDetail.submoduleId);
 
   // set timer and progressBar based on time_limit
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(time_limit);
 
   useEffect(() => {
-    setTimer(0); // Reset timer when word changes
+    setTimer(time_limit); // Reset timer when word changes
     const timerInterval = setInterval(() => {
       setTimer((prev) => {
-        if (prev < time_limit) {
-          return prev + 1;
+        if (prev > 0) {
+          return prev - 1;
         } else {
           clearInterval(timerInterval);
-          handleNext();
-          return time_limit;
+          handleNext(); // Automatically go to next question when timer ends
+          console.log("globalIndex ",globalIndex)
+          return time_limit; 
         }
       });
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [time_limit, handleNext]);
+  }, [time_limit, handleNext, globalIndex]);
 
-  const progress = (timer / time_limit) * 100;
+  const progress = ((time_limit - timer) / time_limit) * 100;
 
   return (
     <>
@@ -53,7 +54,6 @@ const CardHeader = ({ questionDetail, totalWords,
       <TitleBar
         
         id={questionDetail.questionId}
-        // type={word.type}
         difficulty={questionDetail.difficultyLevel}
         onClick={handleBack}
         name={questionDetail.submoduleId}
