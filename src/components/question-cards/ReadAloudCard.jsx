@@ -15,31 +15,16 @@ const ReadAloudCard = ({
   questionDetail,
   handleBack,
   globalIndex,
+  handleLast,
+  handleNext,
 }) => {
   const { t } = useTranslation();
   if (!questionDetail) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
   // handle answer buttons
   const handleRecord = () => {
     console.log('record..');
-  };
-  // handle jump buttons
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // const word = questionDetail.word;
-
-  const handleNext = () => {
-    if (currentIndex < count - 1) {
-      // setCurrentQuestionId(/* 下一个问题的ID，根据需要进行修改 */);
-      // setCurrentSubmoduleId(/* 下一个问题的submoduleId，根据需要进行修改 */);
-    }
-  };
-
-  const handleLast = () => {
-    if (currentIndex > 0) {
-      // setCurrentQuestionId(/* 上一个问题的ID，根据需要进行修改 */);
-      // setCurrentSubmoduleId(/* 上一个问题的submoduleId，根据需要进行修改 */);
-    }
   };
 
   return (
@@ -54,8 +39,8 @@ const ReadAloudCard = ({
       {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
-        onNext={handleNext}
-        onLast={handleLast}
+        handleNext={handleNext}
+        handleLast={handleLast}
         currentIndex={currentIndex}
         totalWords={count}
         handleBack={handleBack}
@@ -137,6 +122,8 @@ ReadAloudCard.propTypes = {
   getNameBySubmoduleId:PropTypes.func.isRequired,
   handleBack:PropTypes.func.isRequired,
   globalIndex:PropTypes.number.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  handleLast: PropTypes.func.isRequired,
 };
 
 export default ReadAloudCard;

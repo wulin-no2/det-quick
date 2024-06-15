@@ -20,29 +20,12 @@ const ReadAndSelectCard = ({
 }) => {
   const { t } = useTranslation();
   if (!questionDetail) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
   // handle answer buttons
   const handleAnswer = (isReal) => {
     console.log(`Answered: ${isReal}`);
   };
-  // handle jump buttons
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // const word = questionDetail.word;
-
-  // const handleNext = () => {
-  //   if (currentIndex < count - 1) {
-  //     // setCurrentQuestionId(/* 下一个问题的ID，根据需要进行修改 */);
-  //     // setCurrentSubmoduleId(/* 下一个问题的submoduleId，根据需要进行修改 */);
-  //   }
-  // };
-
-  // const handleLast = () => {
-  //   if (currentIndex > 0) {
-  //     // setCurrentQuestionId(/* 上一个问题的ID，根据需要进行修改 */);
-  //     // setCurrentSubmoduleId(/* 上一个问题的submoduleId，根据需要进行修改 */);
-  //   }
-  // };
 
   return (
     <Box
