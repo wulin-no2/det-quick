@@ -52,11 +52,14 @@
   "Total Result: ": "总结果数：",
 
 
-    "Record yourself saying the statement below: ": "请录音并读出以下句子： ",
-    "Reference Audio":"示范读音",
-    "Record Now":"开始录音",
-    "Speak about the topic below for 90 seconds.":"就以下话题谈论90秒",
-    "Reference Answer": "参考答案",
-    "Reference Question": "题目原文",
-    "Speak about the image below for 90 seconds.":"就以下图片谈论90秒"
+  "Record yourself saying the statement below: ": "请录音并读出以下句子： ",
+  "Reference Audio":"示范读音",
+  "Record Now":"开始录音",
+  "Speak about the topic below for 90 seconds.":"就以下话题谈论90秒",
+  "Reference Answer": "参考答案",
+  "Reference Question": "题目原文",
+  "Speak about the image below for 90 seconds.":"就以下图片谈论90秒",
+  "Type the statement that you hear.":"打出你听到的句子",
+  "You can listen to the question 3 times.":"你可以听3次录音",
+  "Your response": "你的回答.."
 }

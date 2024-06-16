@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
-import { Box, Typography , Divider} from '@mui/material';
+import { Box, Typography , Divider, TextField} from '@mui/material';
 // import { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
-import {useState, useRef} from "react";
+import {useState, useRef, useEffect} from "react";
 
-const ListenThenSpeakCard = ({
+const ListenAndTypeCard = ({
     // questionId,
     // setCurrentQuestionId,
     // setCurrentSubmoduleId,
@@ -20,24 +20,22 @@ const ListenThenSpeakCard = ({
     handleNext,
   }) => {
     const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
-    const [showReferenceQuestion, setShowReferenceQuestion] = useState(false);
     const { t } = useTranslation();
 
     const audioRef = useRef(null); // Create a reference for the audio element 
 
+    useEffect(()=>{
+      console.log("question detail is", questionDetail)
+      // console.log("questionImageUrl:", questionDetail.questionImageUrl);
+    },[questionDetail])
     if (!questionDetail) {
         return <div></div>;
       }
-    
+
     // Handle reference answer button click
     const handleReferenceAnswerClick = () => {
         setShowReferenceAnswer(!showReferenceAnswer);
     };
-
-    // Handle reference question button click
-    const handleReferenceQuestionClick = () => {
-      setShowReferenceQuestion(!showReferenceQuestion);
-  };
 
   // Handle image click to play/pause audio
   const handleImageClick = () => {
@@ -85,21 +83,35 @@ const ListenThenSpeakCard = ({
             gutterBottom
             sx={{ fontWeight: "bold", opacity: 0.92 }}
           >
-            {t('Speak about the topic below for 90 seconds.')}
+            {t('Type the statement that you hear.')}
           </Typography>
         </Box>
         {/* question text */}
-        <Box sx={{ my: 4, display: 'flex', flexDirection:'column', alignItems: 'center', justifyContent: 'center' }}>
-                <img src="/ListenThenSpeak.png" 
-                onClick={handleImageClick} 
-                style={{ width: '160px', margin:16}} />
-                <audio ref={audioRef} src={questionDetail.questionAudioUrl} />
+        <Box sx={{ my: 4, display: 'flex', flexDirection:'column', alignItems: 'center', justifyContent: 'center',
+        }}>
+                <Box sx={{display: 'flex',
+                justifyContent:'center',
+                alignItems:'stretch',
+                }}>
+                  <img src="/ListenThenSpeak.png" 
+                  onClick={handleImageClick} 
+                  style={{ width: '160px', margin:'16px',
+                    
+                  }} />
+                  <audio ref={audioRef} src={questionDetail.questionAudioUrl} />
+                  <TextField 
+                    multiline
+                    rows={6}
+                    placeholder={t('Your response')}
+                    sx={{px:2, width:'450px'}}>
+                  </TextField>
+                </Box>
                 <Typography
                   variant='h7'
                   gutterBottom
-                  sx={{ opacity: 0.88,maxWidth:"500px" }}
+                  sx={{ opacity: 0.88,maxWidth:"500px",pt:2 }}
                 >
-                  {t('You can listen to the question 3 times in 20 seconds before start.')}
+                  {t('You can listen to the question 3 times.')}
                 </Typography>
             </Box>
         {/* answer button */}
@@ -107,7 +119,6 @@ const ListenThenSpeakCard = ({
           gutterBottom
           sx={{
             display: 'flex',
-            pt: 2,
             pb: 4,
             justifyContent: 'space-evenly',
           }}
@@ -117,7 +128,7 @@ const ListenThenSpeakCard = ({
         {/* Divider */}
         <Divider sx={{ bgcolor: 'grey.100',width:'96%', mx:'auto'}} />
 
-        {/* reference area */}
+        {/* reference answer */}
         <Box
                 sx={{
                 display: 'flex',
@@ -127,58 +138,25 @@ const ListenThenSpeakCard = ({
                 m: 2, p: 2,
                 bgcolor: 'grey.100', width: '96%', mx: 'auto', borderRadius: 1
                 }}>
-                  <Box>
-                    <AnswerButton text='Reference Question' onClick={handleReferenceQuestionClick}/>
-                    <AnswerButton text='Reference Answer' onClick={handleReferenceAnswerClick}/>
-                  </Box>
-                  {/* reference question */}
-                {showReferenceQuestion && (
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection:'column',
-                            alignItems: 'start',
-                            justifyContent: 'center',
-                            m: 2,
-                        }}
-                    >
-                      <Typography variant="h7" 
-                      sx={{textAlign:'left', p:2, fontWeight:'bold'
-                      }}>
-                            {' - '}{t('Reference Question')}
-                        </Typography>
-                        <Typography variant="subtitle1" sx={{textAlign:'left', px:6}}>
-                            {questionDetail.questionReference}
-                        </Typography>
-                    </Box>
-                )}
-                {/* reference answer */}
+                <AnswerButton text='Reference Answer' onClick={handleReferenceAnswerClick}/>
                 {showReferenceAnswer && (
-                    <Box
-                        sx={{
+                    <Box sx={{
                             display: 'flex',
-                            flexDirection:'column',
-                            alignItems: 'start',
+                            alignItems: 'center',
                             justifyContent: 'center',
                             m: 2,
-                        }}
-                    >
-                        <Typography variant="h7" 
-                      sx={{textAlign:'left', p:2, fontWeight:'bold'
-                      }}>
-                            {' - '}{t('Reference Answer')}
-                        </Typography>
+                        }}>
                         <Typography variant="subtitle1" sx={{textAlign:'left', px:6}}>
                             {questionDetail.referenceAnswer}
                         </Typography>
                     </Box>
-            )} 
+            )}
         </Box>
       </Box>
     );
   };
 
-  ListenThenSpeakCard.propTypes = {
+  ListenAndTypeCard.propTypes = {
   questionId: PropTypes.number.isRequired,
   setCurrentQuestionId: PropTypes.func.isRequired,
   setCurrentSubmoduleId: PropTypes.func.isRequired,
@@ -192,4 +170,4 @@ const ListenThenSpeakCard = ({
   handleLast: PropTypes.func.isRequired,
 };
 
-export default ListenThenSpeakCard;
+export default ListenAndTypeCard;
