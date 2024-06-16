@@ -8,6 +8,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { green, red,grey} from '@mui/material/colors';
 import Toast from "../common/Toast";
+import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
 
 const ReadAndSelectCard = ({
   // questionId,
@@ -25,6 +26,7 @@ const ReadAndSelectCard = ({
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const [openToast, setOpenToast] = useState(false);
+  const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
   const { t } = useTranslation();
 
   if (!questionDetail) {
@@ -35,6 +37,11 @@ const handleAnswer = (answer) => {
   setSelectedAnswer(answer);
   setIsCorrect(answer === questionDetail.correct);
   setOpenToast(true);
+  // Update practice status
+  updatePracticeStatus(questionDetail.id, true);
+
+  // Set practice status to true
+  setIsPracticed(true);
   console.log(`Answered: ${answer}`);
 };
 
@@ -79,6 +86,7 @@ const getButtonSx = (answer) => {
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
+        isPracticed={isPracticed}
       />
       {/* question */}
       <Box

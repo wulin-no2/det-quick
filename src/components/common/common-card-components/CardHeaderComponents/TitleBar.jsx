@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 import CloseButton from "./CloseButton";
 import DifficultyButton from "./DifficultyButton";
 import CardTitle from "./CardTitle";
-const TitleBar = ({ id, name, onClick, difficulty }) => {
+import PracticedButton from "./PracticedButton";
+const TitleBar = ({ id, name, onClick, difficulty ,isPracticed}) => {
   return (
     <Box
       sx={{
@@ -19,6 +20,7 @@ const TitleBar = ({ id, name, onClick, difficulty }) => {
       <CloseButton onClick={onClick} />
       <CardTitle id={id} name={name} />
       <DifficultyButton difficulty={difficulty} />
+      {isPracticed===true && <PracticedButton/>}
     </Box>
   );
 };
@@ -27,6 +29,7 @@ TitleBar.propTypes = {
   name: PropTypes.string.isRequired,
   difficulty: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  isPracticed:PropTypes.bool.isRequired,
 };
 
 export default TitleBar;

@@ -21,6 +21,7 @@ const CardHeader = ({ questionDetail, totalWords,
   handleBack,
   globalIndex,
   handleLast, handleNext,
+  isPracticed
   // getNameBySubmoduleId
 }) => {
   const time_limit = timeLimit(questionDetail.submoduleId);
@@ -57,6 +58,7 @@ const CardHeader = ({ questionDetail, totalWords,
         difficulty={questionDetail.difficultyLevel}
         onClick={handleBack}
         name={questionDetail.submoduleId}
+        isPracticed={isPracticed}
       />
       {/* Timer, JumpButton and ProgressBar */}
       <Box
