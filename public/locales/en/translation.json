@@ -67,6 +67,10 @@
   "Right Answer": "Right Answer",
   "Sorry. It's wrong": "Sorry. It's Wrong",
   "Yes": "Yes",
-  "No": "No"
+  "No": "No",
+  "You can listen to the question 3 times in 20 seconds before start.": "You can listen to the question 3 times in 20 seconds before start.",
+  "Last": "Last",
+  "Next": "Next",
+  "close": "close"
 
 }

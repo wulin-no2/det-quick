@@ -65,5 +65,9 @@
   "Right Answer": "答案正确",
   "Sorry. It's wrong": "抱歉，答错啦",
   "Yes": "是",
-  "No": "否"
+  "No": "否",
+  "You can listen to the question 3 times in 20 seconds before start.": "在开始录音前，你有20秒的时间，最多听3次问题。",
+  "Last": "上一题",
+  "Next": "下一题",
+  "close": "关闭"
 }

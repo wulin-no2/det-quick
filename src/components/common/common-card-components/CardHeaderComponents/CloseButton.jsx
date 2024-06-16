@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const CloseButton = ({ onClick }) => {
+  const {t} = useTranslation();
   return (
     <Button
       variant="outlined"
@@ -15,7 +17,7 @@ const CloseButton = ({ onClick }) => {
         textTransform: "none",
       }}
     >
-      close
+      {t('close')}
     </Button>
   );
 };
