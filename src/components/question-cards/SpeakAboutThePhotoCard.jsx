@@ -79,7 +79,7 @@ const SpeakAboutThePhotoCard = ({
                   style={{ width: '160px', margin:'auto'}} 
                   onError={(e) => {
                 e.target.onerror = null; // Prevent infinite loop in case of broken image
-                e.target.src = "/placeholder1.jpeg"; // Fallback image
+                e.target.src = "/placeholder.svg"; // Fallback image
               }}
             />
           ) : (
