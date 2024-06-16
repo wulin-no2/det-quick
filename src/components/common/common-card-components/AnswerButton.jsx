@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-const AnswerButton = ({ text, onClick }) => {
+const AnswerButton = ({ text, onClick ,sx}) => {
   const { t } = useTranslation();
   return (
     <Button
@@ -15,6 +15,7 @@ const AnswerButton = ({ text, onClick }) => {
         margin: "2px",
         borderRadius: 1,
         textTransform: "none",
+        ...sx, // Apply additional styles
       }}
     >
       {t(text)}
@@ -25,6 +26,7 @@ const AnswerButton = ({ text, onClick }) => {
 AnswerButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  sx: PropTypes.object, // Add sx prop type
 };
 
 export default AnswerButton;

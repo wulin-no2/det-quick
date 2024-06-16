@@ -61,5 +61,9 @@
   "Speak about the image below for 90 seconds.":"就以下图片谈论90秒",
   "Type the statement that you hear.":"打出你听到的句子",
   "You can listen to the question 3 times.":"你可以听3次录音",
-  "Your response": "你的回答.."
+  "Your response": "你的回答..",
+  "Right Answer": "答案正确",
+  "Sorry. It's wrong": "抱歉，答错啦",
+  "Yes": "是",
+  "No": "否"
 }
