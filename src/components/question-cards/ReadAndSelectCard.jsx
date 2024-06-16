@@ -7,7 +7,7 @@ import CardHeader from '../common/common-card-components/CardHeader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { green, red,grey} from '@mui/material/colors';
-import Toast from "../common/Toast";
+// import Toast from "../common/Toast";
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
 
 const ReadAndSelectCard = ({
@@ -25,7 +25,7 @@ const ReadAndSelectCard = ({
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
-  const [openToast, setOpenToast] = useState(false);
+  // const [openToast, setOpenToast] = useState(false);
   const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
   const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ const ReadAndSelectCard = ({
 const handleAnswer = (answer) => {
   setSelectedAnswer(answer);
   setIsCorrect(answer === questionDetail.correct);
-  setOpenToast(true);
+  // setOpenToast(true);
   // Update practice status
   updatePracticeStatus(questionDetail.id, true);
 
@@ -149,10 +149,10 @@ const getButtonSx = (answer) => {
         </Box>
       )}
       {/* toast */}
-      <Toast
+      {/* <Toast
         message="Practiced + 1"
         open={openToast}
-      />
+      /> */}
 
     </Box>
   );
