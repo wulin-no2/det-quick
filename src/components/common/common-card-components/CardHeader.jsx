@@ -50,7 +50,9 @@ const CardHeader = ({ questionDetail, totalWords,
   const progress = ((time_limit - timer) / time_limit) * 100;
 
   return (
-    <>
+    <Box sx={{
+      px:1
+    }}>
       {/* title bar */}
       <TitleBar
         
@@ -87,7 +89,7 @@ const CardHeader = ({ questionDetail, totalWords,
         </Box>
         <ProgressBar progress={progress} />
       </Box>
-    </>
+    </Box>
   );
 };
 export default CardHeader;
