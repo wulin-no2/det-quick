@@ -70,13 +70,13 @@ const SpeakAboutThePhotoCard = ({
           <Typography
             variant="h4"
             gutterBottom
-            sx={{ fontWeight: "bold", opacity: 0.92,mb:6 }}
+            sx={{ fontWeight: "bold", opacity: 0.92,mb:2 }}
           >
             {t('Speak about the image below for 90 seconds.')}
           </Typography>
           {questionDetail.questionImageUrl ? (
             <img src={questionDetail.questionImageUrl}
-                  style={{ width: '160px', margin:'auto'}} 
+                  style={{ width: '300px', margin:'auto'}} 
                   onError={(e) => {
                 e.target.onerror = null; // Prevent infinite loop in case of broken image
                 e.target.src = "/placeholder.svg"; // Fallback image
@@ -92,7 +92,7 @@ const SpeakAboutThePhotoCard = ({
           gutterBottom
           sx={{
             display: 'flex',
-            pt: 2,
+            // pt: 2,
             pb: 4,
             justifyContent: 'space-evenly',
           }}
@@ -102,7 +102,7 @@ const SpeakAboutThePhotoCard = ({
         {/* Divider */}
         <Divider sx={{ bgcolor: 'grey.100',width:'96%', mx:'auto'}} />
 
-        {/* reference area */}
+        {/* reference answer */}
         <Box
                 sx={{
                 display: 'flex',
@@ -112,23 +112,19 @@ const SpeakAboutThePhotoCard = ({
                 m: 2, p: 2,
                 bgcolor: 'grey.100', width: '96%', mx: 'auto', borderRadius: 1
                 }}>
-                    <AnswerButton text='Reference Answer' onClick={handleReferenceAnswerClick}/>
-                {/* reference answer */}
+                <AnswerButton text='Reference Answer' onClick={handleReferenceAnswerClick}/>
                 {showReferenceAnswer && (
-                    <Box
-                        sx={{
+                    <Box sx={{
                             display: 'flex',
-                            flexDirection:'column',
-                            alignItems: 'start',
+                            alignItems: 'center',
                             justifyContent: 'center',
                             m: 2,
-                        }}
-                    >
+                        }}>
                         <Typography variant="subtitle1" sx={{textAlign:'left', px:6}}>
                             {questionDetail.referenceAnswer}
                         </Typography>
                     </Box>
-            )} 
+            )}
         </Box>
       </Box>
     );
