@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import React,{ useRef, useState} from 'react';
-import { useTranslation} from "react-i18next";
-import { Box,Divider,Typography} from '@mui/material';
-import CardHeader from '../common/common-card-components/CardHeader';
-import AnswerButton from '../common/common-card-components/AnswerButton';
+import React, { useRef, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Box, Typography, Paper} from "@mui/material";
+import CardHeader from "../common/common-card-components/CardHeader";
+import AnswerButton from "../common/common-card-components/AnswerButton";
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
-// import { green, red, grey} from '@mui/material/colors';
+import { grey} from '@mui/material/colors';
 
 const FillInTheBlanksCard = ({
   // questionId,
@@ -26,11 +26,15 @@ const FillInTheBlanksCard = ({
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const inputRefs = useRef([]);
   
-
-  // const [parsedSentence, setParsedSentence] = useState([]);
   const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
-  const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
   const { t } = useTranslation();
+
+  // initialize practiced
+  useEffect(() => {
+    if (questionDetail.isPracticed) {
+      setIsPracticed(true);
+    }
+  }, [questionDetail]);
 
   // The remaining code for event handlers 
   const handleInputChange = (index, event) => {
@@ -71,10 +75,6 @@ const FillInTheBlanksCard = ({
   if (!questionDetail) {
     return <div></div>;
   }
-  // Handle reference answer button click
-  const handleReferenceAnswerClick = () => {
-    setShowReferenceAnswer(!showReferenceAnswer);
-  };
 
   // handle answer button
   const handleSubmit = (answer) => {
@@ -87,11 +87,21 @@ const FillInTheBlanksCard = ({
     setIsPracticed(true);
     console.log(`Answered: ${answer}`);
   };
+  // split string into words
+  const renderWords = (text) => {
+    return text.split(" ").map((word, index) => (
+      <Typography variant='h7' key={index} component="span" sx={{ mr: 0.5, fontWeight:'medium', color:grey[800] }}>
+        {word}
+      </Typography>
+    ));
+  };
+
 
   return (
     
     <Box
-      sx={{p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb:10,}}
+      sx={{p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb:10,
+      }}
     >
       {/* CardHeader */}
       <CardHeader
@@ -113,68 +123,71 @@ const FillInTheBlanksCard = ({
         </Typography>
       </Box>
       
-      {/* Card content */}
-      <Box
-        display='flex'
-        flexWrap='wrap'
-        justifyContent='center'
-        alignItems='center'
-        mb='120px'
+       {/* Card content */}
+      <Paper variant="outlined" 
+        sx={{ wordBreak: "break-word" ,
+          // border:'1px solid blue',
+          display:"flex",
+          flexWrap:"wrap",
+          justifyContent:"start",
+          alignItems:"center",
+          mx:16,my:6,px:6,py:8,
+        }}
       >
-          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
-              <span>{parts[0]}</span>
+         {renderWords(parts[0])}
+         {/* blanks */}
+         <Box sx={{pr:1, display:'flex',flexDirection:'column',justifyContent:'start',
+          // border:'1px solid red',
+         }}>
+            <Box>
               {clues.map((clue, index) => (
-                  <React.Fragment key={index}>
-                      <input
-                          ref={el => inputRefs.current[index] = el}
-                          type="text"
-                          value={answers[index] || clue || ''}
-                          onInput={(event) => handleInputChange(index, event)}
-                          onKeyDown={(event) => handleKeyDown(index, event)}
-                          style={{ width: '20px', marginRight: '5px', textAlign: 'center' }}
-                          disabled={clue !== null}
-                      />
-                      {index === clues.length - 1 && showCorrectAnswer && (
-                          <span style={{ color: 'green', marginLeft: '10px', fontWeight: 'bold' }}>
-                              ({questionDetail.referenceAnswer})
-                          </span>
-                      )}
-                  </React.Fragment>
+                <React.Fragment key={index}>
+                  <input
+                    ref={(el) => (inputRefs.current[index] = el)}
+                    value={answers[index] || clue || ""}
+                    onInput={(event) => handleInputChange(index, event)}
+                    onKeyDown={(event) => handleKeyDown(index, event)}
+                    style={{
+                      width: "24px",
+                      height:'32px',
+                      textAlign: "center",
+                      marginRight: "-1px",
+                      fontSize: "16px",
+                      border: "1px solid #ccc",
+                      backgroundColor: clue !== null ? grey[100] : "white",
+                      borderRadius:
+                        index === 0
+                          ? "4px 0 0 4px" // first 
+                          : index === clues.length - 1
+                          ? "0 4px 4px 0" // last
+                          : "0", // others
+                      color: clue !== null ? "black" : "inherit",
+                      pointerEvents: clue !== null ? "none" : "auto", // disable the input
+                      
+                    }}
+                    disabled={clue !== null}
+                  />
+                  {/* answer */}
+                  {index === clues.length - 1 && showCorrectAnswer && (
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "green", ml: 2, fontWeight: "bold",
+                        letterSpacing: "14px", // Adjust the distance between letters
+                      }}
+                    >
+                      {questionDetail.referenceAnswer}
+                    </Typography>
+                  )}
+                </React.Fragment>
               ))}
-              <span>{parts[1]}</span>
-          </Box>
+            </Box>
         </Box>
+        {renderWords(parts[1])}
+      </Paper>
+
       {/* answer button */}
       <Box gutterBottom sx={{display: 'flex',pb: 4,justifyContent: 'space-evenly',}}>
           <AnswerButton text='Submit' onClick={handleSubmit} />
-      </Box>
-
-      {/* Divider */}
-      <Divider sx={{ bgcolor: 'grey.100',width:'96%', mx:'auto'}} />
-
-      {/* reference answer */}
-      <Box
-          sx={{
-          display: 'flex',
-          flexDirection:'column',
-          alignItems: 'start',
-          justifyContent: 'end',
-          m: 2, p: 2,
-          bgcolor: 'grey.100', width: '96%', mx: 'auto', borderRadius: 1
-          }}>
-          <AnswerButton text='Reference Answer' onClick={handleReferenceAnswerClick}/>
-          {showReferenceAnswer && (
-              <Box sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      m: 2,
-                  }}>
-                  <Typography variant="subtitle1" sx={{textAlign:'left', px:6}}>
-                      {questionDetail.referenceAnswer}
-                  </Typography>
-              </Box>
-          )}
       </Box>
     </Box>
   );
@@ -188,9 +201,9 @@ FillInTheBlanksCard.propTypes = {
   filters: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
   currentIndex: PropTypes.number.isRequired,
-  questionDetail: PropTypes.object, 
-  handleBack:PropTypes.func.isRequired,
-  globalIndex:PropTypes.number.isRequired,
+  questionDetail: PropTypes.object,
+  handleBack: PropTypes.func.isRequired,
+  globalIndex: PropTypes.number.isRequired,
   handleNext: PropTypes.func.isRequired,
   handleLast: PropTypes.func.isRequired,
 };
