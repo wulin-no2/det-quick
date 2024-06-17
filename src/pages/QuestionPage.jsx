@@ -25,6 +25,7 @@ import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
 import ListenThenSpeakCard from "../components/question-cards/ListenThenSpeakCard";
 import SpeakAboutThePhotoCard from "../components/question-cards/SpeakAboutThePhotoCard";
 import ListenAndTypeCard from "../components/question-cards/ListenAndTypeCard";
+import ReadAndCompleteCard from "../components/question-cards/ReadAndCompleteCard";
 
 function QuestionPage() {
   const location = useLocation();
@@ -137,11 +138,12 @@ const handleLast = async () => {
     5: SpeakAboutThePhotoCard,
     6: ListenAndTypeCard,
     7: TitleThePassageCard,
-    8: FillInTheBlanksCard,
+    8: ReadAndCompleteCard,
     9: HighlightTheAnswerCard,
-    10: CompleteThePassageCard,
+    10: FillInTheBlanksCard,
     11: CompleteTheSentencesCard,
     12: IdentifyTheIdeaCard,
+    13: CompleteThePassageCard,
 
   };
 
