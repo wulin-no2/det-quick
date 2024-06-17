@@ -96,13 +96,8 @@ const FillInTheBlanksCard = ({
     ));
   };
 
-
   return (
-    
-    <Box
-      sx={{p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb:10,
-      }}
-    >
+    <Box sx={{p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb:10,}}>
       {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
@@ -122,7 +117,6 @@ const FillInTheBlanksCard = ({
           {t('Complete the sentence with the correct word.')}
         </Typography>
       </Box>
-      
        {/* Card content */}
       <Paper variant="outlined" 
         sx={{ wordBreak: "break-word" ,
@@ -137,7 +131,6 @@ const FillInTheBlanksCard = ({
          {renderWords(parts[0])}
          {/* blanks */}
          <Box sx={{pr:1, display:'flex',flexDirection:'column',justifyContent:'start',
-          // border:'1px solid red',
          }}>
             <Box>
               {clues.map((clue, index) => (
@@ -149,7 +142,7 @@ const FillInTheBlanksCard = ({
                     onKeyDown={(event) => handleKeyDown(index, event)}
                     style={{
                       width: "24px",
-                      height:'32px',
+                      height:'28px',
                       textAlign: "center",
                       marginRight: "-1px",
                       fontSize: "16px",
