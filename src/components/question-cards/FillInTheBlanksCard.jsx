@@ -132,7 +132,7 @@ const FillInTheBlanksCard = ({
          {/* blanks */}
          <Box sx={{pr:1, display:'flex',flexDirection:'column',justifyContent:'start',
          }}>
-            <Box>
+            <Box sx={{display:'inline-block'}}>
               {clues.map((clue, index) => (
                 <React.Fragment key={index}>
                   <input

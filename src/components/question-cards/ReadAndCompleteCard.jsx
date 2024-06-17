@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React,{ useRef, useState, useEffect} from 'react';
 import { useTranslation} from "react-i18next";
-import { Box,Paper,Typography} from '@mui/material';
+import { Box,Paper,Typography,Grid} from '@mui/material';
 import CardHeader from '../common/common-card-components/CardHeader';
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
@@ -63,7 +63,7 @@ const ReadAndCompleteCard = ({
 
   // handle answer button
   const handleSubmit = (answer) => {
-    setShowCorrectAnswer(true)
+    setShowCorrectAnswer(!showCorrectAnswer)
 
     // Update practice status
     updatePracticeStatus(questionDetail.id, true);
@@ -117,7 +117,7 @@ const ReadAndCompleteCard = ({
                     <Typography variant='h7' key={index} component="span" sx={{ mr: 0.5, fontWeight:'medium', color:grey[800] }}>
                       {part}
                     </Typography>
-                  {/* <Grid item key={index} sx={{border:'1px solid blue'}}> */}
+                  <Grid item key={index} sx={{display:'inline-block', mr:0.5}}>
                     {index < parts.length - 1 && 
                         questionDetail.blankList[index].clues.map((clue, clueIndex) => (
                             <input
@@ -149,13 +149,12 @@ const ReadAndCompleteCard = ({
                                 disabled={clue !== null}
                             />
                   ))}
-
                     {index < parts.length - 1 && showCorrectAnswer && (
                         <span style={{ color: 'green', marginLeft: '10px', fontWeight: 'bold' }}>
                             {questionDetail.blankList[index].answer}
                         </span>
                     )}
-                  {/* </Grid> */}
+                  </Grid>
                 </React.Fragment>
              
             ))}
