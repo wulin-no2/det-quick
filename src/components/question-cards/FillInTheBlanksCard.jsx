@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Paper} from "@mui/material";
+import { Box, Typography, Paper,Grid} from "@mui/material";
 import CardHeader from "../common/common-card-components/CardHeader";
 import AnswerButton from "../common/common-card-components/AnswerButton";
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
@@ -118,21 +118,24 @@ const FillInTheBlanksCard = ({
         </Typography>
       </Box>
        {/* Card content */}
-      <Paper variant="outlined" 
-        sx={{ wordBreak: "break-word" ,
-          // border:'1px solid blue',
-          display:"flex",
-          flexWrap:"wrap",
-          justifyContent:"start",
-          alignItems:"center",
-          mx:16,my:6,px:6,py:8,
-        }}
-      >
+      <Paper variant="outlined" sx={{ mx:16,my:6,px:6,py:8,}}>
+       <Box sx={{
+        wordBreak: "break-word" ,
+        display:"flex",
+        flexWrap:"wrap",
+         lineHeight:2.2,
+         }}>
          {renderWords(parts[0])}
          {/* blanks */}
-         <Box sx={{pr:1, display:'flex',flexDirection:'column',justifyContent:'start',
+         <Box sx={{pr:1, 
+            display:'flex',
+            flexDirection:'column',
+            justifyContent:'start', 
          }}>
-            <Box sx={{display:'inline-block',position: 'relative'}}>
+            <Grid item sx={{
+              // display:'inline-block',
+            mb: showCorrectAnswer?4:0,
+            position: 'relative',}}>
               {clues.map((clue, index) => (
                 <React.Fragment key={index}>
                   <input
@@ -165,12 +168,14 @@ const FillInTheBlanksCard = ({
                     <Box
                     sx={{
                       position: "absolute",
-                      ml:'1px',
-                      width: "110%",
+                      ml:'6px',
+                      width: "100%",
                     }}>
                     <Typography
                       variant="body1"
-                      sx={{ color: "green",  fontWeight: "bold",
+                      sx={{ color: "green",  
+                        fontWeight: "bold",
+                        whiteSpace: 'nowrap',
                         letterSpacing: "14px", // Adjust the distance between letters
                       }}
                     >
@@ -180,10 +185,10 @@ const FillInTheBlanksCard = ({
                   )}
                 </React.Fragment>
               ))}
-            </Box>
+            </Grid>
         </Box>
         {renderWords(parts[1])}
-        
+        </Box>
       </Paper>
 
       {/* answer button */}

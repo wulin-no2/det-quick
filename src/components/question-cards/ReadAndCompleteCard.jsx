@@ -111,6 +111,7 @@ const ReadAndCompleteCard = ({
          {/* blanks */}
          <Box sx={{
          lineHeight:2.2,
+         position:'relative',
         //  border:'1px red solid',
          }}>
             {parts.map((part, index) => (
@@ -118,7 +119,9 @@ const ReadAndCompleteCard = ({
                     <Typography variant='h7' key={index} component="span" sx={{ mr: 0.5, fontWeight:'medium', color:grey[800] }}>
                       {part}
                     </Typography>
-                  <Grid item key={index} sx={{display:'inline-block', mr:0.5}}>
+                  <Grid item key={index} sx={{display:'inline-block', mr:0.5,
+                    mb: showCorrectAnswer?4:0,
+                  }}>
                     {index < parts.length - 1 && 
                         questionDetail.blankList[index].clues.map((clue, clueIndex) => (
                             <input
@@ -151,21 +154,25 @@ const ReadAndCompleteCard = ({
                             />
                   ))}
                     {index < parts.length - 1 && showCorrectAnswer && (
-                      <Typography
-                      variant="body1"
-                      sx={{ color: "green", ml: 2, fontWeight: "bold",
-                        letterSpacing: "14px", // Adjust the distance between letters
-                      }}
-                    >
-                      {questionDetail.blankList[index].answer}
-                    </Typography>
-                        // <span style={{ color: 'green', marginLeft: '10px', fontWeight: 'bold' }}>
-                        //     {questionDetail.blankList[index].answer}
-                        // </span>
+                      <Box 
+                          sx={{
+                            position:'absolute',
+                            ml:'-10px',
+                            }}
+                          >
+                            <Typography
+                                variant="body1"
+                                sx={{ color: "green", ml: 2, 
+                                  fontWeight: "bold",
+                                  whiteSpace: 'nowrap',
+                                  letterSpacing: "15px", // Adjust the distance between letters
+                                }}>
+                            {questionDetail.blankList[index].answer}
+                          </Typography>
+                    </Box>
                     )}
                   </Grid>
                 </React.Fragment>
-             
             ))}
         </Box>
       </Paper>
