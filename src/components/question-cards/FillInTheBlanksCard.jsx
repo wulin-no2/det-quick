@@ -132,7 +132,7 @@ const FillInTheBlanksCard = ({
          {/* blanks */}
          <Box sx={{pr:1, display:'flex',flexDirection:'column',justifyContent:'start',
          }}>
-            <Box sx={{display:'inline-block'}}>
+            <Box sx={{display:'inline-block',position: 'relative'}}>
               {clues.map((clue, index) => (
                 <React.Fragment key={index}>
                   <input
@@ -162,20 +162,28 @@ const FillInTheBlanksCard = ({
                   />
                   {/* answer */}
                   {index === clues.length - 1 && showCorrectAnswer && (
+                    <Box
+                    sx={{
+                      position: "absolute",
+                      ml:'1px',
+                      width: "110%",
+                    }}>
                     <Typography
                       variant="body1"
-                      sx={{ color: "green", ml: 2, fontWeight: "bold",
+                      sx={{ color: "green",  fontWeight: "bold",
                         letterSpacing: "14px", // Adjust the distance between letters
                       }}
                     >
                       {questionDetail.referenceAnswer}
                     </Typography>
+                    </Box>
                   )}
                 </React.Fragment>
               ))}
             </Box>
         </Box>
         {renderWords(parts[1])}
+        
       </Paper>
 
       {/* answer button */}

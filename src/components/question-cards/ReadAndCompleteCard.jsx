@@ -109,9 +109,10 @@ const ReadAndCompleteCard = ({
         }}
       >
          {/* blanks */}
-         <Box sx={{pr:1, 
+         <Box sx={{
+         lineHeight:2.2,
+        //  border:'1px red solid',
          }}>
-          <Box sx={{lineHeight:2.2}}>
             {parts.map((part, index) => (
                 <React.Fragment key={index}>
                     <Typography variant='h7' key={index} component="span" sx={{ mr: 0.5, fontWeight:'medium', color:grey[800] }}>
@@ -150,17 +151,23 @@ const ReadAndCompleteCard = ({
                             />
                   ))}
                     {index < parts.length - 1 && showCorrectAnswer && (
-                        <span style={{ color: 'green', marginLeft: '10px', fontWeight: 'bold' }}>
-                            {questionDetail.blankList[index].answer}
-                        </span>
+                      <Typography
+                      variant="body1"
+                      sx={{ color: "green", ml: 2, fontWeight: "bold",
+                        letterSpacing: "14px", // Adjust the distance between letters
+                      }}
+                    >
+                      {questionDetail.blankList[index].answer}
+                    </Typography>
+                        // <span style={{ color: 'green', marginLeft: '10px', fontWeight: 'bold' }}>
+                        //     {questionDetail.blankList[index].answer}
+                        // </span>
                     )}
                   </Grid>
                 </React.Fragment>
              
             ))}
-            </Box>
         </Box>
-        {/* {renderWords(parts[1])} */}
       </Paper>
       {/* answer button */}
       <Box gutterBottom sx={{display: 'flex',pb: 4,justifyContent: 'space-evenly',}}>
