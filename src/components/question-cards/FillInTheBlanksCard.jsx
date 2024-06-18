@@ -193,7 +193,7 @@ const FillInTheBlanksCard = ({
 
       {/* answer button */}
       <Box gutterBottom sx={{display: 'flex',pb: 4,justifyContent: 'space-evenly',}}>
-          <AnswerButton text='Submit' onClick={handleSubmit} />
+          <AnswerButton text={t('Submit')} onClick={handleSubmit} />
       </Box>
     </Box>
   );
