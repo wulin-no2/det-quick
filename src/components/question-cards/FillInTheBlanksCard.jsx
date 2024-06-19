@@ -1,17 +1,13 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Paper,Grid} from "@mui/material";
+import { Box, Typography, Paper, Grid } from "@mui/material";
 import CardHeader from "../common/common-card-components/CardHeader";
 import AnswerButton from "../common/common-card-components/AnswerButton";
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
-import { grey} from '@mui/material/colors';
+import { grey, green, red } from '@mui/material/colors';
 
 const FillInTheBlanksCard = ({
-  // questionId,
-  // setCurrentQuestionId,
-  // setCurrentSubmoduleId,
-  // filters,
   count,
   currentIndex,
   questionDetail,
@@ -19,86 +15,117 @@ const FillInTheBlanksCard = ({
   globalIndex,
   handleLast,
   handleNext,
-  }) => {
+}) => {
   const parts = questionDetail.sentenceTemplate.split("{}");
   const clues = questionDetail.clues[0];
   const [answers, setAnswers] = useState(Array(clues.length).fill(''));
+  const [backgroundColors, setBackgroundColors] = useState(Array(clues.length).fill('white'));
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+  const [buttonText, setButtonText] = useState('Submit');
   const inputRefs = useRef([]);
-  
+  const nextFocusRef = useRef(null);
+
   const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
   const { t } = useTranslation();
 
-  // initialize practiced
   useEffect(() => {
     if (questionDetail.isPracticed) {
       setIsPracticed(true);
     }
   }, [questionDetail]);
 
-  // The remaining code for event handlers 
+  useEffect(() => {
+    if (nextFocusRef.current) {
+      requestAnimationFrame(() => {
+        nextFocusRef.current.focus();
+        nextFocusRef.current = null;
+      });
+    }
+  }, [answers]);
+
+  const getNextEnabledInput = (index) => {
+    for (let i = index + 1; i < inputRefs.current.length; i++) {
+      if (inputRefs.current[i] && !inputRefs.current[i].disabled) {
+        return inputRefs.current[i];
+      }
+    }
+    return null;
+  };
+
+  const getPreviousEnabledInput = (index) => {
+    for (let i = index - 1; i >= 0; i--) {
+      if (inputRefs.current[i] && !inputRefs.current[i].disabled) {
+        return inputRefs.current[i];
+      }
+    }
+    return null;
+  };
+
   const handleInputChange = (index, event) => {
-    event.preventDefault();
     const latestChar = event.nativeEvent.data || '';
     if (latestChar) {
-        const newAnswers = [...answers];
-        newAnswers[index] = latestChar;
-        setAnswers(newAnswers);
-        const inputElement = inputRefs.current[index];
-        inputElement.value = latestChar;
-        if (index < clues.length - 1) {
-            setTimeout(() => {
-                inputRefs.current[index + 1].focus();
-            }, 0);
-        }
+      const newAnswers = [...answers];
+      newAnswers[index] = latestChar;
+      setAnswers(newAnswers);
+      if (index < clues.length - 1) {
+        nextFocusRef.current = getNextEnabledInput(index);
+      }
     }
   };
 
   const handleKeyDown = (index, event) => {
     if (event.key === 'ArrowRight' && index < clues.length - 1) {
-        inputRefs.current[index + 1].focus();
+      nextFocusRef.current = getNextEnabledInput(index);
     } else if (event.key === 'ArrowLeft' && index > 0) {
-        inputRefs.current[index - 1].focus();
+      nextFocusRef.current = getPreviousEnabledInput(index);
     } else if ((event.key === 'Backspace' || event.key === 'Delete')) {
-        if (answers[index] !== '') {
-            const newAnswers = [...answers];
-            newAnswers[index] = '';
-            setAnswers(newAnswers);
-            event.preventDefault();
-        }
-        if (index > 0) {
-            inputRefs.current[index - 1].focus();
-        }
+      const newAnswers = [...answers];
+      newAnswers[index] = '';
+      setAnswers(newAnswers);
+      if (index > 0) {
+        nextFocusRef.current = getPreviousEnabledInput(index);
+      }
+      event.preventDefault();
     }
+  };
+
+  const handleSubmit = () => {
+    if (buttonText === 'Submit') {
+      setShowCorrectAnswer(true);
+
+      // Update practice status
+      updatePracticeStatus(questionDetail.id, true);
+      setIsPracticed(true);
+
+      // Compare user input with correct answer and update background colors
+      const newBackgroundColors = answers.map((answer, index) =>
+        clues[index] !== null ? grey[100] : (answer === questionDetail.referenceAnswer[index] ? green[100] : red[100])
+      );
+      setBackgroundColors(newBackgroundColors);
+      setButtonText('Solve Again');
+    } else {
+      // Reset the state to initial state
+      setShowCorrectAnswer(false);
+      setAnswers(Array(clues.length).fill(''));
+      setBackgroundColors(Array(clues.length).fill('white'));
+      setButtonText('Submit');
+    }
+  };
+
+  const renderWords = (text) => {
+    return text.split(" ").map((word, index) => (
+      <Typography variant='h7' key={index} component="span" sx={{ mr: 0.5, fontWeight: 'medium', color: grey[800] }}>
+        {word}
+      </Typography>
+    ));
   };
 
   if (!questionDetail) {
     return <div></div>;
   }
 
-  // handle answer button
-  const handleSubmit = (answer) => {
-    setShowCorrectAnswer(true)
-
-    // Update practice status
-    updatePracticeStatus(questionDetail.id, true);
-
-    // Set practice status to true
-    setIsPracticed(true);
-    console.log(`Answered: ${answer}`);
-  };
-  // split string into words
-  const renderWords = (text) => {
-    return text.split(" ").map((word, index) => (
-      <Typography variant='h7' key={index} component="span" sx={{ mr: 0.5, fontWeight:'medium', color:grey[800] }}>
-        {word}
-      </Typography>
-    ));
-  };
-
   return (
-    <Box sx={{p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb:10,}}>
-      {/* CardHeader */}
+    <Box sx={{ p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb: 10 }}>
       <CardHeader
         questionDetail={questionDetail}
         handleNext={handleNext}
@@ -109,33 +136,16 @@ const FillInTheBlanksCard = ({
         globalIndex={globalIndex}
         isPracticed={isPracticed}
       />
-      {/* question */}
-      <Box sx={{m: 4,}}>
-        <Typography variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", opacity: 0.92 }}>
+      <Box sx={{ m: 4 }}>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92 }}>
           {t('Complete the sentence with the correct word.')}
         </Typography>
       </Box>
-       {/* Card content */}
-      <Paper variant="outlined" sx={{ mx:16,my:6,px:6,py:8,}}>
-       <Box sx={{
-        wordBreak: "break-word" ,
-        display:"flex",
-        flexWrap:"wrap",
-         lineHeight:2.2,
-         }}>
-         {renderWords(parts[0])}
-         {/* blanks */}
-         <Box sx={{pr:1, 
-            display:'flex',
-            flexDirection:'column',
-            justifyContent:'start', 
-         }}>
-            <Grid item sx={{
-              // display:'inline-block',
-            mb: showCorrectAnswer?4:0,
-            position: 'relative',}}>
+      <Paper variant="outlined" sx={{ mx: 16, my: 6, px: 6, py: 8 }}>
+        <Box sx={{ wordBreak: "break-word", display: "flex", flexWrap: "wrap", lineHeight: 2.2 }}>
+          {renderWords(parts[0])}
+          <Box sx={{ pr: 1, display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
+            <Grid item sx={{ mb: showCorrectAnswer ? 4 : 0, position: 'relative' }}>
               {clues.map((clue, index) => (
                 <React.Fragment key={index}>
                   <input
@@ -145,60 +155,41 @@ const FillInTheBlanksCard = ({
                     onKeyDown={(event) => handleKeyDown(index, event)}
                     style={{
                       width: "24px",
-                      height:'28px',
+                      height: '28px',
                       textAlign: "center",
                       marginRight: "-1px",
                       fontSize: "16px",
                       border: "1px solid #ccc",
-                      backgroundColor: clue !== null ? grey[100] : "white",
-                      borderRadius:
-                        index === 0
-                          ? "4px 0 0 4px" // first 
-                          : index === clues.length - 1
-                          ? "0 4px 4px 0" // last
-                          : "0", // others
+                      backgroundColor: clue !== null ? grey[100] : backgroundColors[index],
+                      borderRadius: index === 0 ? "4px 0 0 4px" : index === clues.length - 1 ? "0 4px 4px 0" : "0",
                       color: clue !== null ? "black" : "inherit",
-                      pointerEvents: clue !== null ? "none" : "auto", // disable the input
-                      
+                      pointerEvents: clue !== null ? "none" : "auto",
                     }}
                     disabled={clue !== null}
                   />
-                  {/* answer */}
                   {index === clues.length - 1 && showCorrectAnswer && (
-                    <Box
-                    sx={{
-                      position: "absolute",
-                      ml:'6px',
-                      width: "100%",
-                    }}>
-                    <Typography
-                      variant="body1"
-                      sx={{ color: "green",  
-                        fontWeight: "bold",
-                        whiteSpace: 'nowrap',
-                        letterSpacing: "14px", // Adjust the distance between letters
-                      }}
-                    >
-                      {questionDetail.referenceAnswer}
-                    </Typography>
+                    <Box sx={{ position: "absolute", ml: '6px', width: "100%" }}>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "green", fontWeight: "bold", whiteSpace: 'nowrap', letterSpacing: "14px" }}
+                      >
+                        {questionDetail.referenceAnswer}
+                      </Typography>
                     </Box>
                   )}
                 </React.Fragment>
               ))}
             </Grid>
-        </Box>
-        {renderWords(parts[1])}
+          </Box>
+          {renderWords(parts[1])}
         </Box>
       </Paper>
-
-      {/* answer button */}
-      <Box gutterBottom sx={{display: 'flex',pb: 4,justifyContent: 'space-evenly',}}>
-          <AnswerButton text={t('Submit')} onClick={handleSubmit} />
+      <Box gutterBottom sx={{ display: 'flex', pb: 4, justifyContent: 'space-evenly' }}>
+        <AnswerButton text={t(buttonText)} onClick={handleSubmit} />
       </Box>
     </Box>
   );
 };
-
 
 FillInTheBlanksCard.propTypes = {
   questionId: PropTypes.number.isRequired,

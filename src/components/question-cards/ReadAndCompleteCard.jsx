@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { Box, Paper, Typography, Grid } from '@mui/material';
+import { Box, Paper, Typography, Grid, CircularProgress } from '@mui/material';
 import { grey, green, red } from '@mui/material/colors';
 import CardHeader from '../common/common-card-components/CardHeader';
 import AnswerButton from '../common/common-card-components/AnswerButton';
@@ -16,13 +16,36 @@ const ReadAndCompleteCard = ({
   handleLast,
   handleNext,
 }) => {
+  const [loading, setLoading] = useState(true);
+  const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (questionDetail.isPracticed) {
+      setIsPracticed(true);
+    }
+  }, [questionDetail]);
+
+  useEffect(() => {
+    if (questionDetail) {
+      setLoading(false);
+    }
+  }, [questionDetail]);
+
+
+  const validBlankList = questionDetail.blankList.map(blank => ({
+    clues: blank.clues || [],
+    answer: blank.answer || '',
+  }));
+
   const parts = questionDetail.sentenceTemplate.split('{}');
-  const [answers, setAnswers] = useState(questionDetail.blankList.map(blank =>
+  const [answers, setAnswers] = useState(validBlankList.map(blank =>
     blank.clues.map(clue => clue || '')
   ));
-  const [backgroundColors, setBackgroundColors] = useState(questionDetail.blankList.map(blank => Array(blank.clues.length).fill('white')));
+  const [backgroundColors, setBackgroundColors] = useState(validBlankList.map(blank => Array(blank.clues.length).fill('white')));
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
-  const inputRefs = useRef(questionDetail.blankList.map(blank => Array(blank.clues.length).fill(null)));
+  const [buttonText, setButtonText] = useState('Submit');
+  const inputRefs = useRef(validBlankList.map(blank => Array(blank.clues.length).fill(null)));
   const nextFocusRef = useRef(null);
 
   useEffect(() => {
@@ -33,6 +56,17 @@ const ReadAndCompleteCard = ({
       });
     }
   }, [answers]);
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!questionDetail || !questionDetail.sentenceTemplate || !questionDetail.blankList) {
+    return <div></div>;
+  }
 
   const getNextEnabledInput = (placeholderIndex, charIndex) => {
     for (let i = placeholderIndex; i < inputRefs.current.length; i++) {
@@ -98,34 +132,34 @@ const ReadAndCompleteCard = ({
     }
   };
 
-  const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
-  const { t } = useTranslation();
 
-  useEffect(() => {
-    if (questionDetail.isPracticed) {
-      setIsPracticed(true);
-    }
-  }, [questionDetail]);
-
-  if (!questionDetail) {
-    return <div></div>;
-  }
 
   const handleSubmit = () => {
-    setShowCorrectAnswer(!showCorrectAnswer);
+    if (buttonText === 'Submit') {
+      setShowCorrectAnswer(true);
 
-    // Update practice status
-    updatePracticeStatus(questionDetail.id, true);
-    setIsPracticed(true);
+      // Update practice status
+      updatePracticeStatus(questionDetail.id, true);
+      setIsPracticed(true);
 
-    // Compare user input with correct answer and update background colors
-    const newBackgroundColors = answers.map((answerGroup, i) =>
-      answerGroup.map((answer, j) =>
-        questionDetail.blankList[i].clues[j] !== null ? 'white' :
-        answer === questionDetail.blankList[i].answer[j] ? green[100] : red[100]
-      )
-    );
-    setBackgroundColors(newBackgroundColors);
+      // Compare user input with correct answer and update background colors
+      const newBackgroundColors = answers.map((answerGroup, i) =>
+        answerGroup.map((answer, j) =>
+          validBlankList[i].clues[j] !== null ? grey[100] :
+          answer === validBlankList[i].answer[j] ? green[100] : red[100]
+        )
+      );
+      setBackgroundColors(newBackgroundColors);
+      setButtonText('Solve Again');
+    } else {
+      // Reset the state to initial state
+      setShowCorrectAnswer(false);
+      setAnswers(validBlankList.map(blank =>
+        blank.clues.map(clue => clue || '')
+      ));
+      setBackgroundColors(validBlankList.map(blank => Array(blank.clues.length).fill('white')));
+      setButtonText('Submit');
+    }
   };
 
   return (
@@ -155,40 +189,45 @@ const ReadAndCompleteCard = ({
               </Typography>
               <Grid item key={`grid-${index}`} sx={{ display: 'inline-block', mr: 0.5, mb: showCorrectAnswer ? 4 : 0 }}>
                 {index < parts.length - 1 &&
-                  questionDetail.blankList[index].clues.map((clue, clueIndex) => (
-                    <input
-                      key={`input-${index}-${clueIndex}`}
-                      ref={el => {
-                        if (el) inputRefs.current[index][clueIndex] = el;
-                      }}
-                      type="text"
-                      value={answers[index][clueIndex]}
-                      onChange={(event) => handleInputChange(index, clueIndex, event)}
-                      onKeyDown={(event) => handleKeyDown(index, clueIndex, event)}
-                      style={{
-                        width: "24px",
-                        height: '28px',
-                        textAlign: "center",
-                        marginRight: "-1px",
-                        fontSize: "16px",
-                        border: "1px solid #ccc",
-                        backgroundColor: backgroundColors[index][clueIndex], // Set background color based on state
-                        borderRadius:
-                          clueIndex === 0
-                            ? "4px 0 0 4px" // First character
-                            : clueIndex === questionDetail.blankList[index].clues.length - 1
-                              ? "0 4px 4px 0" // Last character
-                              : "0", // Other characters
-                        color: clue !== null ? "black" : "inherit",
-                        pointerEvents: clue !== null ? "none" : "auto", // Disable input field
-                      }}
-                      disabled={clue !== null}
-                    />
-                  ))}
+                  validBlankList[index]?.clues?.map((clue, clueIndex) => {
+                    if (!inputRefs.current[index]) {
+                      inputRefs.current[index] = []; // Ensure the array exists
+                    }
+                    return (
+                      <input
+                        key={`input-${index}-${clueIndex}`}
+                        ref={el => {
+                          if (el) inputRefs.current[index][clueIndex] = el;
+                        }}
+                        type="text"
+                        value={answers[index]?.[clueIndex] || ''}
+                        onChange={(event) => handleInputChange(index, clueIndex, event)}
+                        onKeyDown={(event) => handleKeyDown(index, clueIndex, event)}
+                        style={{
+                          width: "24px",
+                          height: '28px',
+                          textAlign: "center",
+                          marginRight: "-1px",
+                          fontSize: "16px",
+                          border: "1px solid #ccc",
+                          backgroundColor: validBlankList[index]?.clues?.[clueIndex] !== null ? grey[100] : backgroundColors[index]?.[clueIndex] || 'white', // Set background color based on state
+                          borderRadius:
+                            clueIndex === 0
+                              ? "4px 0 0 4px" // First character
+                              : clueIndex === validBlankList[index]?.clues?.length - 1
+                                ? "0 4px 4px 0" // Last character
+                                : "0", // Other characters
+                          color: validBlankList[index]?.clues?.[clueIndex] !== null ? "black" : "inherit",
+                          pointerEvents: validBlankList[index]?.clues?.[clueIndex] !== null ? "none" : "auto", // Disable input field
+                        }}
+                        disabled={validBlankList[index]?.clues?.[clueIndex] !== null}
+                      />
+                    );
+                  })}
                 {index < parts.length - 1 && showCorrectAnswer && (
                   <Box sx={{ position: 'absolute', ml: '-10px' }}>
                     <Typography variant="body1" sx={{ color: "green", ml: 2, fontWeight: "bold", whiteSpace: 'nowrap', letterSpacing: "15px" }}>
-                      {questionDetail.blankList[index].answer}
+                      {validBlankList[index]?.answer}
                     </Typography>
                   </Box>
                 )}
@@ -198,7 +237,7 @@ const ReadAndCompleteCard = ({
         </Box>
       </Paper>
       <Box gutterBottom sx={{ display: 'flex', pb: 4, justifyContent: 'space-evenly' }}>
-        <AnswerButton text={t('Submit')} onClick={handleSubmit} />
+        <AnswerButton text={t(buttonText)} onClick={handleSubmit} />
       </Box>
     </Box>
   );
@@ -219,6 +258,12 @@ ReadAndCompleteCard.propTypes = {
 };
 
 export default ReadAndCompleteCard;
+
+
+
+
+
+
 
 
 
