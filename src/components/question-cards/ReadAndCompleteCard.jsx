@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { Box, Paper, Typography, Grid } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { grey, green, red } from '@mui/material/colors';
 import CardHeader from '../common/common-card-components/CardHeader';
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
@@ -20,13 +20,13 @@ const ReadAndCompleteCard = ({
   const [answers, setAnswers] = useState(questionDetail.blankList.map(blank =>
     blank.clues.map(clue => clue || '')
   ));
+  const [backgroundColors, setBackgroundColors] = useState(questionDetail.blankList.map(blank => Array(blank.clues.length).fill('white')));
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const inputRefs = useRef(questionDetail.blankList.map(blank => Array(blank.clues.length).fill(null)));
   const nextFocusRef = useRef(null);
 
   useEffect(() => {
     if (nextFocusRef.current) {
-      // Use requestAnimationFrame to ensure focus is set after state updates
       requestAnimationFrame(() => {
         nextFocusRef.current.focus();
         nextFocusRef.current = null;
@@ -34,7 +34,6 @@ const ReadAndCompleteCard = ({
     }
   }, [answers]);
 
-  // Function to get the next enabled input field
   const getNextEnabledInput = (placeholderIndex, charIndex) => {
     for (let i = placeholderIndex; i < inputRefs.current.length; i++) {
       for (let j = (i === placeholderIndex ? charIndex : 0); j < inputRefs.current[i].length; j++) {
@@ -46,7 +45,6 @@ const ReadAndCompleteCard = ({
     return null;
   };
 
-  // Function to get the previous enabled input field
   const getPreviousEnabledInput = (placeholderIndex, charIndex) => {
     for (let i = placeholderIndex; i >= 0; i--) {
       for (let j = (i === placeholderIndex ? charIndex : inputRefs.current[i].length - 1); j >= 0; j--) {
@@ -103,7 +101,6 @@ const ReadAndCompleteCard = ({
   const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
   const { t } = useTranslation();
 
-  // Initialize practice status
   useEffect(() => {
     if (questionDetail.isPracticed) {
       setIsPracticed(true);
@@ -114,22 +111,25 @@ const ReadAndCompleteCard = ({
     return <div></div>;
   }
 
-  // Handle submit button click
-  const handleSubmit = (answer) => {
+  const handleSubmit = () => {
     setShowCorrectAnswer(!showCorrectAnswer);
 
     // Update practice status
     updatePracticeStatus(questionDetail.id, true);
-
-    // Set practice status to true
     setIsPracticed(true);
+
+    // Compare user input with correct answer and update background colors
+    const newBackgroundColors = answers.map((answerGroup, i) =>
+      answerGroup.map((answer, j) =>
+        questionDetail.blankList[i].clues[j] !== null ? 'white' :
+        answer === questionDetail.blankList[i].answer[j] ? green[100] : red[100]
+      )
+    );
+    setBackgroundColors(newBackgroundColors);
   };
 
   return (
-    <Box
-      sx={{ p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb: 10 }}
-    >
-      {/* CardHeader */}
+    <Box sx={{ p: 2, width: '1200px', margin: 'auto', textAlign: 'center', pb: 10 }}>
       <CardHeader
         questionDetail={questionDetail}
         handleNext={handleNext}
@@ -140,39 +140,20 @@ const ReadAndCompleteCard = ({
         globalIndex={globalIndex}
         isPracticed={isPracticed}
       />
-      {/* Question section */}
       <Box sx={{ m: 4 }}>
-        <Typography variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", opacity: 0.92 }}>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92 }}>
           {t('Type the missing letters to complete the text below.')}
         </Typography>
       </Box>
 
-      {/* Card content */}
-      <Paper variant="outlined"
-        sx={{
-          wordBreak: "break-word",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "start",
-          alignItems: "center",
-          mx: 16, my: 4, px: 4, py: 2,
-          textAlign: 'left'
-        }}
-      >
-        {/* Blanks section */}
-        <Box sx={{
-          lineHeight: 2.2,
-          position: 'relative',
-        }}>
+      <Paper variant="outlined" sx={{ wordBreak: "break-word", display: "flex", flexWrap: "wrap", justifyContent: "start", alignItems: "center", mx: 16, my: 4, px: 4, py: 2, textAlign: 'left' }}>
+        <Box sx={{ lineHeight: 2.2, position: 'relative' }}>
           {parts.map((part, index) => (
             <React.Fragment key={`part-${index}`}>
               <Typography variant='h7' component="span" sx={{ mr: 0.5, fontWeight: 'medium', color: grey[800] }}>
                 {part}
               </Typography>
-              <Grid item sx={{ display: 'inline-block', mr: 0.5, mb: showCorrectAnswer ? 4 : 0 }}>
-                {/* Input fields */}
+              <Grid item key={`grid-${index}`} sx={{ display: 'inline-block', mr: 0.5, mb: showCorrectAnswer ? 4 : 0 }}>
                 {index < parts.length - 1 &&
                   questionDetail.blankList[index].clues.map((clue, clueIndex) => (
                     <input
@@ -191,7 +172,7 @@ const ReadAndCompleteCard = ({
                         marginRight: "-1px",
                         fontSize: "16px",
                         border: "1px solid #ccc",
-                        backgroundColor: clue !== null ? grey[100] : "white",
+                        backgroundColor: backgroundColors[index][clueIndex], // Set background color based on state
                         borderRadius:
                           clueIndex === 0
                             ? "4px 0 0 4px" // First character
@@ -204,22 +185,9 @@ const ReadAndCompleteCard = ({
                       disabled={clue !== null}
                     />
                   ))}
-                {/* Display correct answers */}
                 {index < parts.length - 1 && showCorrectAnswer && (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      ml: '-10px',
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "green", ml: 2,
-                        fontWeight: "bold",
-                        whiteSpace: 'nowrap',
-                        letterSpacing: "15px", // Adjust letter spacing
-                      }}>
+                  <Box sx={{ position: 'absolute', ml: '-10px' }}>
+                    <Typography variant="body1" sx={{ color: "green", ml: 2, fontWeight: "bold", whiteSpace: 'nowrap', letterSpacing: "15px" }}>
                       {questionDetail.blankList[index].answer}
                     </Typography>
                   </Box>
@@ -229,8 +197,7 @@ const ReadAndCompleteCard = ({
           ))}
         </Box>
       </Paper>
-      {/* Submit button */}
-      <Box gutterBottom sx={{ display: 'flex', pb: 4, justifyContent: 'space-evenly', }}>
+      <Box gutterBottom sx={{ display: 'flex', pb: 4, justifyContent: 'space-evenly' }}>
         <AnswerButton text={t('Submit')} onClick={handleSubmit} />
       </Box>
     </Box>
@@ -252,6 +219,7 @@ ReadAndCompleteCard.propTypes = {
 };
 
 export default ReadAndCompleteCard;
+
 
 
 
