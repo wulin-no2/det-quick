@@ -23,7 +23,6 @@ const FillInTheBlanksCard = ({
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const [buttonText, setButtonText] = useState('Submit');
   const inputRefs = useRef([]);
-  const nextFocusRef = useRef(null);
 
   const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
   const { t } = useTranslation();
@@ -33,15 +32,6 @@ const FillInTheBlanksCard = ({
       setIsPracticed(true);
     }
   }, [questionDetail]);
-
-  useEffect(() => {
-    if (nextFocusRef.current) {
-      requestAnimationFrame(() => {
-        nextFocusRef.current.focus();
-        nextFocusRef.current = null;
-      });
-    }
-  }, [answers]);
 
   const getNextEnabledInput = (index) => {
     for (let i = index + 1; i < inputRefs.current.length; i++) {
@@ -68,22 +58,34 @@ const FillInTheBlanksCard = ({
       newAnswers[index] = latestChar;
       setAnswers(newAnswers);
       if (index < clues.length - 1) {
-        nextFocusRef.current = getNextEnabledInput(index);
+        const nextInput = getNextEnabledInput(index);
+        if (nextInput) {
+          setTimeout(() => nextInput.focus(), 0);
+        }
       }
     }
   };
 
   const handleKeyDown = (index, event) => {
     if (event.key === 'ArrowRight' && index < clues.length - 1) {
-      nextFocusRef.current = getNextEnabledInput(index);
+      const nextInput = getNextEnabledInput(index);
+      if (nextInput) {
+        nextInput.focus();
+      }
     } else if (event.key === 'ArrowLeft' && index > 0) {
-      nextFocusRef.current = getPreviousEnabledInput(index);
+      const prevInput = getPreviousEnabledInput(index);
+      if (prevInput) {
+        prevInput.focus();
+      }
     } else if ((event.key === 'Backspace' || event.key === 'Delete')) {
       const newAnswers = [...answers];
       newAnswers[index] = '';
       setAnswers(newAnswers);
       if (index > 0) {
-        nextFocusRef.current = getPreviousEnabledInput(index);
+        const prevInput = getPreviousEnabledInput(index);
+        if (prevInput) {
+          prevInput.focus();
+        }
       }
       event.preventDefault();
     }
