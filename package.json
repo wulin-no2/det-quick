@@ -12,7 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.17",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.17",
     "atomize": "^1.0.28",
     "autoprefixer": "^10.4.19",
@@ -22,10 +23,13 @@
     "i18next-http-backend": "^2.5.1",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.1",
+    "react-media-recorder": "^1.6.6",
     "react-router-dom": "^6.23.1",
     "react-transition-group": "^4.4.5",
+    "react-use": "^17.5.0",
     "styled-components": "^6.1.11",
     "tailwindcss": "^3.4.3"
   },

@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider } from '@mui/material';
-
+import { useState, useCallback, useRef } from "react";
+import { Box, Typography, Divider, IconButton, CircularProgress } from '@mui/material';
 import { useTranslation } from "react-i18next";
+import { ReactMediaRecorder } from "react-media-recorder";
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AnswerButton from '../common/common-card-components/AnswerButton';
 import CardHeader from '../common/common-card-components/CardHeader';
+import styles from './ReadAloudCard.module.css';
 
 const ReadAloudCard = ({
-  // questionId,
-  // setCurrentQuestionId,
-  // setCurrentSubmoduleId,
-  // filters,
   count,
   currentIndex,
   questionDetail,
@@ -19,23 +18,36 @@ const ReadAloudCard = ({
   handleNext,
 }) => {
   const { t } = useTranslation();
+  const [recording, setRecording] = useState(false);
+  const [playing, setPlaying] = useState({ reference: false, recorded: false });
+  const audioRef = useRef(null);
+  const recordedAudioRef = useRef(null);
+
+  const handleStartRecording = useCallback((startRecording) => {
+    startRecording();
+    setRecording(true);
+  }, []);
+
+  const handleStopRecording = useCallback((stopRecording) => {
+    stopRecording();
+    setRecording(false);
+  }, []);
+
+  const handlePlayAudio = (audioElement, type) => {
+    if (audioElement.current) {
+      audioElement.current.play();
+      setPlaying((prev) => ({ ...prev, [type]: true }));
+      audioElement.current.onended = () => setPlaying((prev) => ({ ...prev, [type]: false }));
+    }
+  };
+
   if (!questionDetail) {
     return <div></div>;
   }
-  // handle answer buttons
-  const handleRecord = () => {
-    console.log('record..');
-  };
 
   return (
     <Box
-      sx={{
-        width: '1200px',
-        margin: 'auto',
-        textAlign: 'center',
-        // mb:10
-      }}
-    >
+      sx={{width: '1200px', margin: 'auto',textAlign: 'center',}}>
       {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
@@ -47,66 +59,127 @@ const ReadAloudCard = ({
         globalIndex={globalIndex}
       />
       {/* question */}
-      <Box
-        sx={{
-          m: 4,
-        }}
-      >
+      <Box sx={{ m: 4 }}>
         <Typography
           variant="h4"
           gutterBottom
-          sx={{ fontWeight: "bold", opacity: 0.92 }}
-        >
+          sx={{ fontWeight: "bold", opacity: 0.92 }}>
           {t('Record yourself saying the statement below: ')}
         </Typography>
       </Box>
       {/* question text */}
-      <Box sx={{mt:6, display:'flex', alignItems:'center', justifyContent:'center'}}>
-        <img src="/ReadAloud.png" style={{ width: '200px', mr:4}} />
+      <Box sx={{ mt: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <img src="/ReadAloud.png" style={{ width: '200px', marginRight: '20px' }} />
         <Typography
           variant='h5'
           gutterBottom
-          sx={{ fontWeight:"bold", opacity: 0.88,maxWidth:"500px" }}
-        >
+          sx={{ fontWeight: "bold", opacity: 0.88, maxWidth: "500px" }}>
           {`"${questionDetail.questionText}"`}
         </Typography>
       </Box>
       {/* answer buttons */}
-      <Box
-        gutterBottom
-        sx={{
-          display: 'flex',
-          p: 4,
-          justifyContent: 'space-evenly',
-        }}
-      >
-        <AnswerButton text='Record Now' onClick={handleRecord} />
-      </Box>
-      {/* Divider */}
-      <Divider sx={{ bgcolor: 'grey.100',width:'96%', mx:'auto'}} />
-      {/* reference audio */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          m: 2,
-        //   border:'1px black solid'
-        }}
-      >
-        <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
-          {t('Reference Audio')}
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {/* <IconButton aria-label="play/pause">
-            <PlayArrowIcon sx={{ height: 38, width: 38 }} />
-          </IconButton> */}
-          <audio controls>
-            <source src={questionDetail.referenceAudioLink} type="audio/mp3" />
-            Your browser does not support the audio element.
-          </audio>
-        </Box>
-      </Box>
+      <ReactMediaRecorder
+        audio
+        render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
+          <>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, position: 'relative' }}>
+              <AnswerButton 
+                text={status === "recording" ? 'Stop Recording' : t('Record Now')}
+                onClick={() => {
+                  if (status === "recording") {
+                    handleStopRecording(stopRecording);
+                  } else {
+                    handleStartRecording(startRecording);
+                  }}} 
+              />
+              {status === "recording" && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: 'absolute',
+                    ml: 30, // Add some spacing
+                  }}
+                />
+              )}
+            </Box>
+            {/* Divider */}
+            <Divider sx={{ bgcolor: 'grey.100', width: '96%', mx: 'auto', mt: 4 }} />
+            {/* playback recorded and reference audio */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                m: 2,
+              }}
+            >
+              {mediaBlobUrl && (
+                <Box sx={{ display: 'flex', alignItems: 'center', mr: 10,
+                }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 ,
+                    }}>
+                    {t('Your Recording')}
+                  </Typography>
+                  <Box sx={{display:'flex', justifyContent:'start',
+                  position:'absolute',
+                  ml:19
+                  }}>
+                  <IconButton
+                    onClick={() => handlePlayAudio(recordedAudioRef, 'recorded')}
+                    color="primary"
+                    sx={{ '&:focus': { outline: 'none' }, mr: 4 }}
+                  >
+                    {playing.recorded ? (
+                      <Box sx={{ display: 'flex', alignItems: 'center',}}>
+                        <div className={styles.waveform}>
+                          <span className={styles.bar}></span>
+                          <span className={styles.bar}></span>
+                          <span className={styles.bar}></span>
+                          <span className={styles.bar}></span>
+                          <span className={styles.bar}></span>
+                        </div>
+                      </Box>
+                    ) : <PlayCircleIcon />}
+                  </IconButton>
+                  <audio ref={recordedAudioRef} src={mediaBlobUrl} />
+                  </Box>
+                </Box>
+              )}
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
+                  {t('Reference Audio')}
+                </Typography>
+                <Box sx={{display:'flex', justifyContent:'start',
+                  position:'absolute',
+                  ml:20
+                  }}>
+                <IconButton
+                  onClick={() => handlePlayAudio(audioRef, 'reference')}
+                  color="primary"
+                  sx={{ '&:focus': { outline: 'none' } }}
+                >
+                  {playing.reference ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <div className={styles.waveform}>
+                        <span className={styles.bar}></span>
+                        <span className={styles.bar}></span>
+                        <span className={styles.bar}></span>
+                        <span className={styles.bar}></span>
+                        <span className={styles.bar}></span>
+                      </div>
+                    </Box>
+                  ) : <PlayCircleIcon />}
+                </IconButton>
+                <audio ref={audioRef}>
+                  <source src={questionDetail.referenceAudioLink} type="audio/mp3" />
+                  Your browser does not support the audio element.
+                </audio>
+                </Box>
+              </Box>
+            </Box>
+          </>
+        )}
+      />
     </Box>
   );
 };
@@ -121,9 +194,16 @@ ReadAloudCard.propTypes = {
   questionDetail: PropTypes.object, 
   getNameBySubmoduleId:PropTypes.func.isRequired,
   handleBack:PropTypes.func.isRequired,
-  globalIndex:PropTypes.number.isRequired,
+  globalIndex: PropTypes.number.isRequired,
   handleNext: PropTypes.func.isRequired,
   handleLast: PropTypes.func.isRequired,
 };
 
 export default ReadAloudCard;
+
+
+
+
+
+
+
