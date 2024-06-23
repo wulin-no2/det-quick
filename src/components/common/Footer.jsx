@@ -5,13 +5,11 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: '#f8f9fa',
+        backgroundColor: '#fff',
         padding: '20px',
         display: 'flex',
         justifyContent: 'space-between',
-        position: 'sticky',
-        bottom: 0,
-        width: '100%',
+        width: '1200px',
       }}
     >
       <Box sx={{ flex: 1 }}>

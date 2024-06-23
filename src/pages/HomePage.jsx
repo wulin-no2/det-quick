@@ -1,19 +1,18 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box,} from "@mui/material";
+import AdBanner from "../components/homepage/AdBanner";
+import PracticeSection from "../components/homepage/PracticeSection";
 
 function HomePage() {
+  const bannerImages = [
+    'https://dcdn.51ddedu.com/materials/banner/banner02_pc.png',
+    'https://dcdn.51ddedu.com/materials/banner/banner01_pc.png',
+  ];
+    
   return (
-    <div className="content">
-      <div className="container">
-        <Box className="p-4 max-w-lg mx-auto">
-          <Typography variant="h3" component={Link} href={`/practice`}>
-            Practice Now
-          </Typography>
-          {/* <Button variant="contained" color="primary">
-            MUI Button
-          </Button> */}
-        </Box>
-      </div>
-    </div>
+      <Box>
+      <AdBanner images={bannerImages} />
+      <PracticeSection />
+      </Box>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import './AdBanner.css';
+import { Box, IconButton } from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function AdBanner({ images }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -17,23 +19,105 @@ function AdBanner({ images }) {
     setCurrentImageIndex(index);
   };
 
+  const handlePrevClick = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
+  const handleNextClick = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
   return (
-    <div className="ad-banner">
-      <img src={images[currentImageIndex]} alt={`banner ${currentImageIndex + 1}`} />
-      <div className="indicators">
+    <Box sx={{
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: 1,
+        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+        width: '1200px',
+        height: '400px',
+      }}>
+      <Box
+        component="img"
+        src={images[currentImageIndex]}
+        alt={`banner ${currentImageIndex + 1}`}
+        sx={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          display: 'block',
+        }}/>
+      <IconButton
+        onClick={handlePrevClick}
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '10px',
+          transform: 'translateY(-50%)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: '#fff',
+          opacity: 0.6,
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          },
+          '&:focus': {
+            outline: 'none',
+          },
+        }}
+      >
+        <ArrowBackIosNewIcon />
+      </IconButton>
+      <IconButton
+        onClick={handleNextClick}
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          right: '10px',
+          transform: 'translateY(-50%)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: '#fff',
+          opacity: 0.6,
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          },
+          '&:focus': {
+            outline: 'none',
+          },
+        }}
+      >
+        <ArrowForwardIosIcon />
+      </IconButton>
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '10px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+        }}
+      >
         {images.map((_, idx) => (
-          <span
+          <Box
             key={idx}
-            className={`indicator ${idx === currentImageIndex ? 'active' : ''}`}
             onClick={() => handleIndicatorClick(idx)}
             role="button"
             aria-label={`Show banner ${idx + 1}`}
             tabIndex={0}
             onKeyDown={(e) => (e.key === 'Enter' ? handleIndicatorClick(idx) : null)}
-          ></span>
+            sx={{
+              display: 'inline-block',
+              width: '8px',
+              height: '8px',
+              backgroundColor: idx === currentImageIndex ? '#fff' : '#ccc',
+              margin: '0 5px',
+              borderRadius: '50%',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s',
+            }}
+          />
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
@@ -42,4 +126,7 @@ AdBanner.propTypes = {
 };
 
 export default AdBanner;
+
+
+
 
