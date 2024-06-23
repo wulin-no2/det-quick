@@ -7,16 +7,23 @@ import ReadingIcon from '@mui/icons-material/MenuBook';
 import WritingIcon from '@mui/icons-material/Create';
 import PeopleIcon from '@mui/icons-material/People'; 
 import { orange } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
+
 
 function CustomCard() {
+  const navigate = useNavigate();
   const iconsData = [
-    { icon: <VocabularyIcon />, title: 'Vocabulary', types: '1 type' },
-    { icon: <SpeakingIcon />, title: 'Speaking', types: '4 types' },
-    { icon: <ListeningIcon />, title: 'Listening', types: '2 types' },
-    { icon: <ReadingIcon />, title: 'Reading', types: '2 types' },
-    { icon: <WritingIcon />, title: 'Writing', types: '2 types' },
-    { icon: <PeopleIcon />, title: 'Sample', types: '2 types' },
+    { icon: <VocabularyIcon />, title: 'Vocabulary', types: '1 type' , moduleId: 1 },
+    { icon: <SpeakingIcon />, title: 'Speaking', types: '4 types' , moduleId: 2 },
+    { icon: <ListeningIcon />, title: 'Listening', types: '2 types' , moduleId: 3 },
+    { icon: <ReadingIcon />, title: 'Reading', types: '2 types' , moduleId: 4 },
+    { icon: <WritingIcon />, title: 'Writing', types: '2 types' , moduleId: 5 },
+    { icon: <PeopleIcon />, title: 'Sample', types: '2 types' , moduleId: 6 },
   ];
+  const handleClick = (moduleId) => {
+    localStorage.setItem('moduleId', moduleId);
+    navigate('/practice');
+  };
 
   return (
     <Box
@@ -34,6 +41,7 @@ function CustomCard() {
       {iconsData.map((data, index) => (
         <Box
           key={index}
+          onClick={() => handleClick(data.moduleId)}
           sx={{
             mt: 3,
             mb: 2.5,

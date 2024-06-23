@@ -4,8 +4,6 @@ import QuestionListCard from "../components/question-list/QuestionListCard";
 import { useState, useEffect} from "react";
 
 const PracticeListPage = () => {
-  // const [moduleId, setModuleId] = useState(1);
-  // const [submoduleId, setSubmoduleId] = useState(1);
   const [moduleId, setModuleId] = useState(() => {
     const saved = localStorage.getItem("moduleId");
     return saved ? JSON.parse(saved) : 1;
