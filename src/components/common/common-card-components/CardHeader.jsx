@@ -22,6 +22,7 @@ const CardHeader = ({ questionDetail, totalWords,
   globalIndex,
   handleLast, handleNext,
   isPracticed
+  , onTimeUp 
   // getNameBySubmoduleId
 }) => {
   const time_limit = timeLimit(questionDetail.submoduleId);
@@ -39,13 +40,14 @@ const CardHeader = ({ questionDetail, totalWords,
           clearInterval(timerInterval);
           // handleNext(); // Automatically go to next question when timer ends
           console.log("globalIndex ",globalIndex)
+          onTimeUp(); // Call onTimeUp when timer ends
           return time_limit; 
         }
       });
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [time_limit, handleNext, globalIndex]);
+  }, [time_limit, onTimeUp, globalIndex]);
 
   const progress = ((time_limit - timer) / time_limit) * 100;
 
