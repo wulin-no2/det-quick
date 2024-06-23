@@ -31,8 +31,8 @@ function AdBanner({ images }) {
     <Box sx={{
         position: 'relative',
         overflow: 'hidden',
-        borderRadius: 1,
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+        borderRadius: 4,
+        // boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
         width: '1200px',
         height: '400px',
       }}>

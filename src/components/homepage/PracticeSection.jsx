@@ -1,45 +1,18 @@
+import { Box, Typography } from "@mui/material";
 import CustomCard from "./CustomCard";
 import "./PracticeSection.css"; 
+import { orange } from '@mui/material/colors';
 
 function PracticeSection() {
   return (
-    <div className="practice-section">
-      <h2>DET Practice</h2>
-     
-      <CustomCard/>
-      
-        {/* <div className="practice-item">
-            <div className="icon-placeholder"></div>
-            <a href="/practice1">Practice 1</a>
-        </div>
-        <div className="practice-item">
-            <div className="icon-placeholder"></div>
-            <a href="/practice1">Practice 2</a>
-        </div>
-        <div className="practice-item">
-            <div className="icon-placeholder"></div>
-            <a href="/practice2">Practice 3</a>
-        </div>
-        <div className="practice-item">
-            <div className="icon-placeholder"></div>
-            <a href="/practice1">Practice 4</a>
-        </div>
-        <div className="practice-item">
-            <div className="icon-placeholder"></div>
-            <a href="/practice2">Practice 5</a>
-        </div>
-        <div className="practice-item"> */}
-            {/* <div className="icon-placeholder"></div>
-            <a href="/practice1">Practice 6</a> */}
-       
-      
-    </div>       
-        
-      
-        
-       
-    
-    
+    <Box sx={{my:4}}>
+        <Box sx={{display:'flex', m:1 }}>
+         <Typography variant="h5" sx={{fontWeight:'bold', color:orange[500]}}>DET{' '}</Typography>
+         <Box sx={{ width: 4 }} /> 
+         <Typography variant="h5" sx={{fontWeight:'bold'}}>Practice</Typography>
+        </Box>
+        <CustomCard/>
+    </Box>       
   );
 }
 

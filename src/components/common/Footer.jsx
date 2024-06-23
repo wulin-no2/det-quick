@@ -6,10 +6,10 @@ const Footer = () => {
       component="footer"
       sx={{
         backgroundColor: '#fff',
-        padding: '20px',
+        p: '20px',
         display: 'flex',
         justifyContent: 'space-between',
-        width: '1200px',
+        width: '100%',
       }}
     >
       <Box sx={{ flex: 1 }}>
