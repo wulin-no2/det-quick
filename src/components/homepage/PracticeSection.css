@@ -1,0 +1,61 @@
+.practice-section {
+    background-color: #f8f9fa;  
+    padding: 30px 100px;  
+}
+
+.practice-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 20px;  
+    color: #555;  
+}
+
+
+/* .practice-container {
+    background-color: #fff;  
+    border-radius: 10px;     
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);  
+    padding: 20px;  
+    display: flex;  
+    justify-content: space-between;  
+    max-width: 1200px;  
+    margin: 0 auto;  
+} */
+
+/* .practice-item {
+    flex: 1;  
+    display: flex;
+    flex-direction: column;  
+    align-items: center;  
+} */
+
+/* .icon-placeholder {
+    width: 60px;   
+    height: 60px;
+    background-color: #ccc;
+    margin-bottom: 15px;  
+    border-radius: 50%;  
+}
+
+
+.practice-item a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+  
+    font-size: 18px;  
+    
+}
+
+.practice-item a:hover {
+    color: #007BFF;
+}
+
+.icon-placeholder {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;  
+    margin-bottom: 10px;     
+} */
+

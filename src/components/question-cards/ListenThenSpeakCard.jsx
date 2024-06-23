@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import { Box, Typography , Divider} from '@mui/material';
 // import { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import AnswerButton from '../common/common-card-components/AnswerButton';
-import CardHeader from '../common/common-card-components/CardHeader';
+import AnswerButton from '../common/question-card-components/AnswerButton';
+import CardHeader from '../common/question-card-components/CardHeader';
 import {useState, useRef} from "react";
 
 const ListenThenSpeakCard = ({

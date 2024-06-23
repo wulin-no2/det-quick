@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Box, Typography, List, ListItem, Grid, Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import DifficultyButton from "../../common/common-card-components/CardHeaderComponents/DifficultyButton";
+import DifficultyButton from "../../common/question-card-components/CardHeaderComponents/DifficultyButton";
 
 const baseQuestionsDetailURL = "questions/detail";
 

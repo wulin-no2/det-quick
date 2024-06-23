@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
-import QuestionFilterMenu from "./question-card-components/QuestionFilterMenu";
-import QuestionList from "./question-card-components/QuestionList";
+import QuestionFilterMenu from "./question-list-components/QuestionFilterMenu";
+import QuestionList from "./question-list-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
 import { fetchQuestionListResponseData } from "../../api/api-fetchQuestionList";
 

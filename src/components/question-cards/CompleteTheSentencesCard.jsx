@@ -13,7 +13,7 @@ import {
 
 import { useTheme } from '@mui/material/styles';
 
-import CardHeader from '../common/common-card-components/CardHeader';
+import CardHeader from '../common/question-card-components/CardHeader';
 
 
 

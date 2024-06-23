@@ -9,6 +9,7 @@ import "./utils/languageSwitcher/i18n"; // import i18n to translate
 import Navbar from "./components/navbar/navbar";
 import PracticeListPage from "./pages/PracticeListPage";
 import QuestionPage from "./pages/QuestionPage";
+import Footer from "./components/common/Footer";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/practice/questions/detail" element={<QuestionPage />} />
                 <Route path="*" element={<h1>Page not found</h1>} />
               </Routes>
+              <Footer/>
             </Box>
           </Container>
         </Router>

@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 
 import { useTheme } from '@mui/material/styles';
-import CardHeader from '../common/common-card-components/CardHeader';
+import CardHeader from '../common/question-card-components/CardHeader';
 
 const question = {
   id: 4233,

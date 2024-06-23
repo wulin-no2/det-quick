@@ -1,0 +1,35 @@
+.ad-banner {
+    margin: 20px 100px; /* 顶部和底部增加20px的外边距 */
+
+    position: relative;
+    overflow: hidden;  /* 隐藏超出的部分 */
+    border-radius: 8px;  /* 圆角 */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* 这行代码为元素添加阴影 */
+
+  }
+  
+  .ad-banner img {
+    width: 100%;  /* 图片宽度填充整个容器 */
+    display: block;
+  }
+  
+  .indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);  /* 指示器水平居中 */
+  }
+  
+  .indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #ccc;
+    margin: 0 5px;
+    border-radius: 50%;  /* 圆形指示器 */
+  }
+  
+  .indicator.active {
+    background-color: #fff;  /* 当前图片的指示器颜色 */
+  }
+  

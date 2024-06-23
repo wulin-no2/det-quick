@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Paper, Grid } from "@mui/material";
-import CardHeader from "../common/common-card-components/CardHeader";
-import AnswerButton from "../common/common-card-components/AnswerButton";
+import CardHeader from "../common/question-card-components/CardHeader";
+import AnswerButton from "../common/question-card-components/AnswerButton";
 import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
 import { grey, green, red } from '@mui/material/colors';
 

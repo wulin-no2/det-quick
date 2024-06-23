@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import TabPanel from "./question-card-components/TabPanel";
+import TabPanel from "./question-list-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 
 const types = [

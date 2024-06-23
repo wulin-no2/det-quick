@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
-import TabPanel from "./question-card-components/TabPanel";
+import TabPanel from "./question-list-components/TabPanel";
 
 
 const SuperQuestionTypeContent = ({ 

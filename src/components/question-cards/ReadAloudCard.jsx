@@ -4,8 +4,8 @@ import { Box, Typography, Divider, IconButton, CircularProgress } from '@mui/mat
 import { useTranslation } from "react-i18next";
 import { ReactMediaRecorder } from "react-media-recorder";
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import AnswerButton from '../common/common-card-components/AnswerButton';
-import CardHeader from '../common/common-card-components/CardHeader';
+import AnswerButton from '../common/question-card-components/AnswerButton';
+import CardHeader from '../common/question-card-components/CardHeader';
 import styles from './ReadAloudCard.module.css';
 
 const ReadAloudCard = ({
