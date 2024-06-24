@@ -8,17 +8,19 @@ import WritingIcon from '@mui/icons-material/Create';
 import PeopleIcon from '@mui/icons-material/People'; 
 import { orange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 
 function CustomCard() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const iconsData = [
-    { icon: <VocabularyIcon />, title: 'Vocabulary', types: '1 type' , moduleId: 1 },
-    { icon: <SpeakingIcon />, title: 'Speaking', types: '4 types' , moduleId: 2 },
-    { icon: <ListeningIcon />, title: 'Listening', types: '2 types' , moduleId: 3 },
-    { icon: <ReadingIcon />, title: 'Reading', types: '2 types' , moduleId: 4 },
-    { icon: <WritingIcon />, title: 'Writing', types: '2 types' , moduleId: 5 },
-    { icon: <PeopleIcon />, title: 'Sample', types: '2 types' , moduleId: 6 },
+    { icon: <VocabularyIcon />, title: 'Vocabulary', types: '1' , moduleId: 1 },
+    { icon: <SpeakingIcon />, title: 'Speaking', types: '4' , moduleId: 2 },
+    { icon: <ListeningIcon />, title: 'Listening', types: '2' , moduleId: 3 },
+    { icon: <ReadingIcon />, title: 'Reading', types: '3' , moduleId: 4 },
+    { icon: <WritingIcon />, title: 'Writing', types: '2' , moduleId: 5 },
+    { icon: <PeopleIcon />, title: 'Sample', types: '2' , moduleId: 6 },
   ];
   const handleClick = (moduleId) => {
     localStorage.setItem('moduleId', moduleId);
@@ -26,6 +28,7 @@ function CustomCard() {
   };
 
   return (
+    
     <Box
       sx={{
         width:'1200px',
@@ -75,7 +78,7 @@ function CustomCard() {
               color: '#333',
             }}
           >
-            {data.title}
+            {t(data.title)}
           </Typography>
           <Typography
             variant="body2"
@@ -84,7 +87,7 @@ function CustomCard() {
               color: '#777',
             }}
           >
-            {data.types}
+             {data.types === '1' ? `${data.types} ${t('type')}` : `${data.types} ${t('types')}`}
           </Typography>
         </Box>
       ))}

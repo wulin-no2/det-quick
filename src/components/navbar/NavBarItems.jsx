@@ -1,5 +1,5 @@
 import "./NavBar.css";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export default function NavBarItems() {
@@ -24,21 +24,21 @@ export default function NavBarItems() {
         </Link>
       </li>
       <li>
-        <NavLink
+        <Link
           to="/live-course"
           className={location.pathname === "/live-course" ? "active-link" : ""}
         >
           {t("live_course")}
-        </NavLink>
+        </Link>
       </li>
-      <li>
+      {/* <li>
         <Link
           to="/mock-test"
           className={location.pathname === "/mock-test" ? "active-link" : ""}
         >
           {t("mock_test")}
         </Link>
-      </li>
+      </li> */}
       <li>
         <Link
           to="/about-us"
