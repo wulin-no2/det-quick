@@ -9,6 +9,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabPanel from "./question-list-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
+import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 
 const types = [
   { module_id: 1, name: "Vocabulary" },
@@ -64,25 +65,27 @@ const QuestionListCard = ({
   setSubmoduleId,
   globalIndex,
   setGlobalIndex,
+  currentPage,
+  setCurrentPage,
 }) => {
   // get moduleId value from localStorage first
   const [value, setValue] = useState(() => {
-    // const saved = localStorage.getItem("tabIndex");
-    const saved = localStorage.getItem("moduleId") - 1;
+    const saved = localStorage.getItem("tabIndex");
+    // const saved = localStorage.getItem("moduleId") - 1;
     return saved ? JSON.parse(saved) : 0;
   });
 
   const { t } = useTranslation();
 
    // handle currentPage
-   const [currentPage, setCurrentPage] = useState(() => {
-    const saved = localStorage.getItem("currentPage");
-    return saved ? JSON.parse(saved) : 1;
-  });
+  //  const [currentPage, setCurrentPage] = useState(() => {
+  //   const saved = localStorage.getItem("currentPage");
+  //   return saved ? JSON.parse(saved) : 1;
+  // });
 
-  useEffect(() => {
-    localStorage.setItem("currentPage", JSON.stringify(currentPage));
-  }, [currentPage]);
+  // useEffect(() => {
+  //   localStorage.setItem("currentPage", JSON.stringify(currentPage));
+  // }, [currentPage]);
 
   // when moduleId changes, update value
   useEffect(() => {
@@ -90,7 +93,7 @@ const QuestionListCard = ({
     if (index !== -1) {
       setValue(index);
       // store tabIndex
-      // localStorage.setItem("tabIndex", JSON.stringify(index));
+      localStorage.setItem("tabIndex", JSON.stringify(index));
       localStorage.setItem("moduleId", JSON.stringify(index + 1));
     }
   }, [moduleId]);
@@ -103,7 +106,7 @@ const QuestionListCard = ({
     // Update the moduleId based on default submoduleId
     const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
     setSubmoduleId(defaultSubmoduleId);
-    localStorage.setItem("submoduleId", defaultSubmoduleId);
+    localStorage.setItem("submoduleId", JSON.stringify(defaultSubmoduleId));
     setCurrentPage(1);  // Reset to the first page when moduleId change
     setGlobalIndex(1); // Reset globalIndex when moduleId changes
   };
@@ -138,6 +141,7 @@ const QuestionListCard = ({
           />
         </TabPanel>
       ))}
+      <ShowLocalStorage componentName='QuestionListCard'/>
     </Box>
   );
 };
@@ -149,6 +153,8 @@ QuestionListCard.propTypes = {
   setSubmoduleId: PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,
   setGlobalIndex: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default QuestionListCard;

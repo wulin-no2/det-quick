@@ -12,6 +12,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 import TabPanel from "./question-list-components/TabPanel";
+import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 
 
 const SuperQuestionTypeContent = ({ 
@@ -25,28 +26,26 @@ const SuperQuestionTypeContent = ({
   setGlobalIndex,
 
  }) => {
+  const { t } = useTranslation();
+  const currentTypes = subTypesArr[moduleId - 1];
+
   // get submoduleId value from localStorage first
     const [value, setValue] = useState(() => {
-    // const saved = localStorage.getItem("subTabIndex");
-    const saved = localStorage.getItem("submoduleId") - 1;
+    const saved = localStorage.getItem("subTabIndex");
+    // const saved = localStorage.getItem("submoduleId") - 1;
     return saved ? JSON.parse(saved) : 0;
   });
-  // const [value, setValue] = useState(0);
-  const { t } = useTranslation();
-  const currentTypes = subTypesArr[moduleId-1];
 
-  // handle filters and currentPage change
+  // handle filters change
   const [filters, setFilters] = useState(() => {
     const saved = localStorage.getItem("filters");
     return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
   });
 
-  // store filters and currentPage
+  // store filters 
   useEffect(() => {
     localStorage.setItem("filters", JSON.stringify(filters));
   }, [filters]);
-
-
 
   // when submoduleId changes, update value
   useEffect(() => {
@@ -54,20 +53,21 @@ const SuperQuestionTypeContent = ({
     if (index !== -1) {
       setValue(index);
       // store subTabIndex
-      // localStorage.setItem("subTabIndex", JSON.stringify(index));
-      localStorage.setItem("submoduleId", JSON.stringify(index + 1));
+      localStorage.setItem("subTabIndex", JSON.stringify(index));
+      // localStorage.setItem("submoduleId", JSON.stringify(index + 1));
     }
   }, [submoduleId, currentTypes]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+  // handle submoduleId changes by clicking tab
   const handleChange = (event, newValue) => {
     setValue(newValue);
     // update submoduleId
     const selectedSubmoduleId = currentTypes[newValue].submodule_id;
     setSubmoduleId(selectedSubmoduleId);
+    localStorage.setItem("submoduleId", JSON.stringify(selectedSubmoduleId));
     setCurrentPage(1);  // Reset to the first page when submoduleId change
     setGlobalIndex(1); // Reset globalIndex when submoduleId changes
   };
@@ -110,6 +110,7 @@ const SuperQuestionTypeContent = ({
             />
         </TabPanel>
       ))}
+      <ShowLocalStorage componentName='SuperQuestionTypeContent'/>
     </Box>
   );
 };

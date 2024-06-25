@@ -9,6 +9,7 @@ import QuestionFilterMenu from "./question-list-components/QuestionFilterMenu";
 import QuestionList from "./question-list-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
 import { fetchQuestionListResponseData } from "../../api/api-fetchQuestionList";
+import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -123,6 +124,7 @@ const SubQuestionTypeContent = ({
           <PaginationRounded pages={pages} onPageChange={handlePageChange} currentPage={currentPage} />
         </Item>
       </Stack>
+      <ShowLocalStorage componentName='SubQuestionTypeContent'/>
     </Box>
   );
 };

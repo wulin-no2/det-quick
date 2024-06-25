@@ -31,7 +31,7 @@ function QuestionPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const state = location.state || JSON.parse(localStorage.getItem("questionPageState")) || {};
+  const state = location.state|| JSON.parse(localStorage.getItem("questionPageState"))|| {};
 
   const {
     questionId,

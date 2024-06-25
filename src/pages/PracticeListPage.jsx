@@ -2,6 +2,7 @@
 
 import QuestionListCard from "../components/question-list/QuestionListCard";
 import { useState, useEffect} from "react";
+import { ShowLocalStorage } from "../utils/ShowLocalStorage";
 
 const PracticeListPage = () => {
   const [moduleId, setModuleId] = useState(() => {
@@ -14,6 +15,10 @@ const PracticeListPage = () => {
   });
   const [globalIndex, setGlobalIndex] = useState(() => {
     const saved = localStorage.getItem("globalIndex");
+    return saved ? JSON.parse(saved) : 1;
+  });
+  const [currentPage, setCurrentPage] = useState(() => {
+    const saved = localStorage.getItem("currentPage");
     return saved ? JSON.parse(saved) : 1;
   });
 
@@ -29,6 +34,10 @@ const PracticeListPage = () => {
     localStorage.setItem("globalIndex", JSON.stringify(globalIndex));
   }, [globalIndex]);
 
+  useEffect(() => {
+    localStorage.setItem("currentPage", JSON.stringify(currentPage));
+  }, [currentPage]);
+
   return (
     <>
       <QuestionListCard
@@ -38,7 +47,10 @@ const PracticeListPage = () => {
         setSubmoduleId={setSubmoduleId}
         globalIndex={globalIndex}
         setGlobalIndex={setGlobalIndex}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
+      <ShowLocalStorage componentName="PracticeListPage"/>
     </>
   );
 };
