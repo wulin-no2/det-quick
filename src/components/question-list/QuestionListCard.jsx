@@ -67,7 +67,8 @@ const QuestionListCard = ({
 }) => {
   // get moduleId value from localStorage first
   const [value, setValue] = useState(() => {
-    const saved = localStorage.getItem("tabIndex");
+    // const saved = localStorage.getItem("tabIndex");
+    const saved = localStorage.getItem("moduleId") - 1;
     return saved ? JSON.parse(saved) : 0;
   });
 
@@ -89,7 +90,8 @@ const QuestionListCard = ({
     if (index !== -1) {
       setValue(index);
       // store tabIndex
-      localStorage.setItem("tabIndex", JSON.stringify(index));
+      // localStorage.setItem("tabIndex", JSON.stringify(index));
+      localStorage.setItem("moduleId", JSON.stringify(index + 1));
     }
   }, [moduleId]);
 
@@ -101,6 +103,7 @@ const QuestionListCard = ({
     // Update the moduleId based on default submoduleId
     const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
     setSubmoduleId(defaultSubmoduleId);
+    localStorage.setItem("submoduleId", defaultSubmoduleId);
     setCurrentPage(1);  // Reset to the first page when moduleId change
     setGlobalIndex(1); // Reset globalIndex when moduleId changes
   };

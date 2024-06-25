@@ -27,7 +27,8 @@ const SuperQuestionTypeContent = ({
  }) => {
   // get submoduleId value from localStorage first
     const [value, setValue] = useState(() => {
-    const saved = localStorage.getItem("subTabIndex");
+    // const saved = localStorage.getItem("subTabIndex");
+    const saved = localStorage.getItem("submoduleId") - 1;
     return saved ? JSON.parse(saved) : 0;
   });
   // const [value, setValue] = useState(0);
@@ -53,7 +54,8 @@ const SuperQuestionTypeContent = ({
     if (index !== -1) {
       setValue(index);
       // store subTabIndex
-      localStorage.setItem("subTabIndex", JSON.stringify(index));
+      // localStorage.setItem("subTabIndex", JSON.stringify(index));
+      localStorage.setItem("submoduleId", JSON.stringify(index + 1));
     }
   }, [submoduleId, currentTypes]);
 

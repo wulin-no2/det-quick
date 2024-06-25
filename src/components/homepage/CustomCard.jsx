@@ -24,6 +24,7 @@ function CustomCard() {
   ];
   const handleClick = (moduleId) => {
     localStorage.setItem('moduleId', moduleId);
+    
     navigate('/practice');
   };
 
