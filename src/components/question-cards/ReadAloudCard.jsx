@@ -102,7 +102,17 @@ const ReadAloudCard = ({
 
           return (
             <>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, alignItems:'center', position: 'relative'}}>
+              <Box sx={{ display: 'flex', flexDirection:'column',justifyContent: 'center', mt: 4, alignItems:'center', position: 'relative'}}>
+              {status === "recording" && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: 'absolute',
+                      bottom: '68px',
+                      // left: 'calc(50% + 110px)', // Position it to the right of the button with spacing
+                    }}
+                  />
+                )}
                 <AnswerButton 
                   text={status === "recording" ? 'Stop Recording' : t('Record Now')}
                   onClick={() => {
@@ -113,15 +123,7 @@ const ReadAloudCard = ({
                     }
                   }} 
                 />
-                {status === "recording" && (
-                  <CircularProgress
-                    size={24}
-                    sx={{
-                      position: 'absolute',
-                      left: 'calc(50% + 110px)', // Position it to the right of the button with spacing
-                    }}
-                  />
-                )}
+                
               </Box>
               {/* Divider */}
               <Divider sx={{ bgcolor: 'grey.100', width: '96%', mx: 'auto', mt: 4 }} />
