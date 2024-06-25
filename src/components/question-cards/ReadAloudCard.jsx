@@ -102,7 +102,7 @@ const ReadAloudCard = ({
 
           return (
             <>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, position: 'relative' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, alignItems:'center', position: 'relative'}}>
                 <AnswerButton 
                   text={status === "recording" ? 'Stop Recording' : t('Record Now')}
                   onClick={() => {
@@ -118,7 +118,7 @@ const ReadAloudCard = ({
                     size={24}
                     sx={{
                       position: 'absolute',
-                      left: 'calc(100% + 10px)', // Position it to the right of the button with spacing
+                      left: 'calc(50% + 110px)', // Position it to the right of the button with spacing
                     }}
                   />
                 )}
@@ -128,7 +128,7 @@ const ReadAloudCard = ({
               {/* playback recorded and reference audio */}
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', m: 2 }}>
                 {mediaBlobUrl && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 10 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 10 , position: 'relative'}}>
                     <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
                       {t('Your Recording')}
                     </Typography>
@@ -154,7 +154,7 @@ const ReadAloudCard = ({
                     </Box>
                   </Box>
                 )}
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' , position: 'relative' }}>
                   <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
                     {t('Reference Audio')}
                   </Typography>
