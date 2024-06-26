@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { grey } from '@mui/material/colors';
+import AnswerButton from '../../common/question-card-components/AnswerButton';
 import {
   Grid,
   Typography,
@@ -7,165 +10,138 @@ import {
   Radio,
   Card,
   CardContent,
-  Box,
   Divider,
+  Box
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-import { useTheme } from "@mui/material/styles";
 
-import CardHeader from "../../common/question-card-components/CardHeader";
-
-const question = {
-  id: 4233,
-  text: 'The Amazon rainforest is often referred to as the "lungs of the Earth" because it produces about 20% of the world\'s oxygen. This vast tropical forest is home to an incredible diversity of plant and animal species, many of which are found nowhere else on the planet. {} This deforestation not only threatens the biodiversity of the region but also contributes to global climate change by releasing large amounts of carbon dioxide into the atmosphere.',
-  difficulty: 3,
-  time_limit: 120,
-  type: "Complete the Passage",
-  options: [
-    "Many indigenous communities live in the Amazon and depend on its resources for their livelihoods.",
-    "However, in recent decades, large areas of the Amazon have been cleared for agriculture and cattle ranching.",
-    "Scientists are still discovering new species in the Amazon every year.",
-    "The Amazon River, which flows through the forest, is one of the longest rivers in the world.",
-  ],
-};
-
-const CompleteThePassageCard = () => {
-  const theme = useTheme();
+const CompleteThePassageCard = ({ sequence,handleNextSequence}) => {
+  const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
+
+  useEffect(() => {
+    setSelectedOption("");
+  }, [sequence]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const rectangleStyle = {
-    display: "inline-block",
-    width: "100%",
-    height: "70px", // Fixed height
-    border: "2px dashed lightgrey",
-    borderRadius: "8px",
-    textAlign: "left",
-    margin: "16px 0",
-    backgroundColor: "transparent",
-    padding: "10px",
-    lineHeight: "1.5",
-    color: theme.palette.grey[700],
-    overflow: "hidden", // Ensures text does not overflow the rectangle
-    wordWrap: "break-word", // Allows text to wrap within the rectangle
-  };
-
-  const radioStyle = {
-    border: "1px solid",
-    borderColor: theme.palette.grey[300], // Change border to grey-600
-    borderRadius: "8px",
-    padding: "10px",
-    marginBottom: "8px",
-    display: "flex",
-    alignItems: "flex-start", // Align the radio button and text on the top
-    gap: "10px",
-    color: theme.palette.grey[700],
-  };
-
-  const radioControlStyle = {
-    "&.MuiRadio-root": {
-      color: theme.palette.grey[300],
+  const styles = {
+    rectangle: {
+      display: "inline-block",
+      width: "100%",
+      height: "70px",
+      border: "2px dashed lightgrey",
+      borderRadius: "8px",
+      textAlign: "left",
+      margin: "16px 0",
+      backgroundColor: "transparent",
+      padding: "10px",
+      lineHeight: "1.5",
+      color: grey[700],
+      overflow: "hidden",
+      wordWrap: "break-word",
     },
-    "&.MuiRadio-root.Mui-checked": {
-      color: "rgb(240,174,63)",
+    radio: {
+      with:'100%',
+      border: "1px solid",
+      borderColor: grey[300],
+      borderRadius: "8px",
+      padding: "10px",
+      mx:'auto',
+      marginBottom: "8px",
+      display: "flex",
+      alignItems: "flex-start",
+      gap: 1,
+      color: grey[700],
     },
-    "& .MuiSvgIcon-root": {
-      fontSize: "1.2rem",
+    radioControl: {
+      "&.MuiRadio-root": {
+        color: grey[300],
+      },
+      "&.MuiRadio-root.Mui-checked": {
+        color: "rgb(240,174,63)",
+      },
+      "& .MuiSvgIcon-root": {
+        fontSize: "1.2rem",
+      },
     },
   };
 
   return (
-    <Box
-      sx={{
-        width: "1100px",
-        margin: "auto",
-        textAlign: "left",
-        border: "1px solid lightgray",
-        borderRadius: "8px",
-        backgroundColor: "white",
-      }}
-    >
-      {/* CardHeader */}
-      <CardHeader
-        word={question}
-        onNext={0}
-        onLast={0}
-        currentIndex={1}
-        totalWords={3}
-      />
-
-      {/* Card content */}
-      <Grid container spacing={4} sx={{ padding: 4 }}>
-        {/* Passage */}
-        <Grid item xs={7}>
-          <Card
-            sx={{
-              minWidth: 275,
-              backgroundColor: "#f5f5f5",
-              border: "1px solid lightgrey",
-              boxShadow: "none",
-            }}
-          >
-            <CardContent sx={{ position: "relative", paddingInline: 4 }}>
-              <Typography
-                variant="subtitle1"
-                sx={{ color: theme.palette.grey[700] }}
-              >
-                PASSAGE
-              </Typography>
-              <Divider
-                sx={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: "56px",
-                }}
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  lineHeight: 2,
-                  marginTop: 4,
-                  color: theme.palette.grey[700],
-                }}
-              >
-                {question.text.split("{}").map((part, index) => (
-                  <React.Fragment key={index}>
-                    {part}
-                    {index < 1 && (
-                      <span style={rectangleStyle}>{selectedOption}</span>
-                    )}
-                  </React.Fragment>
-                ))}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Options */}
-        <Grid item xs={5}>
-          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-            Select the best sentence to fill in the blank in the passage.
-          </Typography>
-          <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-            {question.options.map((option, index) => (
-              <FormControlLabel
-                key={index}
-                value={option}
-                control={<Radio sx={radioControlStyle} />}
-                label={option}
-                sx={radioStyle}
-                style={{ color: theme.palette.grey[700] }}
-              />
-            ))}
-          </RadioGroup>
-        </Grid>
+    <Grid container spacing={4} sx={{ pb: 2, px: 4, }}>
+      {/* Passage */}
+      <Grid item xs={7}>
+        <Card
+          sx={{
+            minWidth: '320px',
+            backgroundColor: grey[100],
+            border: "1px solid lightgrey",
+            boxShadow: "none",
+            height: '100%'
+          }}>
+          <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
+            <Typography
+              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: '14px' }}>
+              {t('PASSAGE')} #{sequence.questionId}-{sequence.sequenceOrder}
+            </Typography>
+            <Divider />
+            <Typography variant="body1" sx={{
+              px: 3, py: 0,
+              lineHeight: 2,
+              mt: 2,
+              color: grey[700],
+            }}>
+              {sequence.sentenceTemplate.split("{}").map((part, index) => (
+                <React.Fragment key={index}>
+                  {part}
+                  {index < 1 && (
+                    <span style={styles.rectangle}>{selectedOption}</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
-    </Box>
+
+      {/* Options */}
+      <Grid item xs={5} sx={{textAlign: 'left',}}>
+        <Typography variant="h6" sx={{ fontWeight: "bold", pb: 4 }}>
+          {t('Select the best sentence to fill in the blank in the passage.')}
+        </Typography>
+        <RadioGroup value={selectedOption} onChange={handleOptionChange} >
+          {sequence.blankList.options.map((option, index) => (
+            <FormControlLabel
+              key={index}
+              value={option}
+              control={<Radio sx={styles.radioControl} />}
+              label={option}
+              sx={styles.radio}/>
+          ))}
+        </RadioGroup>
+         {/* Answer button */}
+          <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4}}>
+          <AnswerButton text='Next Step' onClick={handleNextSequence} />
+        </Box>
+      </Grid>
+    </Grid>
   );
+};
+
+CompleteThePassageCard.propTypes = {
+  handleNextSequence:PropTypes.func.isRequired,
+  sequence: PropTypes.shape({
+    questionId: PropTypes.number.isRequired,
+    sequenceOrder: PropTypes.number.isRequired,
+    sentenceTemplate: PropTypes.string.isRequired,
+    blankList: PropTypes.shape({
+      options: PropTypes.arrayOf(PropTypes.string).isRequired,
+      answer: PropTypes.string.isRequired
+    }).isRequired,
+  }).isRequired,
 };
 
 export default CompleteThePassageCard;

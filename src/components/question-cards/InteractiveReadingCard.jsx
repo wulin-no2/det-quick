@@ -45,7 +45,7 @@ const InteractiveReadingCard = ({
       case 1:
         return <CompleteTheSentencesCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
       case 2:
-        return <CompleteThePassageCard sequence={currentSequence} />;
+        return <CompleteThePassageCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
       // Add cases for other sequences
       default:
         return <div>Unknown sequence order</div>;
