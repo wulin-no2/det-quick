@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Typography,
@@ -9,23 +9,21 @@ import {
   CardContent,
   Box,
   Divider,
-} from '@mui/material';
+} from "@mui/material";
 
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 
-import CardHeader from '../common/question-card-components/CardHeader';
-
-
+import CardHeader from "../../common/question-card-components/CardHeader";
 
 const question = {
   id: 4233,
   text: "Sarah loves reading books. Every weekend, she goes to the local library to find new books to read. Last week, she {} a novel by her favorite author. She couldn't {} reading it until she finished.",
   difficulty: 3,
   time_limit: 120,
-  type: 'Complete the Sentences',
+  type: "Complete the Sentences",
   options: [
-    ['borrowed', 'bought', 'lost'],
-    ['stop', 'enjoy', 'avoid'],
+    ["borrowed", "bought", "lost"],
+    ["stop", "enjoy", "avoid"],
   ],
 };
 
@@ -35,7 +33,7 @@ const CompleteTheSentencesCard = () => {
 
   useEffect(() => {
     // Initialize the selectedOptions state based on the number of options
-    const initialSelectedOptions = question.options.map(() => '');
+    const initialSelectedOptions = question.options.map(() => "");
     setSelectedOptions(initialSelectedOptions);
   }, []);
 
@@ -46,46 +44,46 @@ const CompleteTheSentencesCard = () => {
   };
 
   const rectangleStyle = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    width: '120px',
-    height: '40px',
-    border: '2px dashed lightgrey',
-    borderRadius: '8px',
-    textAlign: 'center',
-    verticalAlign: 'middle',
-    marginRight: '4px',
-    backgroundColor: 'transparent',
-    paddingBlock: '16px',
-    paddingInline: '6px',
+    display: "inline-flex",
+    alignItems: "center",
+    width: "120px",
+    height: "40px",
+    border: "2px dashed lightgrey",
+    borderRadius: "8px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    marginRight: "4px",
+    backgroundColor: "transparent",
+    paddingBlock: "16px",
+    paddingInline: "6px",
   };
 
   const numberStyle = {
-    width: '24px',
-    height: '24px',
-    borderRadius: '50%',
-    border: '2px solid lightgrey',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '4px',
-    backgroundColor: 'transparent',
+    width: "24px",
+    height: "24px",
+    borderRadius: "50%",
+    border: "2px solid lightgrey",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: "4px",
+    backgroundColor: "transparent",
   };
 
   const selectStyle = {
-    border: '1px solid lightgrey',
-    borderRadius: '4px',
+    border: "1px solid lightgrey",
+    borderRadius: "4px",
   };
 
   return (
     <Box
       sx={{
-        width: '1100px',
-        margin: 'auto',
-        textAlign: 'left',
-        border: '1px solid lightgray',
-        borderRadius: '8px',
-        backgroundColor:'white',
+        width: "1100px",
+        margin: "auto",
+        textAlign: "left",
+        border: "1px solid lightgray",
+        borderRadius: "8px",
+        backgroundColor: "white",
       }}
     >
       {/* CardHeader */}
@@ -104,41 +102,41 @@ const CompleteTheSentencesCard = () => {
           <Card
             sx={{
               minWidth: 275,
-              backgroundColor: '#f5f5f5',
-              border: '1px solid lightgrey',
-              boxShadow: 'none',
+              backgroundColor: "#f5f5f5",
+              border: "1px solid lightgrey",
+              boxShadow: "none",
             }}
           >
-            <CardContent sx={{ position: 'relative', paddingInline: 4 }}>
+            <CardContent sx={{ position: "relative", paddingInline: 4 }}>
               <Typography
-                variant='subtitle1'
+                variant="subtitle1"
                 sx={{ color: theme.palette.grey[700] }}
               >
                 PASSAGE
               </Typography>
               <Divider
                 sx={{
-                  position: 'absolute',
+                  position: "absolute",
                   left: 0,
                   right: 0,
-                  top: '56px',
+                  top: "56px",
                 }}
               />
               <Typography
-                variant='body1'
+                variant="body1"
                 sx={{
                   lineHeight: 3,
                   marginTop: 4,
                   color: theme.palette.grey[700],
                 }}
               >
-                {question.text.split('{}').map((part, index) => (
+                {question.text.split("{}").map((part, index) => (
                   <React.Fragment key={index}>
                     {part}
                     {index < selectedOptions.length && (
                       <span style={rectangleStyle}>
                         <span style={numberStyle}>{index + 1}</span>
-                        {selectedOptions[index] || ' '}
+                        {selectedOptions[index] || " "}
                       </span>
                     )}
                   </React.Fragment>
@@ -150,11 +148,11 @@ const CompleteTheSentencesCard = () => {
 
         {/* Options */}
         <Grid item xs={6}>
-          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
             Select the best option for each missing word.
           </Typography>
           {question.options.map((optionList, index) => (
-            <FormControl key={index} fullWidth margin='normal'>
+            <FormControl key={index} fullWidth margin="normal">
               <Select
                 displayEmpty
                 value={selectedOptions[index]}
@@ -165,9 +163,9 @@ const CompleteTheSentencesCard = () => {
                     return (
                       <Box
                         sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: 'darkgrey',
+                          display: "flex",
+                          alignItems: "center",
+                          color: "darkgrey",
                         }}
                       >
                         <span style={numberStyle}>{index + 1}</span> Select a
@@ -179,8 +177,8 @@ const CompleteTheSentencesCard = () => {
                   return (
                     <Box
                       sx={{
-                        display: 'flex',
-                        alignItems: 'center',
+                        display: "flex",
+                        alignItems: "center",
                         color: theme.palette.grey[700],
                       }}
                     >

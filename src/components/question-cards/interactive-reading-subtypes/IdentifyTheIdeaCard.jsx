@@ -12,9 +12,7 @@ import {
 } from "@mui/material";
 
 import { useTheme } from "@mui/material/styles";
-
-import CardHeader from "../common/question-card-components/CardHeader";
-
+import CardHeader from "../../common/question-card-components/CardHeader";
 
 const question = {
   id: 4233,
@@ -23,14 +21,14 @@ const question = {
   time_limit: 120,
   type: "Identify the idea",
   options: [
-    "Amazon and depend on its resources",
-    "Agriculture",
-    "Scientists and new species",
-    "The Amazon River",
+    "Many indigenous communities live in the Amazon and depend on its resources for their livelihoods.",
+    "However, in recent decades, large areas of the Amazon have been cleared for agriculture and cattle ranching.",
+    "Scientists are still discovering new species in the Amazon every year.",
+    "The Amazon River, which flows through the forest, is one of the longest rivers in the world.",
   ],
 };
 
-const TitleThePassageCard = () => {
+const IdentifyTheIdeaCard = () => {
   const theme = useTheme();
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -40,12 +38,12 @@ const TitleThePassageCard = () => {
 
   const radioStyle = {
     border: "1px solid",
-    borderColor: theme.palette.grey[300],
+    borderColor: theme.palette.grey[300], // Change border to grey-600
     borderRadius: "8px",
     padding: "10px",
     marginBottom: "8px",
     display: "flex",
-    alignItems: "center", // Align the radio button and text to the center
+    alignItems: "flex-start", // Align the radio button and text on the top
     gap: "10px",
     color: theme.palette.grey[700],
   };
@@ -126,7 +124,7 @@ const TitleThePassageCard = () => {
         {/* Options */}
         <Grid item xs={5}>
           <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-            Select the best title for the passage.
+            Select the idea that is expressed in the passage.
           </Typography>
           <RadioGroup value={selectedOption} onChange={handleOptionChange}>
             {question.options.map((option, index) => (
@@ -146,4 +144,4 @@ const TitleThePassageCard = () => {
   );
 };
 
-export default TitleThePassageCard;
+export default IdentifyTheIdeaCard;
