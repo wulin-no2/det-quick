@@ -64,7 +64,21 @@ const InteractiveReadingCard = ({
     textAlign: "center",
     verticalAlign: "middle",
     marginRight: "4px",
-    backgroundColor: "transparent",
+    backgroundColor: grey[200],
+    paddingBlock: "8px",
+    paddingInline: "4px",
+  };
+  const selectedRectangleStyle = {
+    display: "inline-flex",
+    alignItems: "center",
+    minWidth: "120px",
+    height: "36px",
+    border: "1px solid lightgrey",
+    borderRadius: "8px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    marginRight: "4px",
+    backgroundColor: 'white',
     paddingBlock: "8px",
     paddingInline: "4px",
   };
@@ -79,6 +93,16 @@ const InteractiveReadingCard = ({
     justifyContent: "center",
     backgroundColor: "white",
   };
+  const selectedNumberStyle = {
+    width: "20px",
+    height: "20px",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#357af5",
+    color:'white',
+  };
 
   const selectStyle = {
     border: "0.5px solid lightgrey",
@@ -92,11 +116,12 @@ const InteractiveReadingCard = ({
       const match = part.match(/\{(\d+)\}/);
       if (match) {
         const blankIndex = parseInt(match[1], 10) - 1;
+        const selected = selectedOptions[blankIndex];
         return (
-          <span key={index} style={rectangleStyle}>
-            <span style={numberStyle}>{match[1]}</span>
-            {selectedOptions[blankIndex] || " "}
-          </span>
+          <Typography key={index} style={selected ? selectedRectangleStyle :rectangleStyle} >
+            <Typography style={selected ? selectedNumberStyle : numberStyle} sx={{ml:"2px"}}>{match[1]}</Typography>
+            <Typography sx={{display:'flex', alignItems:'center',px:0.5}}>{selected || " "}</Typography>
+          </Typography>
         );
       }
       return <span key={index}>{part}</span>;
@@ -104,7 +129,7 @@ const InteractiveReadingCard = ({
   };
 
   return (
-    <Box sx={{ width: '1200px', margin: 'auto', textAlign: 'center', mb: 2, minHeight: '400px' }}>
+    <Box sx={{ width: '1200px', margin: 'auto', textAlign: 'center', mb: 6, minHeight: '400px' }}>
       {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
@@ -125,6 +150,7 @@ const InteractiveReadingCard = ({
               backgroundColor: grey[100],
               border: "1px solid lightgrey",
               boxShadow: "none",
+              height:'100%'
             }}>
             <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
               <Typography
@@ -135,7 +161,7 @@ const InteractiveReadingCard = ({
               <Typography variant="body1" sx={{
                 px: 3, py: 0,
                 lineHeight: 2.6,
-                mt: 4,
+                mt: 2,
                 color: grey[700],
               }}>
                 {currentSequence ? renderTextWithBlanks(currentSequence.sentenceTemplate) : ""}
@@ -145,15 +171,17 @@ const InteractiveReadingCard = ({
         </Grid>
 
         {/* Options */}
-        <Grid item xs={5}>
+        <Grid item xs={5} sx={{
+            // border:'1px solid red'
+        }}>
           <Typography variant="h6" sx={{ fontWeight: "bold", pb:2}}>
             {t('Select the best option for each missing word.')}
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column',justifyContent:'end',
-            // border:'1px solid red'
+          <Box sx={{ display: 'flex', flexDirection: 'column', 
+            // border:'1px solid blue'
           }}>
             {currentSequence && currentSequence.blankList.map((blank, index) => (
-              <FormControl key={index} sx={{ width: '100%', m:0.5}}>
+              <FormControl key={index} sx={{ width: '100%', mb:1}}>
                 <Select
                   displayEmpty
                   value={selectedOptions[index]}
@@ -169,11 +197,11 @@ const InteractiveReadingCard = ({
                             color: "darkgrey",
                           }}
                         >
-                          <span style={numberStyle}>{blank.indexNumber}</span> Select a word
+                          <Typography style={numberStyle}>{blank.indexNumber}</Typography> 
+                          <Typography sx={{m:'auto'}}>{t('Select a word')}</Typography>
                         </Box>
                       );
                     }
-
                     return (
                       <Box
                         sx={{
@@ -182,7 +210,8 @@ const InteractiveReadingCard = ({
                           color: grey[700],
                         }}
                       >
-                        <span style={numberStyle}>{blank.indexNumber}</span> {selected}
+                        <Typography style={selectedNumberStyle}>{blank.indexNumber}</Typography> 
+                        <Typography sx={{m:'auto'}}>{selected}</Typography>
                       </Box>
                     );
                   }}
@@ -196,12 +225,15 @@ const InteractiveReadingCard = ({
               </FormControl>
             ))}
           </Box>
+          {/* answer button */}
+            <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 2,
+                // border:'1px solid red'
+            }}>
+                <AnswerButton text='Next Step' onClick={handleNextSequence} />
+            </Box>
         </Grid>
       </Grid>
-      {/* answer button */}
-      <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', py: 4, pr: 6, }}>
-        <AnswerButton text='Next' onClick={handleNextSequence} />
-      </Box>
+      
     </Box>
   );
 };

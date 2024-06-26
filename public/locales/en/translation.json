@@ -80,7 +80,10 @@
   "close": "close",
   "Complete the sentence with the correct word.":"Complete the sentence with the correct word.",
   "Type the missing letters to complete the text below.": "Type the missing letters to complete the text below.",
-  "Submit": "Submit"
+  "Submit": "Submit",
+  "Next Step": "Next Step",
+  "Select the best option for each missing word.": "请选择最佳选项填空",
+  "Select a word":"Select a word"
 
 
 }
