@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import CardHeader from '../common/question-card-components/CardHeader';
 import CompleteTheSentencesCard from "./interactive-reading-subtypes/CompleteTheSentencesCard";
 import CompleteThePassageCard from "./interactive-reading-subtypes/CompleteThePassageCard";
+import HighlightTheAnswerCard from "./interactive-reading-subtypes/HighlightTheAnswerCard";
 
 const InteractiveReadingCard = ({
   count,
@@ -46,11 +47,14 @@ const InteractiveReadingCard = ({
         return <CompleteTheSentencesCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
       case 2:
         return <CompleteThePassageCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
-      // Add cases for other sequences
+      case 3:
+        return <HighlightTheAnswerCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
+      case 4:
+        return <HighlightTheAnswerCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
       default:
         return <div>Unknown sequence order</div>;
     }
-  };
+  }
 
   return (
     <Box sx={{

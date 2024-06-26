@@ -1,34 +1,24 @@
-import { useState } from "react";
-import {
-  Grid,
-  Typography,
-  Card,
-  CardContent,
-  Box,
-  Divider,
-} from "@mui/material";
-import styled from "@mui/system/styled";
-import { useTheme } from "@mui/material/styles";
-
-import CardHeader from "../../common/question-card-components/CardHeader";
+import  { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Grid, Typography, Card, CardContent, Box, Divider } from "@mui/material";
+import { styled } from "@mui/system";
+import { grey,amber } from '@mui/material/colors';
+import { useTranslation } from "react-i18next";
+import AnswerButton from "../../common/question-card-components/AnswerButton";
 
 const HighlightedText = styled("span")({
   "::selection": {
-    backgroundColor: "rgb(249,236,181)",
+    backgroundColor: amber[200],
   },
 });
 
-const question = {
-  id: 4233,
-  text: "The Amazon rainforest, also known as the Amazon Jungle, is a moist broadleaf tropical rainforest in the Amazon biome that covers most of the Amazon basin of South America. This basin encompasses 7,000,000 square kilometers, of which 5,500,000 square kilometers are covered by the rainforest. This region includes territory belonging to nine nations. The majority of the forest is contained within Brazil, with 60% of the rainforest, followed by Peru with 13%, and Colombia with 10%. Minor amounts are located in Venezuela, Ecuador, Bolivia, Guyana, Suriname, and French Guiana.",
-  difficulty: 3,
-  time_limit: 120,
-  type: "Highlight the answer",
-};
-
-const HighlightTheAnswerCard = () => {
-  const theme = useTheme();
+const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
+  const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState("");
+
+  useEffect(() => {
+    setHighlightedText("");
+  }, [sequence]);
 
   const handleMouseUp = () => {
     const selection = window.getSelection();
@@ -37,94 +27,88 @@ const HighlightTheAnswerCard = () => {
       setHighlightedText(selectedText);
     }
   };
+  const handleClick = () => {
+    const selection = window.getSelection();
+    if (!selection.toString()) {
+      setHighlightedText("");
+    }
+  }
 
   return (
-    <Box
-      sx={{
-        width: "1100px",
-        margin: "auto",
-        textAlign: "left",
-        border: "1px solid lightgray",
-        borderRadius: "8px",
-        backgroundColor: "white",
-      }}
-    >
-      {/* CardHeader */}
-      <CardHeader
-        word={question}
-        onNext={0}
-        onLast={0}
-        currentIndex={1}
-        totalWords={3}
-      />
-
-      {/* Card content */}
-      <Grid container spacing={4} sx={{ padding: 4 }}>
-        {/* Passage */}
-        <Grid item xs={7}>
-          <Card
-            sx={{
-              minWidth: 275,
-              border: "1px solid lightgrey",
-              boxShadow: "none",
-            }}
-            onMouseUp={handleMouseUp}
-          >
-            <CardContent sx={{ position: "relative", paddingInline: 4 }}>
-              <Typography
-                variant="subtitle1"
-                sx={{ color: theme.palette.grey[700] }}
-              >
-                PASSAGE
-              </Typography>
-              <Divider
-                sx={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: "56px",
-                }}
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  lineHeight: 2,
-                  marginTop: 4,
-                  color: theme.palette.grey[700],
-                }}
-              >
-                <HighlightedText>{question.text}</HighlightedText>
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Options */}
-        <Grid item xs={5}>
-          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-            Click and drag to highlight the answer to the question below.
-          </Typography>
-          <Typography>Where is the Amazon rainforest?</Typography>
-          <Box
-            sx={{
-              width: "100%",
-              marginTop: 2,
-              backgroundColor: "#f5f5f5",
-              border: "1px solid lightgray",
-              borderRadius: "8px",
-              padding: 2,
-              overflow: "auto",
-              minHeight: "50px",
-            }}
-          >
-            <Typography variant="body1" sx={{ color: theme.palette.grey[700] }}>
-              {highlightedText}
+    <Grid container spacing={4} sx={{ pb: 2, px: 4 }}>
+      {/* Passage */}
+      <Grid item xs={7}>
+        <Card
+          sx={{
+            minWidth: '320px',
+            backgroundColor: grey[100],
+            border: "1px solid lightgrey",
+            boxShadow: "none",
+            height: '100%'
+          }}
+          onMouseUp={handleMouseUp}
+          onClick={handleClick}
+        >
+          <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
+            <Typography
+              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: '14px' }}>
+              {t('PASSAGE')} #{sequence.questionId}-{sequence.sequenceOrder}
             </Typography>
-          </Box>
-        </Grid>
+            <Divider />
+            <Typography variant="body1" sx={{
+              px: 3, py: 0,
+              lineHeight: 2,
+              mt: 2,
+              color: grey[700],
+            }}>
+              <HighlightedText>{sequence.sentenceTemplate}</HighlightedText>
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
-    </Box>
+
+      {/* Options */}
+      <Grid item xs={5} sx={{ textAlign: 'left' }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold", pb: 3 }}>
+          {t('Click and drag to highlight the answer to the question below.')}
+        </Typography>
+        <Typography sx={{lineHeight:1.6, color:grey[800]}}>{sequence.blankList.question}</Typography>
+        <Box
+          sx={{
+            width: "100%",
+            marginTop: 2,
+            backgroundColor: highlightedText? 'white':'#f5f5f5',
+            border: "1px solid lightgray",
+            borderRadius: "8px",
+            padding: 2,
+            overflow: "auto",
+            minHeight: "50px",
+          }}
+        >
+          <Typography variant="body1" sx={{ color: grey[800],minHeight:'200px' }}>
+            {highlightedText}
+          </Typography>
+        </Box>
+        {/* Answer button */}
+        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
+          <AnswerButton text='Next Step' onClick={handleNextSequence} />
+        </Box>
+      </Grid>
+    </Grid>
   );
+};
+
+HighlightTheAnswerCard.propTypes = {
+  handleNextSequence: PropTypes.func.isRequired,
+  sequence: PropTypes.shape({
+    questionId: PropTypes.number.isRequired,
+    sequenceOrder: PropTypes.number.isRequired,
+    sentenceTemplate: PropTypes.string.isRequired,
+    blankList: PropTypes.shape({
+      question: PropTypes.string.isRequired,
+      answer: PropTypes.string.isRequired
+    }).isRequired,
+  }).isRequired,
 };
 
 export default HighlightTheAnswerCard;

@@ -80,8 +80,9 @@
   "Type the missing letters to complete the text below.": "补充缺失的字母，完成下面这段话。",
   "Submit": "提交",
   "Next Step": "下一步",
-  "Select the best option for each missing word.": "Select the best option for each missing word",
-  "Select a word":"未选择",
+  "Select the best option for each missing word.": "请选择最佳选项填空：",
+  "Select a word":"请选择",
   "PASSAGE": "短文",
-  "Select the best sentence to fill in the blank in the passage.": "选择最合适的句子填空："
+  "Select the best sentence to fill in the blank in the passage.": "选择最合适的句子填空：",
+  "Click and drag to highlight the answer to the question below.": "阅读问题，然后点击并拖动以标出文中的答案："
 }
