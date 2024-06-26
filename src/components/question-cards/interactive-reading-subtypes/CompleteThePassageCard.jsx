@@ -16,7 +16,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 
-const CompleteThePassageCard = ({ sequence,handleNextSequence}) => {
+const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -32,37 +32,43 @@ const CompleteThePassageCard = ({ sequence,handleNextSequence}) => {
     rectangle: {
       display: "inline-block",
       width: "100%",
-      height: "70px",
+      minHeight: "80px",
       border: "2px dashed lightgrey",
       borderRadius: "8px",
       textAlign: "left",
-      margin: "16px 0",
-      backgroundColor: "transparent",
+      margin: "12px 0",
       padding: "10px",
       lineHeight: "1.5",
       color: grey[700],
       overflow: "hidden",
       wordWrap: "break-word",
+      backgroundColor: grey[200],
     },
     radio: {
-      with:'100%',
+      width: '100%',
       border: "1px solid",
-      borderColor: grey[300],
       borderRadius: "8px",
       padding: "10px",
-      mx:'auto',
+      mx: 'auto',
       marginBottom: "8px",
       display: "flex",
       alignItems: "flex-start",
       gap: 1,
       color: grey[700],
     },
+    unSelectedRadio: {
+      borderColor: grey[300],
+    },
+    selectedRadio: {
+      borderColor: '#357af5',
+      backgroundColor: '#e3f2fd', // Light blue background
+    },
     radioControl: {
       "&.MuiRadio-root": {
         color: grey[300],
       },
       "&.MuiRadio-root.Mui-checked": {
-        color: "rgb(240,174,63)",
+        color: "#357af5", // Match border color
       },
       "& .MuiSvgIcon-root": {
         fontSize: "1.2rem",
@@ -71,7 +77,7 @@ const CompleteThePassageCard = ({ sequence,handleNextSequence}) => {
   };
 
   return (
-    <Grid container spacing={4} sx={{ pb: 2, px: 4, }}>
+    <Grid container spacing={4} sx={{ pb: 2, px: 4 }}>
       {/* Passage */}
       <Grid item xs={7}>
         <Card
@@ -108,22 +114,26 @@ const CompleteThePassageCard = ({ sequence,handleNextSequence}) => {
       </Grid>
 
       {/* Options */}
-      <Grid item xs={5} sx={{textAlign: 'left',}}>
+      <Grid item xs={5} sx={{ textAlign: 'left' }}>
         <Typography variant="h6" sx={{ fontWeight: "bold", pb: 4 }}>
           {t('Select the best sentence to fill in the blank in the passage.')}
         </Typography>
-        <RadioGroup value={selectedOption} onChange={handleOptionChange} >
+        <RadioGroup value={selectedOption} onChange={handleOptionChange}>
           {sequence.blankList.options.map((option, index) => (
             <FormControlLabel
               key={index}
               value={option}
               control={<Radio sx={styles.radioControl} />}
               label={option}
-              sx={styles.radio}/>
+              sx={{
+                ...styles.radio,
+                ...(selectedOption === option ? styles.selectedRadio : styles.unSelectedRadio),
+              }}
+            />
           ))}
         </RadioGroup>
-         {/* Answer button */}
-          <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4}}>
+        {/* Answer button */}
+        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
           <AnswerButton text='Next Step' onClick={handleNextSequence} />
         </Box>
       </Grid>
@@ -132,7 +142,7 @@ const CompleteThePassageCard = ({ sequence,handleNextSequence}) => {
 };
 
 CompleteThePassageCard.propTypes = {
-  handleNextSequence:PropTypes.func.isRequired,
+  handleNextSequence: PropTypes.func.isRequired,
   sequence: PropTypes.shape({
     questionId: PropTypes.number.isRequired,
     sequenceOrder: PropTypes.number.isRequired,
@@ -145,3 +155,4 @@ CompleteThePassageCard.propTypes = {
 };
 
 export default CompleteThePassageCard;
+
