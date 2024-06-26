@@ -118,8 +118,8 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
         </Card>
       </Grid>
 
-      <Grid item xs={5}>
-        <Typography variant="h6" sx={{ fontWeight: "bold", pb: 2 }}>
+      <Grid item xs={5} sx={{ textAlign: 'left' }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
           {t('Select the best option for each missing word.')}
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>

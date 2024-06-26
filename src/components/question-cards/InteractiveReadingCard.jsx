@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
-import { Box} from '@mui/material';
+import { Box } from "@mui/material";
 import { useState, useEffect } from "react";
 
-import CardHeader from '../common/question-card-components/CardHeader';
-import CompleteTheSentencesCard from "./interactive-reading-subtypes/CompleteTheSentencesCard";
-import CompleteThePassageCard from "./interactive-reading-subtypes/CompleteThePassageCard";
-import HighlightTheAnswerCard from "./interactive-reading-subtypes/HighlightTheAnswerCard";
+import CardHeader from "../common/question-card-components/CardHeader";
+import CompleteTheSentencesCard from "./interactive-reading-sequences/CompleteTheSentencesCard";
+import CompleteThePassageCard from "./interactive-reading-sequences/CompleteThePassageCard";
+import HighlightTheAnswerCard from "./interactive-reading-sequences/HighlightTheAnswerCard";
+import IdentifyTheIdeaCard from "./interactive-reading-sequences/IdentifyTheIdeaCard";
+import TitleThePassageCard from "./interactive-reading-sequences/TitleThePassageCard";
+import HighlightTheAnswerCardAlt from "./interactive-reading-sequences/HighlightTheAnswerCardAlt";
 
 const InteractiveReadingCard = ({
   count,
@@ -44,43 +47,76 @@ const InteractiveReadingCard = ({
     const currentSequence = questionDetail.sequences[currentSequenceIndex];
     switch (currentSequence.sequenceOrder) {
       case 1:
-        return <CompleteTheSentencesCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
+        return (
+          <CompleteTheSentencesCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+          />
+        );
       case 2:
-        return <CompleteThePassageCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
+        return (
+          <CompleteThePassageCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+          />
+        );
       case 3:
-        return <HighlightTheAnswerCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
+        return (
+          <HighlightTheAnswerCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+          />
+        );
       case 4:
-        return <HighlightTheAnswerCard sequence={currentSequence} handleNextSequence={handleNextSequence}/>;
+        return (
+          <HighlightTheAnswerCardAlt
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+          />
+        );
+      case 5:
+        return (
+          <IdentifyTheIdeaCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+          />
+        );
+      case 6:
+        return (
+          <TitleThePassageCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+          />
+        );
       default:
         return <div>Unknown sequence order</div>;
     }
-  }
+  };
 
   return (
-    <Box sx={{
-      maxWidth: '1200px',
-      mx: 'auto',
-      textAlign: 'center',
-      mb: 4,
-      minHeight: '620px',
-    }}>
+    <Box
+      sx={{
+        maxWidth: "1200px",
+        mx: "auto",
+        textAlign: "center",
+        mb: 4,
+        minHeight: "620px",
+      }}
+    >
       {/* CardHeader */}
       <Box>
         <CardHeader
-            questionDetail={questionDetail}
-            handleNext={handleNext}
-            handleLast={handleLast}
-            currentIndex={currentIndex}
-            totalWords={count}
-            handleBack={handleBack}
-            globalIndex={globalIndex}
+          questionDetail={questionDetail}
+          handleNext={handleNext}
+          handleLast={handleLast}
+          currentIndex={currentIndex}
+          totalWords={count}
+          handleBack={handleBack}
+          globalIndex={globalIndex}
         />
       </Box>
       {/* Card content */}
-      <Box>
-        {renderSequence()}
-      </Box>
-
+      <Box>{renderSequence()}</Box>
     </Box>
   );
 };
@@ -96,5 +132,3 @@ InteractiveReadingCard.propTypes = {
 };
 
 export default InteractiveReadingCard;
-
-

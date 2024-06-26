@@ -18,13 +18,13 @@ import {
 } from "../api/api-fetchQuestionDetail";
 
 // Import card components
-import CompleteThePassageCard from "../components/question-cards/interactive-reading-subtypes/CompleteThePassageCard";
-import CompleteTheSentencesCard from "../components/question-cards/interactive-reading-subtypes/CompleteTheSentencesCard";
+import CompleteThePassageCard from "../components/question-cards/interactive-reading-sequences/CompleteThePassageCard";
+import CompleteTheSentencesCard from "../components/question-cards/interactive-reading-sequences/CompleteTheSentencesCard";
 import FillInTheBlanksCard from "../components/question-cards/FillInTheBlanksCard";
-import HighlightTheAnswerCard from "../components/question-cards/interactive-reading-subtypes/HighlightTheAnswerCard";
-import IdentifyTheIdeaCard from "../components/question-cards/interactive-reading-subtypes/IdentifyTheIdeaCard";
+import HighlightTheAnswerCard from "../components/question-cards/interactive-reading-sequences/HighlightTheAnswerCard";
+import IdentifyTheIdeaCard from "../components/question-cards/interactive-reading-sequences/IdentifyTheIdeaCard";
 import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
-import TitleThePassageCard from "../components/question-cards/interactive-reading-subtypes/TitleThePassageCard";
+import TitleThePassageCard from "../components/question-cards/interactive-reading-sequences/TitleThePassageCard";
 import ReadAloudCard from "../components/question-cards/ReadAloudCard";
 import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
 import ListenThenSpeakCard from "../components/question-cards/ListenThenSpeakCard";

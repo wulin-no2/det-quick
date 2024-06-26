@@ -12,7 +12,7 @@ const HighlightedText = styled("span")({
   },
 });
 
-const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
+const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence }) => {
   const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState("");
 
@@ -20,19 +20,28 @@ const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
     setHighlightedText("");
   }, [sequence]);
 
+  // const handleMouseUp = () => {
+  //   const selection = window.getSelection();
+  //   const selectedText = selection.toString();
+  //   if (selectedText) {
+  //     setHighlightedText(selectedText);
+  //   }
+  // };
+  // const handleClick = () => {
+  //   const selection = window.getSelection();
+  //   if (!selection.toString()) {
+  //     setHighlightedText("");
+  //   }
+  // }
   const handleMouseUp = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();
     if (selectedText) {
       setHighlightedText(selectedText);
-    }
-  };
-  const handleClick = () => {
-    const selection = window.getSelection();
-    if (!selection.toString()) {
+    } else {
       setHighlightedText("");
     }
-  }
+  };
 
   return (
     <Grid container spacing={4} sx={{ pb: 2, px: 4 }}>
@@ -47,7 +56,7 @@ const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
             height: '100%'
           }}
           onMouseUp={handleMouseUp}
-          onClick={handleClick}
+          // onClick={handleClick}
         >
           <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
             <Typography
@@ -69,7 +78,7 @@ const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
 
       {/* Options */}
       <Grid item xs={5} sx={{ textAlign: 'left' }}>
-        <Typography variant="h6" sx={{ fontWeight: "bold", pb: 3 }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
           {t('Click and drag to highlight the answer to the question below.')}
         </Typography>
         <Typography sx={{lineHeight:1.6, color:grey[800]}}>{sequence.blankList.question}</Typography>
@@ -98,7 +107,7 @@ const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
   );
 };
 
-HighlightTheAnswerCard.propTypes = {
+HighlightTheAnswerCardAlt.propTypes = {
   handleNextSequence: PropTypes.func.isRequired,
   sequence: PropTypes.shape({
     questionId: PropTypes.number.isRequired,
@@ -111,4 +120,4 @@ HighlightTheAnswerCard.propTypes = {
   }).isRequired,
 };
 
-export default HighlightTheAnswerCard;
+export default HighlightTheAnswerCardAlt;

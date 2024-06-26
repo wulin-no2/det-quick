@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Grid, Typography, RadioGroup, FormControlLabel, Radio, Card, CardContent, Box, Divider } from "@mui/material";
 import { grey } from '@mui/material/colors';
-import AnswerButton from '../../common/question-card-components/AnswerButton';
-import {
-  Grid,
-  Typography,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Card,
-  CardContent,
-  Divider,
-  Box
-} from "@mui/material";
 import { useTranslation } from "react-i18next";
+import AnswerButton from "../../common/question-card-components/AnswerButton";
 
-
-const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
+const TitleThePassageCard = ({ sequence, handleNextSequence }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -29,21 +18,6 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
   };
 
   const styles = {
-    rectangle: {
-      display: "inline-block",
-      width: "100%",
-      minHeight: "80px",
-      border: "2px dashed lightgrey",
-      borderRadius: "8px",
-      textAlign: "left",
-      margin: "12px 0",
-      padding: "10px",
-      lineHeight: "1.5",
-      color: grey[700],
-      overflow: "hidden",
-      wordWrap: "break-word",
-      backgroundColor: grey[200],
-    },
     radio: {
       width: '100%',
       border: "1px solid",
@@ -52,7 +26,8 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
       mx: 'auto',
       marginBottom: "8px",
       display: "flex",
-      alignItems: "flex-start",
+      // alignItems: "flex-start",
+      alignItems:'center',
       gap: 1,
       color: grey[700],
     },
@@ -100,14 +75,7 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
               mt: 2,
               color: grey[700],
             }}>
-              {sequence.sentenceTemplate.split("{}").map((part, index) => (
-                <React.Fragment key={index}>
-                  {part}
-                  {index < 1 && (
-                    <span style={styles.rectangle}>{selectedOption}</span>
-                  )}
-                </React.Fragment>
-              ))}
+              {sequence.sentenceTemplate}
             </Typography>
           </CardContent>
         </Card>
@@ -115,8 +83,8 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
 
       {/* Options */}
       <Grid item xs={5} sx={{ textAlign: 'left' }}>
-        <Typography variant="h6" sx={{ fontWeight: "bold", pb: 4 }}>
-          {t('Select the best sentence to fill in the blank in the passage.')}
+        <Typography variant="h6" sx={{ fontWeight: "bold", py: 2}}>
+          {t('Select the best title for the passage.')}
         </Typography>
         <RadioGroup value={selectedOption} onChange={handleOptionChange}>
           {sequence.blankList.options.map((option, index) => (
@@ -141,7 +109,7 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
   );
 };
 
-CompleteThePassageCard.propTypes = {
+TitleThePassageCard.propTypes = {
   handleNextSequence: PropTypes.func.isRequired,
   sequence: PropTypes.shape({
     questionId: PropTypes.number.isRequired,
@@ -154,5 +122,4 @@ CompleteThePassageCard.propTypes = {
   }).isRequired,
 };
 
-export default CompleteThePassageCard;
-
+export default TitleThePassageCard;
