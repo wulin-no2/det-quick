@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { grey } from '@mui/material/colors';
+import { grey, green, red } from '@mui/material/colors';
 import AnswerButton from '../../common/question-card-components/AnswerButton';
 import {
   Grid,
@@ -15,17 +15,27 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-
-const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
+const CompleteThePassageCard = ({ sequence, handleNextSequence, currentAnswer }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
+  const [showCorrection, setShowCorrection] = useState(false);
 
   useEffect(() => {
-    setSelectedOption("");
-  }, [sequence]);
+    if (currentAnswer) {
+      setSelectedOption(currentAnswer[0]); // Assuming currentAnswer is an array with a single element
+      setShowCorrection(true);
+    } else {
+      setSelectedOption("");
+      setShowCorrection(false);
+    }
+  }, [sequence, currentAnswer]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    handleNextSequence([selectedOption]);
   };
 
   const styles = {
@@ -44,6 +54,14 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
       wordWrap: "break-word",
       backgroundColor: grey[200],
     },
+    rectangleCorrect: {
+      backgroundColor: green[100],
+      borderColor: green[200],
+    },
+    rectangleIncorrect: {
+      backgroundColor: red[100],
+      borderColor: red[200],
+    },
     radio: {
       width: '100%',
       border: "1px solid",
@@ -52,8 +70,7 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
       mx: 'auto',
       marginBottom: "8px",
       display: "flex",
-      // alignItems: "flex-start",
-      alignItems:'center',
+      alignItems: 'center',
       gap: 1,
       color: grey[700],
     },
@@ -75,67 +92,96 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence }) => {
         fontSize: "1.2rem",
       },
     },
+    radioCorrect: {
+      border:'1px solid',
+      borderColor:green[200],
+      backgroundColor: green[50],
+    },
+    radioIncorrect: {
+      border:'1px solid',
+      borderColor:red[200],
+      backgroundColor: red[50],
+    },
+  };
+
+  const renderPassage = () => {
+    const correctAnswer = sequence.blankList.answer;
+    const isCorrect = selectedOption === correctAnswer;
+    return (
+      <Card
+        sx={{
+          minWidth: '320px',
+          backgroundColor: grey[100],
+          border: "1px solid lightgrey",
+          boxShadow: "none",
+          height: '100%'
+        }}
+      >
+        <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
+          <Typography
+            sx={{ color: grey[700], px: 3, py: 1.5, fontSize: '14px' }}>
+            {t('PASSAGE')} #{sequence.questionId}-{sequence.sequenceOrder}
+          </Typography>
+          <Divider />
+          <Typography variant="body1" sx={{
+            px: 3, py: 0,
+            lineHeight: 2,
+            mt: 2,
+            color: grey[700],
+          }}>
+            {sequence.sentenceTemplate.split("{}").map((part, index) => (
+              <React.Fragment key={index}>
+                {part}
+                {index < 1 && (
+                  <span style={{
+                    ...styles.rectangle,
+                    ...(showCorrection && selectedOption && (isCorrect ? styles.rectangleCorrect : styles.rectangleIncorrect))
+                  }}>{selectedOption}</span>
+                )}
+              </React.Fragment>
+            ))}
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const renderOptions = () => {
+    const correctAnswer = sequence.blankList.answer;
+    return sequence.blankList.options.map((option, index) => {
+      const isCorrect = option === correctAnswer;
+      return (
+        <FormControlLabel
+          key={index}
+          value={option}
+          control={<Radio sx={styles.radioControl} />}
+          label={option}
+          sx={{
+            ...styles.radio,
+            ...(selectedOption === option ? styles.selectedRadio : styles.unSelectedRadio),
+            ...(showCorrection && (isCorrect ? styles.radioCorrect : (selectedOption === option ? styles.radioIncorrect : {}))),
+          }}
+        />
+      );
+    });
   };
 
   return (
     <Grid container spacing={4} sx={{ pb: 2, px: 4 }}>
-      {/* Passage */}
       <Grid item xs={7}>
-        <Card
-          sx={{
-            minWidth: '320px',
-            backgroundColor: grey[100],
-            border: "1px solid lightgrey",
-            boxShadow: "none",
-            height: '100%'
-          }}>
-          <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
-            <Typography
-              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: '14px' }}>
-              {t('PASSAGE')} #{sequence.questionId}-{sequence.sequenceOrder}
-            </Typography>
-            <Divider />
-            <Typography variant="body1" sx={{
-              px: 3, py: 0,
-              lineHeight: 2,
-              mt: 2,
-              color: grey[700],
-            }}>
-              {sequence.sentenceTemplate.split("{}").map((part, index) => (
-                <React.Fragment key={index}>
-                  {part}
-                  {index < 1 && (
-                    <span style={styles.rectangle}>{selectedOption}</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </Typography>
-          </CardContent>
-        </Card>
+        {renderPassage()}
       </Grid>
 
-      {/* Options */}
       <Grid item xs={5} sx={{ textAlign: 'left'}}>
         <Typography variant="h6" sx={{ fontWeight: "bold", py: 2}}>
           {t('Select the best sentence to fill in the blank in the passage.')}
         </Typography>
         <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-          {sequence.blankList.options.map((option, index) => (
-            <FormControlLabel
-              key={index}
-              value={option}
-              control={<Radio sx={styles.radioControl} />}
-              label={option}
-              sx={{
-                ...styles.radio,
-                ...(selectedOption === option ? styles.selectedRadio : styles.unSelectedRadio),
-              }}
-            />
-          ))}
+          {renderOptions()}
         </RadioGroup>
         {/* Answer button */}
         <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
-          <AnswerButton text='Next Step' onClick={handleNextSequence} />
+          <AnswerButton text='Next Step' onClick={handleSubmit} />
         </Box>
       </Grid>
     </Grid>
@@ -153,7 +199,9 @@ CompleteThePassageCard.propTypes = {
       answer: PropTypes.string.isRequired
     }).isRequired,
   }).isRequired,
+  currentAnswer: PropTypes.array,
 };
 
 export default CompleteThePassageCard;
+
 

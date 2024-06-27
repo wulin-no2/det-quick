@@ -12,7 +12,7 @@ const HighlightedText = styled("span")({
   },
 });
 
-const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
+const HighlightTheAnswerCard = ({ sequence, handleNextSequence,  }) => {
   const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState("");
 
@@ -20,19 +20,6 @@ const HighlightTheAnswerCard = ({ sequence, handleNextSequence }) => {
     setHighlightedText("");
   }, [sequence]);
 
-  // const handleMouseUp = () => {
-  //   const selection = window.getSelection();
-  //   const selectedText = selection.toString();
-  //   if (selectedText) {
-  //     setHighlightedText(selectedText);
-  //   }
-  // };
-  // const handleClick = () => {
-  //   const selection = window.getSelection();
-  //   if (!selection.toString()) {
-  //     setHighlightedText("");
-  //   }
-  // }
   const handleMouseUp = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();

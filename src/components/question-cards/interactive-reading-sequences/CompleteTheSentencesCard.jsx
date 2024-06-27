@@ -84,7 +84,7 @@ const CompleteTheSentencesCard = ({ sequence, handleNextSequence, currentAnswer 
       color: 'white',
     },
     select: {
-      border: "0.5px solid",
+      // border: "0.5px solid",
       // borderColor:'lightgray',
       borderRadius: "4px",
       height: '50px',
@@ -136,7 +136,6 @@ const CompleteTheSentencesCard = ({ sequence, handleNextSequence, currentAnswer 
               sx={{
                 ...styles.select,
                 borderColor: showCorrection ? (isCorrect ? green[500] : red[500]) : 'lightgrey',
-                // borderColor: showCorrection ? 'white': 'lightgrey',
                 backgroundColor: showCorrection ? (isCorrect ? green[100] : '#fde1e1') : 'white',
               }}
               renderValue={(selected) => {
