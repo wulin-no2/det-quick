@@ -1,8 +1,8 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Grid, Typography, Card, CardContent, Box, Divider } from "@mui/material";
 import { styled } from "@mui/system";
-import { grey,amber } from '@mui/material/colors';
+import { grey, amber, green, red } from '@mui/material/colors';
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../../common/question-card-components/AnswerButton";
 
@@ -12,27 +12,21 @@ const HighlightedText = styled("span")({
   },
 });
 
-const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence }) => {
+const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer }) => {
   const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState("");
+  const [showCorrection, setShowCorrection] = useState(false);
 
   useEffect(() => {
-    setHighlightedText("");
-  }, [sequence]);
+    if (currentAnswer) {
+      setHighlightedText(currentAnswer);
+      setShowCorrection(true);
+    } else {
+      setHighlightedText("");
+      setShowCorrection(false);
+    }
+  }, [sequence, currentAnswer]);
 
-  // const handleMouseUp = () => {
-  //   const selection = window.getSelection();
-  //   const selectedText = selection.toString();
-  //   if (selectedText) {
-  //     setHighlightedText(selectedText);
-  //   }
-  // };
-  // const handleClick = () => {
-  //   const selection = window.getSelection();
-  //   if (!selection.toString()) {
-  //     setHighlightedText("");
-  //   }
-  // }
   const handleMouseUp = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();
@@ -40,6 +34,54 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence }) => {
       setHighlightedText(selectedText);
     } else {
       setHighlightedText("");
+    }
+  };
+
+  const handleSubmit = () => {
+    handleNextSequence(highlightedText);
+  };
+
+  const isCorrect = highlightedText.includes(sequence.blankList.answer);
+
+  const styles = {
+    box: {
+      width: "100%",
+      marginTop: 2,
+      border: "1px solid lightgray",
+      borderRadius: "8px",
+      padding: 2,
+      overflow: "auto",
+      minHeight: "50px",
+      backgroundColor: highlightedText ? 'white' : '#f5f5f5',
+      ...(showCorrection && {
+        backgroundColor: isCorrect ? green[50] : red[50],
+        borderColor: isCorrect ? green[500] : red[500],
+      })
+    },
+    correctAnswer: {
+      color: grey[700],
+      mt: 0.5,
+      ...(showCorrection && !isCorrect && {
+        display: 'block'
+      })
+    },
+    rectangle: {
+      display: "inline-block",
+      width: "100%",
+      minHeight: "80px",
+      border: "2px dashed lightgrey",
+      borderRadius: "8px",
+      textAlign: "left",
+      margin: "12px 0",
+      padding: "10px",
+      lineHeight: "1.5",
+      color: grey[700],
+      overflow: "hidden",
+      wordWrap: "break-word",
+      backgroundColor: grey[200],
+      ...(showCorrection && highlightedText && {
+        backgroundColor: isCorrect ? green[100] : red[100]
+      })
     }
   };
 
@@ -56,7 +98,6 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence }) => {
             height: '100%'
           }}
           onMouseUp={handleMouseUp}
-          // onClick={handleClick}
         >
           <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
             <Typography
@@ -81,26 +122,20 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence }) => {
         <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
           {t('Click and drag to highlight the answer to the question below.')}
         </Typography>
-        <Typography sx={{lineHeight:1.6, color:grey[800]}}>{sequence.blankList.question}</Typography>
-        <Box
-          sx={{
-            width: "100%",
-            marginTop: 2,
-            backgroundColor: highlightedText? 'white':'#f5f5f5',
-            border: "1px solid lightgray",
-            borderRadius: "8px",
-            padding: 2,
-            overflow: "auto",
-            minHeight: "50px",
-          }}
-        >
-          <Typography variant="body1" sx={{ color: grey[800],minHeight:'200px' }}>
+        <Typography sx={{ lineHeight: 1.6, color: grey[800] }}>{sequence.blankList.question}</Typography>
+        <Box sx={styles.box}>
+          <Typography variant="body1" sx={{ color: grey[800], minHeight: '200px' }}>
             {highlightedText}
           </Typography>
         </Box>
+        {showCorrection && !isCorrect && (
+          <Typography sx={styles.correctAnswer}>
+            Correct Answer: {sequence.blankList.answer}
+          </Typography>
+        )}
         {/* Answer button */}
         <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
-          <AnswerButton text='Next Step' onClick={handleNextSequence} />
+          <AnswerButton text='Next Step' onClick={handleSubmit} />
         </Box>
       </Grid>
     </Grid>
@@ -118,6 +153,7 @@ HighlightTheAnswerCardAlt.propTypes = {
       answer: PropTypes.string.isRequired
     }).isRequired,
   }).isRequired,
+  currentAnswer: PropTypes.string,
 };
 
 export default HighlightTheAnswerCardAlt;

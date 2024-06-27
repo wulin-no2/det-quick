@@ -56,11 +56,11 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence, currentAnswer })
     },
     rectangleCorrect: {
       backgroundColor: green[100],
-      borderColor: green[200],
+      borderColor: green[300],
     },
     rectangleIncorrect: {
       backgroundColor: red[100],
-      borderColor: red[200],
+      borderColor: red[300],
     },
     radio: {
       width: '100%',
@@ -94,12 +94,12 @@ const CompleteThePassageCard = ({ sequence, handleNextSequence, currentAnswer })
     },
     radioCorrect: {
       border:'1px solid',
-      borderColor:green[200],
+      borderColor:green[500],
       backgroundColor: green[50],
     },
     radioIncorrect: {
       border:'1px solid',
-      borderColor:red[200],
+      borderColor:red[500],
       backgroundColor: red[50],
     },
   };

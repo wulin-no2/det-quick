@@ -1,20 +1,35 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Grid, Typography, RadioGroup, FormControlLabel, Radio, Card, CardContent, Box, Divider } from "@mui/material";
-import { grey } from '@mui/material/colors';
+import { grey, green, red } from '@mui/material/colors';
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../../common/question-card-components/AnswerButton";
 
-const TitleThePassageCard = ({ sequence, handleNextSequence }) => {
+const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, handleSolveAgain }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
+  const [showCorrection, setShowCorrection] = useState(false);
 
   useEffect(() => {
-    setSelectedOption("");
-  }, [sequence]);
+    if (currentAnswer) {
+      setSelectedOption(currentAnswer);
+      setShowCorrection(true);
+    } else {
+      setSelectedOption("");
+      setShowCorrection(false);
+    }
+  }, [sequence, currentAnswer]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (showCorrection) {
+      handleSolveAgain();
+    } else {
+      handleNextSequence(selectedOption);
+    }
   };
 
   const styles = {
@@ -26,8 +41,7 @@ const TitleThePassageCard = ({ sequence, handleNextSequence }) => {
       mx: 'auto',
       marginBottom: "8px",
       display: "flex",
-      // alignItems: "flex-start",
-      alignItems:'center',
+      alignItems: 'center',
       gap: 1,
       color: grey[700],
     },
@@ -49,6 +63,48 @@ const TitleThePassageCard = ({ sequence, handleNextSequence }) => {
         fontSize: "1.2rem",
       },
     },
+    correctRadio: {
+      backgroundColor: green[50],
+      borderColor: green[500],
+    },
+    incorrectRadio: {
+      backgroundColor: red[50],
+      borderColor: red[500],
+    },
+    correctAnswerText: {
+      color: grey[700],
+      mt: 0.5,
+    }
+  };
+
+  const renderOptions = () => {
+    return sequence.blankList.options.map((option, index) => {
+      const isCorrect = option === sequence.blankList.answer;
+      const isSelected = selectedOption === option;
+      const showIncorrect = showCorrection && !isCorrect && isSelected;
+      const showCorrect = showCorrection && isCorrect;
+
+      return (
+        <Box key={index} sx={{ mb: 1 }}>
+          <FormControlLabel
+            value={option}
+            control={<Radio sx={styles.radioControl} />}
+            label={option}
+            sx={{
+              ...styles.radio,
+              ...(isSelected ? styles.selectedRadio : styles.unSelectedRadio),
+              ...(showCorrect && styles.correctRadio),
+              ...(showIncorrect && styles.incorrectRadio),
+            }}
+          />
+          {showIncorrect && (
+            <Typography sx={styles.correctAnswerText}>
+              Correct Answer: {sequence.blankList.answer}
+            </Typography>
+          )}
+        </Box>
+      );
+    });
   };
 
   return (
@@ -83,26 +139,15 @@ const TitleThePassageCard = ({ sequence, handleNextSequence }) => {
 
       {/* Options */}
       <Grid item xs={5} sx={{ textAlign: 'left' }}>
-        <Typography variant="h6" sx={{ fontWeight: "bold", py: 2}}>
-          {t('Select the best title for the passage.')}
+        <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
+          {t('Select the idea that is expressed in the passage.')}
         </Typography>
         <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-          {sequence.blankList.options.map((option, index) => (
-            <FormControlLabel
-              key={index}
-              value={option}
-              control={<Radio sx={styles.radioControl} />}
-              label={option}
-              sx={{
-                ...styles.radio,
-                ...(selectedOption === option ? styles.selectedRadio : styles.unSelectedRadio),
-              }}
-            />
-          ))}
+          {renderOptions()}
         </RadioGroup>
         {/* Answer button */}
         <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
-          <AnswerButton text='Submit' onClick={handleNextSequence} />
+          <AnswerButton text={showCorrection ? 'Solve Again' : 'Submit'} onClick={handleSubmit} />
         </Box>
       </Grid>
     </Grid>
@@ -120,6 +165,9 @@ TitleThePassageCard.propTypes = {
       answer: PropTypes.string.isRequired
     }).isRequired,
   }).isRequired,
+  currentAnswer: PropTypes.string,
+  handleSolveAgain: PropTypes.func.isRequired,
 };
 
 export default TitleThePassageCard;
+

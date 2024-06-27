@@ -49,6 +49,11 @@ const InteractiveReadingCard = ({
     setCurrentSequenceIndex(0); // Start over for grading
   };
 
+  const handleSolveAgain = () => {
+    setAnswers([]);
+    setCurrentSequenceIndex(0); // Start over 
+  }
+
   const renderSequence = () => {
     const currentSequence = questionDetail.sequences[currentSequenceIndex];
     const currentAnswer = answers[currentSequenceIndex];
@@ -100,6 +105,7 @@ const InteractiveReadingCard = ({
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
             currentAnswer={currentAnswer}
+            handleSolveAgain={handleSolveAgain}
           />
         );
       default:
