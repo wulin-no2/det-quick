@@ -134,7 +134,7 @@ const ReadAloudCard = ({
                     <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
                       {t('Your Recording')}
                     </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'start', position: 'absolute', ml: 19 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'start', position: 'absolute', ml: 10 }}>
                       <IconButton
                         onClick={() => handlePlayAudio(recordedAudioRef, 'recorded')}
                         color="primary"
@@ -160,7 +160,7 @@ const ReadAloudCard = ({
                   <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 2 }}>
                     {t('Reference Audio')}
                   </Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'start', position: 'absolute', ml: 20 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'start', position: 'absolute', ml: 10 }}>
                     <IconButton
                       onClick={() => handlePlayAudio(audioRef, 'reference')}
                       color="primary"
