@@ -54,6 +54,12 @@ const InteractiveReadingCard = ({
     setCurrentSequenceIndex(0); // Start over 
   }
 
+  const handlePrevious = () => {
+    if (currentSequenceIndex > 0) {
+      setCurrentSequenceIndex(currentSequenceIndex - 1);
+    }
+  };
+
   const renderSequence = () => {
     const currentSequence = questionDetail.sequences[currentSequenceIndex];
     const currentAnswer = answers[currentSequenceIndex];
@@ -73,6 +79,8 @@ const InteractiveReadingCard = ({
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
             currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
           />
         );
       case 3:
@@ -81,6 +89,8 @@ const InteractiveReadingCard = ({
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
             currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
           />
         );
       case 4:
@@ -89,6 +99,8 @@ const InteractiveReadingCard = ({
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
             currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
           />
         );
       case 5:
@@ -97,6 +109,8 @@ const InteractiveReadingCard = ({
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
             currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
           />
         );
       case 6:
@@ -106,6 +120,8 @@ const InteractiveReadingCard = ({
             handleNextSequence={handleNextSequence}
             currentAnswer={currentAnswer}
             handleSolveAgain={handleSolveAgain}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
           />
         );
       default:

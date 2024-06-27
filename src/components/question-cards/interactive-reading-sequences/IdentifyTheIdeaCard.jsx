@@ -5,7 +5,7 @@ import { grey, green, red } from '@mui/material/colors';
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../../common/question-card-components/AnswerButton";
 
-const IdentifyTheIdeaCard = ({ sequence, handleNextSequence, currentAnswer }) => {
+const IdentifyTheIdeaCard = ({ sequence, handleNextSequence, currentAnswer, handlePrevious, currentSequenceIndex }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
   const [showCorrection, setShowCorrection] = useState(false);
@@ -136,7 +136,10 @@ const IdentifyTheIdeaCard = ({ sequence, handleNextSequence, currentAnswer }) =>
           {renderOptions()}
         </RadioGroup>
         {/* Answer button */}
-        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
+        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'space-between', pt: 4 }}>
+        {showCorrection && currentSequenceIndex > 1 && (
+            <AnswerButton text='Previous' onClick={handlePrevious} />
+          )}
           <AnswerButton text='Next Step' onClick={handleSubmit} />
         </Box>
       </Grid>
@@ -156,6 +159,8 @@ IdentifyTheIdeaCard.propTypes = {
     }).isRequired,
   }).isRequired,
   currentAnswer: PropTypes.string,
+  handlePrevious: PropTypes.func.isRequired,
+  currentSequenceIndex: PropTypes.number.isRequired,
 };
 
 export default IdentifyTheIdeaCard;

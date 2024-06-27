@@ -12,7 +12,7 @@ const HighlightedText = styled("span")({
   },
 });
 
-const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer }) => {
+const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer, handlePrevious, currentSequenceIndex }) => {
   const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState("");
   const [showCorrection, setShowCorrection] = useState(false);
@@ -134,7 +134,10 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer
           </Typography>
         )}
         {/* Answer button */}
-        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
+        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'space-between', pt: 4 }}>
+        {showCorrection && currentSequenceIndex > 1 && (
+            <AnswerButton text='Previous' onClick={handlePrevious} />
+          )}
           <AnswerButton text='Next Step' onClick={handleSubmit} />
         </Box>
       </Grid>
@@ -154,6 +157,8 @@ HighlightTheAnswerCardAlt.propTypes = {
     }).isRequired,
   }).isRequired,
   currentAnswer: PropTypes.string,
+  handlePrevious: PropTypes.func.isRequired,
+  currentSequenceIndex: PropTypes.number.isRequired,
 };
 
 export default HighlightTheAnswerCardAlt;

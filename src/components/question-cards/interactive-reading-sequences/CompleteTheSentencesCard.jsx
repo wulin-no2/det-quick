@@ -175,7 +175,7 @@ const CompleteTheSentencesCard = ({ sequence, handleNextSequence, currentAnswer 
             </Select>
           </FormControl>
           {showCorrection && !isCorrect && (
-            <Typography sx={{ color: grey[800], mt: 0.5,mb:2 }}>
+            <Typography sx={{ color: grey[800], my:0.5 }}>
               {t('Correct Answer:')} {correct}
             </Typography>
           )}
