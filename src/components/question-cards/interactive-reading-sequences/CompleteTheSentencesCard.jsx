@@ -2,22 +2,33 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography, Select, MenuItem, FormControl, Card, CardContent, Divider, Grid } from '@mui/material';
 import { useTranslation } from "react-i18next";
-import { grey } from '@mui/material/colors';
+import { grey, green, red } from '@mui/material/colors';
 import AnswerButton from '../../common/question-card-components/AnswerButton';
 
-const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
+const CompleteTheSentencesCard = ({ sequence, handleNextSequence, currentAnswer }) => {
   const { t } = useTranslation();
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [showCorrection, setShowCorrection] = useState(false);
 
   useEffect(() => {
-    const initialSelectedOptions = sequence.blankList.map(() => "");
-    setSelectedOptions(initialSelectedOptions);
-  }, [sequence]);
+    if (currentAnswer && currentAnswer.length > 0) {
+      setSelectedOptions(currentAnswer);
+      setShowCorrection(true);
+    } else {
+      const initialSelectedOptions = sequence.blankList.map(() => "");
+      setSelectedOptions(initialSelectedOptions);
+      setShowCorrection(false);
+    }
+  }, [sequence, currentAnswer]);
 
   const handleOptionChange = (index) => (event) => {
     const newSelectedOptions = [...selectedOptions];
     newSelectedOptions[index] = event.target.value;
     setSelectedOptions(newSelectedOptions);
+  };
+
+  const handleSubmit = () => {
+    handleNextSequence(selectedOptions);
   };
 
   const styles = {
@@ -32,6 +43,7 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
       marginRight: "4px",
       paddingBlock: "8px",
       paddingInline: "4px",
+      color: grey[800]
     },
     rectangleUnselected: {
       border: "2px dashed lightgrey",
@@ -40,6 +52,14 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
     rectangleSelected: {
       border: "1px solid lightgrey",
       backgroundColor: 'white',
+    },
+    rectangleCorrect: {
+      backgroundColor: green[100],
+      border: 'none',
+    },
+    rectangleIncorrect: {
+      backgroundColor: red[100],
+      border: 'none',
     },
     number: {
       width: "20px",
@@ -57,8 +77,15 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
       backgroundColor: "#357af5",
       color: 'white',
     },
+    numberCorrect: {
+      color: 'white',
+    },
+    numberIncorrect: {
+      color: 'white',
+    },
     select: {
-      border: "0.5px solid lightgrey",
+      border: "0.5px solid",
+      // borderColor:'lightgray',
       borderRadius: "4px",
       height: '50px',
     },
@@ -71,14 +98,19 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
       if (match) {
         const blankIndex = parseInt(match[1], 10) - 1;
         const selected = selectedOptions[blankIndex];
+        const correct = sequence.blankList[blankIndex].answer;
+        const isCorrect = selected === correct;
+
         return (
           <Typography key={index} style={{
             ...styles.rectangle,
             ...(selected ? styles.rectangleSelected : styles.rectangleUnselected),
+            ...(showCorrection && selected && (isCorrect ? styles.rectangleCorrect : styles.rectangleIncorrect)),
           }}>
             <Typography style={{
               ...styles.number,
               ...(selected ? styles.numberSelected : styles.numberUnselected),
+              ...(showCorrection && selected && (isCorrect ? styles.numberCorrect : styles.numberIncorrect)),
               marginLeft: "2px"
             }}>{match[1]}</Typography>
             <Typography sx={{ display: 'flex', alignItems: 'center', px: 0.5 }}>{selected || " "}</Typography>
@@ -89,8 +121,72 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
     });
   };
 
+  const renderOptions = () => {
+    return sequence.blankList.map((blank, index) => {
+      const selected = selectedOptions[index] || "";
+      const correct = blank.answer;
+      const isCorrect = selected === correct;
+      return (
+        <Box key={index} sx={{ mb: 1 }}>
+          <FormControl sx={{ width: '100%' }}>
+            <Select
+              displayEmpty
+              value={selected}
+              onChange={handleOptionChange(index)}
+              sx={{
+                ...styles.select,
+                borderColor: showCorrection ? (isCorrect ? green[500] : red[500]) : 'lightgrey',
+                // borderColor: showCorrection ? 'white': 'lightgrey',
+                backgroundColor: showCorrection ? (isCorrect ? green[100] : '#fde1e1') : 'white',
+              }}
+              renderValue={(selected) => {
+                if (!selected) {
+                  return (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "darkgrey",
+                      }}
+                    >
+                      <Typography style={{ ...styles.number, ...styles.numberUnselected }}>{blank.indexNumber}</Typography>
+                      <Typography sx={{ m: 'auto' }}>{t('Select a word')}</Typography>
+                    </Box>
+                  );
+                }
+                return (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: grey[800],
+                    }}
+                  >
+                    <Typography style={{ ...styles.number, ...styles.numberSelected }}>{blank.indexNumber}</Typography>
+                    <Typography sx={{ m: 'auto' }}>{selected}</Typography>
+                  </Box>
+                );
+              }}
+            >
+              {blank.options.map((option, i) => (
+                <MenuItem key={i} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {showCorrection && !isCorrect && (
+            <Typography sx={{ color: grey[800], mt: 0.5 }}>
+              {t('Correct Answer:')} {correct}
+            </Typography>
+          )}
+        </Box>
+      );
+    });
+  };
+
   return (
-    <Grid container spacing={4} sx={{pb: 2, px: 4,}}>
+    <Grid container spacing={4} sx={{ pb: 2, px: 4 }}>
       <Grid item xs={7}>
         <Card
           sx={{
@@ -123,54 +219,11 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
           {t('Select the best option for each missing word.')}
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          {sequence.blankList.map((blank, index) => (
-            <FormControl key={index} sx={{ width: '100%', mb: 1 }}>
-              <Select
-                displayEmpty
-                value={selectedOptions[index]}
-                onChange={handleOptionChange(index)}
-                sx={styles.select}
-                renderValue={(selected) => {
-                  if (!selected) {
-                    return (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          color: "darkgrey",
-                        }}
-                      >
-                        <Typography style={{ ...styles.number, ...styles.numberUnselected }}>{blank.indexNumber}</Typography>
-                        <Typography sx={{ m: 'auto' }}>{t('Select a word')}</Typography>
-                      </Box>
-                    );
-                  }
-                  return (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        color: grey[700],
-                      }}
-                    >
-                      <Typography style={{ ...styles.number, ...styles.numberSelected }}>{blank.indexNumber}</Typography>
-                      <Typography sx={{ m: 'auto' }}>{selected}</Typography>
-                    </Box>
-                  );
-                }}
-              >
-                {blank.options.map((option, i) => (
-                  <MenuItem key={i} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          ))}
+          {renderOptions()}
         </Box>
         {/* Answer button */}
-        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4}}>
-          <AnswerButton text='Next Step' onClick={handleNextSequence} />
+        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
+          <AnswerButton text='Next Step' onClick={handleSubmit} />
         </Box>
       </Grid>
     </Grid>
@@ -178,7 +231,6 @@ const CompleteTheSentencesCard = ({ sequence,handleNextSequence }) => {
 };
 
 CompleteTheSentencesCard.propTypes = {
-  handleNextSequence:PropTypes.func.isRequired,
   sequence: PropTypes.shape({
     questionId: PropTypes.number.isRequired,
     sequenceOrder: PropTypes.number.isRequired,
@@ -190,9 +242,12 @@ CompleteTheSentencesCard.propTypes = {
         indexNumber: PropTypes.string.isRequired
       })
     ).isRequired
-  }).isRequired
+  }).isRequired,
+  handleNextSequence: PropTypes.func.isRequired,
+  currentAnswer: PropTypes.array,
 };
 
 export default CompleteTheSentencesCard;
+
 
 

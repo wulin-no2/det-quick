@@ -20,37 +20,46 @@ const InteractiveReadingCard = ({
   handleNext,
 }) => {
   const [currentSequenceIndex, setCurrentSequenceIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     if (questionDetail && questionDetail.sequences) {
       setCurrentSequenceIndex(0);
+      setAnswers(Array(questionDetail.sequences.length).fill(null));
     }
   }, [questionDetail]);
 
-  useEffect(() => {
-    console.log("question detail is", questionDetail);
-  }, [questionDetail]);
+  const handleNextSequence = (userAnswer) => {
+    setAnswers(prevAnswers => {
+      const newAnswers = [...prevAnswers];
+      newAnswers[currentSequenceIndex] = userAnswer;
+      return newAnswers;
+    });
 
-  if (!questionDetail) {
-    return <div></div>;
-  }
-
-  const handleNextSequence = () => {
     if (currentSequenceIndex < questionDetail.sequences.length - 1) {
       setCurrentSequenceIndex(currentSequenceIndex + 1);
     } else {
-      handleNext();
+      handleSubmit();
     }
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitted Answers:", answers);
+    // TODO: Handle submission and grading
+    setCurrentSequenceIndex(0); // Start over for grading
   };
 
   const renderSequence = () => {
     const currentSequence = questionDetail.sequences[currentSequenceIndex];
+    const currentAnswer = answers[currentSequenceIndex];
+
     switch (currentSequence.sequenceOrder) {
       case 1:
         return (
           <CompleteTheSentencesCard
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
           />
         );
       case 2:
@@ -58,6 +67,7 @@ const InteractiveReadingCard = ({
           <CompleteThePassageCard
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
           />
         );
       case 3:
@@ -65,6 +75,7 @@ const InteractiveReadingCard = ({
           <HighlightTheAnswerCard
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
           />
         );
       case 4:
@@ -72,6 +83,7 @@ const InteractiveReadingCard = ({
           <HighlightTheAnswerCardAlt
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
           />
         );
       case 5:
@@ -79,6 +91,7 @@ const InteractiveReadingCard = ({
           <IdentifyTheIdeaCard
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
           />
         );
       case 6:
@@ -86,6 +99,7 @@ const InteractiveReadingCard = ({
           <TitleThePassageCard
             sequence={currentSequence}
             handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
           />
         );
       default:

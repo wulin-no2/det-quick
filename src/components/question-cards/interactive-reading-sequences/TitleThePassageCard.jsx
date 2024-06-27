@@ -102,7 +102,7 @@ const TitleThePassageCard = ({ sequence, handleNextSequence }) => {
         </RadioGroup>
         {/* Answer button */}
         <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
-          <AnswerButton text='Next Step' onClick={handleNextSequence} />
+          <AnswerButton text='Submit' onClick={handleNextSequence} />
         </Box>
       </Grid>
     </Grid>
