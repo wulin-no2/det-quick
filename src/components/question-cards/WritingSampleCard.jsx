@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider,TextField } from "@mui/material";
 // import { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useState, useEffect } from "react";
+import { grey } from "@mui/material/colors";
 
 const WritingSampleCard = ({
   // questionId,
@@ -64,7 +65,7 @@ const WritingSampleCard = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          m: 4,
+          mx: 4,
         }}
       >
         <Typography
@@ -72,34 +73,34 @@ const WritingSampleCard = ({
           gutterBottom
           sx={{ fontWeight: "bold", opacity: 0.92, mb: 2 }}
         >
-          {t("Speak about the image below for 90 seconds.")}
+          {t("Write about the topic below for 5 minutes.")}
         </Typography>
-        {questionDetail.questionImageUrl ? (
-          <img
-            src={questionDetail.questionImageUrl}
-            style={{ width: "300px", margin: "auto" }}
-            onError={(e) => {
-              e.target.onerror = null; // Prevent infinite loop in case of broken image
-              e.target.src = "/placeholder.svg"; // Fallback image
-            }}
-          />
-        ) : (
-          <Typography variant="h6" color="error">
-            {t("Image not available")}
-          </Typography>
-        )}
+      </Box >
+      {/* question text */}
+      <Box sx={{display:'flex', justifyContent:'center',px:4,pt:2,pb:6}}>
+        <Typography sx={{width:"360px", textAlign:'left'}}>{questionDetail.questionText}</Typography>
+        <Box sx={{display:'flex',flexDirection:'column', alignItems:'start',px: 2, }}>
+            <TextField
+                multiline
+                rows={12}
+                placeholder={t("Your response")}
+                sx={{ width: "560px" }}/>
+            <Typography sx={{ mt: 1, color: grey[700]}}>
+            {t("At least 50 words. Recommended word count: 120+.")}
+            </Typography>
+        </Box>
       </Box>
       {/* answer button */}
       <Box
         gutterBottom
         sx={{
           display: "flex",
-          // pt: 2,
+          pr:4,
           pb: 4,
-          justifyContent: "space-evenly",
+          justifyContent: "end",
         }}
       >
-        <AnswerButton text="Record Now" onClick={handleRecord} />
+        <AnswerButton text="CONTINUE AFTER 3 MINUTES" onClick={handleRecord} sx={{minWidth:'280px'}}/>
       </Box>
       {/* Divider */}
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />

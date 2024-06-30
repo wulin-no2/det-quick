@@ -16,6 +16,7 @@ const timeLimit = (submoduleId)=>{
     case 6: return 60;
     case 9: return 60*8;
     case 13: return 60*3;
+    case 14: return 60*5;
     default: return 10;
   }
 }
