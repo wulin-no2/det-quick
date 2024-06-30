@@ -18,10 +18,8 @@ import {
 } from "../api/api-fetchQuestionDetail";
 
 // Import card components
-import CompleteThePassageCard from "../components/question-cards/interactive-reading-sequences/CompleteThePassageCard";
 import CompleteTheSentencesCard from "../components/question-cards/interactive-reading-sequences/CompleteTheSentencesCard";
 import FillInTheBlanksCard from "../components/question-cards/FillInTheBlanksCard";
-import HighlightTheAnswerCard from "../components/question-cards/interactive-reading-sequences/HighlightTheAnswerCard";
 import IdentifyTheIdeaCard from "../components/question-cards/interactive-reading-sequences/IdentifyTheIdeaCard";
 import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
 import TitleThePassageCard from "../components/question-cards/interactive-reading-sequences/TitleThePassageCard";
@@ -32,6 +30,8 @@ import SpeakAboutThePhotoCard from "../components/question-cards/SpeakAboutThePh
 import ListenAndTypeCard from "../components/question-cards/ListenAndTypeCard";
 import ReadAndCompleteCard from "../components/question-cards/ReadAndCompleteCard";
 import InteractiveReadingCard from "../components/question-cards/InteractiveReadingCard";
+import SpeakingSampleCard from "../components/question-cards/SpeakingSampleCard";
+import WritingSampleCard from "../components/question-cards/WritingSampleCard";
 
 function QuestionPage() {
   const location = useLocation();
@@ -194,9 +194,8 @@ function QuestionPage() {
     10: FillInTheBlanksCard,
     11: CompleteTheSentencesCard,
     12: IdentifyTheIdeaCard,
-    13: CompleteThePassageCard,
-    14: HighlightTheAnswerCard,
-    15: TitleThePassageCard,
+    13: SpeakingSampleCard,
+    14: WritingSampleCard,
   };
 
   // Determine which component to render based on the currentSubmoduleId

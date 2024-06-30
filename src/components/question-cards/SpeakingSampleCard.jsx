@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider } from "@mui/material";
-// import { useState } from 'react';
+import { Box, Typography, Divider, Paper } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useState, useEffect } from "react";
+import { grey } from "@mui/material/colors";
 
-const SpeakAboutThePhotoCard = ({
+const SpeakingSampleCard = ({
   // questionId,
   // setCurrentQuestionId,
   // setCurrentSubmoduleId,
@@ -23,7 +23,6 @@ const SpeakAboutThePhotoCard = ({
   const { t } = useTranslation();
   useEffect(() => {
     console.log("question detail is", questionDetail);
-    console.log("questionImageUrl:", questionDetail.questionImageUrl);
   }, [questionDetail]);
 
   if (!questionDetail) {
@@ -37,7 +36,7 @@ const SpeakAboutThePhotoCard = ({
 
   // handle answer buttons
   const handleRecord = () => {
-    console.log("record..");
+    console.log("Recording..");
   };
 
   return (
@@ -72,34 +71,46 @@ const SpeakAboutThePhotoCard = ({
           gutterBottom
           sx={{ fontWeight: "bold", opacity: 0.92, mb: 2 }}
         >
-          {t("Speak about the image below for 90 seconds.")}
+          {t("Speak about the topic below for 3 minutes.")}
         </Typography>
-        {questionDetail.questionImageUrl ? (
-          <img
-            src={questionDetail.questionImageUrl}
-            style={{ width: "300px", margin: "auto" }}
-            onError={(e) => {
-              e.target.onerror = null; // Prevent infinite loop in case of broken image
-              e.target.src = "/placeholder.svg"; // Fallback image
+      </Box>
+      {/* question text */}
+      <Box
+        sx={{
+          my: 4,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Paper variant="outlined" sx={{ py: 2, px: 6, maxWidth: "600px" }}>
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{
+              fontWeight: "bold",
+              opacity: 0.88,
+              textAlign: "left",
             }}
-          />
-        ) : (
-          <Typography variant="h6" color="error">
-            {t("Image not available")}
+          >
+            {questionDetail.questionText}
           </Typography>
-        )}
+        </Paper>
       </Box>
       {/* answer button */}
       <Box
         gutterBottom
         sx={{
           display: "flex",
-          // pt: 2,
+          flexDirection: "column",
+          alignItems: "center",
           pb: 4,
-          justifyContent: "space-evenly",
         }}
       >
-        <AnswerButton text="Record Now" onClick={handleRecord} />
+        <AnswerButton text={t("Record Now")} onClick={handleRecord} />
+        <Typography sx={{ mt: 1, color: grey }}>
+          {t("Recommended minimum word count: 250")}
+        </Typography>
       </Box>
       {/* Divider */}
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
@@ -142,7 +153,7 @@ const SpeakAboutThePhotoCard = ({
   );
 };
 
-SpeakAboutThePhotoCard.propTypes = {
+SpeakingSampleCard.propTypes = {
   questionId: PropTypes.number.isRequired,
   setCurrentQuestionId: PropTypes.func.isRequired,
   setCurrentSubmoduleId: PropTypes.func.isRequired,
@@ -156,4 +167,4 @@ SpeakAboutThePhotoCard.propTypes = {
   handleLast: PropTypes.func.isRequired,
 };
 
-export default SpeakAboutThePhotoCard;
+export default SpeakingSampleCard;

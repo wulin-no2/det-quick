@@ -17,6 +17,7 @@ const AnswerButton = ({ text, onClick ,sx}) => {
         textTransform: "none",
         ...sx, // Apply additional styles
       }}
+      //sx={{bgcolor:'#3b5d87', border:'none', color:'white'} // another color
     >
       {t(text)}
     </Button>

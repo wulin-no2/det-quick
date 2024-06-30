@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Grid, Typography, Card, CardContent, Box, Divider } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  Box,
+  Divider,
+} from "@mui/material";
 import { styled } from "@mui/system";
-import { grey, amber, green, red } from '@mui/material/colors';
+import { grey, amber, green, red } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
-import AnswerButton from "../../common/question-card-components/AnswerButton";
+import AnswerButton from "../../common/AnswerButton";
 
 const HighlightedText = styled("span")({
   "::selection": {
@@ -12,7 +19,13 @@ const HighlightedText = styled("span")({
   },
 });
 
-const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer, handlePrevious, currentSequenceIndex }) => {
+const HighlightTheAnswerCardAlt = ({
+  sequence,
+  handleNextSequence,
+  currentAnswer,
+  handlePrevious,
+  currentSequenceIndex,
+}) => {
   const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState("");
   const [showCorrection, setShowCorrection] = useState(false);
@@ -52,18 +65,19 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer
       padding: 2,
       overflow: "auto",
       minHeight: "50px",
-      backgroundColor: highlightedText ? 'white' : '#f5f5f5',
+      backgroundColor: highlightedText ? "white" : "#f5f5f5",
       ...(showCorrection && {
         backgroundColor: isCorrect ? green[50] : red[50],
         borderColor: isCorrect ? green[500] : red[500],
-      })
+      }),
     },
     correctAnswer: {
       color: grey[700],
       mt: 0.5,
-      ...(showCorrection && !isCorrect && {
-        display: 'block'
-      })
+      ...(showCorrection &&
+        !isCorrect && {
+          display: "block",
+        }),
     },
     rectangle: {
       display: "inline-block",
@@ -79,10 +93,11 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer
       overflow: "hidden",
       wordWrap: "break-word",
       backgroundColor: grey[200],
-      ...(showCorrection && highlightedText && {
-        backgroundColor: isCorrect ? green[100] : red[100]
-      })
-    }
+      ...(showCorrection &&
+        highlightedText && {
+          backgroundColor: isCorrect ? green[100] : red[100],
+        }),
+    },
   };
 
   return (
@@ -91,26 +106,31 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer
       <Grid item xs={7}>
         <Card
           sx={{
-            minWidth: '320px',
+            minWidth: "320px",
             backgroundColor: grey[100],
             border: "1px solid lightgrey",
             boxShadow: "none",
-            height: '100%'
+            height: "100%",
           }}
           onMouseUp={handleMouseUp}
         >
-          <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
+          <CardContent sx={{ px: 0, py: 0, textAlign: "left" }}>
             <Typography
-              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: '14px' }}>
-              {t('PASSAGE')} #{sequence.questionId}-{sequence.sequenceOrder}
+              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: "14px" }}
+            >
+              {t("PASSAGE")} #{sequence.questionId}-{sequence.sequenceOrder}
             </Typography>
             <Divider />
-            <Typography variant="body1" sx={{
-              px: 3, py: 0,
-              lineHeight: 2,
-              mt: 2,
-              color: grey[700],
-            }}>
+            <Typography
+              variant="body1"
+              sx={{
+                px: 3,
+                py: 0,
+                lineHeight: 2,
+                mt: 2,
+                color: grey[700],
+              }}
+            >
               <HighlightedText>{sequence.sentenceTemplate}</HighlightedText>
             </Typography>
           </CardContent>
@@ -118,13 +138,18 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer
       </Grid>
 
       {/* Options */}
-      <Grid item xs={5} sx={{ textAlign: 'left' }}>
+      <Grid item xs={5} sx={{ textAlign: "left" }}>
         <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
-          {t('Click and drag to highlight the answer to the question below.')}
+          {t("Click and drag to highlight the answer to the question below.")}
         </Typography>
-        <Typography sx={{ lineHeight: 1.6, color: grey[800] }}>{sequence.blankList.question}</Typography>
+        <Typography sx={{ lineHeight: 1.6, color: grey[800] }}>
+          {sequence.blankList.question}
+        </Typography>
         <Box sx={styles.box}>
-          <Typography variant="body1" sx={{ color: grey[800], minHeight: '200px' }}>
+          <Typography
+            variant="body1"
+            sx={{ color: grey[800], minHeight: "200px" }}
+          >
             {highlightedText}
           </Typography>
         </Box>
@@ -134,11 +159,14 @@ const HighlightTheAnswerCardAlt = ({ sequence, handleNextSequence, currentAnswer
           </Typography>
         )}
         {/* Answer button */}
-        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'space-between', pt: 4 }}>
-        {showCorrection && currentSequenceIndex > 1 && (
-            <AnswerButton text='Previous' onClick={handlePrevious} />
+        <Box
+          gutterBottom
+          sx={{ display: "flex", justifyContent: "space-between", pt: 4 }}
+        >
+          {showCorrection && currentSequenceIndex > 1 && (
+            <AnswerButton text="Previous" onClick={handlePrevious} />
           )}
-          <AnswerButton text='Next Step' onClick={handleSubmit} />
+          <AnswerButton text="Next Step" onClick={handleSubmit} />
         </Box>
       </Grid>
     </Grid>
@@ -153,7 +181,7 @@ HighlightTheAnswerCardAlt.propTypes = {
     sentenceTemplate: PropTypes.string.isRequired,
     blankList: PropTypes.shape({
       question: PropTypes.string.isRequired,
-      answer: PropTypes.string.isRequired
+      answer: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
   currentAnswer: PropTypes.string,

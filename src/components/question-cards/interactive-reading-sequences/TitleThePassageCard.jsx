@@ -1,11 +1,28 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Grid, Typography, RadioGroup, FormControlLabel, Radio, Card, CardContent, Box, Divider } from "@mui/material";
-import { grey, green, red } from '@mui/material/colors';
+import {
+  Grid,
+  Typography,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Card,
+  CardContent,
+  Box,
+  Divider,
+} from "@mui/material";
+import { grey, green, red } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
-import AnswerButton from "../../common/question-card-components/AnswerButton";
+import AnswerButton from "../../common/AnswerButton";
 
-const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, handleSolveAgain, handlePrevious, currentSequenceIndex}) => {
+const TitleThePassageCard = ({
+  sequence,
+  handleNextSequence,
+  currentAnswer,
+  handleSolveAgain,
+  handlePrevious,
+  currentSequenceIndex,
+}) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState("");
   const [showCorrection, setShowCorrection] = useState(false);
@@ -34,14 +51,14 @@ const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, hand
 
   const styles = {
     radio: {
-      width: '100%',
+      width: "100%",
       border: "1px solid",
       borderRadius: "8px",
       padding: "10px",
-      mx: 'auto',
+      mx: "auto",
       marginBottom: "8px",
       display: "flex",
-      alignItems: 'center',
+      alignItems: "center",
       gap: 1,
       color: grey[700],
     },
@@ -49,8 +66,8 @@ const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, hand
       borderColor: grey[300],
     },
     selectedRadio: {
-      borderColor: '#357af5',
-      backgroundColor: '#e3f2fd', // Light blue background
+      borderColor: "#357af5",
+      backgroundColor: "#e3f2fd", // Light blue background
     },
     radioControl: {
       "&.MuiRadio-root": {
@@ -74,7 +91,7 @@ const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, hand
     correctAnswerText: {
       color: grey[700],
       mt: 0.5,
-    }
+    },
   };
 
   const renderOptions = () => {
@@ -108,24 +125,30 @@ const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, hand
       <Grid item xs={7}>
         <Card
           sx={{
-            minWidth: '320px',
+            minWidth: "320px",
             backgroundColor: grey[100],
             border: "1px solid lightgrey",
             boxShadow: "none",
-            height: '100%'
-          }}>
-          <CardContent sx={{ px: 0, py: 0, textAlign: 'left' }}>
+            height: "100%",
+          }}
+        >
+          <CardContent sx={{ px: 0, py: 0, textAlign: "left" }}>
             <Typography
-              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: '14px' }}>
-              {t('PASSAGE')} #{sequence.questionId}-{sequence.sequenceOrder}
+              sx={{ color: grey[700], px: 3, py: 1.5, fontSize: "14px" }}
+            >
+              {t("PASSAGE")} #{sequence.questionId}-{sequence.sequenceOrder}
             </Typography>
             <Divider />
-            <Typography variant="body1" sx={{
-              px: 3, py: 0,
-              lineHeight: 2,
-              mt: 2,
-              color: grey[700],
-            }}>
+            <Typography
+              variant="body1"
+              sx={{
+                px: 3,
+                py: 0,
+                lineHeight: 2,
+                mt: 2,
+                color: grey[700],
+              }}
+            >
               {sequence.sentenceTemplate}
             </Typography>
           </CardContent>
@@ -133,9 +156,9 @@ const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, hand
       </Grid>
 
       {/* Options */}
-      <Grid item xs={5} sx={{ textAlign: 'left' }}>
+      <Grid item xs={5} sx={{ textAlign: "left" }}>
         <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
-          {t('Select the idea that is expressed in the passage.')}
+          {t("Select the idea that is expressed in the passage.")}
         </Typography>
         <RadioGroup value={selectedOption} onChange={handleOptionChange}>
           {renderOptions()}
@@ -145,11 +168,17 @@ const TitleThePassageCard = ({ sequence, handleNextSequence, currentAnswer, hand
           <AnswerButton text={showCorrection ? 'Solve Again' : 'Submit'} onClick={handleSubmit} />
         </Box> */}
         {/* Answer button */}
-        <Box gutterBottom sx={{ display: 'flex', justifyContent: 'space-between', pt: 4 }}>
+        <Box
+          gutterBottom
+          sx={{ display: "flex", justifyContent: "space-between", pt: 4 }}
+        >
           {showCorrection && currentSequenceIndex > 1 && (
-            <AnswerButton text='Previous' onClick={handlePrevious} />
+            <AnswerButton text="Previous" onClick={handlePrevious} />
           )}
-          <AnswerButton text={showCorrection ? 'Solve Again' : 'Submit'} onClick={handleSubmit} />
+          <AnswerButton
+            text={showCorrection ? "Solve Again" : "Submit"}
+            onClick={handleSubmit}
+          />
         </Box>
       </Grid>
     </Grid>
@@ -164,7 +193,7 @@ TitleThePassageCard.propTypes = {
     sentenceTemplate: PropTypes.string.isRequired,
     blankList: PropTypes.shape({
       options: PropTypes.arrayOf(PropTypes.string).isRequired,
-      answer: PropTypes.string.isRequired
+      answer: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
   currentAnswer: PropTypes.string,
@@ -174,4 +203,3 @@ TitleThePassageCard.propTypes = {
 };
 
 export default TitleThePassageCard;
-

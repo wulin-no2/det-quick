@@ -6,7 +6,7 @@ import AnswerButton from "../common/AnswerButton";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useState, useEffect } from "react";
 
-const SpeakAboutThePhotoCard = ({
+const WritingSampleCard = ({
   // questionId,
   // setCurrentQuestionId,
   // setCurrentSubmoduleId,
@@ -142,7 +142,7 @@ const SpeakAboutThePhotoCard = ({
   );
 };
 
-SpeakAboutThePhotoCard.propTypes = {
+WritingSampleCard.propTypes = {
   questionId: PropTypes.number.isRequired,
   setCurrentQuestionId: PropTypes.func.isRequired,
   setCurrentSubmoduleId: PropTypes.func.isRequired,
@@ -156,4 +156,4 @@ SpeakAboutThePhotoCard.propTypes = {
   handleLast: PropTypes.func.isRequired,
 };
 
-export default SpeakAboutThePhotoCard;
+export default WritingSampleCard;
