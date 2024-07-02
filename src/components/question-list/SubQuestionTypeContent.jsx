@@ -10,6 +10,7 @@ import PaginationRounded from "../common/PaginationRounded";
 import { fetchQuestionListResponseData } from "../../api/api-fetchQuestionList";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import { buttonGroups } from "../../utils/practice/questionListConstantAndFunc";
+import useQuestionStateContext from "../../context/useQuestionStateContext";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -29,12 +30,13 @@ const cleanFilters = (filters) => {
   return cleanedFilters;
 };
 
-const SubQuestionTypeContent = ({
-  submoduleId,
-  currentPage, setCurrentPage,
-  filters, setFilters,
-  globalIndex, setGlobalIndex,
-}) => {
+const SubQuestionTypeContent = ({submoduleId,}) => {
+  const {
+    currentPage, setCurrentPage,
+    filters, setFilters,
+    globalIndex, setGlobalIndex,
+  } = useQuestionStateContext();
+
   const [questions, setQuestions] = useState([]);
   const [pages, setPages] = useState(0);
   const [count, setCount] = useState(0);
@@ -119,13 +121,7 @@ const SubQuestionTypeContent = ({
 };
 
 SubQuestionTypeContent.propTypes = {
-  currentPage: PropTypes.number.isRequired,
-  setFilters: PropTypes.func.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
-  filters: PropTypes.object.isRequired,
   submoduleId: PropTypes.number.isRequired,
-  globalIndex: PropTypes.number.isRequired,
-  setGlobalIndex: PropTypes.func.isRequired,
 };
 
 export default SubQuestionTypeContent;

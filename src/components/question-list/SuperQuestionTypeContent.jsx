@@ -1,6 +1,5 @@
 // handle page change, handle submoduleId change
 // Manages the state of filters and currentPage and passes them to SubQuestionTypeContent
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import SubQuestionTypeContent from "./SubQuestionTypeContent";
 import { useState, useEffect } from "react";
@@ -9,23 +8,22 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabPanel from "./question-list-components/TabPanel";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
+import useQuestionStateContext from "../../context/useQuestionStateContext";
+import { subTypesArr } from "../../utils/practice/questionListConstantAndFunc";
 
 const getInitialValue = (key, defaultValue) => {
   const saved = localStorage.getItem(key);
   return saved ? JSON.parse(saved) : defaultValue;
 };
 
-const SuperQuestionTypeContent = ({
-  moduleId,
-  submoduleId,
-  setSubmoduleId,
-  subTypesArr,
-  currentPage,
-  setCurrentPage,
-  globalIndex,
-  setGlobalIndex,
-}) => {
+const SuperQuestionTypeContent = () => {
   const { t } = useTranslation();
+  const {
+    moduleId, 
+    submoduleId, setSubmoduleId,
+    currentPage, setCurrentPage,
+    globalIndex, setGlobalIndex,
+  } = useQuestionStateContext();
   const currentTypes = subTypesArr[moduleId - 1];
 
   // Initialize state from localStorage or defaults
@@ -102,17 +100,6 @@ const SuperQuestionTypeContent = ({
       <ShowLocalStorage componentName="SuperQuestionTypeContent" />
     </Box>
   );
-};
-
-SuperQuestionTypeContent.propTypes = {
-  subTypesArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
-  moduleId: PropTypes.number.isRequired,
-  submoduleId: PropTypes.number.isRequired,
-  setSubmoduleId: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
-  globalIndex: PropTypes.number.isRequired,
-  setGlobalIndex: PropTypes.func.isRequired,
 };
 
 export default SuperQuestionTypeContent;

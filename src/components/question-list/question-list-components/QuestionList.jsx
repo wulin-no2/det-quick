@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DifficultyButton from "../../common/question-card-components/CardHeaderComponents/DifficultyButton";
 import { getNameBySubmoduleId } from "../../../utils/practice/questionListConstantAndFunc";
+import useQuestionStateContext from "../../../context/useQuestionStateContext";
 
 const baseQuestionsDetailURL = "questions/detail";
 
@@ -13,19 +14,17 @@ export default function QuestionList({
   questionsArr,
   filters,
   count,
-  currentPage,
-  globalIndex,
-  setGlobalIndex,
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { currentPage, setGlobalIndex } = useQuestionStateContext();
   const itemsPerPage = 10;
 
   // remember the state with React Router for later use in QuestionPage
   const handleItemClick = (question, index) => {
-    globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
-    setGlobalIndex(globalIndex);
-    localStorage.setItem("globalIndex", globalIndex);
+    const newGlobalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+    setGlobalIndex(newGlobalIndex);
+    localStorage.setItem("globalIndex", newGlobalIndex);
 
     navigate(baseQuestionsDetailURL, {
       state: {
@@ -36,7 +35,7 @@ export default function QuestionList({
         currentIndex: index,
         moduleId: question.moduleId,
         currentPage: currentPage,
-        globalIndex: globalIndex,
+        globalIndex: newGlobalIndex,
       },
     });
   };
@@ -73,7 +72,7 @@ export default function QuestionList({
             }}
           >
             {questionsArr.map((question, index) => {
-              globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+              const newGlobalIndex = (currentPage - 1) * itemsPerPage + index + 1;
               return (
                 <React.Fragment key={question.questionId}>
                   <ListItem
@@ -102,7 +101,7 @@ export default function QuestionList({
                     >
                       <Grid item md={6}>
                         <Typography variant="body1" color="text.primary">
-                          {globalIndex}
+                        {newGlobalIndex}
                           {"  "}
                           <Box component="span" sx={{ fontWeight: "bold" }}>
                             {t(getNameBySubmoduleId(question.submoduleId))}
@@ -151,7 +150,4 @@ QuestionList.propTypes = {
     .isRequired,
   count: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  globalIndex: PropTypes.number.isRequired,
-  setGlobalIndex: PropTypes.func.isRequired,
 };

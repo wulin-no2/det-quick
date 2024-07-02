@@ -11,10 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { ShowLocalStorage } from '../../utils/ShowLocalStorage';
 import { subTypesArr } from '../../utils/practice/questionListConstantAndFunc';
+import useQuestionStateContext from '../../context/useQuestionStateContext';
 
 function CustomCard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { setModuleId, setSubmoduleId, setCurrentPage, setGlobalIndex } = useQuestionStateContext();
   const iconsData = [
     { icon: <VocabularyIcon />, title: 'Vocabulary', types: '1' , moduleId: 1 },
     { icon: <SpeakingIcon />, title: 'Speaking', types: '4' , moduleId: 2 },
@@ -23,14 +25,13 @@ function CustomCard() {
     { icon: <WritingIcon />, title: 'Writing', types: '2' , moduleId: 5 },
     { icon: <PeopleIcon />, title: 'Sample', types: '2' , moduleId: 6 },
   ];
+
   const handleClick = (moduleId) => {
-    localStorage.setItem('moduleId', JSON.stringify(moduleId));
-    // Update the moduleId based on default submoduleId
+    setModuleId(moduleId);
     const defaultSubmoduleId = subTypesArr[moduleId - 1][0].submodule_id;
-    // setSubmoduleId(defaultSubmoduleId);
-    localStorage.setItem("submoduleId", JSON.stringify(defaultSubmoduleId));
-    localStorage.setItem("currentPage", 1);
-    localStorage.setItem("globalIndex", 1);
+    setSubmoduleId(defaultSubmoduleId);
+    setCurrentPage(1);
+    setGlobalIndex(1);
     navigate('/practice');
   };
 

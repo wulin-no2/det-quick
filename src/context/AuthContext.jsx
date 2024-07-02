@@ -1,15 +1,12 @@
 // copied from Zain.haven't used it
 // AuthContext.js
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { loginApi, logoutApi } from "../api/Profile/login";
 // import { useNavigate } from "react-router-dom";
 import { getUserDetailApi } from "../api/Profile/user";
+import PropTypes from "prop-types";
 
 const AuthContext = createContext(null);
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
 
 export function AuthProvider({ children }) {
   const [auth, setAuth] = useState(null); // 用来保存认证状态和用户信息
@@ -108,5 +105,11 @@ export function AuthProvider({ children }) {
     logoutAuth,
   };
 
+  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default AuthContext;

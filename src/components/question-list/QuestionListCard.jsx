@@ -2,7 +2,6 @@
 // and pass moduleId and submoduleId to SuperQuestionTypeContent
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -10,22 +9,20 @@ import TabPanel from "./question-list-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import { types, subTypesArr } from "../../utils/practice/questionListConstantAndFunc";
+import useQuestionStateContext from "../../context/useQuestionStateContext";
 
 const getInitialValue = (key, defaultValue) => {
   const saved = localStorage.getItem(key);
   return saved ? JSON.parse(saved) : defaultValue;
 };
 
-const QuestionListCard = ({
-  moduleId,
-  submoduleId,
-  setModuleId,
-  setSubmoduleId,
-  globalIndex,
-  setGlobalIndex,
-  currentPage,
-  setCurrentPage,
-}) => {
+const QuestionListCard = () => {
+  const {
+    moduleId, setModuleId,
+    submoduleId, setSubmoduleId,
+    globalIndex, setGlobalIndex,
+    currentPage, setCurrentPage,
+  } = useQuestionStateContext();
   const { t } = useTranslation();
 
   const [value, setValue] = useState(() => getInitialValue("tabIndex", 0));
@@ -87,17 +84,6 @@ const QuestionListCard = ({
       <ShowLocalStorage componentName="QuestionListCard" />
     </Box>
   );
-};
-
-QuestionListCard.propTypes = {
-  moduleId: PropTypes.number.isRequired,
-  setModuleId: PropTypes.func.isRequired,
-  submoduleId: PropTypes.number.isRequired,
-  setSubmoduleId: PropTypes.func.isRequired,
-  globalIndex: PropTypes.number.isRequired,
-  setGlobalIndex: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default QuestionListCard;
