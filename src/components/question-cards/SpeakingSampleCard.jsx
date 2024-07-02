@@ -108,7 +108,7 @@ const SpeakingSampleCard = ({
         }}
       >
         <AnswerButton text={t("Record Now")} onClick={handleRecord} />
-        <Typography sx={{ mt: 1, color: grey }}>
+        <Typography sx={{ mt: 1, color: grey[700] ,fontSize:'14px'}}>
           {t("Recommended minimum word count: 250")}
         </Typography>
       </Box>

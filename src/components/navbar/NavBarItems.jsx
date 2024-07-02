@@ -25,20 +25,20 @@ export default function NavBarItems() {
       </li>
       <li>
         <Link
-          to="/live-course"
+          to="/courses"
           className={location.pathname === "/live-course" ? "active-link" : ""}
         >
-          {t("live_course")}
+          {t("Courses")}
         </Link>
       </li>
-      {/* <li>
+      <li>
         <Link
-          to="/mock-test"
+          to="/pricing"
           className={location.pathname === "/mock-test" ? "active-link" : ""}
         >
-          {t("mock_test")}
+          {t("Pricing")}
         </Link>
-      </li> */}
+      </li>
       <li>
         <Link
           to="/about-us"

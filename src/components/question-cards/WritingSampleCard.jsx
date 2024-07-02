@@ -78,14 +78,14 @@ const WritingSampleCard = ({
       </Box >
       {/* question text */}
       <Box sx={{display:'flex', justifyContent:'center',px:4,pt:2,pb:6}}>
-        <Typography sx={{width:"360px", textAlign:'left'}}>{questionDetail.questionText}</Typography>
+        <Typography sx={{width:"400px", textAlign:'left'}}>{questionDetail.questionText}</Typography>
         <Box sx={{display:'flex',flexDirection:'column', alignItems:'start',px: 2, }}>
             <TextField
                 multiline
                 rows={12}
                 placeholder={t("Your response")}
-                sx={{ width: "560px" }}/>
-            <Typography sx={{ mt: 1, color: grey[700]}}>
+                sx={{ width: "500px" }}/>
+            <Typography sx={{ mt: 1, color: grey[700],fontSize:'14px'}}>
             {t("At least 50 words. Recommended word count: 120+.")}
             </Typography>
         </Box>
@@ -95,7 +95,7 @@ const WritingSampleCard = ({
         gutterBottom
         sx={{
           display: "flex",
-          pr:4,
+          pr:18,
           pb: 4,
           justifyContent: "end",
         }}

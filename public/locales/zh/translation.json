@@ -6,8 +6,10 @@
   "Privacy Policy": "隐私政策",
   "practice": "练习题库",
   "mock_test": "模拟考试",
+  "Courses":"免费课程",
+  "Pricing":"会员服务",
   "language_switch": "语言切换",
-  "vocab": "单词本",
+  "vocab": "背单词",
   "contact_us": "联系我们",
   "logout": "退出登录",
   "personal_center": "个人中心",
@@ -87,6 +89,10 @@
   "Click and drag to highlight the answer to the question below.": "阅读问题，点击并拖动以标出文中的答案：",
   "Select the best title for the passage.": "请选出这篇短文最适合的标题：",
   "Select the idea that is expressed in the passage.":"选出段落大意：",
-  "Correct Answer:":"正确答案："
-
+  "Correct Answer:":"正确答案：",
+  "Speak about the topic below for 3 minutes.":"就以下话题展开谈论，限时3分钟：",
+  "Recommended minimum word count: 250":"建议说够250个单词",
+  "Write about the topic below for 5 minutes.":"就以下话题写文章，限时5分钟：",
+  "At least 50 words. Recommended word count: 120+.":"至少写50个单词， 建议写够120个单词",
+  "CONTINUE AFTER 3 MINUTES":"3分钟后可提交"
 }
