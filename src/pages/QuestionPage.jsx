@@ -1,21 +1,11 @@
-// handleBack function
-// display different question card based on submoduleId
-// fetch data: question detail
-// fetch data: previous, next
-
+// // handleBack function
+// // display different question card based on submoduleId
+// // fetch data: question detail
+// // fetch data: previous, next
 import { Box, Container } from "@mui/material";
-// import { useParams } from 'react-router-dom';
-import {
-  useState,
-  useEffect,
-  // useRef
-} from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchQuestionDetail } from "../api/api-fetchQuestionDetail";
-import {
-  fetchNextQuestion,
-  fetchPreviousQuestion,
-} from "../api/api-fetchQuestionDetail";
+import { fetchQuestionDetail, fetchNextQuestion, fetchPreviousQuestion } from "../api/api-fetchQuestionDetail";
 
 // Import card components
 import CompleteTheSentencesCard from "../components/question-cards/interactive-reading-sequences/CompleteTheSentencesCard";
@@ -33,102 +23,80 @@ import InteractiveReadingCard from "../components/question-cards/InteractiveRead
 import SpeakingSampleCard from "../components/question-cards/SpeakingSampleCard";
 import WritingSampleCard from "../components/question-cards/WritingSampleCard";
 
+const questionCardComponents = {
+  1: ReadAndSelectCard,
+  2: ReadAloudCard,
+  3: ReadThenSpeakCard,
+  4: ListenThenSpeakCard,
+  5: SpeakAboutThePhotoCard,
+  6: ListenAndTypeCard,
+  7: TitleThePassageCard,
+  8: ReadAndCompleteCard,
+  9: InteractiveReadingCard,
+  10: FillInTheBlanksCard,
+  11: CompleteTheSentencesCard,
+  12: IdentifyTheIdeaCard,
+  13: SpeakingSampleCard,
+  14: WritingSampleCard,
+};
+
 function QuestionPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const state =
-    location.state ||
-    JSON.parse(localStorage.getItem("questionPageState")) ||
-    {};
-
-  const {
-    questionId,
-    submoduleId,
-    filters,
-    count,
-    currentIndex,
-    getNameBySubmoduleId,
-    moduleId,
-    currentPage,
-    globalIndex,
-  } = state;
+  const state = location.state || JSON.parse(localStorage.getItem("questionPageState")) || {};
+  const { questionId, submoduleId, filters, count, currentIndex, getNameBySubmoduleId, moduleId, currentPage, globalIndex } = state;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // use for store fetchData result
   const [questionDetail, setQuestionDetail] = useState(null);
+  const [currentState, setCurrentState] = useState({
+    currentQuestionId: questionId || 1,
+    currentSubmoduleId: submoduleId || 1,
+    currentGlobalIndex: globalIndex || 1,
+  });
 
-  // used for send data to backend
-  const [currentQuestionId, setCurrentQuestionId] = useState(questionId || 1);
-  const [currentSubmoduleId, setCurrentSubmoduleId] = useState(
-    submoduleId || 1
-  );
-  const [currentGlobalIndex, setCurrentGlobalIndex] = useState(
-    globalIndex || 1
-  );
+  const { currentQuestionId, currentSubmoduleId, currentGlobalIndex } = currentState;
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        console.log(
-          "currentQuestionId and currentSubmoduleId in question page ",
-          currentQuestionId,
-          currentSubmoduleId
-        );
-        const result = await fetchQuestionDetail(
-          currentQuestionId,
-          currentSubmoduleId
-        );
-        console.log("result in question page ", result);
-        setQuestionDetail(result); // get question detail
+        const result = await fetchQuestionDetail(currentQuestionId, currentSubmoduleId);
+        setQuestionDetail(result);
         setError("");
       } catch (error) {
         setError(`Error: ${error.message}`);
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchData();
   }, [currentQuestionId, currentSubmoduleId]);
 
-  // used for handle back operation with React Router
   const handleBack = () => {
-    navigate(-1, {
-      state: {
-        moduleId,
-        submoduleId,
-        filters,
-        currentPage,
-        count,
-        globalIndex,
-      },
-    });
-    console.log("state in question page- handleBack is ", state);
+    navigate(-1, { state: { moduleId, submoduleId, filters, currentPage, count, globalIndex } });
   };
 
-  // handle next
-  const handleNext = async () => {
-    if (currentGlobalIndex < count) {
-      const newGlobalIndex = currentGlobalIndex + 1;
-      setCurrentGlobalIndex(newGlobalIndex);
+  const handleNavigation = async (direction) => {
+    const newGlobalIndex = direction === 'next' ? currentGlobalIndex + 1 : currentGlobalIndex - 1;
+    if (newGlobalIndex > 0 && newGlobalIndex <= count) {
+      setCurrentState((prevState) => ({
+        ...prevState,
+        currentGlobalIndex: newGlobalIndex,
+      }));
       localStorage.setItem("globalIndex", newGlobalIndex);
-      console.log("filters in question page handleNext is", filters);
+
+      const fetchQuestion = direction === 'next' ? fetchNextQuestion : fetchPreviousQuestion;
       try {
-        const nextQuestion = await fetchNextQuestion(
-          currentQuestionId,
-          currentSubmoduleId,
-          filters.difficultyLevel,
-          filters.templateType,
-          filters.isCorrect,
-          filters.isAsc
-        );
-        if (nextQuestion) {
-          setCurrentQuestionId(nextQuestion.questionId);
-          setCurrentSubmoduleId(nextQuestion.submoduleId);
-          setQuestionDetail(nextQuestion);
+        const question = await fetchQuestion(currentQuestionId, currentSubmoduleId, filters.difficultyLevel, filters.templateType, filters.isCorrect, filters.isAsc);
+        if (question) {
+          setCurrentState({
+            currentQuestionId: question.questionId,
+            currentSubmoduleId: question.submoduleId,
+            currentGlobalIndex: newGlobalIndex,
+          });
+          setQuestionDetail(question);
         }
       } catch (error) {
         setError(`Error: ${error.message}`);
@@ -136,71 +104,10 @@ function QuestionPage() {
     }
   };
 
-  // handle Last
-  const handleLast = async () => {
-    if (currentGlobalIndex > 1) {
-      const newGlobalIndex = currentGlobalIndex - 1;
-      setCurrentGlobalIndex(newGlobalIndex);
-      localStorage.setItem("globalIndex", newGlobalIndex);
-      console.log(
-        "currentQuestionId, currentSubmoduleId, filters.difficultyLevel, filters.templateType, filters.isCorrect, filters.isAsc) is, ",
-        currentQuestionId,
-        currentSubmoduleId,
-        filters.difficultyLevel,
-        filters.templateType,
-        filters.isCorrect,
-        filters.isAsc
-      );
-      try {
-        const prevQuestion = await fetchPreviousQuestion(
-          currentQuestionId,
-          currentSubmoduleId,
-          filters.difficultyLevel,
-          filters.templateType,
-          filters.isCorrect,
-          filters.isAsc
-        );
-        console.log("prev question is ", prevQuestion);
-        if (prevQuestion) {
-          setCurrentQuestionId(prevQuestion.questionId);
-          setCurrentSubmoduleId(prevQuestion.submoduleId);
-          setQuestionDetail(prevQuestion);
-        }
-      } catch (error) {
-        setError(`Error: ${error.message}`);
-      }
-    }
-  };
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-  if (loading) {
-    return <div></div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  // Map submoduleId to corresponding component
-  const questionCardComponents = {
-    1: ReadAndSelectCard,
-    2: ReadAloudCard,
-    3: ReadThenSpeakCard,
-    4: ListenThenSpeakCard,
-    5: SpeakAboutThePhotoCard,
-    6: ListenAndTypeCard,
-    7: TitleThePassageCard,
-    8: ReadAndCompleteCard,
-    9: InteractiveReadingCard,
-    10: FillInTheBlanksCard,
-    11: CompleteTheSentencesCard,
-    12: IdentifyTheIdeaCard,
-    13: SpeakingSampleCard,
-    14: WritingSampleCard,
-  };
-
-  // Determine which component to render based on the currentSubmoduleId
   const QuestionCard = questionCardComponents[currentSubmoduleId];
-
   return (
     <Container
       sx={{
@@ -217,21 +124,20 @@ function QuestionPage() {
           mb: 2,
         }}
       >
-        {/* Render the corresponding question card component or a default message */}
         {QuestionCard ? (
           <QuestionCard
             questionId={currentQuestionId}
-            setCurrentQuestionId={setCurrentQuestionId}
-            setCurrentSubmoduleId={setCurrentSubmoduleId}
-            filters={filters} // pass filters
-            count={count} // pass totalResults
-            currentIndex={currentIndex} // pass currentIndex
-            questionDetail={questionDetail} // pass questionDetail from fetchData()
+            setCurrentQuestionId={(id) => setCurrentState((prev) => ({ ...prev, currentQuestionId: id }))}
+            setCurrentSubmoduleId={(id) => setCurrentState((prev) => ({ ...prev, currentSubmoduleId: id }))}
+            filters={filters}
+            count={count}
+            currentIndex={currentIndex}
+            questionDetail={questionDetail}
             getNameBySubmoduleId={getNameBySubmoduleId}
-            handleBack={handleBack} // pass handleBack to question Card until back button
+            handleBack={handleBack}
             globalIndex={currentGlobalIndex}
-            handleNext={handleNext}
-            handleLast={handleLast}
+            handleNext={() => handleNavigation('next')}
+            handleLast={() => handleNavigation('last')}
           />
         ) : (
           <div>No question found for this submodule id.</div>

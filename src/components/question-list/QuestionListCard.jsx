@@ -9,10 +9,12 @@ import Box from "@mui/material/Box";
 import TabPanel from "./question-list-components/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
-import {
-  types,
-  subTypesArr,
-} from "../../utils/practice/questionListConstantAndFunc";
+import { types, subTypesArr } from "../../utils/practice/questionListConstantAndFunc";
+
+const getInitialValue = (key, defaultValue) => {
+  const saved = localStorage.getItem(key);
+  return saved ? JSON.parse(saved) : defaultValue;
+};
 
 const QuestionListCard = ({
   moduleId,
@@ -24,57 +26,46 @@ const QuestionListCard = ({
   currentPage,
   setCurrentPage,
 }) => {
-  // get moduleId value from localStorage first
-  const [value, setValue] = useState(() => {
-    const saved = localStorage.getItem("tabIndex");
-    // const saved = localStorage.getItem("moduleId") - 1;
-    return saved ? JSON.parse(saved) : 0;
-  });
-
   const { t } = useTranslation();
+
+  const [value, setValue] = useState(() => getInitialValue("tabIndex", 0));
 
   // when moduleId changes, update value
   useEffect(() => {
     const index = types.findIndex((type) => type.module_id === moduleId);
     if (index !== -1) {
       setValue(index);
-      // store tabIndex
       localStorage.setItem("tabIndex", JSON.stringify(index));
-      localStorage.setItem("moduleId", JSON.stringify(index + 1));
+      localStorage.setItem("moduleId", JSON.stringify(moduleId));
     }
   }, [moduleId]);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-    // Update the module_id in filters when a new tab is selected
     const selectedModuleId = types[newValue].module_id;
+    const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
+
+    setValue(newValue);
     setModuleId(selectedModuleId);
-    // Update the moduleId based on default submoduleId
-    const defaultSubmoduleId =
-      subTypesArr[selectedModuleId - 1][0].submodule_id;
     setSubmoduleId(defaultSubmoduleId);
+    setCurrentPage(1);
+    setGlobalIndex(1);
+
+    localStorage.setItem("tabIndex", JSON.stringify(newValue));
+    localStorage.setItem("moduleId", JSON.stringify(selectedModuleId));
     localStorage.setItem("submoduleId", JSON.stringify(defaultSubmoduleId));
-    setCurrentPage(1); // Reset to the first page when moduleId change
-    setGlobalIndex(1); // Reset globalIndex when moduleId changes
   };
 
   return (
     <Box sx={{ borderColor: "divider" }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="basic tabs example"
-      >
+      <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
         {types.map((type) => (
           <Tab
             key={type.module_id}
             label={t(type.name)}
             sx={{
               fontSize: "18px",
-              textTransform: "none", // Ensure the text remains in its original case
-              "&:focus": {
-                outline: "none", // Remove the default focus outline
-              },
+              textTransform: "none",
+              "&:focus": { outline: "none" },
             }}
           />
         ))}
@@ -82,12 +73,12 @@ const QuestionListCard = ({
       {types.map((type, index) => (
         <TabPanel value={value} index={index} key={type.module_id}>
           <SuperQuestionTypeContent
-            moduleId={moduleId} //  moduleId
-            submoduleId={submoduleId} //  submoduleId
-            setSubmoduleId={setSubmoduleId} //  setSubmoduleId
+            moduleId={moduleId}
+            submoduleId={submoduleId}
+            setSubmoduleId={setSubmoduleId}
             subTypesArr={subTypesArr}
-            currentPage={currentPage} // pass currentPage
-            setCurrentPage={setCurrentPage} // pass setCurrentPage
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
             globalIndex={globalIndex}
             setGlobalIndex={setGlobalIndex}
           />
@@ -110,3 +101,4 @@ QuestionListCard.propTypes = {
 };
 
 export default QuestionListCard;
+

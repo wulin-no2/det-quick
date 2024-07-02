@@ -1,6 +1,5 @@
 // Get data based on filters and currentPage, 
 // refresh QuestionList when the data changes
-
 import { useEffect, useState } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -20,34 +19,30 @@ const Item = styled(Paper)(({ theme }) => ({
   boxShadow: "none"
 }));
 
-const SubQuestionTypeContent = ({ 
+const cleanFilters = (filters) => {
+  const cleanedFilters = {};
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== "null") {
+      cleanedFilters[key] = value;
+    }
+  });
+  return cleanedFilters;
+};
+
+const SubQuestionTypeContent = ({
   submoduleId,
   currentPage, setCurrentPage,
-  filters, 
-  setFilters,
-  globalIndex,
-  setGlobalIndex,
- }) => {
+  filters, setFilters,
+  globalIndex, setGlobalIndex,
+}) => {
   const [questions, setQuestions] = useState([]);
   const [pages, setPages] = useState(0);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Function to remove "null" values from filters
-  const cleanFilters = (filters) => {
-    const cleanedFilters = {};
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== "null") {
-        cleanedFilters[key] = value;
-      }
-    });
-    return cleanedFilters;
-  };
-
-  // get data from backend
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         setLoading(true);
         const cleanedFilters = cleanFilters(filters);
@@ -66,14 +61,11 @@ const SubQuestionTypeContent = ({
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchData();
   }, [filters, currentPage, submoduleId]);
 
-  
-
   const handlePageChange = (newPage) => {
-    // console.log('Attempting to set new page: ', newPage);
     setCurrentPage(newPage);
   };
 
@@ -83,8 +75,13 @@ const SubQuestionTypeContent = ({
     setGlobalIndex(1); // Reset globalIndex when filters change
   };
 
-  if (loading) {return <div></div>;}
-  if (error) {return <div>Error: {error}</div>;}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
@@ -96,32 +93,32 @@ const SubQuestionTypeContent = ({
             currentPage={currentPage}
             filters={filters}
             onFiltersChange={handleFiltersChange}
-            
           />
         </Item>
         <Item>
-          <QuestionList questionsArr={questions} 
-          count={count}
-          filters={filters}
-          currentPage={currentPage}
-          globalIndex={globalIndex}
-          setGlobalIndex={setGlobalIndex}
-
+          <QuestionList
+            questionsArr={questions}
+            count={count}
+            filters={filters}
+            currentPage={currentPage}
+            globalIndex={globalIndex}
+            setGlobalIndex={setGlobalIndex}
           />
         </Item>
-        <Item sx={{width: "100%", display: 'flex', justifyContent: 'center' ,p:2}}>
-          <PaginationRounded pages={pages} onPageChange={handlePageChange} currentPage={currentPage} />
+        <Item sx={{ width: "100%", display: 'flex', justifyContent: 'center', p: 2 }}>
+          <PaginationRounded
+            pages={pages}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+          />
         </Item>
       </Stack>
-      <ShowLocalStorage componentName='SubQuestionTypeContent'/>
+      <ShowLocalStorage componentName="SubQuestionTypeContent" />
     </Box>
   );
 };
 
 SubQuestionTypeContent.propTypes = {
-  questionList: PropTypes.array.isRequired,
-  pages: PropTypes.number.isRequired,
-  count: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   setFilters: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
@@ -130,7 +127,6 @@ SubQuestionTypeContent.propTypes = {
   globalIndex: PropTypes.number.isRequired,
   setGlobalIndex: PropTypes.func.isRequired,
 };
-
 
 export default SubQuestionTypeContent;
 

@@ -1,92 +1,84 @@
 // handle page change, handle submoduleId change
 // Manages the state of filters and currentPage and passes them to SubQuestionTypeContent
-
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-
 import SubQuestionTypeContent from "./SubQuestionTypeContent";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-
 import TabPanel from "./question-list-components/TabPanel";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 
+const getInitialValue = (key, defaultValue) => {
+  const saved = localStorage.getItem(key);
+  return saved ? JSON.parse(saved) : defaultValue;
+};
 
-const SuperQuestionTypeContent = ({ 
+const SuperQuestionTypeContent = ({
   moduleId,
-  submoduleId, setSubmoduleId,
+  submoduleId,
+  setSubmoduleId,
   subTypesArr,
   currentPage,
   setCurrentPage,
   globalIndex,
   setGlobalIndex,
-
- }) => {
+}) => {
   const { t } = useTranslation();
   const currentTypes = subTypesArr[moduleId - 1];
 
-  // get submoduleId value from localStorage first
-    const [value, setValue] = useState(() => {
-    const saved = localStorage.getItem("subTabIndex");
-    // const saved = localStorage.getItem("submoduleId") - 1;
-    return saved ? JSON.parse(saved) : 0;
-  });
+  // Initialize state from localStorage or defaults
+  const [value, setValue] = useState(() => getInitialValue("subTabIndex", 0));
+  const [filters, setFilters] = useState(() => getInitialValue("filters", { isAsc: false, difficultyLevel: "null" }));
 
-  // handle filters change
-  const [filters, setFilters] = useState(() => {
-    const saved = localStorage.getItem("filters");
-    return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
-  });
-
-  // store filters 
+  // Store filters in localStorage when they change
   useEffect(() => {
     localStorage.setItem("filters", JSON.stringify(filters));
   }, [filters]);
 
-  // when submoduleId changes, update value
+  // Update value and store in localStorage when submoduleId changes
   useEffect(() => {
     const index = currentTypes.findIndex((type) => type.submodule_id === submoduleId);
     if (index !== -1) {
       setValue(index);
-      // store subTabIndex
       localStorage.setItem("subTabIndex", JSON.stringify(index));
     }
   }, [submoduleId, currentTypes]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-  // handle submoduleId changes by clicking tab
+  // Handle submoduleId changes by clicking tab
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-    // update submoduleId
     const selectedSubmoduleId = currentTypes[newValue].submodule_id;
+
+    setValue(newValue);
     setSubmoduleId(selectedSubmoduleId);
-    localStorage.setItem("submoduleId", JSON.stringify(selectedSubmoduleId));
-    setCurrentPage(1);  // Reset to the first page when submoduleId change
+    setCurrentPage(1); // Reset to the first page when submoduleId changes
     setGlobalIndex(1); // Reset globalIndex when submoduleId changes
+
+    localStorage.setItem("subTabIndex", JSON.stringify(newValue));
+    localStorage.setItem("submoduleId", JSON.stringify(selectedSubmoduleId));
   };
+
   return (
     <Box>
       <Box
-      sx={{ borderColor: "divider", backgroundColor: "#ffffff", p: 1, minWidth: '1220px' }}      >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        sx={{
+          borderColor: "divider",
+          backgroundColor: "#ffffff",
+          p: 1,
+          minWidth: '1220px'
+        }}
+      >
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           {currentTypes.map((type) => (
             <Tab
               key={type.id}
               label={t(type.name)}
               sx={{
                 fontSize: "18px",
-                textTransform: "none", // Ensure the text remains in its original case
+                textTransform: "none",
                 "&:focus": {
-                  outline: "none", // Remove the default focus outline
+                  outline: "none",
                 },
               }}
             />
@@ -95,22 +87,23 @@ const SuperQuestionTypeContent = ({
       </Box>
       {currentTypes.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SubQuestionTypeContent 
-          type={type} 
-          submoduleId={submoduleId}
-          setCurrentPage={handlePageChange}
-          currentPage={currentPage}
-          setFilters={setFilters}
-          filters={filters}
-          globalIndex={globalIndex}
-          setGlobalIndex={setGlobalIndex}
-            />
+          <SubQuestionTypeContent
+            type={type}
+            submoduleId={submoduleId}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            setFilters={setFilters}
+            filters={filters}
+            globalIndex={globalIndex}
+            setGlobalIndex={setGlobalIndex}
+          />
         </TabPanel>
       ))}
-      <ShowLocalStorage componentName='SuperQuestionTypeContent'/>
+      <ShowLocalStorage componentName="SuperQuestionTypeContent" />
     </Box>
   );
 };
+
 SuperQuestionTypeContent.propTypes = {
   subTypesArr: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
   moduleId: PropTypes.number.isRequired,
@@ -123,3 +116,4 @@ SuperQuestionTypeContent.propTypes = {
 };
 
 export default SuperQuestionTypeContent;
+
