@@ -9,12 +9,13 @@ const TitleBar = ({ id, name, onClick, difficulty ,isPracticed}) => {
     <Box
       sx={{
         display: "flex",
-        borderRadius: "8px",
+        borderRadius: 1,
         backgroundColor: "#fff3e0",
         justifyContent: "flex-start",
         alignItems: "center",
         alignContent: "center",
-        m: 2,
+        mx: 2,
+        mt:2
       }}
     >
       <CloseButton onClick={onClick} />

@@ -11,10 +11,8 @@ const JumpButton = ({ onLast, onNext, globalIndex, totalWords }) => {
   return (
     <Box
       sx={{
-        // pr: 1,
         display: "flex",
-        // border: "1px solid #1976d2",
-        borderRadius: "8px",
+        borderRadius: 1,
         justifyContent: "right",
         alignItems: "center",
       }}

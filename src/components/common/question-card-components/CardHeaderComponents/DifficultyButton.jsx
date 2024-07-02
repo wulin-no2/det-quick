@@ -34,7 +34,7 @@ const DifficultyButton = ({ difficulty }) => {
       sx={{
         border: boxProps.border,
         minWidth: "100px",
-        minHeight:'32px',
+        minHeight:'30px',
         fontSize: "14px",
         display:"flex",        
         textTransform: "none",
@@ -42,8 +42,7 @@ const DifficultyButton = ({ difficulty }) => {
         alignItems: "center",
         color: boxProps.color,
         opacity: 0.68,
-        pl: 1,
-        pr: 1,
+        px: 1,
         backgroundColor: boxProps.backgroundColor, // Apply background color
         borderRadius:1
       }}

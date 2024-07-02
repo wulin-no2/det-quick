@@ -13,7 +13,7 @@ const PracticedButton = () => {
         border:'1px',
         borderStyle:'solid',
         minWidth: "100px",
-        minHeight:'32px',
+        minHeight:'30px',
         fontSize: "14px",
         display:"flex",        
         textTransform: "none",
@@ -21,8 +21,7 @@ const PracticedButton = () => {
         alignItems: "center",
         color: theme.palette.primary.main,
         opacity: 0.68,
-        pl: 1,
-        pr: 1,
+        px: 1,
         borderRadius: 1,
         mx:1
       }}

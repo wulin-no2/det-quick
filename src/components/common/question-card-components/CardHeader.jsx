@@ -66,16 +66,13 @@ const CardHeader = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          m: 2,
-          mt: 2,
-        }}
-      >
+          mx: 2,mt: 1}}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mb: 2,
+            mb: 1,
           }}
         >
           <Timer timer={timer} />

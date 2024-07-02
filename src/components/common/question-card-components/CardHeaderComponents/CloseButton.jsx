@@ -9,15 +9,16 @@ const CloseButton = ({ onClick }) => {
       variant="outlined"
       onClick={onClick}
       sx={{
-        minWidth: "80px",
-        padding: "4px",
-        fontSize: "18px",
-        margin: "12px",
-        borderRadius: "8px",
+        minWidth: "60px",
+        p: 0.5,
+        fontSize: "16px",
+        mx: 1,
+        my:1,
+        borderRadius: 1,
         textTransform: "none",
       }}
     >
-      {t('close')}
+      {t('Exit')}
     </Button>
   );
 };

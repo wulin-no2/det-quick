@@ -5,7 +5,7 @@ const CardTitle = ({ id, name }) => {
   const {t} = useTranslation();
   return (
     <Typography
-      sx={{ p: 2, fontSize: "20px", fontWeight: "bold", opacity: 0.78 }}
+      sx={{ px: 1.5, fontSize: "16px", fontWeight: "bold", opacity: 0.78 }}
     >
       {t(name)}{' '}#{id}
     </Typography>

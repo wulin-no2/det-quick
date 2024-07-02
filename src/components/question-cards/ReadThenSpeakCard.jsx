@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider, List, ListItem, Paper } from "@mui/material";
-// import { useState } from 'react';
+import { Box, Typography, Divider, List, ListItem, Paper, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { ReactMediaRecorder } from "react-media-recorder";
+import AudioButton from "../common/AudioButton";
 
 const ReadThenSpeakCard = ({
   count,
@@ -16,8 +17,33 @@ const ReadThenSpeakCard = ({
 }) => {
   const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
   const { t } = useTranslation();
+  const [recording, setRecording] = useState(false);
+  const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
+  const stopRecordingRef = useRef(null);
 
-  // Split the question text by the first bullet point
+  const handleStartRecording = useCallback((startRecording) => {
+    startRecording();
+    setRecording(true);
+  }, []);
+
+  const handleStopRecording = useCallback((stopRecording) => {
+    stopRecording();
+    setRecording(false);
+  }, []);
+
+  const handleTimeUp = useCallback(() => {
+    console.log("Time is up, stopping recording");
+    if (stopRecordingRef.current) {
+      stopRecordingRef.current();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!recording && mediaBlobUrl) {
+      console.log("Recording stopped, mediaBlobUrl available");
+    }
+  }, [recording, mediaBlobUrl]);
+
   const firstBulletIndex = questionDetail.questionText.indexOf("•");
   const mainQuestion = questionDetail.questionText
     .slice(0, firstBulletIndex)
@@ -32,14 +58,8 @@ const ReadThenSpeakCard = ({
     return <div></div>;
   }
 
-  // Handle reference answer button click
   const handleReferenceAnswerClick = () => {
     setShowReferenceAnswer(!showReferenceAnswer);
-  };
-
-  // handle answer buttons
-  const handleRecord = () => {
-    console.log("record..");
   };
 
   return (
@@ -48,10 +68,9 @@ const ReadThenSpeakCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        mb: 2,
+        minHeight: '660px'
       }}
     >
-      {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
         handleNext={handleNext}
@@ -59,52 +78,25 @@ const ReadThenSpeakCard = ({
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
+        onTimeUp={handleTimeUp}
       />
-      {/* question */}
-      <Box
-        sx={{
-          m: 4,
-        }}
-      >
+      <Box sx={{ m: 4 }}>
         <Typography
           variant="h4"
           gutterBottom
-          sx={{ fontWeight: "bold", opacity: 0.92 }}
-        >
+          sx={{ fontWeight: "bold", opacity: 0.92 }}>
           {t("Speak about the topic below for 90 seconds.")}
         </Typography>
       </Box>
-      {/* question text */}
-      <Box
-        sx={{
-          my: 4,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Box sx={{ my: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Paper variant="outlined" sx={{ py: 2, px: 6, maxWidth: "600px" }}>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{
-              fontWeight: "bold",
-              opacity: 0.88,
-              textAlign: "left",
-            }}
-          >
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", opacity: 0.88, textAlign: "left" }}>
             {mainQuestion}
           </Typography>
           <List sx={{ textAlign: "left" }}>
             {subQuestions.map((line, index) => (
               <ListItem key={index} sx={{ px: 1, py: 0.6 }}>
-                <Typography
-                  variant="h8"
-                  sx={{
-                    fontWeight: "medium",
-                    opacity: 1,
-                  }}
-                >
+                <Typography variant="h8" sx={{ fontWeight: "medium", opacity: 1 }}>
                   • {line}
                 </Typography>
               </ListItem>
@@ -112,49 +104,56 @@ const ReadThenSpeakCard = ({
           </List>
         </Paper>
       </Box>
-      {/* answer button */}
-      <Box
-        gutterBottom
-        sx={{
-          display: "flex",
-          pt: 2,
-          pb: 4,
-          justifyContent: "space-evenly",
+      <ReactMediaRecorder
+        audio
+        onStop={(blobUrl) => {
+          console.log("Recording stopped, blobUrl:", blobUrl);
+          setMediaBlobUrl(blobUrl);
         }}
-      >
-        <AnswerButton text="Record Now" onClick={handleRecord} />
-      </Box>
-      {/* Divider */}
+        render={({ status, startRecording, stopRecording }) => {
+          stopRecordingRef.current = () => {
+            stopRecording();
+            setRecording(false);
+          };
+          return (
+            <>
+              <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", mt: 8, mb: 4, alignItems: "center", position: "relative" }}>
+                {status === "recording" && (
+                  <CircularProgress size={24} sx={{ position: "absolute", bottom: "68px" }} />
+                )}
+                <AnswerButton
+                  text={status === "recording" ? "Stop Recording" : t("Record Now")}
+                  onClick={() => {
+                    if (status === "recording") {
+                      handleStopRecording(stopRecording);
+                    } else {
+                      handleStartRecording(startRecording);
+                    }}}/>
+              </Box>
+            </>
+          );
+        }}
+      />
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
-
-      {/* reference answer */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "start",
-          justifyContent: "end",
-          m: 2,
-          p: 2,
-          bgcolor: "grey.100",
-          width: "96%",
-          mx: "auto",
-          borderRadius: 1,
-        }}
-      >
-        <AnswerButton
-          text="Reference Answer"
-          onClick={handleReferenceAnswerClick}
-        />
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "end", m: 2, p: 2, bgcolor: "grey.100", width: "96%", mx: "auto", borderRadius: 1 }}>
+        <Box sx={{ display: 'flex',alignItems:'center' }}>
+          <AnswerButton
+            text="Reference Answer"
+            onClick={handleReferenceAnswerClick}
+          />
+          <Box>
+            {mediaBlobUrl && (
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+                <AudioButton
+                  text="Your Recording"
+                  audioSrc={mediaBlobUrl}
+                />
+              </Box>
+            )}
+          </Box>
+        </Box>
         {showReferenceAnswer && (
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              m: 2,
-            }}
-          >
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", m: 2 }}>
             <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
               {questionDetail.referenceAnswer}
             </Typography>
@@ -175,3 +174,4 @@ ReadThenSpeakCard.propTypes = {
 };
 
 export default ReadThenSpeakCard;
+

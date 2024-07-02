@@ -12,7 +12,7 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import AnswerButton from "../common/AnswerButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import styles from "./ReadAloudCard.module.css";
+import styles from "../common/Record.module.css";
 
 const ReadAloudCard = ({
   count,
@@ -67,7 +67,7 @@ const ReadAloudCard = ({
   }
 
   return (
-    <Box sx={{ width: "1200px", margin: "auto", textAlign: "center" }}>
+    <Box sx={{ width: "1200px", margin: "auto", textAlign: "center",minHeight:'660px' }}>
       {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
@@ -91,7 +91,7 @@ const ReadAloudCard = ({
       {/* question text */}
       <Box
         sx={{
-          mt: 6,
+          m: 8,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

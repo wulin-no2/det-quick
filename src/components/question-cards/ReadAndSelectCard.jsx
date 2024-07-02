@@ -66,11 +66,10 @@ const ReadAndSelectCard = ({
   return (
     <Box
       sx={{
-        p: 2,
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        pb: 10,
+        minHeight:'660px'
       }}
     >
       {/* CardHeader */}
@@ -85,20 +84,17 @@ const ReadAndSelectCard = ({
       />
       {/* question */}
       <Box
-        sx={{
-          m: 4,
-        }}
-      >
+        sx={{m: 6,
+        }}>
         <Typography
           variant="h4"
           gutterBottom
-          sx={{ fontWeight: "bold", opacity: 0.92 }}
-        >
+          sx={{ fontWeight: "bold", opacity: 0.92 }}>
           {t("Is this a real English word?")}
         </Typography>
       </Box>
       {/* word */}
-      <Box sx={{ m: 8 }}>
+      <Box sx={{ m: 10 }}>
         <Typography
           variant="h3"
           gutterBottom
@@ -107,50 +103,53 @@ const ReadAndSelectCard = ({
           {questionDetail.word}
         </Typography>
       </Box>
-      {/* answer buttons */}
-      <Box
-        gutterBottom
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Box sx={{ mx: 2 }}>
-          <AnswerButton
-            text={t("Yes")}
-            onClick={() => handleAnswer(true)}
-            sx={getButtonSx(true)}
-          />
-        </Box>
-        <Box sx={{ mx: 2 }}>
-          <AnswerButton
-            text={t("No")}
-            onClick={() => handleAnswer(false)}
-            sx={getButtonSx(false)}
-          />
-        </Box>
-      </Box>
-      {/* feedback */}
-      {selectedAnswer !== null && (
+      <Box sx={{mt:2,mb:10}}>
+        {/* answer buttons */}
         <Box
+          gutterBottom
           sx={{
-            mt: 4,
-            color: isCorrect ? green[400] : red[400],
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {isCorrect ? (
-            <CheckCircleIcon sx={{ mr: 1 }} />
-          ) : (
-            <CancelIcon sx={{ mr: 1 }} />
-          )}
-          <Typography variant="h6">
-            {isCorrect ? t("Right Answer") : t("Sorry. It's wrong")}
-          </Typography>
+          <Box sx={{ mx: 2 }}>
+            <AnswerButton
+              text={t("Yes")}
+              onClick={() => handleAnswer(true)}
+              sx={getButtonSx(true)}
+            />
+          </Box>
+          <Box sx={{ mx: 2 }}>
+            <AnswerButton
+              text={t("No")}
+              onClick={() => handleAnswer(false)}
+              sx={getButtonSx(false)}
+            />
+          </Box>
         </Box>
-      )}
+        {/* feedback */}
+        {selectedAnswer !== null && (
+          <Box
+            sx={{
+              mt: 4,
+              color: isCorrect ? green[400] : red[400],
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {isCorrect ? (
+              <CheckCircleIcon sx={{ mr: 1 }} />
+            ) : (
+              <CancelIcon sx={{ mr: 1 }} />
+            )}
+            <Typography variant="h6">
+              {isCorrect ? t("Right Answer") : t("Sorry. It's wrong")}
+            </Typography>
+          </Box>
+        )}
+      </Box>
+
       {/* toast */}
       {/* <Toast
         message="Practiced + 1"

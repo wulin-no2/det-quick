@@ -15,6 +15,7 @@ const AnswerButton = ({ text, onClick ,sx}) => {
         margin: "2px",
         borderRadius: 1,
         textTransform: "none",
+        height:"50px",
         ...sx, // Apply additional styles
       }}
       //sx={{bgcolor:'#3b5d87', border:'none', color:'white'} // another color
