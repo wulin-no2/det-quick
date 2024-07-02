@@ -141,11 +141,11 @@ const FillInTheBlanksCard = ({
   return (
     <Box
       sx={{
-        p: 2,
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        pb: 10,
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       <CardHeader
@@ -225,7 +225,7 @@ const FillInTheBlanksCard = ({
                           color: "green",
                           fontWeight: "bold",
                           whiteSpace: "nowrap",
-                          letterSpacing: "14px",
+                          letterSpacing: "12px",
                         }}
                       >
                         {questionDetail.referenceAnswer}

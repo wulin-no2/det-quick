@@ -67,7 +67,8 @@ const ReadAloudCard = ({
   }
 
   return (
-    <Box sx={{ width: "1200px", margin: "auto", textAlign: "center",minHeight:'660px' }}>
+    <Box sx={{ width: "1200px", margin: "auto", textAlign: "center",pb: 2,
+      minHeight:'700px', }}>
       {/* CardHeader */}
       <CardHeader
         questionDetail={questionDetail}
@@ -178,7 +179,7 @@ const ReadAloudCard = ({
                       display: "flex",
                       justifyContent: "center",
                       alignItems:'center',
-                      mr: 10,
+                      mr: 26,
                       position: "relative",
                     }}
                   >
@@ -190,7 +191,7 @@ const ReadAloudCard = ({
                         display: "flex",
                         justifyContent: "start",
                         position: "absolute",
-                        ml:26
+                        ml:24
                       }}
                     >
                       <IconButton
@@ -222,20 +223,22 @@ const ReadAloudCard = ({
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "space-around",
                     alignItems:'center',
                     position: "relative",
                   }}
                 >
-                  <Typography variant="h6" sx={{ fontWeight: "bold", mr: 2 }}>
-                    {t("Reference Audio")}
-                  </Typography>
+                  <Box sx={{mr:1}}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", mr: 2 }}>
+                      {t("Reference Audio")}
+                    </Typography>
+                  </Box>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "start",
                       position: "absolute",
-                      ml:23
+                      ml:20,
                     }}>
                     <IconButton
                       onClick={() => handlePlayAudio(audioRef, "reference")}

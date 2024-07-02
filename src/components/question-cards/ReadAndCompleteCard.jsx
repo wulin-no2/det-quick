@@ -204,11 +204,11 @@ const ReadAndCompleteCard = ({
   return (
     <Box
       sx={{
-        p: 2,
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        pb: 10,
+        minHeight:'700px',
+        pb: 2,
       }}
     >
       <CardHeader
@@ -322,10 +322,10 @@ const ReadAndCompleteCard = ({
                       variant="body1"
                       sx={{
                         color: "green",
-                        ml: 2,
+                        ml: 2.5,
                         fontWeight: "bold",
                         whiteSpace: "nowrap",
-                        letterSpacing: "15px",
+                        letterSpacing: "14px",
                       }}
                     >
                       {validBlankList[index]?.answer}
@@ -339,7 +339,7 @@ const ReadAndCompleteCard = ({
       </Paper>
       <Box
         gutterBottom
-        sx={{ display: "flex", pb: 4, justifyContent: "space-evenly" }}
+        sx={{ display: "flex", pb: 4, justifyContent: "center" }}
       >
         <AnswerButton text={t(buttonText)} onClick={handleSubmit} />
       </Box>

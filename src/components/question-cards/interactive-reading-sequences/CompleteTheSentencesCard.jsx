@@ -101,7 +101,7 @@ const CompleteTheSentencesCard = ({
       // border: "0.5px solid",
       // borderColor:'lightgray',
       borderRadius: "4px",
-      height: "50px",
+      height: "46px",
     },
   };
 

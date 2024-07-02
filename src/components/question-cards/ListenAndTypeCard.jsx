@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { Box, Typography, Divider, TextField } from "@mui/material";
-// import { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
+import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useState, useRef, useEffect } from "react";
 
@@ -15,14 +15,18 @@ const ListenAndTypeCard = ({
   handleNext,
 }) => {
   const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [showUserAnswer, setShowUserAnswer] = useState(false);
   const { t } = useTranslation();
 
   const audioRef = useRef(null); // Create a reference for the audio element
+  const textFieldRef = useRef(null);
 
   useEffect(() => {
     console.log("question detail is", questionDetail);
     // console.log("questionImageUrl:", questionDetail.questionImageUrl);
   }, [questionDetail]);
+
   if (!questionDetail) {
     return <div></div>;
   }
@@ -30,6 +34,10 @@ const ListenAndTypeCard = ({
   // Handle reference answer button click
   const handleReferenceAnswerClick = () => {
     setShowReferenceAnswer(!showReferenceAnswer);
+  };
+
+  const handleUserAnswerClick = () => {
+    setShowUserAnswer(!showUserAnswer);
   };
 
   // Handle image click to play/pause audio
@@ -44,8 +52,10 @@ const ListenAndTypeCard = ({
   };
 
   // handle answer buttons
-  const handleRecord = () => {
-    console.log("record..");
+  const handleSubmit = () => {
+    if (textFieldRef.current) {
+      setUserAnswer(textFieldRef.current.value);
+    }
   };
 
   return (
@@ -54,7 +64,8 @@ const ListenAndTypeCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        mb: 2,
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       {/* CardHeader */}
@@ -97,26 +108,31 @@ const ListenAndTypeCard = ({
             alignItems: "stretch",
           }}
         >
-          <img
-            src="/ListenThenSpeak.png"
-            onClick={handleImageClick}
-            style={{ width: "160px", margin: "16px" }}
-          />
-          <audio ref={audioRef} src={questionDetail.questionAudioUrl} />
-          <TextField
-            multiline
-            rows={6}
-            placeholder={t("Your response")}
-            sx={{ px: 2, width: "450px" }}
-          ></TextField>
+          <Box>
+            <img
+              src="/ListenThenSpeak.png"
+              onClick={handleImageClick}
+              style={{ width: "160px", margin: "16px" }}
+            />
+            <audio ref={audioRef} src={questionDetail.questionAudioUrl} />
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+            <TextField
+              multiline
+              rows={6}
+              placeholder={t("Your response")}
+              sx={{ px: 2, width: "600px" }}
+              inputRef={textFieldRef}
+            />
+            <Typography
+              variant="h7"
+              gutterBottom
+              sx={{ opacity: 0.88, maxWidth: "500px", px: 2, pt: 1 }}
+            >
+              {t("You can listen to the question 3 times.")}
+            </Typography>
+          </Box>
         </Box>
-        <Typography
-          variant="h7"
-          gutterBottom
-          sx={{ opacity: 0.88, maxWidth: "500px", pt: 2 }}
-        >
-          {t("You can listen to the question 3 times.")}
-        </Typography>
       </Box>
       {/* answer button */}
       <Box
@@ -124,10 +140,11 @@ const ListenAndTypeCard = ({
         sx={{
           display: "flex",
           pb: 4,
-          justifyContent: "space-evenly",
+          pr: 27,
+          justifyContent: "end",
         }}
       >
-        <AnswerButton text="Record Now" onClick={handleRecord} />
+        <AnswerButton text="Submit" onClick={handleSubmit} />
       </Box>
       {/* Divider */}
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
@@ -147,21 +164,59 @@ const ListenAndTypeCard = ({
           borderRadius: 1,
         }}
       >
-        <AnswerButton
-          text="Reference Answer"
-          onClick={handleReferenceAnswerClick}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <ReferenceButton
+            text="Reference Answer"
+            onClick={handleReferenceAnswerClick}
+          />
+          {userAnswer && (
+            <ReferenceButton
+              text="Your Answer"
+              onClick={handleUserAnswerClick}
+            />
+          )}
+        </Box>
         {showReferenceAnswer && (
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: "column",
+              alignItems: "start",
               justifyContent: "center",
               m: 2,
             }}
           >
+            <Typography
+              variant="h7"
+              sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
+            >
+              {" - "}
+              {t("Reference Answer")}
+            </Typography>
             <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
               {questionDetail.referenceAnswer}
+            </Typography>
+          </Box>
+        )}
+        {showUserAnswer && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              justifyContent: "center",
+              m: 2,
+            }}
+          >
+            <Typography
+              variant="h7"
+              sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
+            >
+              {" - "}
+              {t("Your Answer")}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
+              {userAnswer}
             </Typography>
           </Box>
         )}
@@ -180,3 +235,4 @@ ListenAndTypeCard.propTypes = {
 };
 
 export default ListenAndTypeCard;
+

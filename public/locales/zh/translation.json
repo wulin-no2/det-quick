@@ -67,7 +67,7 @@
   "Reference Answer": "参考答案",
   "Reference Question": "题目原文",
   "Speak about the image below for 90 seconds.":"就以下图片谈论90秒",
-  "Type the statement that you hear.":"打出你听到的句子",
+  "Type the statement that you hear.":"写出你听到的句子",
   "You can listen to the question 3 times.":"你可以听3次录音",
   "Your response": "你的回答..",
   "Right Answer": "答案正确",
@@ -78,6 +78,9 @@
   "Last": "上一题",
   "Next": "下一题",
   "close": "关闭",
+  "Your Answer":"你的答案",
+  "Solve Again":"重做",
+  "Exit":"退出",
   "Complete the sentence with the correct word.":"用正确的单词补充句子。",
   "Type the missing letters to complete the text below.": "补充缺失的字母，完成下面这段话。",
   "Submit": "提交",
@@ -94,5 +97,7 @@
   "Recommended minimum word count: 250":"建议说够250个单词",
   "Write about the topic below for 5 minutes.":"就以下话题写文章，限时5分钟：",
   "At least 50 words. Recommended word count: 120+.":"至少写50个单词， 建议写够120个单词",
-  "CONTINUE AFTER 3 MINUTES":"3分钟后可提交"
+  "CONTINUE AFTER 3 MINUTES":"3分钟后可提交",
+  "Previous":"上一步"
+
 }

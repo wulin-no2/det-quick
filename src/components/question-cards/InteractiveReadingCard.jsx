@@ -134,8 +134,8 @@ const InteractiveReadingCard = ({
         maxWidth: "1200px",
         mx: "auto",
         textAlign: "center",
-        mb: 4,
-        minHeight: "620px",
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       {/* CardHeader */}
@@ -150,7 +150,7 @@ const InteractiveReadingCard = ({
         />
       </Box>
       {/* Card content */}
-      <Box>{renderSequence()}</Box>
+      <Box sx={{pt:1}}>{renderSequence()}</Box>
     </Box>
   );
 };

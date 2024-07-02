@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Box, Typography, Divider, List, ListItem, Paper, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
+import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
@@ -68,7 +69,8 @@ const ReadThenSpeakCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        minHeight: '660px'
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       <CardHeader
@@ -137,7 +139,7 @@ const ReadThenSpeakCard = ({
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "end", m: 2, p: 2, bgcolor: "grey.100", width: "96%", mx: "auto", borderRadius: 1 }}>
         <Box sx={{ display: 'flex',alignItems:'center' }}>
-          <AnswerButton
+          <ReferenceButton
             text="Reference Answer"
             onClick={handleReferenceAnswerClick}
           />
@@ -145,7 +147,7 @@ const ReadThenSpeakCard = ({
             {mediaBlobUrl && (
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
                 <AudioButton
-                  text="Your Recording"
+                  text={t("Your Recording")}
                   audioSrc={mediaBlobUrl}
                 />
               </Box>

@@ -42,9 +42,9 @@ const AudioButton = ({ text, audioSrc }) => {
       variant="outlined"
       onClick={handlePlayAudio}
       sx={{
-        minWidth: "180px",
-        height: "50px", // Set a fixed height to prevent shrinking
-        p: 0,
+        minWidth: "160px",
+        height: "44px", // Set a fixed height to prevent shrinking
+        pr: 3,
         fontSize: "16px",
         mx: 1,
         borderRadius: 1,
@@ -52,7 +52,7 @@ const AudioButton = ({ text, audioSrc }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // position: "relative",
+        textAlign:'center'
       }}
     >
       {isPlaying ? (
@@ -70,10 +70,7 @@ const AudioButton = ({ text, audioSrc }) => {
           <IconButton
             sx={{
               color: 'inherit', // Ensures the icon button inherits the text color of the button
-              "&:focus": { outline: "none" },
-              my:0,
-              py:0
-            }}
+              "&:focus": { outline: "none" },}}
           >
             <PlayCircleIcon />
           </IconButton>

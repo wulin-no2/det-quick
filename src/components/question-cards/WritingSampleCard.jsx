@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider,TextField } from "@mui/material";
-// import { useState } from 'react';
+import { Box, Typography, Divider, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
+import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { grey } from "@mui/material/colors";
 
 const WritingSampleCard = ({
@@ -16,24 +16,31 @@ const WritingSampleCard = ({
   handleNext,
 }) => {
   const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [showUserAnswer, setShowUserAnswer] = useState(false);
   const { t } = useTranslation();
+  const textFieldRef = useRef(null);
+
   useEffect(() => {
     console.log("question detail is", questionDetail);
-    console.log("questionImageUrl:", questionDetail.questionImageUrl);
   }, [questionDetail]);
 
   if (!questionDetail) {
     return <div></div>;
   }
 
-  // Handle reference answer button click
   const handleReferenceAnswerClick = () => {
     setShowReferenceAnswer(!showReferenceAnswer);
   };
 
-  // handle answer buttons
-  const handleRecord = () => {
-    console.log("record..");
+  const handleUserAnswerClick = () => {
+    setShowUserAnswer(!showUserAnswer);
+  };
+
+  const handleSubmit = () => {
+    if (textFieldRef.current) {
+      setUserAnswer(textFieldRef.current.value);
+    }
   };
 
   return (
@@ -42,7 +49,8 @@ const WritingSampleCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        mb: 2,
+        pb: 2,
+        minHeight: '700px',
       }}
     >
       {/* CardHeader */}
@@ -50,7 +58,6 @@ const WritingSampleCard = ({
         questionDetail={questionDetail}
         handleNext={handleNext}
         handleLast={handleLast}
-        // currentIndex={currentIndex}
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
@@ -61,6 +68,7 @@ const WritingSampleCard = ({
           display: "flex",
           flexDirection: "column",
           mx: 4,
+          my: 2
         }}
       >
         <Typography
@@ -70,19 +78,23 @@ const WritingSampleCard = ({
         >
           {t("Write about the topic below for 5 minutes.")}
         </Typography>
-      </Box >
+      </Box>
       {/* question text */}
-      <Box sx={{display:'flex', justifyContent:'center',px:4,pt:2,pb:6}}>
-        <Typography sx={{width:"400px", textAlign:'left'}}>{questionDetail.questionText}</Typography>
-        <Box sx={{display:'flex',flexDirection:'column', alignItems:'start',px: 2, }}>
-            <TextField
-                multiline
-                rows={12}
-                placeholder={t("Your response")}
-                sx={{ width: "500px" }}/>
-            <Typography sx={{ mt: 1, color: grey[700],fontSize:'14px'}}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', px: 4, pt: 2, pb: 4 }}>
+        <Typography variant='h7' sx={{ width: "400px", textAlign: 'left', my: 2, fontWeight: 'medium', lineHeight: 1.8 }}>
+          {questionDetail.questionText}
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', px: 2, }}>
+          <TextField
+            multiline
+            rows={10}
+            placeholder={t("Your response")}
+            sx={{ width: "500px" }}
+            inputRef={textFieldRef}
+          />
+          <Typography sx={{ mt: 1, color: grey[700], fontSize: '14px' }}>
             {t("At least 50 words. Recommended word count: 120+.")}
-            </Typography>
+          </Typography>
         </Box>
       </Box>
       {/* answer button */}
@@ -90,12 +102,12 @@ const WritingSampleCard = ({
         gutterBottom
         sx={{
           display: "flex",
-          pr:18,
-          pb: 4,
+          pr: 18,
+          pb: 3,
           justifyContent: "end",
         }}
       >
-        <AnswerButton text="CONTINUE AFTER 3 MINUTES" onClick={handleRecord} sx={{minWidth:'280px'}}/>
+        <AnswerButton text="Submit" onClick={handleSubmit} sx={{ minWidth: '280px' }} />
       </Box>
       {/* Divider */}
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
@@ -115,21 +127,59 @@ const WritingSampleCard = ({
           borderRadius: 1,
         }}
       >
-        <AnswerButton
-          text="Reference Answer"
-          onClick={handleReferenceAnswerClick}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <ReferenceButton
+            text="Reference Answer"
+            onClick={handleReferenceAnswerClick}
+          />
+          {userAnswer && (
+            <ReferenceButton
+              text="Your Answer"
+              onClick={handleUserAnswerClick}
+            />
+          )}
+        </Box>
         {showReferenceAnswer && (
           <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+            justifyContent: "center",
+            m: 2,
+          }}
+        >
+          <Typography
+            variant="h7"
+            sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
+          >
+            {" - "}
+            {t("Reference Answer")}
+          </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
+              {questionDetail.referenceAnswer}
+            </Typography>
+          </Box>
+        )}
+        {showUserAnswer && (
+            <Box
             sx={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: "column",
+              alignItems: "start",
               justifyContent: "center",
               m: 2,
             }}
           >
+            <Typography
+              variant="h7"
+              sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
+            >
+              {" - "}
+              {t("Your Answer")}
+            </Typography>
             <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
-              {questionDetail.referenceAnswer}
+              {userAnswer}
             </Typography>
           </Box>
         )}
@@ -148,3 +198,4 @@ WritingSampleCard.propTypes = {
 };
 
 export default WritingSampleCard;
+

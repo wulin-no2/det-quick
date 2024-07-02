@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider } from "@mui/material";
-// import { useState } from 'react';
+import { Box, Typography, Divider, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
+import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import { useState, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { ReactMediaRecorder } from "react-media-recorder";
+import AudioButton from "../common/AudioButton";
 
 const SpeakAboutThePhotoCard = ({
   count,
@@ -16,24 +18,38 @@ const SpeakAboutThePhotoCard = ({
 }) => {
   const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
   const { t } = useTranslation();
+  const [recording, setRecording] = useState(false);
+  const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
+  const stopRecordingRef = useRef(null);
+
   useEffect(() => {
     console.log("question detail is", questionDetail);
     console.log("questionImageUrl:", questionDetail.questionImageUrl);
   }, [questionDetail]);
 
-  if (!questionDetail) {
-    return <div></div>;
-  }
+  const handleStartRecording = useCallback((startRecording) => {
+    startRecording();
+    setRecording(true);
+  }, []);
 
-  // Handle reference answer button click
+  const handleStopRecording = useCallback((stopRecording) => {
+    stopRecording();
+    setRecording(false);
+  }, []);
+
+  useEffect(() => {
+    if (!recording && mediaBlobUrl) {
+      console.log("Recording stopped, mediaBlobUrl available");
+    }
+  }, [recording, mediaBlobUrl]);
+
   const handleReferenceAnswerClick = () => {
     setShowReferenceAnswer(!showReferenceAnswer);
   };
 
-  // handle answer buttons
-  const handleRecord = () => {
-    console.log("record..");
-  };
+  if (!questionDetail) {
+    return <div></div>;
+  }
 
   return (
     <Box
@@ -41,7 +57,8 @@ const SpeakAboutThePhotoCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        mb: 2,
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       {/* CardHeader */}
@@ -54,15 +71,9 @@ const SpeakAboutThePhotoCard = ({
         globalIndex={globalIndex}
       />
       {/* question */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          m: 4,
-        }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "column", m: 4 }}>
         <Typography
-          variant="h4"
+          variant="h5"
           gutterBottom
           sx={{ fontWeight: "bold", opacity: 0.92, mb: 2 }}
         >
@@ -71,7 +82,7 @@ const SpeakAboutThePhotoCard = ({
         {questionDetail.questionImageUrl ? (
           <img
             src={questionDetail.questionImageUrl}
-            style={{ width: "300px", margin: "auto" }}
+            style={{ width: "280px", margin: "auto" }}
             onError={(e) => {
               e.target.onerror = null; // Prevent infinite loop in case of broken image
               e.target.src = "/placeholder.svg"; // Fallback image
@@ -84,48 +95,57 @@ const SpeakAboutThePhotoCard = ({
         )}
       </Box>
       {/* answer button */}
-      <Box
-        gutterBottom
-        sx={{
-          display: "flex",
-          // pt: 2,
-          pb: 4,
-          justifyContent: "space-evenly",
+      <ReactMediaRecorder
+        audio
+        onStop={(blobUrl) => {
+          console.log("Recording stopped, blobUrl:", blobUrl);
+          setMediaBlobUrl(blobUrl);
         }}
-      >
-        <AnswerButton text="Record Now" onClick={handleRecord} />
-      </Box>
+        render={({ status, startRecording, stopRecording }) => {
+          stopRecordingRef.current = () => {
+            stopRecording();
+            setRecording(false);
+          };
+          return (
+            <>
+              <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", mt: 6, mb: 4, alignItems: "center", position: "relative" }}>
+                {status === "recording" && (
+                  <CircularProgress size={24} sx={{ position: "absolute", bottom: "68px" }} />
+                )}
+                <AnswerButton
+                  text={status === "recording" ? "Stop Recording" : t("Record Now")}
+                  onClick={() => {
+                    if (status === "recording") {
+                      handleStopRecording(stopRecording);
+                    } else {
+                      handleStartRecording(startRecording);
+                    }}}/>
+              </Box>
+            </>
+          );
+        }}
+      />
       {/* Divider */}
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
 
       {/* reference answer */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "start",
-          justifyContent: "end",
-          m: 2,
-          p: 2,
-          bgcolor: "grey.100",
-          width: "96%",
-          mx: "auto",
-          borderRadius: 1,
-        }}
-      >
-        <AnswerButton
-          text="Reference Answer"
-          onClick={handleReferenceAnswerClick}
-        />
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "end", m: 2, p: 2, bgcolor: "grey.100", width: "96%", mx: "auto", borderRadius: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <ReferenceButton
+            text="Reference Answer"
+            onClick={handleReferenceAnswerClick}
+          />
+          {mediaBlobUrl && (
+            <Box >
+              <AudioButton
+                text={t("Your Recording")}
+                audioSrc={mediaBlobUrl}
+              />
+            </Box>
+          )}
+        </Box>
         {showReferenceAnswer && (
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              m: 2,
-            }}
-          >
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", m: 2 }}>
             <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
               {questionDetail.referenceAnswer}
             </Typography>

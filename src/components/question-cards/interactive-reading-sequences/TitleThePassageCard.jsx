@@ -53,10 +53,9 @@ const TitleThePassageCard = ({
     radio: {
       width: "100%",
       border: "1px solid",
-      borderRadius: "8px",
-      padding: "10px",
+      borderRadius: 1,
+      p: 1,
       mx: "auto",
-      marginBottom: "8px",
       display: "flex",
       alignItems: "center",
       gap: 1,
@@ -158,21 +157,22 @@ const TitleThePassageCard = ({
       {/* Options */}
       <Grid item xs={5} sx={{ textAlign: "left" }}>
         <Typography variant="h6" sx={{ fontWeight: "bold", py: 2 }}>
-          {t("Select the idea that is expressed in the passage.")}
+          {t("Select the best title for the passage.")}
         </Typography>
         <RadioGroup value={selectedOption} onChange={handleOptionChange}>
           {renderOptions()}
         </RadioGroup>
         <Box
           gutterBottom
-          sx={{ display: "flex", justifyContent: "space-between", pt: 4 }}
+          sx={{ display: "flex", justifyContent: "end", pt: 4 }}
         >
           {showCorrection && currentSequenceIndex > 1 && (
             <AnswerButton text="Previous" onClick={handlePrevious} />
           )}
           <AnswerButton
-            text={showCorrection ? "Solve Again" : "Submit"}
+            text={showCorrection ? "Solve Again" : "Submit" }
             onClick={handleSubmit}
+            sx={{ml:8}}
           />
         </Box>
       </Grid>

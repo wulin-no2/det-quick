@@ -6,18 +6,16 @@ const AnswerButton = ({ text, onClick ,sx}) => {
   const { t } = useTranslation();
   return (
     <Button
-      variant="contained"
+      variant="outlined"
       onClick={onClick}
       sx={{
-        fontWeight:'bold',
-        bgcolor:"#357af5",
-        minWidth: "180px",
+        minWidth: "120px",
         py: 1,
         fontSize: "16px",
         margin: "2px",
         borderRadius: 1,
         textTransform: "none",
-        height:"46px",
+        height:"44px",
         ...sx, // Apply additional styles
       }}
       //sx={{bgcolor:'#3b5d87', border:'none', color:'white'} // another color

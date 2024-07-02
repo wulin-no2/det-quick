@@ -48,10 +48,9 @@ const IdentifyTheIdeaCard = ({
     radio: {
       width: "100%",
       border: "1px solid",
-      borderRadius: "8px",
-      padding: "10px",
+      borderRadius: 1,
+      p: 1,
       mx: "auto",
-      marginBottom: "8px",
       display: "flex",
       alignItems: "center",
       gap: 1,
@@ -161,12 +160,12 @@ const IdentifyTheIdeaCard = ({
         {/* Answer button */}
         <Box
           gutterBottom
-          sx={{ display: "flex", justifyContent: "space-between", pt: 4 }}
+          sx={{ display: "flex", justifyContent: "end", pt: 4 }}
         >
           {showCorrection && currentSequenceIndex > 1 && (
             <AnswerButton text="Previous" onClick={handlePrevious} />
           )}
-          <AnswerButton text="Next Step" onClick={handleSubmit} />
+          <AnswerButton text="Next Step" onClick={handleSubmit} sx={{ml:8}}/>
         </Box>
       </Grid>
     </Grid>

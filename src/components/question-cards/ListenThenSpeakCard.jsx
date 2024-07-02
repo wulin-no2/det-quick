@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
-import { Box, Typography, Divider } from "@mui/material";
-// import { useState } from 'react';
+import { Box, Typography, Divider, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
+import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { ReactMediaRecorder } from "react-media-recorder";
+import AudioButton from "../common/AudioButton";
 
 const ListenThenSpeakCard = ({
   count,
@@ -17,24 +19,36 @@ const ListenThenSpeakCard = ({
   const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
   const [showReferenceQuestion, setShowReferenceQuestion] = useState(false);
   const { t } = useTranslation();
+  const [recording, setRecording] = useState(false);
+  const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
+  const stopRecordingRef = useRef(null);
 
   const audioRef = useRef(null); // Create a reference for the audio element
 
-  if (!questionDetail) {
-    return <div></div>;
-  }
+  const handleStartRecording = useCallback((startRecording) => {
+    startRecording();
+    setRecording(true);
+  }, []);
 
-  // Handle reference answer button click
+  const handleStopRecording = useCallback((stopRecording) => {
+    stopRecording();
+    setRecording(false);
+  }, []);
+
+  useEffect(() => {
+    if (!recording && mediaBlobUrl) {
+      console.log("Recording stopped, mediaBlobUrl available");
+    }
+  }, [recording, mediaBlobUrl]);
+
   const handleReferenceAnswerClick = () => {
     setShowReferenceAnswer(!showReferenceAnswer);
   };
 
-  // Handle reference question button click
   const handleReferenceQuestionClick = () => {
     setShowReferenceQuestion(!showReferenceQuestion);
   };
 
-  // Handle image click to play/pause audio
   const handleImageClick = () => {
     if (audioRef.current) {
       if (audioRef.current.paused) {
@@ -45,10 +59,9 @@ const ListenThenSpeakCard = ({
     }
   };
 
-  // handle answer buttons
-  const handleRecord = () => {
-    console.log("record..");
-  };
+  if (!questionDetail) {
+    return <div></div>;
+  }
 
   return (
     <Box
@@ -56,7 +69,8 @@ const ListenThenSpeakCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        mb: 2,
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       {/* CardHeader */}
@@ -69,11 +83,7 @@ const ListenThenSpeakCard = ({
         globalIndex={globalIndex}
       />
       {/* question */}
-      <Box
-        sx={{
-          m: 4,
-        }}
-      >
+      <Box sx={{ m: 4 }}>
         <Typography
           variant="h4"
           gutterBottom
@@ -109,17 +119,36 @@ const ListenThenSpeakCard = ({
         </Typography>
       </Box>
       {/* answer button */}
-      <Box
-        gutterBottom
-        sx={{
-          display: "flex",
-          pt: 2,
-          pb: 4,
-          justifyContent: "space-evenly",
+      <ReactMediaRecorder
+        audio
+        onStop={(blobUrl) => {
+          console.log("Recording stopped, blobUrl:", blobUrl);
+          setMediaBlobUrl(blobUrl);
         }}
-      >
-        <AnswerButton text="Record Now" onClick={handleRecord} />
-      </Box>
+        render={({ status, startRecording, stopRecording }) => {
+          stopRecordingRef.current = () => {
+            stopRecording();
+            setRecording(false);
+          };
+          return (
+            <>
+              <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", mt: 6, mb: 4, alignItems: "center", position: "relative" }}>
+                {status === "recording" && (
+                  <CircularProgress size={24} sx={{ position: "absolute", bottom: "68px" }} />
+                )}
+                <AnswerButton
+                  text={status === "recording" ? "Stop Recording" : t("Record Now")}
+                  onClick={() => {
+                    if (status === "recording") {
+                      handleStopRecording(stopRecording);
+                    } else {
+                      handleStartRecording(startRecording);
+                    }}}/>
+              </Box>
+            </>
+          );
+        }}
+      />
       {/* Divider */}
       <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
 
@@ -138,15 +167,23 @@ const ListenThenSpeakCard = ({
           borderRadius: 1,
         }}
       >
-        <Box>
-          <AnswerButton
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <ReferenceButton
             text="Reference Question"
             onClick={handleReferenceQuestionClick}
           />
-          <AnswerButton
+          <ReferenceButton
             text="Reference Answer"
             onClick={handleReferenceAnswerClick}
           />
+          {mediaBlobUrl && (
+            <Box >
+              <AudioButton
+                text={t("Your Recording")}
+                audioSrc={mediaBlobUrl}
+              />
+            </Box>
+          )}
         </Box>
         {/* reference question */}
         {showReferenceQuestion && (

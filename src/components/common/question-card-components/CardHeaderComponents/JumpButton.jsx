@@ -18,23 +18,22 @@ const JumpButton = ({ onLast, onNext, globalIndex, totalWords }) => {
       }}
     >
       <Button
-        variant="contained"
+        variant="outlined"
         onClick={onLast}
         disabled={globalIndex === 1}
         startIcon={<ArrowBackIcon />}
-        sx={{ textTransform: "none", fontSize: "16px",
-        }}>
+        sx={{ textTransform: "none", fontSize: "14px",height:'36px' }}>
         {t('Last')}
       </Button>
-      <Typography sx={{ mx: 2, fontSize: "16px", color: "#1976d2" }}>
+      <Typography sx={{ mx: 2, fontSize: "16px", color: "#1976d2"}}>
         {globalIndex}/{totalWords}
       </Typography>
       <Button
-        variant="contained"
+        variant="outlined"
         onClick={onNext}
         disabled={globalIndex === totalWords}
         endIcon={<ArrowForwardIcon />}
-        sx={{ textTransform: "none", fontSize: "16px" }}
+        sx={{ textTransform: "none", fontSize: "14px", height:'36px'}}
       >
         {t('Next')}
       </Button>

@@ -11,7 +11,7 @@ const CloseButton = ({ onClick }) => {
       sx={{
         minWidth: "60px",
         p: 0.5,
-        fontSize: "16px",
+        fontSize: "14px",
         mx: 1,
         my:1,
         borderRadius: 1,

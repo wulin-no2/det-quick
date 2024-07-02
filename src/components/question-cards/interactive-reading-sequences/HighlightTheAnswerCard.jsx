@@ -161,12 +161,12 @@ const HighlightTheAnswerCard = ({
         {/* Answer button */}
         <Box
           gutterBottom
-          sx={{ display: "flex", justifyContent: "space-between", pt: 4 }}
+          sx={{ display: "flex", justifyContent: "end", pt: 4 }}
         >
           {showCorrection && currentSequenceIndex > 1 && (
             <AnswerButton text="Previous" onClick={handlePrevious} />
           )}
-          <AnswerButton text="Next Step" onClick={handleSubmit} />
+          <AnswerButton text="Next Step" onClick={handleSubmit} sx={{ml:8}}/>
         </Box>
       </Grid>
     </Grid>

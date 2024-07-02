@@ -69,7 +69,8 @@ const ReadAndSelectCard = ({
         width: "1200px",
         margin: "auto",
         textAlign: "center",
-        minHeight:'660px'
+        pb: 2,
+        minHeight:'700px',
       }}
     >
       {/* CardHeader */}
