@@ -1,12 +1,10 @@
 // copied from Zain. haven't used it
 
 import { Navigate } from "react-router-dom";
-import useAuthContext from "./useAuthContext";
+import { useAuthContext } from "./useAuthContext"; // 确保路径正确
 
-// 高阶组件的实现
 const withAuth = (Component) => {
-  // 返回一个新组件
-  return (props) => {
+  const WrappedComponent = (props) => {
     const { isLoggedIn } = useAuthContext(); // 从 AuthContext 获取 isLoggedIn
 
     if (!isLoggedIn) {
@@ -17,6 +15,18 @@ const withAuth = (Component) => {
     // 用户已登录，渲染目标组件
     return <Component {...props} />;
   };
+
+  WrappedComponent.displayName = `WithAuth(${Component.displayName || Component.name || "Component"})`;
+
+  return WrappedComponent;
 };
 
 export default withAuth;
+
+
+
+
+
+
+
+

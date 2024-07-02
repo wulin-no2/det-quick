@@ -26,7 +26,7 @@ export const QuestionStateProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
   });
 
-  // 使用 useEffect 在状态更新时同步更新 localStorage
+  // use useEffect ,when states change, update localStorage
   useEffect(() => {
     localStorage.setItem("moduleId", JSON.stringify(moduleId));
   }, [moduleId]);

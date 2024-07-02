@@ -16,7 +16,7 @@ import useQuestionStateContext from '../../context/useQuestionStateContext';
 function CustomCard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { setModuleId, setSubmoduleId, setCurrentPage, setGlobalIndex } = useQuestionStateContext();
+  const { setModuleId, setSubmoduleId, setCurrentPage, setGlobalIndex, setFilters } = useQuestionStateContext();
   const iconsData = [
     { icon: <VocabularyIcon />, title: 'Vocabulary', types: '1' , moduleId: 1 },
     { icon: <SpeakingIcon />, title: 'Speaking', types: '4' , moduleId: 2 },
@@ -32,6 +32,7 @@ function CustomCard() {
     setSubmoduleId(defaultSubmoduleId);
     setCurrentPage(1);
     setGlobalIndex(1);
+    setFilters({ isAsc: false, difficultyLevel: "null" });
     navigate('/practice');
   };
 
