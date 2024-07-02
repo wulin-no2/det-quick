@@ -8,12 +8,7 @@ import { useState, useEffect } from "react";
 import { grey } from "@mui/material/colors";
 
 const WritingSampleCard = ({
-  // questionId,
-  // setCurrentQuestionId,
-  // setCurrentSubmoduleId,
-  // filters,
   count,
-  currentIndex,
   questionDetail,
   handleBack,
   globalIndex,
@@ -55,7 +50,7 @@ const WritingSampleCard = ({
         questionDetail={questionDetail}
         handleNext={handleNext}
         handleLast={handleLast}
-        currentIndex={currentIndex}
+        // currentIndex={currentIndex}
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
@@ -144,12 +139,7 @@ const WritingSampleCard = ({
 };
 
 WritingSampleCard.propTypes = {
-  questionId: PropTypes.number.isRequired,
-  setCurrentQuestionId: PropTypes.func.isRequired,
-  setCurrentSubmoduleId: PropTypes.func.isRequired,
-  filters: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
-  currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object,
   handleBack: PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,

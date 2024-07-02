@@ -12,7 +12,6 @@ import HighlightTheAnswerCardAlt from "./interactive-reading-sequences/Highlight
 
 const InteractiveReadingCard = ({
   count,
-  currentIndex,
   questionDetail,
   handleBack,
   globalIndex,
@@ -145,7 +144,6 @@ const InteractiveReadingCard = ({
           questionDetail={questionDetail}
           handleNext={handleNext}
           handleLast={handleLast}
-          currentIndex={currentIndex}
           totalWords={count}
           handleBack={handleBack}
           globalIndex={globalIndex}
@@ -159,7 +157,6 @@ const InteractiveReadingCard = ({
 
 InteractiveReadingCard.propTypes = {
   count: PropTypes.number.isRequired,
-  currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object,
   handleBack: PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,

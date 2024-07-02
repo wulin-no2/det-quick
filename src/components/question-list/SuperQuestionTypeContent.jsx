@@ -21,19 +21,13 @@ const SuperQuestionTypeContent = () => {
   const {
     moduleId, 
     submoduleId, setSubmoduleId,
-    currentPage, setCurrentPage,
-    globalIndex, setGlobalIndex,
+    setCurrentPage,
+    setGlobalIndex,
   } = useQuestionStateContext();
   const currentTypes = subTypesArr[moduleId - 1];
 
   // Initialize state from localStorage or defaults
   const [value, setValue] = useState(() => getInitialValue("subTabIndex", 0));
-  const [filters, setFilters] = useState(() => getInitialValue("filters", { isAsc: false, difficultyLevel: "null" }));
-
-  // Store filters in localStorage when they change
-  useEffect(() => {
-    localStorage.setItem("filters", JSON.stringify(filters));
-  }, [filters]);
 
   // Update value and store in localStorage when submoduleId changes
   useEffect(() => {
@@ -47,7 +41,6 @@ const SuperQuestionTypeContent = () => {
   // Handle submoduleId changes by clicking tab
   const handleChange = (event, newValue) => {
     const selectedSubmoduleId = currentTypes[newValue].submodule_id;
-
     setValue(newValue);
     setSubmoduleId(selectedSubmoduleId);
     setCurrentPage(1); // Reset to the first page when submoduleId changes
@@ -86,14 +79,7 @@ const SuperQuestionTypeContent = () => {
       {currentTypes.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
           <SubQuestionTypeContent
-            type={type}
             submoduleId={submoduleId}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            setFilters={setFilters}
-            filters={filters}
-            globalIndex={globalIndex}
-            setGlobalIndex={setGlobalIndex}
           />
         </TabPanel>
       ))}

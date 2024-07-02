@@ -16,7 +16,6 @@ import styles from "./ReadAloudCard.module.css";
 
 const ReadAloudCard = ({
   count,
-  currentIndex,
   questionDetail,
   handleBack,
   globalIndex,
@@ -74,7 +73,6 @@ const ReadAloudCard = ({
         questionDetail={questionDetail}
         handleNext={handleNext}
         handleLast={handleLast}
-        currentIndex={currentIndex}
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
@@ -277,14 +275,8 @@ const ReadAloudCard = ({
 };
 
 ReadAloudCard.propTypes = {
-  questionId: PropTypes.number.isRequired,
-  setCurrentQuestionId: PropTypes.func.isRequired,
-  setCurrentSubmoduleId: PropTypes.func.isRequired,
-  filters: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
-  currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object,
-  getNameBySubmoduleId: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,
   handleNext: PropTypes.func.isRequired,

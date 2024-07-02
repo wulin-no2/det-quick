@@ -45,7 +45,7 @@ function QuestionPage() {
   const navigate = useNavigate();
 
   const state = location.state || JSON.parse(localStorage.getItem("questionPageState")) || {};
-  const { questionId, submoduleId, filters, count, currentIndex, getNameBySubmoduleId, moduleId, currentPage, globalIndex } = state;
+  const { questionId, submoduleId, filters, count, moduleId, currentPage, globalIndex } = state;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -126,14 +126,8 @@ function QuestionPage() {
       >
         {QuestionCard ? (
           <QuestionCard
-            questionId={currentQuestionId}
-            setCurrentQuestionId={(id) => setCurrentState((prev) => ({ ...prev, currentQuestionId: id }))}
-            setCurrentSubmoduleId={(id) => setCurrentState((prev) => ({ ...prev, currentSubmoduleId: id }))}
-            filters={filters}
             count={count}
-            currentIndex={currentIndex}
             questionDetail={questionDetail}
-            getNameBySubmoduleId={getNameBySubmoduleId}
             handleBack={handleBack}
             globalIndex={currentGlobalIndex}
             handleNext={() => handleNavigation('next')}

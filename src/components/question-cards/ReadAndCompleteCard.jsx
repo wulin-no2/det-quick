@@ -9,7 +9,6 @@ import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
 
 const ReadAndCompleteCard = ({
   count,
-  currentIndex,
   questionDetail,
   handleBack,
   globalIndex,
@@ -216,7 +215,6 @@ const ReadAndCompleteCard = ({
         questionDetail={questionDetail}
         handleNext={handleNext}
         handleLast={handleLast}
-        currentIndex={currentIndex}
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
@@ -350,12 +348,7 @@ const ReadAndCompleteCard = ({
 };
 
 ReadAndCompleteCard.propTypes = {
-  questionId: PropTypes.number.isRequired,
-  setCurrentQuestionId: PropTypes.func.isRequired,
-  setCurrentSubmoduleId: PropTypes.func.isRequired,
-  filters: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
-  currentIndex: PropTypes.number.isRequired,
   questionDetail: PropTypes.object,
   handleBack: PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,

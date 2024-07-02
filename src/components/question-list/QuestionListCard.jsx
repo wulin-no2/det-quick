@@ -19,9 +19,9 @@ const getInitialValue = (key, defaultValue) => {
 const QuestionListCard = () => {
   const {
     moduleId, setModuleId,
-    submoduleId, setSubmoduleId,
-    globalIndex, setGlobalIndex,
-    currentPage, setCurrentPage,
+    setSubmoduleId,
+    setGlobalIndex,
+    setCurrentPage,
   } = useQuestionStateContext();
   const { t } = useTranslation();
 
@@ -40,7 +40,6 @@ const QuestionListCard = () => {
   const handleChange = (event, newValue) => {
     const selectedModuleId = types[newValue].module_id;
     const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
-
     setValue(newValue);
     setModuleId(selectedModuleId);
     setSubmoduleId(defaultSubmoduleId);
@@ -69,16 +68,7 @@ const QuestionListCard = () => {
       </Tabs>
       {types.map((type, index) => (
         <TabPanel value={value} index={index} key={type.module_id}>
-          <SuperQuestionTypeContent
-            moduleId={moduleId}
-            submoduleId={submoduleId}
-            setSubmoduleId={setSubmoduleId}
-            subTypesArr={subTypesArr}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            globalIndex={globalIndex}
-            setGlobalIndex={setGlobalIndex}
-          />
+          <SuperQuestionTypeContent/>
         </TabPanel>
       ))}
       <ShowLocalStorage componentName="QuestionListCard" />

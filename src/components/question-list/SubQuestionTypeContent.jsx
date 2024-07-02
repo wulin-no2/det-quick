@@ -34,7 +34,7 @@ const SubQuestionTypeContent = ({submoduleId,}) => {
   const {
     currentPage, setCurrentPage,
     filters, setFilters,
-    globalIndex, setGlobalIndex,
+    setGlobalIndex,
   } = useQuestionStateContext();
 
   const [questions, setQuestions] = useState([]);
@@ -102,9 +102,6 @@ const SubQuestionTypeContent = ({submoduleId,}) => {
             questionsArr={questions}
             count={count}
             filters={filters}
-            currentPage={currentPage}
-            globalIndex={globalIndex}
-            setGlobalIndex={setGlobalIndex}
           />
         </Item>
         <Item sx={{ width: "100%", display: 'flex', justifyContent: 'center', p: 2 }}>
