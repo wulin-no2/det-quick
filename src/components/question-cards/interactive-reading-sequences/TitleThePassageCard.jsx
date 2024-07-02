@@ -163,11 +163,6 @@ const TitleThePassageCard = ({
         <RadioGroup value={selectedOption} onChange={handleOptionChange}>
           {renderOptions()}
         </RadioGroup>
-        {/* Answer button */}
-        {/* <Box gutterBottom sx={{ display: 'flex', justifyContent: 'end', pt: 4 }}>
-          <AnswerButton text={showCorrection ? 'Solve Again' : 'Submit'} onClick={handleSubmit} />
-        </Box> */}
-        {/* Answer button */}
         <Box
           gutterBottom
           sx={{ display: "flex", justifyContent: "space-between", pt: 4 }}

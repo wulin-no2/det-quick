@@ -1,34 +1,23 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { Box} from "@mui/material";
+import { Box } from "@mui/material";
 import ProgressBar from "./CardHeaderComponents/ProgressBar";
 import Timer from "./CardHeaderComponents/Timer";
 import JumpButton from "./CardHeaderComponents/JumpButton";
 import TitleBar from "./CardHeaderComponents/TitleBar";
+import { getNameBySubmoduleId,timeLimitBySubmoduleId } from "../../../utils/practice/questionListConstantAndFunc";
 
-const timeLimit = (submoduleId)=>{
-  switch(submoduleId){
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 90;
-    case 4: return 90;
-    case 5: return 90;
-    case 6: return 60;
-    case 9: return 60*8;
-    case 13: return 60*3;
-    case 14: return 60*5;
-    default: return 10;
-  }
-}
-const CardHeader = ({ questionDetail, totalWords,
+const CardHeader = ({
+  questionDetail,
+  totalWords,
   handleBack,
   globalIndex,
-  handleLast, handleNext,
-  isPracticed
-  // , onTimeUp 
-  // getNameBySubmoduleId
+  handleLast,
+  handleNext,
+  isPracticed,
+  // , onTimeUp
 }) => {
-  const time_limit = timeLimit(questionDetail.submoduleId);
+  const time_limit = timeLimitBySubmoduleId(questionDetail.submoduleId);
 
   // set timer and progressBar based on time_limit
   const [timer, setTimer] = useState(time_limit);
@@ -42,31 +31,34 @@ const CardHeader = ({ questionDetail, totalWords,
         } else {
           clearInterval(timerInterval);
           // handleNext(); // Automatically go to next question when timer ends
-          console.log("globalIndex ",globalIndex)
+          console.log("globalIndex ", globalIndex);
           // onTimeUp(); // Call onTimeUp when timer ends
-          return time_limit; 
+          return time_limit;
         }
       });
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [time_limit, 
-    // onTimeUp, 
-    globalIndex]);
+  }, [
+    time_limit,
+    // onTimeUp,
+    globalIndex,
+  ]);
 
   const progress = ((time_limit - timer) / time_limit) * 100;
 
   return (
-    <Box sx={{
-      px:1
-    }}>
+    <Box
+      sx={{
+        px: 1,
+      }}
+    >
       {/* title bar */}
       <TitleBar
-        
         id={questionDetail.questionId}
         difficulty={questionDetail.difficultyLevel}
         onClick={handleBack}
-        name={questionDetail.submoduleId}
+        name={getNameBySubmoduleId(questionDetail.submoduleId)}
         isPracticed={isPracticed}
       />
       {/* Timer, JumpButton and ProgressBar */}

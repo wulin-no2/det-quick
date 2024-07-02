@@ -10,6 +10,7 @@ import QuestionList from "./question-list-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
 import { fetchQuestionListResponseData } from "../../api/api-fetchQuestionList";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
+import { buttonGroups } from "../../utils/practice/questionListConstantAndFunc";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -19,22 +20,11 @@ const Item = styled(Paper)(({ theme }) => ({
   boxShadow: "none"
 }));
 
-const buttonGroups = [
-  ["isAsc", "true", "false"],
-  ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
-  // ["isCorrect", "null", "true", "false"],
-  // ["templateType", "NARRATIVE", "CONTRASTING", "PROBLEM_SOLVING"],
-  // ["isCollected", "null", "true", "false"],
-  ["isPracticed", "null", "true", "false"],
-];
-
 const SubQuestionTypeContent = ({ 
   submoduleId,
-  // questionList, pages, count, 
   currentPage, setCurrentPage,
   filters, 
   setFilters,
-  getNameBySubmoduleId,
   globalIndex,
   setGlobalIndex,
  }) => {
@@ -111,7 +101,6 @@ const SubQuestionTypeContent = ({
         </Item>
         <Item>
           <QuestionList questionsArr={questions} 
-          getNameBySubmoduleId={getNameBySubmoduleId} 
           count={count}
           filters={filters}
           currentPage={currentPage}
@@ -138,7 +127,6 @@ SubQuestionTypeContent.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   submoduleId: PropTypes.number.isRequired,
-  getNameBySubmoduleId:PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,
   setGlobalIndex: PropTypes.func.isRequired,
 };

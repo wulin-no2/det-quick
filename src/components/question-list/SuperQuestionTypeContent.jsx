@@ -19,7 +19,6 @@ const SuperQuestionTypeContent = ({
   moduleId,
   submoduleId, setSubmoduleId,
   subTypesArr,
-  getNameBySubmoduleId,
   currentPage,
   setCurrentPage,
   globalIndex,
@@ -54,7 +53,6 @@ const SuperQuestionTypeContent = ({
       setValue(index);
       // store subTabIndex
       localStorage.setItem("subTabIndex", JSON.stringify(index));
-      // localStorage.setItem("submoduleId", JSON.stringify(index + 1));
     }
   }, [submoduleId, currentTypes]);
 
@@ -104,7 +102,6 @@ const SuperQuestionTypeContent = ({
           currentPage={currentPage}
           setFilters={setFilters}
           filters={filters}
-          getNameBySubmoduleId={getNameBySubmoduleId} 
           globalIndex={globalIndex}
           setGlobalIndex={setGlobalIndex}
             />
@@ -119,7 +116,6 @@ SuperQuestionTypeContent.propTypes = {
   moduleId: PropTypes.number.isRequired,
   submoduleId: PropTypes.number.isRequired,
   setSubmoduleId: PropTypes.func.isRequired,
-  getNameBySubmoduleId:PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   globalIndex: PropTypes.number.isRequired,
