@@ -5,10 +5,13 @@
 import { Box, Container } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchQuestionDetail, fetchNextQuestion, fetchPreviousQuestion } from "../api/api-fetchQuestionDetail";
+import {
+  fetchQuestionDetail,
+  fetchNextQuestion,
+  fetchPreviousQuestion,
+} from "../api/api-fetchQuestionDetail";
 
 // Import card components
-import CompleteTheSentencesCard from "../components/question-cards/interactive-reading-sequences/CompleteTheSentencesCard";
 import FillInTheBlanksCard from "../components/question-cards/FillInTheBlanksCard";
 import IdentifyTheIdeaCard from "../components/question-cards/interactive-reading-sequences/IdentifyTheIdeaCard";
 import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
@@ -22,6 +25,7 @@ import ReadAndCompleteCard from "../components/question-cards/ReadAndCompleteCar
 import InteractiveReadingCard from "../components/question-cards/InteractiveReadingCard";
 import SpeakingSampleCard from "../components/question-cards/SpeakingSampleCard";
 import WritingSampleCard from "../components/question-cards/WritingSampleCard";
+import WriteAboutThePhotoCard from "../components/question-cards/WriteAboutThePhoto";
 
 const questionCardComponents = {
   1: ReadAndSelectCard,
@@ -34,7 +38,7 @@ const questionCardComponents = {
   8: ReadAndCompleteCard,
   9: InteractiveReadingCard,
   10: FillInTheBlanksCard,
-  11: CompleteTheSentencesCard,
+  11: WriteAboutThePhotoCard,
   12: IdentifyTheIdeaCard,
   13: SpeakingSampleCard,
   14: WritingSampleCard,
@@ -44,8 +48,19 @@ function QuestionPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const state = location.state || JSON.parse(localStorage.getItem("questionPageState")) || {};
-  const { questionId, submoduleId, filters, count, moduleId, currentPage, globalIndex } = state;
+  const state =
+    location.state ||
+    JSON.parse(localStorage.getItem("questionPageState")) ||
+    {};
+  const {
+    questionId,
+    submoduleId,
+    filters,
+    count,
+    moduleId,
+    currentPage,
+    globalIndex,
+  } = state;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -56,13 +71,17 @@ function QuestionPage() {
     currentGlobalIndex: globalIndex || 1,
   });
 
-  const { currentQuestionId, currentSubmoduleId, currentGlobalIndex } = currentState;
+  const { currentQuestionId, currentSubmoduleId, currentGlobalIndex } =
+    currentState;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await fetchQuestionDetail(currentQuestionId, currentSubmoduleId);
+        const result = await fetchQuestionDetail(
+          currentQuestionId,
+          currentSubmoduleId
+        );
         setQuestionDetail(result);
         setError("");
       } catch (error) {
@@ -75,11 +94,21 @@ function QuestionPage() {
   }, [currentQuestionId, currentSubmoduleId]);
 
   const handleBack = () => {
-    navigate(-1, { state: { moduleId, submoduleId, filters, currentPage, count, globalIndex } });
+    navigate(-1, {
+      state: {
+        moduleId,
+        submoduleId,
+        filters,
+        currentPage,
+        count,
+        globalIndex,
+      },
+    });
   };
 
   const handleNavigation = async (direction) => {
-    const newGlobalIndex = direction === 'next' ? currentGlobalIndex + 1 : currentGlobalIndex - 1;
+    const newGlobalIndex =
+      direction === "next" ? currentGlobalIndex + 1 : currentGlobalIndex - 1;
     if (newGlobalIndex > 0 && newGlobalIndex <= count) {
       setCurrentState((prevState) => ({
         ...prevState,
@@ -87,9 +116,17 @@ function QuestionPage() {
       }));
       localStorage.setItem("globalIndex", newGlobalIndex);
 
-      const fetchQuestion = direction === 'next' ? fetchNextQuestion : fetchPreviousQuestion;
+      const fetchQuestion =
+        direction === "next" ? fetchNextQuestion : fetchPreviousQuestion;
       try {
-        const question = await fetchQuestion(currentQuestionId, currentSubmoduleId, filters.difficultyLevel, filters.templateType, filters.isCorrect, filters.isAsc);
+        const question = await fetchQuestion(
+          currentQuestionId,
+          currentSubmoduleId,
+          filters.difficultyLevel,
+          filters.templateType,
+          filters.isCorrect,
+          filters.isAsc
+        );
         if (question) {
           setCurrentState({
             currentQuestionId: question.questionId,
@@ -130,8 +167,8 @@ function QuestionPage() {
             questionDetail={questionDetail}
             handleBack={handleBack}
             globalIndex={currentGlobalIndex}
-            handleNext={() => handleNavigation('next')}
-            handleLast={() => handleNavigation('last')}
+            handleNext={() => handleNavigation("next")}
+            handleLast={() => handleNavigation("last")}
           />
         ) : (
           <div>No question found for this submodule id.</div>
