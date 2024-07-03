@@ -19,12 +19,13 @@ const WriteAboutThePhotoCard = ({
   const [userAnswer, setUserAnswer] = useState("");
   const [submittedAnswer, setSubmittedAnswer] = useState("");
   const [error, setError] = useState("");
+  const [wordCount, setWordCount] = useState(0);
   const { t } = useTranslation();
   const textFieldRef = useRef(null);
 
   useEffect(() => {
     console.log("question detail is", questionDetail);
-    console.log("questionImageUrl:", questionDetail.questionImageUrl);
+    console.log("questionImageUrl:", questionDetail?.questionImageUrl);
   }, [questionDetail]);
 
   const handleReferenceAnswerClick = () => {
@@ -46,8 +47,21 @@ const WriteAboutThePhotoCard = ({
     setUserAnswer("");
   };
 
+  const countWords = (text) => {
+    text = text.trim();
+    if (!text) return 0;
+    const wordArray = text.match(/[\w\d\p{L}]+/gu);
+    return wordArray ? wordArray.length : 0;
+  };
+
+  const handleInputChange = (e) => {
+    const inputText = e.target.value;
+    setUserAnswer(inputText);
+    setWordCount(countWords(inputText));
+  };
+
   if (!questionDetail) {
-    return <div></div>;
+    return null;
   }
 
   return (
@@ -71,54 +85,74 @@ const WriteAboutThePhotoCard = ({
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
-          justifyContent: "space-around",
-          m: 4,
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          gap: 4, // 间距设为4，可根据需要调整
+          mt: 4, // 上边距
+          mx: "auto", // 水平居中
+          maxWidth: "900px", // 控制最大宽度
         }}
       >
-        <Box sx={{ width: "45%" }}>
-          {questionDetail.questionImageUrl ? (
-            <img
-              src={questionDetail.questionImageUrl}
-              style={{ width: "100%" }}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "/placeholder.svg";
-              }}
+        <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
+          {t("Write a description of the image below for 1 minute.")}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" }, // 在小屏幕下列布局，大屏幕下行布局
+            gap: 4, // 项间距
+            alignItems: "flex-start",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ width: { xs: "100%", md: "50%" }, textAlign: "center" }}>
+            {questionDetail.questionImageUrl ? (
+              <img
+                src={questionDetail.questionImageUrl}
+                style={{ maxWidth: "80%", height: "auto" }}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/placeholder.svg";
+                }}
+                alt="Question"
+              />
+            ) : (
+              <Typography variant="h6" color="error">
+                {t("Image not available")}
+              </Typography>
+            )}
+          </Box>
+          <Box sx={{ width: { xs: "100%", md: "100%" }, textAlign: "left" }}>
+            <TextField
+              label={t("Write your answer")}
+              multiline
+              rows={8}
+              variant="outlined"
+              value={userAnswer}
+              onChange={handleInputChange}
+              sx={{ width: "100%", mb: 2 }}
+              inputRef={textFieldRef}
+              error={!!error}
+              helperText={error}
             />
-          ) : (
-            <Typography variant="h6" color="error">
-              {t("Image not available")}
+            <Typography variant="body2">
+              {t("Word count")}: {wordCount}
             </Typography>
-          )}
-        </Box>
-        <Box sx={{ width: "45%", textAlign: "left" }}>
-          <Typography
-            variant="h4"
-            gutterBottom
-            sx={{ fontWeight: "bold", opacity: 0.92, mb: 2 }}
-          >
-            {t("Write about the image below.")}
-          </Typography>
-          <TextField
-            label={t("Write your answer")}
-            multiline
-            rows={8}
-            variant="outlined"
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-            sx={{ width: "100%", mb: 2 }}
-            inputRef={textFieldRef}
-            error={!!error}
-            helperText={error}
-          />
-          <Button variant="contained" onClick={handleSubmitAnswer}>
-            {t("Submit Answer")}
-          </Button>
+            <Typography variant="body2" sx={{ color: "green" }}>
+              {t("Recommended minimum word count")}: 30
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={handleSubmitAnswer}
+              sx={{ mt: 2 }}
+            >
+              {t("Submit Answer")}
+            </Button>
+          </Box>
         </Box>
       </Box>
-      <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
+      <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto", mt: 4 }} />
       <Box
         sx={{
           display: "flex",
