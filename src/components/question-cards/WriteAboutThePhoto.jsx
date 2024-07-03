@@ -2,10 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, Divider, TextField, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import AnswerButton from "../common/AnswerButton";
 import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import { grey } from "@mui/material/colors";
 
 const WriteAboutThePhotoCard = ({
   count,
