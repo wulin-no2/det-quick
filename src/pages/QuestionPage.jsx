@@ -15,7 +15,6 @@ import {
 import FillInTheBlanksCard from "../components/question-cards/FillInTheBlanksCard";
 import IdentifyTheIdeaCard from "../components/question-cards/interactive-reading-sequences/IdentifyTheIdeaCard";
 import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
-import TitleThePassageCard from "../components/question-cards/interactive-reading-sequences/TitleThePassageCard";
 import ReadAloudCard from "../components/question-cards/ReadAloudCard";
 import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
 import ListenThenSpeakCard from "../components/question-cards/ListenThenSpeakCard";
@@ -26,6 +25,7 @@ import InteractiveReadingCard from "../components/question-cards/InteractiveRead
 import SpeakingSampleCard from "../components/question-cards/SpeakingSampleCard";
 import WritingSampleCard from "../components/question-cards/WritingSampleCard";
 import WriteAboutThePhotoCard from "../components/question-cards/WriteAboutThePhoto";
+import InteractiveListeningCard from "../components/question-cards/InteractiveListeningCard";
 
 const questionCardComponents = {
   1: ReadAndSelectCard,
@@ -34,7 +34,7 @@ const questionCardComponents = {
   4: ListenThenSpeakCard,
   5: SpeakAboutThePhotoCard,
   6: ListenAndTypeCard,
-  7: TitleThePassageCard,
+  7: InteractiveListeningCard,
   8: ReadAndCompleteCard,
   9: InteractiveReadingCard,
   10: FillInTheBlanksCard,

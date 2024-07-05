@@ -1,0 +1,167 @@
+import PropTypes from "prop-types";
+import { Box } from "@mui/material";
+import { useState, useEffect } from "react";
+
+import CardHeader from "../common/question-card-components/CardHeader";
+import CompleteTheSentencesCard from "./interactive-reading-sequences/CompleteTheSentencesCard";
+import CompleteThePassageCard from "./interactive-reading-sequences/CompleteThePassageCard";
+import HighlightTheAnswerCard from "./interactive-reading-sequences/HighlightTheAnswerCard";
+import IdentifyTheIdeaCard from "./interactive-reading-sequences/IdentifyTheIdeaCard";
+import TitleThePassageCard from "./interactive-reading-sequences/TitleThePassageCard";
+import HighlightTheAnswerCardAlt from "./interactive-reading-sequences/HighlightTheAnswerCardAlt";
+
+const InteractiveListeningCard = ({
+  count,
+  questionDetail,
+  handleBack,
+  globalIndex,
+  handleLast,
+  handleNext,
+}) => {
+  const [currentSequenceIndex, setCurrentSequenceIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
+
+  useEffect(() => {
+    if (questionDetail && questionDetail.sequences) {
+      setCurrentSequenceIndex(0);
+      setAnswers(Array(questionDetail.sequences.length).fill(null));
+    }
+  }, [questionDetail]);
+
+  const handleNextSequence = (userAnswer) => {
+    setAnswers(prevAnswers => {
+      const newAnswers = [...prevAnswers];
+      newAnswers[currentSequenceIndex] = userAnswer;
+      return newAnswers;
+    });
+
+    if (currentSequenceIndex < questionDetail.sequences.length - 1) {
+      setCurrentSequenceIndex(currentSequenceIndex + 1);
+    } else {
+      handleSubmit();
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitted Answers:", answers);
+    // TODO: Handle submission and grading
+    setCurrentSequenceIndex(0); // Start over for grading
+  };
+
+  const handleSolveAgain = () => {
+    setAnswers([]);
+    setCurrentSequenceIndex(0); // Start over 
+  }
+
+  const handlePrevious = () => {
+    if (currentSequenceIndex > 0) {
+      setCurrentSequenceIndex(currentSequenceIndex - 1);
+    }
+  };
+
+  const renderSequence = () => {
+    const currentSequence = questionDetail.sequences[currentSequenceIndex];
+    const currentAnswer = answers[currentSequenceIndex];
+
+    switch (currentSequence.sequenceOrder) {
+      case 1:
+        return (
+          <CompleteTheSentencesCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
+          />
+        );
+      case 2:
+        return (
+          <CompleteThePassageCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
+          />
+        );
+      case 3:
+        return (
+          <HighlightTheAnswerCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
+          />
+        );
+      case 4:
+        return (
+          <HighlightTheAnswerCardAlt
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
+          />
+        );
+      case 5:
+        return (
+          <IdentifyTheIdeaCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
+          />
+        );
+      case 6:
+        return (
+          <TitleThePassageCard
+            sequence={currentSequence}
+            handleNextSequence={handleNextSequence}
+            currentAnswer={currentAnswer}
+            handleSolveAgain={handleSolveAgain}
+            handlePrevious={handlePrevious}
+            currentSequenceIndex={currentSequenceIndex}
+          />
+        );
+      default:
+        return <div>Unknown sequence order</div>;
+    }
+  };
+
+  return (
+    <Box
+      sx={{
+        maxWidth: "1200px",
+        mx: "auto",
+        textAlign: "center",
+        pb: 2,
+        minHeight:'700px',
+      }}
+    >
+      {/* CardHeader */}
+      <Box>
+        <CardHeader
+          questionDetail={questionDetail}
+          handleNext={handleNext}
+          handleLast={handleLast}
+          totalWords={count}
+          handleBack={handleBack}
+          globalIndex={globalIndex}
+        />
+      </Box>
+      {/* Card content */}
+      <Box sx={{pt:1}}>{renderSequence()}</Box>
+    </Box>
+  );
+};
+
+InteractiveListeningCard.propTypes = {
+  count: PropTypes.number.isRequired,
+  questionDetail: PropTypes.object,
+  handleBack: PropTypes.func.isRequired,
+  globalIndex: PropTypes.number.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  handleLast: PropTypes.func.isRequired,
+};
+
+export default InteractiveListeningCard;
