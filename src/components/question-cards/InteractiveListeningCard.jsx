@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { Box,Divider,Grid,Typography } from "@mui/material";
+import { Box, Paper,Grid,Typography } from "@mui/material";
 import {useEffect,} from "react";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
-
+import { grey } from "@mui/material/colors";
 
 const InteractiveListeningCard = ({
   count,
@@ -49,6 +49,10 @@ const InteractiveListeningCard = ({
         globalIndex={globalIndex}
       />
       {/* question */}
+      <Paper elevation={0}
+      variant="outlined"
+      sx={{my:2,mx:3,bgcolor:grey[50],borderRadius:2}}
+      >
       <Grid container>
           {/* image */}
           <Grid item xs={4} 
@@ -58,7 +62,12 @@ const InteractiveListeningCard = ({
           >
               <img
                 src="/interactiveListening.png"
-                style={{ width: "300px", margin: "16px" }}
+                style={{ 
+                  height: "100%", 
+                  borderRight:'1px solid',
+                  borderColor:grey[300],
+                  borderRadius:"8px 0 0 8px"
+                }}
               />
               {/* <audio ref={audioRef} src={questionDetail.questionAudioUrl} /> */}
           </Grid>
@@ -66,20 +75,21 @@ const InteractiveListeningCard = ({
           <Grid item xs={8} sx={{display:'flex', flexDirection:'column', justifyContent:'center',
           textAlign:'center',
             // border:'1px solid blue',
-            px:2
+            pl:4,
+            pr:8 
           }}>
             <Typography
               variant="h6"
               gutterBottom
-              sx={{ fontWeight: "bold", opacity: 0.92 }}
-            >
+              sx={{ fontWeight: "bold", opacity: 0.92}}>
               {t("You will participate in a conversation about the scenario below.")}
             </Typography>
             <Typography
               variant="h7"
               gutterBottom
-              sx={{ opacity: 0.88, minWidth: "500px",pt: 1,pl:2,pr:8 }}
-            >
+              sx={{ fontWeight:'medium', textAlign:'start',
+                minWidth: "500px",lineHeight:1.8,
+                bgcolor:'white', p:4, border:"1px solid", borderColor:grey[300],borderRadius:2}}>
               {t(questionDetail.bgInfo)}
             </Typography>
             {/* answer button */}
@@ -88,16 +98,14 @@ const InteractiveListeningCard = ({
               sx={{
                 display: "flex",
                 pt:6,
-                justifyContent: "center",
+                justifyContent: "end",
               }}>
               <AnswerButton text="Start" onClick={handleStart} />
             </Box>
           </Grid>
       </Grid>
+      </Paper>
       
-
-      {/* Divider */}
-      <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
     </Box>
   );
 };
