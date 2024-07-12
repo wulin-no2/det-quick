@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { Box, Button, IconButton } from "@mui/material";
+import { Button, Box, IconButton } from "@mui/material";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import styles from "./Record.module.css";
 import { useState, useRef, useEffect } from "react";
+import styles from "./Record.module.css";
 
-const AudioButton = ({ text, audioSrc, sx }) => {
+const AudioButton = ({ text, audioSrc, sx, onEnded, disabled }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -23,6 +23,9 @@ const AudioButton = ({ text, audioSrc, sx }) => {
   useEffect(() => {
     const handleEnded = () => {
       setIsPlaying(false);
+      if (onEnded) {
+        onEnded();
+      }
     };
 
     const audioElement = audioRef.current;
@@ -35,12 +38,12 @@ const AudioButton = ({ text, audioSrc, sx }) => {
         audioElement.removeEventListener("ended", handleEnded);
       }
     };
-  }, [audioRef]);
+  }, [onEnded]);
 
   return (
     <Button
       variant="outlined"
-      onClick={handlePlayAudio}
+      onClick={!disabled ? handlePlayAudio : null}
       sx={{
         minWidth: "160px",
         height: "44px", // Set a fixed height to prevent shrinking
@@ -52,11 +55,12 @@ const AudioButton = ({ text, audioSrc, sx }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        textAlign:'center',
+        textAlign: 'center',
         ...sx, // Apply additional styles
       }}
+      disabled={disabled}
     >
-      {isPlaying ? (
+      {!disabled && isPlaying ? (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <div className={styles.waveform}>
             <span className={styles.bar}></span>
@@ -71,7 +75,9 @@ const AudioButton = ({ text, audioSrc, sx }) => {
           <IconButton
             sx={{
               color: 'inherit', // Ensures the icon button inherits the text color of the button
-              "&:focus": { outline: "none" },}}
+              "&:focus": { outline: "none" },
+            }}
+            disabled={disabled} // Disable the icon button when the component is disabled
           >
             <PlayCircleIcon />
           </IconButton>
@@ -84,9 +90,11 @@ const AudioButton = ({ text, audioSrc, sx }) => {
 };
 
 AudioButton.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   audioSrc: PropTypes.string.isRequired,
   sx: PropTypes.object, // Add sx prop type
+  onEnded: PropTypes.func,
+  disabled: PropTypes.bool, // Add disabled prop type
 };
 
 export default AudioButton;

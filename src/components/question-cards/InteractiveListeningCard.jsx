@@ -19,6 +19,7 @@ const InteractiveListeningCard = ({
   const [currentSequence, setCurrentSequence] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answers, setAnswers] = useState([]);
+  const [audioPlayed, setAudioPlayed] = useState(false);
 
   useEffect(() => {
     console.log("question detail is", questionDetail);
@@ -36,11 +37,20 @@ const InteractiveListeningCard = ({
     const isCorrect = selectedAnswer === currentQuestion.blankList.answer;
     setAnswers([...answers, { question: currentQuestion, answer: selectedAnswer, correct: isCorrect }]);
     setSelectedAnswer(null); // Reset selected answer for next question
+    setAudioPlayed(false); // Reset audio played status for next question
     setCurrentSequence(prev => prev + 1);
   };
 
   const handleOptionChange = (event) => {
     setSelectedAnswer(event.target.value);
+  };
+
+  const handleAudioEnd = () => {
+    setAudioPlayed(true); // Set audio played status to true when audio ends
+  };
+
+  const handleSubmit = () => {
+    // Submit logic here
   };
 
   const currentQuestion = questionDetail.sequences[currentSequence - 1];
@@ -101,6 +111,105 @@ const InteractiveListeningCard = ({
     },
   };
 
+  const renderQuestionAudio = (audioSrc) => (
+    <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'center', alignItems: 'center', my: 2 }}>
+      <img
+        src="/listeningAvatar.png"
+        style={{
+          width: "64px",
+          borderRadius: 1,
+        }}
+      />
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: grey[500] }}>
+        <Typography sx={{ px: 1, pb: 1, color: grey[600], fontSize: '14px' }}>
+          {t('Listen closely! You can only play the audio clips once.')}
+        </Typography>
+        <AudioButton
+          audioSrc={audioSrc}
+          onEnded={handleAudioEnd}
+          sx={{ borderColor: '#3b5d87', color: '#3b5d87' }}
+        />
+      </Box>
+    </Box>
+  );
+
+  const renderAnswerOptions = () => (
+    <Box
+      sx={{
+        backgroundColor: 'white',
+        border: '1px solid',
+        borderColor: grey[300],
+        borderRadius: 2,
+        p: 2,
+        minWidth: '600px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'end',
+      }}
+    >
+      <Typography sx={{ alignSelf: 'self-start', fontSize: '14px', opacity: 0.58, pb: 0.5 }}>
+        {t('Question ')}{currentSequence}{t(' of ')}{questionDetail.sequences.length}
+      </Typography>
+      <Typography variant="h7" sx={{ alignSelf: 'self-start', fontWeight: 'bold', opacity: 0.78 }}>
+        {t('Select the best response.')}
+      </Typography>
+      <RadioGroup value={selectedAnswer} onChange={handleOptionChange} sx={{ my: 2, width: '100%' }}>
+        {currentQuestion.blankList.options.map((option, index) => (
+          <FormControlLabel
+            key={index}
+            value={option}
+            control={<Radio sx={styles.radioControl} />}
+            label={option}
+            sx={{
+              ...styles.radio,
+              ...(selectedAnswer === option ? styles.selectedRadio : styles.unSelectedRadio),
+            }}
+          />
+        ))}
+      </RadioGroup>
+      <Button
+        variant="contained"
+        onClick={isLastQuestion ? handleSubmit : handleNextQuestion}
+        disabled={!selectedAnswer}
+      >
+        {isLastQuestion ? t("Submit") : t("Next")}
+      </Button>
+    </Box>
+  );
+
+  const renderAnswerResult = (answer) => (
+    <Box
+      sx={{
+        mb: 2,
+        justifyContent: 'end',
+        width: '600px',
+        backgroundColor: answer.correct ? green[50] : red[50],
+        border: `1px solid ${answer.correct ? green[500] : red[500]}`,
+        borderRadius: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'start',
+        py: 2,
+        px: 3,
+        fontWeight: 'medium',
+      }}
+    >
+      {/* your answer */}
+      <Typography variant="body1">
+        <span style={answer.correct ? {} : styles.strikeThrough}>{answer.answer}</span>
+      </Typography>
+      {/* correct answer */}
+      {!answer.correct && (
+        <Box>
+          <Typography sx={{ fontSize: '12px', py: 1 }}>{t('Best Answer:')}</Typography>
+          <Typography variant="body1">
+            {answer.question.blankList.answer}
+          </Typography>
+        </Box>
+      )}
+    </Box>
+  );
+
   return (
     <Box
       sx={{
@@ -136,7 +245,7 @@ const InteractiveListeningCard = ({
               <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92 }}>
                 {t("You will participate in a conversation about the scenario below.")}
               </Typography>
-              <Typography variant="h7" gutterBottom sx={{ fontWeight: 'medium', textAlign: 'start', minWidth: "500px", lineHeight: 1.8, bgcolor: 'white', p: 4, border: "1px solid", borderColor: grey[300], borderRadius: 2 }}>
+              <Typography variant="h7" gutterBottom sx={{ fontWeight: 'medium', textAlign: 'start', minWidth: "500px", lineHeight: 1.8, bgcolor: 'white', p: 4, border: "1px solid", borderColor: grey[300], borderRadius: 2, mt: 2 }}>
                 {t(questionDetail.bgInfo)}
               </Typography>
               <Box gutterBottom sx={{ display: "flex", pt: 6, justifyContent: "end" }}>
@@ -161,7 +270,7 @@ const InteractiveListeningCard = ({
             </Grid>
             <Grid item xs={8} sx={{ height: '100%', overflowY: 'auto' }}>
               {/* background area */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', p: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', pt: 3 }}>
                 <Typography variant="h7" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92, pb: 1 }}>
                   {t("You will participate in a conversation about the scenario below.")}
                 </Typography>
@@ -172,22 +281,12 @@ const InteractiveListeningCard = ({
                 </Typography>
               </Box>
               {/* answers */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'end', p: 2,
-                // border:'1px solid magenta'
-              }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'end', p: 2 }}>
                 {answers.map((answer, index) => (
-                  <Box key={index} sx={{ mb: 1, 
-                    width:'100%',
-                    // border:'1px solid blue',
-                    display:'flex',
-                    flexDirection:'column',
-                    alignItems: 'end',
-                  }}>
+                  <Box key={index} sx={{ mb: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
                     {/* question area */}
                     {answer.question.questionAudioUrl && (
-                      <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 ,
-                        // border:'1px solid red',
-                      }}>
+                      <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 }}>
                         <img
                           src="/listeningAvatar.png"
                           style={{
@@ -196,90 +295,39 @@ const InteractiveListeningCard = ({
                           }}
                         />
                         <Box sx={{ display: 'flex', alignItems: 'center', color: grey[500] }}>
-                        <AudioButton
-                          disabled
-                          sx={{ borderColor: grey[500], color: grey[500] }}
-                        />
+                          <AudioButton
+                            disabled
+                            sx={{ borderColor: grey[500], color: grey[500] }}
+                          />
                         </Box>
                       </Box>
                     )}
                     {/* answer area */}
-                    <Box sx={{
-                      mb: 2,
-                      justifyContent: 'end',
-                      width: '600px',
-                      backgroundColor: answer.correct ? green[50] : red[50],
-                      border: `1px solid ${answer.correct ? green[500] : red[500]}`,
-                      borderRadius: 2,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      textAlign: 'start',
-                      py: 2,
-                      px: 3,
-                      fontWeight: 'medium'
-                    }}>
-                      {/* your answer */}
-                      <Typography variant="body1">
-                        <span style={answer.correct ? {} : styles.strikeThrough}>{answer.answer}</span>
-                      </Typography>
-                      {/* correct answer */}
-                      {!answer.correct && (
-                        <Box>
-                          <Typography sx={{ fontSize: '12px', py: 1 }}>{t('Best Answer:')}</Typography>
-                          <Typography variant="body1">
-                            {answer.question.blankList.answer}
-                          </Typography>
-                        </Box>
-                      )}
-                    </Box>
+                    {renderAnswerResult(answer)}
                   </Box>
                 ))}
                 {/* current question */}
-                {currentQuestion&& (
+                {currentQuestion && (
                   <>
-                  {currentQuestion.questionAudioUrl &&(
-                    <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'center', alignItems: 'center', my: 2 }}>
-                      <img
-                        src="/listeningAvatar.png"
-                        style={{
-                          width: "64px",
-                          borderRadius: 1,
-                        }}
-                      />
-                      <Box sx={{ display: 'flex', flexDirection:'column',alignItems: 'start', color: grey[500],
-                      }}>
-                        <Typography sx={{px:1,pb:1,color:grey[600],fontSize:'14px'}}>
-                          {t('Listen closely! You can only play the audio clips once.')}
-                        </Typography>
-                        <AudioButton
-                          audioSrc={currentQuestion.questionAudioUrl}
-                          sx={{ borderColor: '#3b5d87', color: '#3b5d87' }}
+                    {currentQuestion.questionAudioUrl && !audioPlayed && renderQuestionAudio(currentQuestion.questionAudioUrl)}
+                    {audioPlayed && (
+                      <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 }}>
+                        <img
+                          src="/listeningAvatar.png"
+                          style={{
+                            width: "64px",
+                            borderRadius: 1,
+                          }}
                         />
-                      </Box>
-                    </Box>)}
-                    <Box sx={{ backgroundColor: 'white', border: '1px solid', borderColor: grey[300], borderRadius: 2, p: 2, minWidth: '600px', display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
-                      <Typography sx={{ alignSelf: 'self-start', fontSize: '14px', opacity: 0.58, pb: 0.5 }}>{t('Question ')}{currentSequence}{t(' of ')}{questionDetail.sequences.length}</Typography>
-                      <Typography variant="h7" sx={{ alignSelf: 'self-start', fontWeight: 'bold', opacity: 0.78 }}>{t('Select the best response.')}</Typography>
-                      <RadioGroup value={selectedAnswer} onChange={handleOptionChange} sx={{ my: 2, width: '100%' }}>
-                        {currentQuestion.blankList.options.map((option, index) => (
-                          <FormControlLabel
-                            key={index}
-                            value={option}
-                            control={<Radio sx={styles.radioControl} />}
-                            label={option}
-                            sx={{
-                              ...styles.radio,
-                              ...(selectedAnswer === option
-                                ? styles.selectedRadio
-                                : styles.unSelectedRadio),
-                            }}
+                        <Box sx={{ display: 'flex', alignItems: 'center', color: grey[500] }}>
+                          <AudioButton
+                            disabled
+                            sx={{ borderColor: grey[500], color: grey[500] }}
                           />
-                        ))}
-                      </RadioGroup>
-                      <Button variant="contained" onClick={isLastQuestion ? handleNext : handleNextQuestion} disabled={!selectedAnswer}>
-                        {isLastQuestion ? t("Submit") : t("Next")}
-                      </Button>
-                    </Box>
+                        </Box>
+                      </Box>
+                    )}
+                    {(audioPlayed || !currentQuestion.questionAudioUrl) && renderAnswerOptions()}
                   </>
                 )}
               </Box>
@@ -301,4 +349,6 @@ InteractiveListeningCard.propTypes = {
 };
 
 export default InteractiveListeningCard;
+
+
 
