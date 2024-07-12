@@ -13,7 +13,6 @@ import {
 
 // Import card components
 import FillInTheBlanksCard from "../components/question-cards/FillInTheBlanksCard";
-import IdentifyTheIdeaCard from "../components/question-cards/interactive-reading-sequences/IdentifyTheIdeaCard";
 import ReadAndSelectCard from "../components/question-cards/ReadAndSelectCard";
 import ReadAloudCard from "../components/question-cards/ReadAloudCard";
 import ReadThenSpeakCard from "../components/question-cards/ReadThenSpeakCard";
@@ -26,6 +25,7 @@ import SpeakingSampleCard from "../components/question-cards/SpeakingSampleCard"
 import WritingSampleCard from "../components/question-cards/WritingSampleCard";
 import WriteAboutThePhotoCard from "../components/question-cards/WriteAboutThePhoto";
 import InteractiveListeningCard from "../components/question-cards/InteractiveListeningCard";
+import InteractiveWritingCard from "../components/question-cards/InteractiveWritingCard";
 
 const questionCardComponents = {
   1: ReadAndSelectCard,
@@ -39,7 +39,7 @@ const questionCardComponents = {
   9: InteractiveReadingCard,
   10: FillInTheBlanksCard,
   11: WriteAboutThePhotoCard,
-  12: IdentifyTheIdeaCard,
+  12: InteractiveWritingCard,
   13: SpeakingSampleCard,
   14: WritingSampleCard,
 };
