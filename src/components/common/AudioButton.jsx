@@ -4,7 +4,7 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import styles from "./Record.module.css";
 import { useState, useRef, useEffect } from "react";
 
-const AudioButton = ({ text, audioSrc }) => {
+const AudioButton = ({ text, audioSrc, sx }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -52,7 +52,8 @@ const AudioButton = ({ text, audioSrc }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        textAlign:'center'
+        textAlign:'center',
+        ...sx, // Apply additional styles
       }}
     >
       {isPlaying ? (
@@ -85,6 +86,7 @@ const AudioButton = ({ text, audioSrc }) => {
 AudioButton.propTypes = {
   text: PropTypes.string.isRequired,
   audioSrc: PropTypes.string.isRequired,
+  sx: PropTypes.object, // Add sx prop type
 };
 
 export default AudioButton;

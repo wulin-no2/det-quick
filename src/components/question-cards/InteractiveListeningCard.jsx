@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { Box, Paper,Grid,Typography } from "@mui/material";
-import {useEffect,} from "react";
+import { Box, Paper, Grid, Typography, Radio, RadioGroup, FormControlLabel, Button, } from "@mui/material";
+import { useEffect, useState} from "react";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
-import { grey } from "@mui/material/colors";
+import AudioButton from "../common/AudioButton";
+import { grey, green, red } from "@mui/material/colors";
 
 const InteractiveListeningCard = ({
   count,
@@ -15,18 +16,89 @@ const InteractiveListeningCard = ({
   handleNext,
 }) => {
   const { t } = useTranslation();
+  const [currentSequence, setCurrentSequence] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     console.log("question detail is", questionDetail);
-    // console.log("questionImageUrl:", questionDetail.questionImageUrl);
   }, [questionDetail]);
 
   if (!questionDetail) {
     return <div></div>;
   }
 
-  // handle answer buttons
   const handleStart = () => {
+    setCurrentSequence(1); // Start from the first sequence
+  };
+
+  const handleNextQuestion = () => {
+    const isCorrect = selectedAnswer === currentQuestion.blankList.answer;
+    setAnswers([...answers, { answer: selectedAnswer, correct: isCorrect }]);
+    setSelectedAnswer(null); // Reset selected answer for next question
+    setCurrentSequence(prev => prev + 1);
+  };
+
+  const currentQuestion = questionDetail.sequences[currentSequence - 1];
+  const isLastQuestion = currentSequence === questionDetail.sequences.length;
+
+  const handleOptionChange = (event) => {
+    setSelectedAnswer(event.target.value);
+  };
+
+  const styles = {
+    radio: {
+      width: "100%",
+      border: "1px solid",
+      borderRadius: 1,
+      padding: 1,
+      mx: "auto",
+      mb: 1,
+      display: "flex",
+      alignItems: "center",
+      gap: 1,
+      color: grey[700],
+    },
+    unSelectedRadio: {
+      borderColor: grey[300],
+      backgroundColor: "white", 
+    },
+    selectedRadio: {
+      borderColor: "#357af5",
+      backgroundColor: "#e3f2fd", // Light blue background
+    },
+    radioControl: {
+      "&.MuiRadio-root": {
+        color: grey[300],
+      },
+      "&.MuiRadio-root.Mui-checked": {
+        color: "#357af5", // Match border color
+      },
+      "& .MuiSvgIcon-root": {
+        fontSize: "1.2rem",
+      },
+    },
+    correctAnswer: {
+      backgroundColor: green[100],
+      borderColor: green[500],
+      padding: "10px",
+      borderRadius: "8px",
+      border: "2px solid",
+      marginTop: "12px",
+      textAlign: "left",
+    },
+    incorrectAnswer: {
+      backgroundColor: red[100],
+      borderColor: red[500],
+      padding: "10px",
+      borderRadius: "8px",
+      border: "2px solid",
+      marginTop: "12px",
+      textAlign: "left",
+    },
+    strikeThrough: {
+      textDecoration: "line-through",
+    },
   };
 
   return (
@@ -36,10 +108,8 @@ const InteractiveListeningCard = ({
         margin: "auto",
         textAlign: "center",
         pb: 2,
-        minHeight:'700px',
-      }}
-    >
-      {/* CardHeader */}
+        minHeight: '700px',
+      }}>
       <CardHeader
         questionDetail={questionDetail}
         handleNext={handleNext}
@@ -48,64 +118,143 @@ const InteractiveListeningCard = ({
         handleBack={handleBack}
         globalIndex={globalIndex}
       />
-      {/* question */}
-      <Paper elevation={0}
-      variant="outlined"
-      sx={{my:2,mx:3,bgcolor:grey[50],borderRadius:2}}
-      >
-      <Grid container>
-          {/* image */}
-          <Grid item xs={4} 
-          sx={{
-            // border:'1px solid blue',
-            display:'flex',justifyContent:'end',alignItems:'start'}}
-          >
+      {currentSequence === 0 ? (
+        <Paper elevation={0} variant="outlined" sx={{ my: 2, mx: 3, bgcolor: grey[50], borderRadius: 2 }}>
+          <Grid container>
+            <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'start' }}>
               <img
                 src="/interactiveListening.png"
-                style={{ 
-                  height: "100%", 
-                  borderRight:'1px solid',
-                  borderColor:grey[300],
-                  borderRadius:"8px 0 0 8px"
+                style={{
+                  width: "100%",
+                  borderRight: '1px solid',
+                  borderColor: grey[300],
+                  borderRadius: "8px 0 0 8px"
                 }}
               />
-              {/* <audio ref={audioRef} src={questionDetail.questionAudioUrl} /> */}
+            </Grid>
+            <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', pl: 4, pr: 8 }}>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92 }}>
+                {t("You will participate in a conversation about the scenario below.")}
+              </Typography>
+              <Typography variant="h7" gutterBottom sx={{ fontWeight: 'medium', textAlign: 'start', minWidth: "500px", lineHeight: 1.8, bgcolor: 'white', p: 4, border: "1px solid", borderColor: grey[300], borderRadius: 2 }}>
+                {t(questionDetail.bgInfo)}
+              </Typography>
+              <Box gutterBottom sx={{ display: "flex", pt: 6, justifyContent: "end" }}>
+                <AnswerButton text="Start" onClick={handleStart} />
+              </Box>
+            </Grid>
           </Grid>
-          {/* question text */}
-          <Grid item xs={8} sx={{display:'flex', flexDirection:'column', justifyContent:'center',
-          textAlign:'center',
-            // border:'1px solid blue',
-            pl:4,
-            pr:8 
-          }}>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{ fontWeight: "bold", opacity: 0.92}}>
-              {t("You will participate in a conversation about the scenario below.")}
-            </Typography>
-            <Typography
-              variant="h7"
-              gutterBottom
-              sx={{ fontWeight:'medium', textAlign:'start',
-                minWidth: "500px",lineHeight:1.8,
-                bgcolor:'white', p:4, border:"1px solid", borderColor:grey[300],borderRadius:2}}>
-              {t(questionDetail.bgInfo)}
-            </Typography>
-            {/* answer button */}
-            <Box
-              gutterBottom
-              sx={{
-                display: "flex",
-                pt:6,
-                justifyContent: "end",
-              }}>
-              <AnswerButton text="Start" onClick={handleStart} />
-            </Box>
+        </Paper>
+      ) : (
+        <Paper elevation={0} variant="outlined" sx={{ my: 2, mx: 3, bgcolor: grey[50], borderRadius: 2, display: 'flex' }}>
+          <Grid container>
+            <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'start' }}>
+              <img
+                src="/interactiveListening.png"
+                style={{
+                  width: "100%",
+                  borderRight: '1px solid',
+                  borderColor: grey[300],
+                  borderRadius: "8px 0 0 8px"
+                }}/>
+            </Grid>
+            <Grid item xs={8} sx={{ height: '100%', overflowY: 'auto' }}>
+              <Box sx={{display:'flex',flexDirection:'column',justifyContent: 'center', textAlign: 'center', p: 2}}>
+                <Typography variant="h7" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92,pb:1 }}>
+                  {t("You will participate in a conversation about the scenario below.")}
+                </Typography>
+                <Typography gutterBottom sx={{ 
+                  fontSize:'16px',fontWeight: 'medium', textAlign: 'start', minWidth: "500px", lineHeight: 1.5, px: 4, }}>
+                {t(questionDetail.bgInfo)}
+              </Typography>
+              </Box>
+              {/* answers */}
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'end', 
+                p: 2 }}>
+                {answers.map((answer, index) => (
+                  <Box key={index} sx={{ 
+                    mb: 2, 
+                    justifyContent:'end',
+                    width: '600px', 
+                    backgroundColor: answer.correct ? green[50] : red[50], border: `1px solid ${answer.correct ? green[500] : red[500]}`,
+                    borderRadius: 2,
+                    display:'flex',
+                    flexDirection:'column',
+                    textAlign:'start',
+                    py:2,
+                    px:3,
+                    fontWeight: 'medium'}}>
+                      {/* your answer */}
+                      <Typography variant="body1" >
+                        <span style={answer.correct ? {} : styles.strikeThrough}>{answer.answer}</span>
+                      </Typography>
+                      {/* correct answer */}
+                      {!answer.correct && (
+                        <Box>
+                          <Typography sx={{fontSize:'12px', py:1}}>{t('Best Answer:')}</Typography>
+                          <Typography variant="body1" >
+                          {questionDetail.sequences[index].blankList.answer}
+                          </Typography>
+                        </Box>
+                      )}
+                  </Box>
+                ))}
+                {/* question area */}
+                {currentQuestion && currentQuestion.questionAudioUrl && (
+                  <Box sx={{alignSelf:'self-start',
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    my:2
+                  }}>
+                    <img
+                      src="/listeningAvatar.png"
+                      style={{
+                        width: "64px",
+                        borderRadius: 1,
+                      }}/>
+                      <Box sx={{ display: 'flex', alignItems: 'center', color:grey[500]}}>
+                          <AudioButton
+                            audioSrc={currentQuestion.questionAudioUrl}
+                            sx={{borderColor:'#3b5d87', color:'#3b5d87'}}
+                            />
+                      </Box>
+                  </Box>
+                )}
+                {/* options */}
+                <Box sx={{backgroundColor:'white', border:'1px solid', borderColor:grey[300], borderRadius:2,
+                  p:2,minWidth:'600px',
+                  display:'flex',
+                  flexDirection:'column',
+                  alignItems:'end'
+                  }}>
+                  <Typography sx={{alignSelf:'self-start', fontSize:'14px', opacity:0.58,pb:0.5}}>{t('Question ')}{currentSequence}{t(' of ')}{questionDetail.sequences.length}</Typography>
+                  <Typography variant="h7" sx={{alignSelf:'self-start', fontWeight:'bold',opacity:0.78}}>{t('Select the best response.')}</Typography>
+                  <RadioGroup value={selectedAnswer} onChange={handleOptionChange} sx={{ my: 2, width: '100%' }}>
+                    {currentQuestion.blankList.options.map((option, index) => (
+                      <FormControlLabel
+                        key={index}
+                        value={option}
+                        control={<Radio sx={styles.radioControl} />}
+                        label={option}
+                        sx={{
+                          ...styles.radio,
+                          ...(selectedAnswer === option
+                            ? styles.selectedRadio
+                            : styles.unSelectedRadio),
+                        }}
+                      />
+                    ))}
+                  </RadioGroup>
+                  <Button variant="contained" onClick={isLastQuestion ? handleNext : handleNextQuestion} disabled={!selectedAnswer}>
+                    {isLastQuestion ? t("Submit") : t("Next")}
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
           </Grid>
-      </Grid>
-      </Paper>
-      
+        </Paper>
+      )}
     </Box>
   );
 };

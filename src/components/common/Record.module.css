@@ -1,5 +1,3 @@
-/* Record.module.css */
-
 @keyframes blinking {
   0% { opacity: 1; }
   50% { opacity: 0; }
@@ -15,7 +13,7 @@
 .waveform .bar {
   width: 4px;
   height: 100%;
-  background-color: #357af5;
+  background-color: currentColor; /* Use currentColor to inherit parent color */
   margin: 0 2px;
   animation: wave 1s infinite;
 }
