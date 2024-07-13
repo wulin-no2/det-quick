@@ -15,7 +15,8 @@ const InteractiveWritingCard = ({
   handleLast,
   handleNext,
 }) => {
-  const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
+  const [showPart1ReferenceAnswer, setShowPart1ReferenceAnswer] = useState(false);
+  const [showPart2ReferenceAnswer, setShowPart2ReferenceAnswer] = useState(false);
   const [userAnswer1, setUserAnswer1] = useState("");
   const [userAnswer2, setUserAnswer2] = useState("");
   const [showUserAnswer, setShowUserAnswer] = useState(false);
@@ -40,8 +41,12 @@ const InteractiveWritingCard = ({
     return <div></div>;
   }
 
-  const handleReferenceAnswerClick = () => {
-    setShowReferenceAnswer(!showReferenceAnswer);
+  const handlePart1ReferenceAnswerClick = () => {
+    setShowPart1ReferenceAnswer(!showPart1ReferenceAnswer);
+  };
+
+  const handlePart2ReferenceAnswerClick = () => {
+    setShowPart2ReferenceAnswer(!showPart2ReferenceAnswer);
   };
 
   const handleUserAnswerClick = () => {
@@ -81,7 +86,7 @@ const InteractiveWritingCard = ({
         globalIndex={globalIndex}
       />
       {/* question area */}
-      <Grid container sx={{ px: 4 }}>
+      <Grid container sx={{ px: 6 }}>
         {/* question1 */}
         <Grid item xs={6}>
           <Box
@@ -92,7 +97,7 @@ const InteractiveWritingCard = ({
               my: 2,
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center' ,alignSelf:'start'}}>
+            <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'start' }}>
               <Typography variant="h6" sx={{ display: 'flex', backgroundColor: "#357af5", color: 'white', width: 28, height: 28, borderRadius: 15, textAlign: 'center', alignItems: 'center', justifyContent: 'center', mx: 1, fontWeight: "bold" }}>1</Typography>
               <Typography
                 variant="h6"
@@ -102,16 +107,16 @@ const InteractiveWritingCard = ({
               </Typography>
             </Box>
             {/* question1 data */}
-            <Typography variant='h7' sx={{ width: "92%", textAlign: 'left', pt: 2, fontWeight: 'medium', lineHeight: 1.5}}>
+            <Typography variant='h7' sx={{ width: "92%", textAlign: 'left', pt: 2, fontWeight: 'medium', lineHeight: 1.5, px: 1 }}>
               {questionDetail.partOneData.question}
             </Typography>
             {/* question1 textField */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', width: "96%" ,pt:2}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', width: "98%", pt: 2 }}>
               <TextField
                 multiline
                 rows={12}
                 placeholder={t("Your response")}
-                sx={{ width: "100%"}}
+                sx={{ width: "100%" }}
                 inputRef={textFieldRef1}
                 disabled={showPartTwo}
               />
@@ -132,10 +137,8 @@ const InteractiveWritingCard = ({
                 my: 2,
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center' ,alignSelf:'start',px:4, opacity: showPartTwo ? 0.9 : 0.6 }}>
-                <Typography variant="h6" sx={{ display: 'flex', backgroundColor: "#357af5", color: 'white', width: 28, height: 28, borderRadius: 15, textAlign: 'center', alignItems: 'center', justifyContent: 'center', mx: 1, fontWeight: "bold" ,
-                    opacity: showPartTwo ? 0.9 : 0.6
-                }}>2</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'start', px: 1, opacity: showPartTwo ? 0.9 : 0.6 }}>
+                <Typography variant="h6" sx={{ display: 'flex', backgroundColor: "#357af5", color: 'white', width: 28, height: 28, borderRadius: 15, textAlign: 'center', alignItems: 'center', justifyContent: 'center', mx: 1, fontWeight: "bold", opacity: showPartTwo ? 0.9 : 0.6 }}>2</Typography>
                 <Typography
                   variant="h6"
                   sx={{ fontWeight: "bold", opacity: 0.92 }}
@@ -145,12 +148,12 @@ const InteractiveWritingCard = ({
               </Box>
               {/* question2 data */}
               {showPartTwo && (
-              <Typography variant='h7' sx={{ width: "92%", textAlign: 'left', pt: 2, fontWeight: 'medium', lineHeight: 1.5 }}>
-                {randomQuestion.question}
-              </Typography>)
+                <Typography variant='h7' sx={{ width: "92%", textAlign: 'left', pt: 2, fontWeight: 'medium', lineHeight: 1.5, alignSelf: 'start', px: 2 }}>
+                  {randomQuestion.question}
+                </Typography>)
               }
               {/* question2 textField */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', width: "96%" ,pt:2}}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', width: "98%", pt: 2 }}>
                 <TextField
                   multiline
                   rows={12}
@@ -159,33 +162,33 @@ const InteractiveWritingCard = ({
                   inputRef={textFieldRef2}
                   disabled={!showPartTwo}
                 />
-                <Typography sx={{ mt: 1, color: grey[700], fontSize: '14px' ,opacity: showPartTwo ? 0.9 : 0.6}}>
+                <Typography sx={{ mt: 1, color: grey[700], fontSize: '14px', opacity: showPartTwo ? 0.9 : 0.6 }}>
                   {t("Recommended word count: 90+")}
                 </Typography>
               </Box>
               {!showPartTwo && (
-              <Box
-                gutterBottom
-                sx={{
-                  display: "flex",
-                  pt: 6,
-                  justifyContent: "end",
-                }}
-              >
-                <AnswerButton text="Next" onClick={handleSubmitPartOne} sx={{ minWidth: '280px' }} />
-              </Box>
-            )}
-            {showPartTwo && (
-              <Box
-                gutterBottom
-                sx={{
-                  display: "flex",
-                  pt: 6,
-                  justifyContent: "end",
-                }}
-              >
-                <AnswerButton text="Submit" onClick={handleSubmitPartTwo} sx={{ minWidth: '280px' }} />
-              </Box>
+                <Box
+                  gutterBottom
+                  sx={{
+                    display: "flex",
+                    pt: 6,
+                    justifyContent: "end",
+                  }}
+                >
+                  <AnswerButton text="Next" onClick={handleSubmitPartOne} sx={{ minWidth: '280px' }} />
+                </Box>
+              )}
+              {showPartTwo && (
+                <Box
+                  gutterBottom
+                  sx={{
+                    display: "flex",
+                    pt: 6,
+                    justifyContent: "end",
+                  }}
+                >
+                  <AnswerButton text="Submit" onClick={handleSubmitPartTwo} sx={{ minWidth: '280px' }} />
+                </Box>
               )}
             </Box>
           </Grid>
@@ -210,8 +213,12 @@ const InteractiveWritingCard = ({
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <ReferenceButton
-            text="Reference Answer"
-            onClick={handleReferenceAnswerClick}
+            text="Part1 Reference Answer"
+            onClick={handlePart1ReferenceAnswerClick}
+          />
+          <ReferenceButton
+            text="Part2 Reference Answer"
+            onClick={handlePart2ReferenceAnswerClick}
           />
           {userAnswer1 && userAnswer2 && (
             <ReferenceButton
@@ -220,7 +227,7 @@ const InteractiveWritingCard = ({
             />
           )}
         </Box>
-        {showReferenceAnswer && (
+        {showPart1ReferenceAnswer && (
           <Box
             sx={{
               display: "flex",
@@ -235,16 +242,55 @@ const InteractiveWritingCard = ({
               sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
             >
               {" - "}
-              {t("Reference Answer")}
+              {t("Part1 Reference Answer")}
             </Typography>
-            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 ,fontWeight:'bold' }}>
+              {'- Question: '}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10 }}>
+              {questionDetail.partOneData.question}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 ,fontWeight:'bold' ,pt:2}}>
+              {'- Answer: '}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10 }}>
               {questionDetail.partOneData.answer}
             </Typography>
-            {randomQuestion && (
-              <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
-                {randomQuestion.answer}
-              </Typography>
-            )}
+          </Box>
+        )}
+        {showPart2ReferenceAnswer && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              justifyContent: "center",
+              m: 2,
+            }}
+          >
+            <Typography
+              variant="h7"
+              sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
+            >
+              {" - "}
+              {t("Part2 Reference Answer")}
+            </Typography>
+            {questionDetail.partTwoData.map((item, index) => (
+              <Box key={index} sx={{ my: 2 }}>
+                <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 ,fontWeight:'bold' }}>
+                    {'- Question: '}
+                </Typography>
+                <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10 }}>
+                  {item.question}
+                </Typography>
+                <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 ,fontWeight:'bold' ,pt:2}}>
+                 {'- Answer: '}
+                </Typography>
+                <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10 }}>
+                  {item.answer}
+                </Typography>
+              </Box>
+            ))}
           </Box>
         )}
         {showUserAnswer && (
@@ -264,11 +310,23 @@ const InteractiveWritingCard = ({
               {" - "}
               {t("Your Answer")}
             </Typography>
-            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
-              {userAnswer1}
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 ,fontWeight:'bold' }}>
+                    {'- Part1: '}
+                </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10}}>
+              {questionDetail.partOneData.question}
             </Typography>
-            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
-              {userAnswer2}
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10,fontWeight:'bold' }}>
+            {'Answer: '}{userAnswer1}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 ,fontWeight:'bold' ,pt:2}}>
+                    {'- Part2: '}
+                </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10 }}>
+              {randomQuestion && randomQuestion.question}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 10 ,fontWeight:'bold'}}>
+            {'Answer: '}{userAnswer2}
             </Typography>
           </Box>
         )}
@@ -287,5 +345,7 @@ InteractiveWritingCard.propTypes = {
 };
 
 export default InteractiveWritingCard;
+
+
 
 
