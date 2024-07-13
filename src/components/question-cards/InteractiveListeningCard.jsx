@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { Box, Paper, Grid, Typography, Radio, RadioGroup, FormControlLabel, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, Paper, Grid, Typography, Radio, RadioGroup, FormControlLabel, Button, TextField, Divider } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
 import CardHeader from "../common/question-card-components/CardHeader";
 import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
 import AudioButton from "../common/AudioButton";
+import ReferenceButton from "../common/ReferenceButton";
 import { grey, green, red } from "@mui/material/colors";
 
 const InteractiveListeningCard = ({
@@ -20,6 +21,10 @@ const InteractiveListeningCard = ({
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [audioPlayed, setAudioPlayed] = useState(false);
+  const [isSummarizing, setIsSummarizing] = useState(false);
+  const [userSummary, setUserSummary] = useState("");
+  const [showUserAnswer, setShowUserAnswer] = useState(false);
+  const textFieldRef = useRef(null);
 
   useEffect(() => {
     console.log("question detail is", questionDetail);
@@ -49,8 +54,18 @@ const InteractiveListeningCard = ({
     setAudioPlayed(true); // Set audio played status to true when audio ends
   };
 
-  const handleSubmit = () => {
-    // Submit logic here
+  const handleFinalSubmit = () => {
+    setIsSummarizing(true); // Show summarizing section
+  };
+
+  const handleSummarySubmit = () => {
+    if (textFieldRef.current) {
+      setUserSummary(textFieldRef.current.value);
+    }
+  };
+
+  const handleUserAnswerClick = () => {
+    setShowUserAnswer(!showUserAnswer);
   };
 
   const currentQuestion = questionDetail.sequences[currentSequence - 1];
@@ -66,6 +81,7 @@ const InteractiveListeningCard = ({
       mb: 1,
       display: "flex",
       alignItems: "center",
+      textAlign:'start',
       gap: 1,
       color: grey[700],
     },
@@ -141,7 +157,7 @@ const InteractiveListeningCard = ({
         borderColor: grey[300],
         borderRadius: 2,
         p: 2,
-        minWidth: '600px',
+        width: '600px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'end',
@@ -169,7 +185,7 @@ const InteractiveListeningCard = ({
       </RadioGroup>
       <Button
         variant="contained"
-        onClick={isLastQuestion ? handleSubmit : handleNextQuestion}
+        onClick={isLastQuestion ? handleFinalSubmit : handleNextQuestion}
         disabled={!selectedAnswer}
       >
         {isLastQuestion ? t("Submit") : t("Next")}
@@ -206,6 +222,97 @@ const InteractiveListeningCard = ({
             {answer.question.blankList.answer}
           </Typography>
         </Box>
+      )}
+    </Box>
+  );
+
+  const renderSummarySection = () => (
+    <Box sx={{ width: '100%' }}>
+      {/* question */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          mx: 4,
+          my: 2,
+        }}
+      >
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{ fontWeight: "bold", opacity: 0.92, mb: 2 }}
+        >
+          {t("Summarize the conversation you just had in 75 seconds.")}
+        </Typography>
+      </Box>
+      {/* question text */}
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', px: 2 }}>
+        <TextField
+          multiline
+          rows={10}
+          placeholder={t("Your response")}
+          sx={{ width: '96%', backgroundColor: 'white' }}
+          inputRef={textFieldRef}
+        />
+        <Typography sx={{ mt: 1, color: grey[700], fontSize: '14px' }}>
+          {t("Recommended word count: 40+")}
+        </Typography>
+        {/* answer button */}
+        <Box
+          gutterBottom
+          sx={{
+            pr: 2,
+            py: 4,
+            alignSelf: 'end'
+          }}
+        >
+          <AnswerButton text="Submit" onClick={handleSummarySubmit} sx={{ minWidth: '280px' }} />
+        </Box>
+      </Box>
+
+
+      {/* user answer */}
+      {userSummary && (
+        <>
+          {/* Divider */}
+          <Divider sx={{ bgcolor: "grey.100", width: "96%", mx: "auto" }} />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "end",
+                m: 2,
+                p: 2,
+                bgcolor: "grey.100",
+                width: "96%",
+                mx: "auto",
+                borderRadius: 1,
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ReferenceButton
+                  text="Your Answer"
+                  onClick={handleUserAnswerClick}
+                />
+              </Box>
+              {showUserAnswer && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    justifyContent: "center",
+                    m: 2,
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
+                    {userSummary}
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+        </>
       )}
     </Box>
   );
@@ -255,79 +362,87 @@ const InteractiveListeningCard = ({
           </Grid>
         </Paper>
       ) : (
-        <Paper elevation={0} variant="outlined" sx={{ my: 2, mx: 3, bgcolor: grey[50], borderRadius: 2, display: 'flex' }}>
+        <Paper elevation={0} variant="outlined" sx={{ my: 2, mx: 3, bgcolor: isSummarizing ? "white" : grey[50], borderRadius: 2, display: 'flex' }}>
           <Grid container>
-            <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'start' }}>
-              <img
-                src="/interactiveListening.png"
-                style={{
-                  width: "100%",
-                  borderRight: '1px solid',
-                  borderColor: grey[300],
-                  borderRadius: "8px 0 0 8px"
-                }}
-              />
-            </Grid>
-            <Grid item xs={8} sx={{ height: '100%', overflowY: 'auto' }}>
-              {/* background area */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', pt: 3 }}>
-                <Typography variant="h7" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92, pb: 1 }}>
-                  {t("You will participate in a conversation about the scenario below.")}
-                </Typography>
-                <Typography gutterBottom sx={{
-                  fontSize: '16px', fontWeight: 'medium', textAlign: 'start', minWidth: "500px", lineHeight: 1.5, px: 4,
-                }}>
-                  {t(questionDetail.bgInfo)}
-                </Typography>
-              </Box>
-              {/* answers */}
+            {!isSummarizing && (
+              <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'start' }}>
+                <img
+                  src="/interactiveListening.png"
+                  style={{
+                    width: "100%",
+                    borderRight: '1px solid',
+                    borderColor: grey[300],
+                    borderRadius: "8px 0 0 8px"
+                  }}
+                />
+              </Grid>
+            )}
+            <Grid item xs={isSummarizing ? 12 : 8} sx={{ height: '100%', overflowY: 'auto' }}>
+              {!isSummarizing && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', pt: 3 }}>
+                  <Typography variant="h7" gutterBottom sx={{ fontWeight: "bold", opacity: 0.92, pb: 1 }}>
+                    {t("You will participate in a conversation about the scenario below.")}
+                  </Typography>
+                  <Typography gutterBottom sx={{
+                    fontSize: '16px', fontWeight: 'medium', textAlign: 'start', minWidth: "500px", lineHeight: 1.5, px: 4,
+                  }}>
+                    {t(questionDetail.bgInfo)}
+                  </Typography>
+                </Box>
+              )}
               <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'end', p: 2 }}>
-                {answers.map((answer, index) => (
-                  <Box key={index} sx={{ mb: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
-                    {/* question area */}
-                    {answer.question.questionAudioUrl && (
-                      <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 }}>
-                        <img
-                          src="/listeningAvatar.png"
-                          style={{
-                            width: "64px",
-                            borderRadius: 1,
-                          }}
-                        />
-                        <Box sx={{ display: 'flex', alignItems: 'center', color: grey[500] }}>
-                          <AudioButton
-                            disabled
-                            sx={{ borderColor: grey[500], color: grey[500] }}
-                          />
-                        </Box>
-                      </Box>
-                    )}
-                    {/* answer area */}
-                    {renderAnswerResult(answer)}
-                  </Box>
-                ))}
-                {/* current question */}
-                {currentQuestion && (
+                {isSummarizing ? (
+                  renderSummarySection()
+                ) : (
                   <>
-                    {currentQuestion.questionAudioUrl && !audioPlayed && renderQuestionAudio(currentQuestion.questionAudioUrl)}
-                    {audioPlayed && (
-                      <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 }}>
-                        <img
-                          src="/listeningAvatar.png"
-                          style={{
-                            width: "64px",
-                            borderRadius: 1,
-                          }}
-                        />
-                        <Box sx={{ display: 'flex', alignItems: 'center', color: grey[500] }}>
-                          <AudioButton
-                            disabled
-                            sx={{ borderColor: grey[500], color: grey[500] }}
-                          />
-                        </Box>
+                    {answers.map((answer, index) => (
+                      <Box key={index} sx={{ mb: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+                        {/* question area */}
+                        {answer.question.questionAudioUrl && (
+                          <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 }}>
+                            <img
+                              src="/listeningAvatar.png"
+                              style={{
+                                width: "64px",
+                                borderRadius: 1,
+                              }}
+                            />
+                            <Box sx={{ display: 'flex', alignItems: 'center', color: grey[500] }}>
+                              <AudioButton
+                                disabled
+                                sx={{ borderColor: grey[500], color: grey[500] }}
+                              />
+                            </Box>
+                          </Box>
+                        )}
+                        {/* answer area */}
+                        {renderAnswerResult(answer)}
                       </Box>
+                    ))}
+                    {/* current question */}
+                    {currentQuestion && (
+                      <>
+                        {currentQuestion.questionAudioUrl && !audioPlayed && renderQuestionAudio(currentQuestion.questionAudioUrl)}
+                        {audioPlayed && (
+                          <Box sx={{ alignSelf: 'self-start', display: 'flex', justifyContent: 'start', alignItems: 'center', mb: 1 }}>
+                            <img
+                              src="/listeningAvatar.png"
+                              style={{
+                                width: "64px",
+                                borderRadius: 1,
+                              }}
+                            />
+                            <Box sx={{ display: 'flex', alignItems: 'center', color: grey[500] }}>
+                              <AudioButton
+                                disabled
+                                sx={{ borderColor: grey[500], color: grey[500] }}
+                              />
+                            </Box>
+                          </Box>
+                        )}
+                        {(audioPlayed || !currentQuestion.questionAudioUrl) && renderAnswerOptions()}
+                      </>
                     )}
-                    {(audioPlayed || !currentQuestion.questionAudioUrl) && renderAnswerOptions()}
                   </>
                 )}
               </Box>
