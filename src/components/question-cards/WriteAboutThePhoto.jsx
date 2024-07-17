@@ -4,6 +4,7 @@ import { Box, Typography, Divider, TextField, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
+import { submitUserAnswer } from "../../api/api-fetchQuestionDetail";
 
 const WriteAboutThePhotoCard = ({
   count,
@@ -18,6 +19,7 @@ const WriteAboutThePhotoCard = ({
   const [showUserAnswer, setShowUserAnswer] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
   const [submittedAnswer, setSubmittedAnswer] = useState("");
+  const [optimizedAnswer, setOptimizedAnswer] = useState("");
   const [error, setError] = useState("");
   const [wordCount, setWordCount] = useState(0);
   const { t } = useTranslation();
@@ -36,15 +38,40 @@ const WriteAboutThePhotoCard = ({
     setShowUserAnswer(!showUserAnswer);
   };
 
-  const handleSubmitAnswer = () => {
+  const handleSubmitAnswer = async () => {
     if (!userAnswer.trim()) {
       setError(t("Answer cannot be empty, Please write the answer."));
       return;
     }
-    console.log("User answer submitted:", userAnswer);
-    setError("");
-    setSubmittedAnswer(userAnswer);
-    setUserAnswer("");
+
+    // 准备要发送到后端的数据
+    const userId = 12345; // 假设用户ID为12345，你需要根据实际情况设置
+
+    try {
+      const response = await submitUserAnswer(
+        questionDetail.questionId,
+        questionDetail.submoduleId,
+        userId,
+        userAnswer
+      );
+
+      if (response) {
+        console.log("Response from server:", response);
+        if (response.success) {
+          setError("");
+          setSubmittedAnswer(userAnswer);
+          setOptimizedAnswer(response.data); // 使用服务端返回的data设置optimizedAnswer
+          setUserAnswer("");
+        } else {
+          throw new Error(response.message || "Failed to submit answer");
+        }
+      } else {
+        throw new Error("Failed to submit answer");
+      }
+    } catch (error) {
+      console.error("There was an error submitting the answer:", error);
+      setError(t("There was an error submitting your answer. Please try again."));
+    }
   };
 
   const countWords = (text) => {
@@ -201,7 +228,7 @@ const WriteAboutThePhotoCard = ({
             </Typography>
           </Box>
         )}
-        {showUserAnswer && (
+        {showUserAnswer && submittedAnswer && (
           <Box
             sx={{
               display: "flex",
@@ -220,6 +247,16 @@ const WriteAboutThePhotoCard = ({
             </Typography>
             <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
               {submittedAnswer}
+            </Typography>
+            <Typography
+              variant="h7"
+              sx={{ textAlign: "left", p: 2, fontWeight: "bold" }}
+            >
+              {" - "}
+              {t("Your Result")}
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: "left", px: 6 }}>
+              {optimizedAnswer}
             </Typography>
           </Box>
         )}
