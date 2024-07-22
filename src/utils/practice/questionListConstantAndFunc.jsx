@@ -1,7 +1,8 @@
 // types and subTypesArr are from questionListCard:
 // map moduleId and submoduleId to name;
 
-export const buttonGroups = [
+// question filters
+export const buttonGroupsForQuestionFilter = [
     ["isAsc", "true", "false"],
     ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
     // ["isCorrect", "null", "true", "false"],
@@ -9,11 +10,49 @@ export const buttonGroups = [
     // ["isCollected", "null", "true", "false"],
     ["isPracticed", "null", "true", "false"],
   ];
+// question filters display
+export const displayedQuestionFilter = {
+    isAsc: {
+      label: "Order",
+      null: "All",
+      true: "Question Number",
+      false: "Latest"
+    },
+    difficultyLevel: {
+      label: "Difficulty",
+      null: "All",
+      Easy: "Easy (95-)",
+      Medium: "Medium (100~125)",
+      Hard: "Hard (130+)"
+    },
+    isPracticed: {
+      null: "All",
+      label: "Practice",
+      true: "Practiced",
+      false: "Unpracticed"
+    }
+  };
 
-export const wordbookButtonGroups = [
+
+export const buttonGroupsForWordBookFilter = [
    ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
    ["isPracticed", "null", "true", "false"],
 ]
+export const displayedWordBookFilter = {
+  difficultyLevel: {
+    label: "Difficulty",
+      null: "All",
+      Easy: "Easy (95-)",
+      Medium: "Medium (100~125)",
+      Hard: "Hard (130+)"
+  },
+  isPracticed: {
+    null: "All",
+    label: "Practice",
+    true: "Practiced",
+    false: "Unpracticed"
+  }
+}
 export const questionTypes = [
   {id: 1, submodule_id: 1, name: "word_recognition", submoduleName: "Read & Select"},
   {id: 2, submodule_id: 8, name: "complete_words", submoduleName: "Read & Complete"},

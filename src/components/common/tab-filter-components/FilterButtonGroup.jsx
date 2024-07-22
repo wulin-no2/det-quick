@@ -3,33 +3,12 @@ import { Button, Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { grey } from '@mui/material/colors';
 
-const displayMapping = {
-  isAsc: {
-    label: "Order",
-    null: "All",
-    true: "Question Number",
-    false: "Latest"
-  },
-  difficultyLevel: {
-    label: "Difficulty",
-    null: "All",
-    Easy: "Easy (95-)",
-    Medium: "Medium (100~125)",
-    Hard: "Hard (130+)"
-  },
-  isPracticed: {
-    null: "All",
-    label: "Practice",
-    true: "Practiced",
-    false: "Unpracticed"
-  }
-};
-
-const QuestionFilterButtonGroup = ({
+const FilterButtonGroup = ({
   label,
   buttons,
   selected,
   onSelectionChange,
+  displayedFilter
 }) => {
   const { t } = useTranslation();
   return (
@@ -43,7 +22,7 @@ const QuestionFilterButtonGroup = ({
     >
       <Typography variant="subtitle1" 
       sx={{ mr: 1, height: "32px", pr: 2 , pl: 2, backgroundColor:grey[100], borderRadius:1, display:'flex',alignItems:'center'}}>
-      {t(displayMapping[label].label)}
+      {t(displayedFilter[label].label)}
        {/*Display the label*/}
       </Typography>
       {buttons.map((button, index) => (
@@ -60,18 +39,20 @@ const QuestionFilterButtonGroup = ({
           }} // Margin right for spacing, height set for uniformity
           onClick={() => onSelectionChange(button)} // Use the provided onSelectionChange prop
         >
-          {t(displayMapping[label][button]) || t(button)} {/* Use the display mapping */}
+          {t(displayedFilter[label][button]) || t(button)} {/* Use the display mapping */}
         </Button>
       ))}
     </Box>
   );
 };
 
-QuestionFilterButtonGroup.propTypes = {
+FilterButtonGroup.propTypes = {
   label: PropTypes.string.isRequired,
   buttons: PropTypes.arrayOf(PropTypes.string).isRequired,
   selected: PropTypes.string.isRequired,
   onSelectionChange: PropTypes.func.isRequired,
+  displayedFilter: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+  .isRequired,
 };
 
-export default QuestionFilterButtonGroup;
+export default FilterButtonGroup;

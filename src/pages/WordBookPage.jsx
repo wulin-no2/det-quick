@@ -1,5 +1,5 @@
 import { Box,} from "@mui/material";
-import WordBookListCard from "../components/wordbook-list/WordBookListCard";
+import WordBookListCard from "../components/wordbook-list/WordBookCard";
 
 function WordBookPage() {
     

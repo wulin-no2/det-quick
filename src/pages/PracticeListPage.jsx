@@ -1,5 +1,5 @@
 // only manages the state of moduleId and submoduleId and passes them to QuestionListCard
-import QuestionListCard from "../components/question-list/QuestionListCard";
+import QuestionListCard from "../components/question-list/QuestionModuleTab";
 // import { useState, useEffect } from "react";
 import { ShowLocalStorage } from "../utils/ShowLocalStorage";
 import useQuestionStateContext from "../context/useQuestionStateContext";

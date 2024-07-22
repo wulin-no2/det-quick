@@ -1,12 +1,12 @@
 // handle page change, handle submoduleId change
 // Manages the state of filters and currentPage and passes them to SubQuestionTypeContent
 import Box from "@mui/material/Box";
-import SubQuestionTypeContent from "./SubQuestionTypeContent";
+import SubQuestionTypeContent from "./QuestionFilter";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import TabPanel from "../common/TabPanel";
+import TabPanel from "../common/tab-filter-components/TabPanel";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import useQuestionStateContext from "../../context/useQuestionStateContext";
 import { subTypesArr } from "../../utils/practice/questionListConstantAndFunc";

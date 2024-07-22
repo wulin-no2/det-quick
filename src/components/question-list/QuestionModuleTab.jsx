@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import TabPanel from "../common/TabPanel";
-import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
+import TabPanel from "../common/tab-filter-components/TabPanel";
+import SuperQuestionTypeContent from "./QuestionSubmoduleTab";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import {
   types,
