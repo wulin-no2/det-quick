@@ -11,6 +11,7 @@ import PracticeListPage from "./pages/PracticeListPage";
 import QuestionPage from "./pages/QuestionPage";
 import Footer from "./components/common/Footer";
 import { QuestionStateProvider } from "./context/QuestionStateContext";
+import WordBookPage from "./pages/WordBookPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                   <Route path="/login" element={<LoginPage />} />
                   {/* <Route path="/filter" element={<FilterComponent />} /> */}
                   <Route path="/practice" element={<PracticeListPage />} />
+                  <Route path="/vocab" element={<WordBookPage />} />
                   {/* <Route path="/question/:type" element={<QuestionPage />} /> */}
                   <Route path="/practice/questions/detail" element={<QuestionPage />} />
                   <Route path="*" element={<h1>Page not found</h1>} />

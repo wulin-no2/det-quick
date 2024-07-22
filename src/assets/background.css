@@ -1,0 +1,12 @@
+/* assets/background.css */
+.background-container {
+    width: 100%;
+    height: 100vh; /* Full height */
+    background: url('./background.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  

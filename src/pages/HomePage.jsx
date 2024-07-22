@@ -1,6 +1,7 @@
 import { Box,} from "@mui/material";
 import AdBanner from "../components/homepage/AdBanner";
 import PracticeSection from "../components/homepage/PracticeSection";
+// import "../assets/background.css";
 
 function HomePage() {
   const bannerImages = [
@@ -9,9 +10,9 @@ function HomePage() {
   ];
     
   return (
-      <Box>
-      <AdBanner images={bannerImages} />
-      <PracticeSection />
+      <Box className='background-container'>
+        <AdBanner images={bannerImages} />
+        <PracticeSection />
       </Box>
   );
 }
