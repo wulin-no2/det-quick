@@ -14,6 +14,11 @@ export const wordbookButtonGroups = [
    ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
    ["isPracticed", "null", "true", "false"],
 ]
+export const questionTypes = [
+  {id: 1, submodule_id: 1, name: "word_recognition", submoduleName: "Read & Select"},
+  {id: 2, submodule_id: 8, name: "complete_words", submoduleName: "Read & Complete"},
+  {id: 3, submodule_id: 10, name: "word_fill_in_the_blank" , submoduleName: "Fill In the Blanks"},
+]
 
 export const types = [
     { module_id: 1, name: "Vocabulary" },

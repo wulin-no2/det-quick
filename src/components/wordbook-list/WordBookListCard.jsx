@@ -1,47 +1,26 @@
+import PropTypes from "prop-types";
 import { Box, } from "@mui/material";
-// import { useState, useEffect } from "react";
-// import { useTranslation } from "react-i18next";
-// import Tabs from "@mui/material/Tabs";
-// import Tab from "@mui/material/Tab";
-// import TabPanel from "../common/TabPanel";
-// import { wordbookButtonGroups } from "../../utils/practice/questionListConstantAndFunc";
+import { useState} from "react";
+import { useTranslation } from "react-i18next";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import TabPanel from "../common/TabPanel";
+import { questionTypes } from "../../utils/practice/questionListConstantAndFunc";
+import WordBookFilterAndList from "./WordBookFilterAndList";
+
 
 const WordBookListCard = () => {
-    // const questionTypes = wordbookButtonGroups;
-    // const { t } = useTranslation();
-    // const [currentType, setCurrentType] = useState();
+    const { t } = useTranslation();
+    const [currentType, setCurrentType] = useState(questionTypes[0]);
 
-
-  
-    // Initialize state from localStorage or defaults
-    // const [value, setValue] = useState(() => getInitialValue("subTabIndex", 0));
-  
-    // // Update value and store in localStorage when submoduleId changes
-    // useEffect(() => {
-    //   const index = currentTypes.findIndex(
-    //     (type) => type.submodule_id === submoduleId
-    //   );
-    //   if (index !== -1) {
-    //     setValue(index);
-    //     localStorage.setItem("subTabIndex", JSON.stringify(index));
-    //   }
-    // }, [submoduleId, currentTypes]);
-  
-    // // Handle submoduleId changes by clicking tab
-    // const handleChange = (event, newValue) => {
-    //   const selectedSubmoduleId = currentTypes[newValue].submodule_id;
-    //   setValue(newValue);
-    //   setSubmoduleId(selectedSubmoduleId);
-    //   setCurrentPage(1); // Reset to the first page when submoduleId changes
-    //   setGlobalIndex(1); // Reset globalIndex when submoduleId changes
-  
-    //   localStorage.setItem("subTabIndex", JSON.stringify(newValue));
-    //   localStorage.setItem("submoduleId", JSON.stringify(selectedSubmoduleId));
-    // };
+    // Handle currentType changes by clicking tab
+    const handleChange = (event, newValue) => {
+      setCurrentType(questionTypes[newValue]);
+    };
   
     return (
       <Box>
-        {/* <Box
+        <Box
           sx={{
             borderColor: "divider",
             backgroundColor: "#ffffff",
@@ -50,14 +29,14 @@ const WordBookListCard = () => {
           }}
         >
           <Tabs
-            value={value}
+            value={currentType.id - 1}
             onChange={handleChange}
-            aria-label="basic tabs example"
+            aria-label="change question type"
           >
-            {currentTypes.map((type) => (
+            {questionTypes.map((type) => (
               <Tab
                 key={type.id}
-                label={t(type.name)}
+                label={t(type.submoduleName)}
                 sx={{
                   fontSize: "18px",
                   textTransform: "none",
@@ -69,12 +48,16 @@ const WordBookListCard = () => {
             ))}
           </Tabs>
         </Box>
-        {currentTypes.map((type) => (
-          <TabPanel value={value} index={type.id} key={type.id}>
-            <WordBookFilterList questionType={questionType} />
+        {questionTypes.map((type) => (
+          <TabPanel value={currentType.id} index={type.id} key={type.id}>
+            <WordBookFilterAndList questionType={type} />
           </TabPanel>
-        ))} */}
+        ))}
       </Box>
     );
+  };
+
+  WordBookListCard.propTypes = {
+    currentType: PropTypes.object.isRequired,
   };
 export default WordBookListCard;
