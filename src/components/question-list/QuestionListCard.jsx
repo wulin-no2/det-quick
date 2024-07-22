@@ -5,10 +5,13 @@ import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import TabPanel from "./question-list-components/TabPanel";
+import TabPanel from "../common/TabPanel";
 import SuperQuestionTypeContent from "./SuperQuestionTypeContent";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
-import { types, subTypesArr } from "../../utils/practice/questionListConstantAndFunc";
+import {
+  types,
+  subTypesArr,
+} from "../../utils/practice/questionListConstantAndFunc";
 import useQuestionStateContext from "../../context/useQuestionStateContext";
 
 const getInitialValue = (key, defaultValue) => {
@@ -18,7 +21,8 @@ const getInitialValue = (key, defaultValue) => {
 
 const QuestionListCard = () => {
   const {
-    moduleId, setModuleId,
+    moduleId,
+    setModuleId,
     setSubmoduleId,
     setGlobalIndex,
     setCurrentPage,
@@ -39,7 +43,8 @@ const QuestionListCard = () => {
 
   const handleChange = (event, newValue) => {
     const selectedModuleId = types[newValue].module_id;
-    const defaultSubmoduleId = subTypesArr[selectedModuleId - 1][0].submodule_id;
+    const defaultSubmoduleId =
+      subTypesArr[selectedModuleId - 1][0].submodule_id;
     setValue(newValue);
     setModuleId(selectedModuleId);
     setSubmoduleId(defaultSubmoduleId);
@@ -53,7 +58,11 @@ const QuestionListCard = () => {
 
   return (
     <Box sx={{ borderColor: "divider" }}>
-      <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+      >
         {types.map((type) => (
           <Tab
             key={type.module_id}
@@ -68,7 +77,7 @@ const QuestionListCard = () => {
       </Tabs>
       {types.map((type, index) => (
         <TabPanel value={value} index={index} key={type.module_id}>
-          <SuperQuestionTypeContent/>
+          <SuperQuestionTypeContent />
         </TabPanel>
       ))}
       <ShowLocalStorage componentName="QuestionListCard" />
@@ -77,4 +86,3 @@ const QuestionListCard = () => {
 };
 
 export default QuestionListCard;
-

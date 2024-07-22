@@ -10,6 +10,11 @@ export const buttonGroups = [
     ["isPracticed", "null", "true", "false"],
   ];
 
+export const wordbookButtonGroups = [
+   ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
+   ["isPracticed", "null", "true", "false"],
+]
+
 export const types = [
     { module_id: 1, name: "Vocabulary" },
     { module_id: 2, name: "Speaking" },

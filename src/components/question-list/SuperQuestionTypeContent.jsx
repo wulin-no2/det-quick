@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import TabPanel from "./question-list-components/TabPanel";
+import TabPanel from "../common/TabPanel";
 import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import useQuestionStateContext from "../../context/useQuestionStateContext";
 import { subTypesArr } from "../../utils/practice/questionListConstantAndFunc";
@@ -19,8 +19,9 @@ const getInitialValue = (key, defaultValue) => {
 const SuperQuestionTypeContent = () => {
   const { t } = useTranslation();
   const {
-    moduleId, 
-    submoduleId, setSubmoduleId,
+    moduleId,
+    submoduleId,
+    setSubmoduleId,
     setCurrentPage,
     setGlobalIndex,
   } = useQuestionStateContext();
@@ -31,7 +32,9 @@ const SuperQuestionTypeContent = () => {
 
   // Update value and store in localStorage when submoduleId changes
   useEffect(() => {
-    const index = currentTypes.findIndex((type) => type.submodule_id === submoduleId);
+    const index = currentTypes.findIndex(
+      (type) => type.submodule_id === submoduleId
+    );
     if (index !== -1) {
       setValue(index);
       localStorage.setItem("subTabIndex", JSON.stringify(index));
@@ -57,10 +60,14 @@ const SuperQuestionTypeContent = () => {
           borderColor: "divider",
           backgroundColor: "#ffffff",
           p: 1,
-          minWidth: '1220px'
+          minWidth: "1220px",
         }}
       >
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
           {currentTypes.map((type) => (
             <Tab
               key={type.id}
@@ -78,9 +85,7 @@ const SuperQuestionTypeContent = () => {
       </Box>
       {currentTypes.map((type) => (
         <TabPanel value={value} index={type.id} key={type.id}>
-          <SubQuestionTypeContent
-            submoduleId={submoduleId}
-          />
+          <SubQuestionTypeContent submoduleId={submoduleId} />
         </TabPanel>
       ))}
       <ShowLocalStorage componentName="SuperQuestionTypeContent" />
@@ -89,4 +94,3 @@ const SuperQuestionTypeContent = () => {
 };
 
 export default SuperQuestionTypeContent;
-
