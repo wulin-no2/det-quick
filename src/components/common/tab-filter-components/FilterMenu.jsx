@@ -63,10 +63,8 @@ const FilterMenu = ({ originFilter, displayedFilter, count, filters, onFiltersCh
 };
 
 FilterMenu.propTypes = {
-  originFilter: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-    .isRequired,
-  displayedFilter: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-    .isRequired,
+  originFilter: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  displayedFilter: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,

@@ -35,16 +35,13 @@ export const displayedQuestionFilter = {
 
 
 export const buttonGroupsForWordBookFilter = [
-   ["difficultyLevel", "null", "Easy", "Medium", "Hard"],
+   ["difficultyLevel", "null","CEFR-A1", "CEFR-A2", "CEFR-B1", "CEFR-B2","CEFR-C"],
    ["isPracticed", "null", "true", "false"],
 ]
 export const displayedWordBookFilter = {
   difficultyLevel: {
     label: "Difficulty",
       null: "All",
-      Easy: "Easy (95-)",
-      Medium: "Medium (100~125)",
-      Hard: "Hard (130+)"
   },
   isPracticed: {
     null: "All",

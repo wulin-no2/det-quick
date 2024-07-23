@@ -1,20 +1,22 @@
-import PropTypes from "prop-types";
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabPanel from "../common/tab-filter-components/TabPanel";
 import { questionTypes } from "../../utils/practice/questionListConstantAndFunc";
-import WordBookFilterAndList from "./WordBookFilter";
+import WordBookFilter from "./WordBookFilter";
 
 const WordBookListCard = () => {
   const { t } = useTranslation();
   const [currentType, setCurrentType] = useState(questionTypes[0]);
-
+  useEffect(() => {
+    console.log("currentType is ",currentType)},[currentType]
+  )
   // Handle currentType changes by clicking tab
   const handleChange = (event, newValue) => {
     setCurrentType(questionTypes[newValue]);
+    console.log("newValue in currentType is", newValue);
   };
 
   return (
@@ -49,14 +51,11 @@ const WordBookListCard = () => {
       </Box>
       {questionTypes.map((type) => (
         <TabPanel value={currentType.id} index={type.id} key={type.id}>
-          <WordBookFilterAndList questionType={type} />
+          <WordBookFilter questionTypeObject={type} />
         </TabPanel>
       ))}
     </Box>
   );
 };
 
-WordBookListCard.propTypes = {
-  currentType: PropTypes.object.isRequired,
-};
 export default WordBookListCard;

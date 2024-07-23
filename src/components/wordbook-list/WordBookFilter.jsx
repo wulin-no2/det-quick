@@ -27,33 +27,39 @@ const cleanFilters = (filters) => {
   });
   return cleanedFilters;
 };
+const initialFilters = {
+  difficultyLevel: "null", // Assuming "null" is a string based on your component usage
+  isPracticed: "null", // Default value for isPracticed
+};
 
-const WordBookFilterAndList= ({questionType}) => {
-    const questionTypeName = questionType.name;
-
+const WordBookFilter= ({questionTypeObject}) => {
+  const questionType = questionTypeObject.name;
   const [words, setWords] = useState([]);
-  const [filters, setFilters] = useState([]);//??????????? should i add it or used a default filter?
+  const [filters, setFilters] = useState(initialFilters);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    console.log("questionTypeName is ", questionType);
     const fetchData = async () => {
-      const question_type = questionType;
       try {
         setLoading(true);
         const cleanedFilters = cleanFilters(filters);
         const postData = {
           ...cleanedFilters,
-          question_type,
+          questionType,
           page: currentPage,
           size: 10,
         };
+        console.log("postData is ", postData);
         const result = await fetchWordBookListResponseData(postData);
         setWords(result.content);
         setPages(result.totalPages);
         setCount(result.totalElements);
+        console.log("result from api is: ", result);
       } catch (error) {
         setError(`Error: ${error.message}`);
       } finally {
@@ -61,7 +67,7 @@ const WordBookFilterAndList= ({questionType}) => {
       }
     };
     fetchData();
-  }, []);
+  }, [currentPage, filters, questionType]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -70,7 +76,6 @@ const WordBookFilterAndList= ({questionType}) => {
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters);
     setCurrentPage(1);  // Reset to the first page when filters change
-    setGlobalIndex(1); // Reset globalIndex when filters change
   };
 
   if (loading) {
@@ -84,7 +89,7 @@ const WordBookFilterAndList= ({questionType}) => {
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
       <Stack spacing={3}>
-        <Item>{questionTypeName}
+        <Item>
           <FilterMenu
               originFilter={buttonGroupsForWordBookFilter}
               displayedFilter={displayedWordBookFilter}
@@ -94,15 +99,13 @@ const WordBookFilterAndList= ({questionType}) => {
               onFiltersChange={handleFiltersChange}
             />
         </Item>
-        <Item>2
+        <Item>
           <WordBookList
             words={words}
-            count={count}
-            filters={filters}
+            currentPage={currentPage}
           />
         </Item>
         <Item sx={{ width: "100%", display: 'flex', justifyContent: 'center', p: 2 }}>
-            3
           <PaginationRounded
             pages={pages}
             onPageChange={handlePageChange}
@@ -115,9 +118,8 @@ const WordBookFilterAndList= ({questionType}) => {
   );
 };
 
-WordBookFilterAndList.propTypes = {
-  questionType: PropTypes.object.isRequired,
-  questionTypeName: PropTypes.string.isRequired,
+WordBookFilter.propTypes = {
+  questionTypeObject: PropTypes.object.isRequired,
 };
 
-export default WordBookFilterAndList;
+export default WordBookFilter;

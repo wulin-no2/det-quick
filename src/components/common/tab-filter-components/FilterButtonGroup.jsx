@@ -51,8 +51,7 @@ FilterButtonGroup.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.string).isRequired,
   selected: PropTypes.string.isRequired,
   onSelectionChange: PropTypes.func.isRequired,
-  displayedFilter: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-  .isRequired,
+  displayedFilter: PropTypes.object.isRequired,
 };
 
 export default FilterButtonGroup;
