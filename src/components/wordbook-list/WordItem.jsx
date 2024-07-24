@@ -1,25 +1,22 @@
 import * as React from "react";
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Typography, Grid, ListItem} from "@mui/material";
+import { Box, Typography, Grid, ListItem, Button} from "@mui/material";
 import { green, grey, orange } from "@mui/material/colors";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import { useTranslation } from "react-i18next";
-import AnswerButton from "../common/AnswerButton";
 
 const WordItem = ({ word, translations, getColorByDifficulty,}) => {
   const { t } = useTranslation();
   const ukAudioRef = useRef(null);
   const usAudioRef = useRef(null);
-  const [playing, setPlaying] = useState({ uk: false, us: false });
+//   const [playing, setPlaying] = useState({ uk: false, us: false });
   const [masterText, setMasterText] = useState('Master');
 
-  const handlePlayAudio = (audioElement, type) => {
+  const handlePlayAudio = (audioElement) => {
     if (audioElement.current) {
       audioElement.current.play();
-      setPlaying((prev) => ({ ...prev, [type]: true }));
-      audioElement.current.onended = () =>
-        setPlaying((prev) => ({ ...prev, [type]: false }));
+      audioElement.current.onended = () => {};
     }
   };
   const handleMaster = ()=>{
@@ -128,7 +125,9 @@ const WordItem = ({ word, translations, getColorByDifficulty,}) => {
                 pr: 2,
               }}
             >
-              <AnswerButton text={t(masterText)} onClick={handleMaster}/>
+                <Button variant={masterText==='Master'?"outlined":"contained"} onClick={handleMaster}
+                sx={{ textTransform: 'none' }}
+                >{t(masterText)}</Button>
             </Box>
           </Grid>
         </Grid>
