@@ -98,6 +98,9 @@
   "Write about the topic below for 5 minutes.":"就以下话题写文章，限时5分钟：",
   "At least 50 words. Recommended word count: 120+.":"至少写50个单词， 建议写够120个单词",
   "CONTINUE AFTER 3 MINUTES":"3分钟后可提交",
-  "Previous":"上一步"
+  "Previous":"上一步",
+
+  "Master":"未掌握",
+  "Mastered":"已掌握"
 
 }

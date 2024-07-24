@@ -26,33 +26,37 @@ const WordBookListCard = () => {
           borderColor: "divider",
           backgroundColor: "#ffffff",
           p: 1,
-          minWidth: "1220px",
+          width: "1220px",
         }}
       >
-        <Tabs
-          value={currentType.id - 1}
-          onChange={handleChange}
-          aria-label="change question type"
-        >
-          {questionTypes.map((type) => (
-            <Tab
-              key={type.id}
-              label={t(type.submoduleName)}
-              sx={{
-                fontSize: "18px",
-                textTransform: "none",
-                "&:focus": {
-                  outline: "none",
-                },
-              }}
-            />
-          ))}
-        </Tabs>
+        <Box>
+          <Tabs
+            value={currentType.id - 1}
+            onChange={handleChange}
+            aria-label="change question type"
+          >
+            {questionTypes.map((type) => (
+              <Tab
+                key={type.id}
+                label={t(type.submoduleName)}
+                sx={{
+                  fontSize: "18px",
+                  textTransform: "none",
+                  "&:focus": {
+                    outline: "none",
+                  },
+                }}
+              />
+            ))}
+          </Tabs>
+        </Box>
       </Box>
       {questionTypes.map((type) => (
-        <TabPanel value={currentType.id} index={type.id} key={type.id}>
-          <WordBookFilter questionTypeObject={type} />
-        </TabPanel>
+        <Box key={type.id} sx={{width:'100%'}}>
+          <TabPanel value={currentType.id} index={type.id}>
+            <WordBookFilter questionTypeObject={type} />
+          </TabPanel>
+        </Box>
       ))}
     </Box>
   );
