@@ -52,7 +52,7 @@ const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, s
       }}
     >
         {/* hide vocabulary & meaning button */}
-        <Box sx={{display:'flex', mx:4,my:2}}>
+        <Box sx={{display:'flex', mx:4,mt:2}}>
         <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', mr:2,pr:1,pl:2,fontWeight:'bold',
             borderRadius:2,backgroundColor:blue[50]
         }}>
