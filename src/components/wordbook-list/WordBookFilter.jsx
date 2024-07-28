@@ -8,7 +8,7 @@ import FilterMenu from "../common/tab-filter-components/FilterMenu";
 import { buttonGroupsForWordBookFilter, displayedWordBookFilter } from "../../utils/practice/questionListConstantAndFunc";
 import WordBookList from "./WordBookList";
 import PaginationRounded from "../common/PaginationRounded";
-import { fetchWordBookListResponseData } from "../../api/api-fetchWordBookList";
+import { fetchWordBookListResponseData, fetchWordBookSearchData } from "../../api/api-fetchWordBookList";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -45,7 +45,8 @@ const WordBookFilter= ({questionTypeObject}) => {
   const [hideVocabulary, setHideVocabulary] = useState(false);
   const [hideMeanings, setHideMeanings] = useState(false);
 
-  
+  // const [searchResult, setSearchResult] = useState({});
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     console.log("questionTypeName is ", questionType);
@@ -73,6 +74,17 @@ const WordBookFilter= ({questionTypeObject}) => {
     };
     fetchData();
   }, [currentPage, filters, questionType]);
+
+  const handleSearch=async ()=>{
+    try {
+      const result = await fetchWordBookSearchData({ query: searchInput });
+      setWords(result.content);
+      setPages(result.totalPages);
+      setCount(result.totalElements);
+    } catch (error) {
+      setError(`Error: ${error.message}`);
+    }
+  }
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -113,6 +125,9 @@ const WordBookFilter= ({questionTypeObject}) => {
             setHideVocabulary={setHideVocabulary}
             hideMeanings={hideMeanings}
             setHideMeanings={setHideMeanings}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            handleSearch={handleSearch}
           />
         </Item>
         <Item sx={{ width: "100%", display: 'flex', justifyContent: 'center', p: 2 }}>

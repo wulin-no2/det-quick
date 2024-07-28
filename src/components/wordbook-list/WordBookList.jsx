@@ -7,10 +7,15 @@ import { useTranslation } from "react-i18next";
 import { useState} from "react";
 import SearchBar from "../common/SearchBar";
 
-const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, setHideMeanings}) => {
+const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, setHideMeanings,
+  searchInput,
+  setSearchInput,
+  handleSearch
+}) => {
   const {t} = useTranslation();
   const [showWords, setShowWords] = useState({});
   const [showMeanings, setShowMeanings] = useState({});
+
   const getColorByDifficulty = (difficulty) => {
     switch (difficulty) {
       case "CEFR-C":
@@ -69,9 +74,12 @@ const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, s
             </Box>
           </Box>
           {/* search bar */}
-          <Box sx={{alignSelf:'end'}}><SearchBar/></Box>
+          <Box><SearchBar 
+          searchInput={searchInput} 
+          setSearchInput={setSearchInput}
+          handleSearch={handleSearch}
+          /></Box>
         </Box>
-        
         
       <List>
         {words.map((word, index) => {
@@ -130,10 +138,9 @@ WordBookList.propTypes = {
   setHideVocabulary: PropTypes.func.isRequired,
   hideMeanings: PropTypes.bool.isRequired,
   setHideMeanings: PropTypes.func.isRequired,
-  showWords: PropTypes.object.isRequired,
-  showMeanings: PropTypes.object.isRequired,
-  onShowWord: PropTypes.func.isRequired,
-  onShowMeaning: PropTypes.func.isRequired,
+  searchInput: PropTypes.string.isRequired,
+  setSearchInput: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
 
 export default WordBookList;
