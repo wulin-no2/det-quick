@@ -1,10 +1,11 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Box, List, Divider, Switch,Typography } from "@mui/material";
+import { Box, List, Divider, Switch,Typography} from "@mui/material";
 import { green, red, blue} from "@mui/material/colors";
 import WordItem from "./WordItem"; // Import the new WordItem component
 import { useTranslation } from "react-i18next";
 import { useState} from "react";
+import SearchBar from "../common/SearchBar";
 
 const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, setHideMeanings}) => {
   const {t} = useTranslation();
@@ -52,20 +53,26 @@ const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, s
       }}
     >
         {/* hide vocabulary & meaning button */}
-        <Box sx={{display:'flex', mx:4,mt:2}}>
-        <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', mr:2,pr:1,pl:2,fontWeight:'bold',
-            borderRadius:2,backgroundColor:blue[50]
-        }}>
-            <Typography sx={{fontSize:'16px', fontWeight:'bold', color:blue[500]}}>{t('Hide Vocabulary')}</Typography>
-            <Switch onChange={handleHideVocabulary}/>
+        <Box sx={{display:'flex',mx:4,mt:2,justifyContent:'space-between'}}>
+          <Box sx={{display:'flex', }}>
+            <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', mr:2,pr:1,pl:2,fontWeight:'bold',
+                borderRadius:2,backgroundColor:blue[50]
+            }}>
+                <Typography sx={{fontSize:'16px', fontWeight:'bold', color:blue[500]}}>{t('Hide Vocabulary')}</Typography>
+                <Switch onChange={handleHideVocabulary}/>
+            </Box>
+            <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', pr:1,pl:2,fontWeight:'bold',
+                borderRadius:2,backgroundColor:blue[50]
+            }}>
+                <Typography sx={{fontSize:'16px', fontWeight:'bold', color:blue[500]}}>{t('Hide Meanings')}</Typography>
+                <Switch onChange={handleHideMeanings}/>
+            </Box>
+          </Box>
+          {/* search bar */}
+          <Box sx={{alignSelf:'end'}}><SearchBar/></Box>
         </Box>
-        <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', pr:1,pl:2,fontWeight:'bold',
-            borderRadius:2,backgroundColor:blue[50]
-        }}>
-            <Typography sx={{fontSize:'16px', fontWeight:'bold', color:blue[500]}}>{t('Hide Meanings')}</Typography>
-            <Switch onChange={handleHideMeanings}/>
-        </Box>
-        </Box>
+        
+        
       <List>
         {words.map((word, index) => {
           // Ensure translationCNList is parsed as an array

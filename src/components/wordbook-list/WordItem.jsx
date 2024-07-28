@@ -68,7 +68,7 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
                 {hideVocabulary && !showWord &&(
                         <Typography 
                         onClick={handleShowVocabulary}
-                        sx={{fontSize:'18px', color:blue[500],py:1, px:1.5, mr:3,
+                        sx={{fontSize:'16px', color:blue[500],py:1, px:1.5, mr:3,
                             backgroundColor:blue[50],borderRadius:2,border:'1px solid', borderColor:blue[500],
                             "&:hover":{cursor:'pointer'}
                         }}>{t('show word')}</Typography>
@@ -144,9 +144,10 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
                 sx={{fontSize:'18px', color:blue[500],py:1, px:1.5, mr:3,
                     backgroundColor:blue[50],borderRadius:2,border:'1px solid', borderColor:blue[500],
                     width:'150px',
+                    textAlign:'center',
                     "&:hover":{cursor:'pointer'}
                 }}>
-                    <Typography>{t('Show Meanings')}
+                    <Typography>{t('show meanings')}
                     </Typography>
                 </Box>
               )}

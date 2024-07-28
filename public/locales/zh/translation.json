@@ -103,6 +103,11 @@
   "Master":"未掌握",
   "Mastered":"已掌握",
   "UK":"英",
-  "US":"美"
+  "US":"美",
+  "Search":"搜索",
+  "Hide Meanings":"隐藏释义",
+  "Hide Vocabulary":"隐藏单词",
+  "show word":"显示单词",
+  "show meanings":"显示释义"
 
 }
