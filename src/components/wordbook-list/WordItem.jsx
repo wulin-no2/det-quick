@@ -1,15 +1,17 @@
 import * as React from "react";
-import { useRef, useState } from "react";
+import { useRef, useState,} from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, Grid, ListItem, Button} from "@mui/material";
-import { green, grey, orange } from "@mui/material/colors";
+import { green, grey, orange,blue } from "@mui/material/colors";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import { useTranslation } from "react-i18next";
 
-const WordItem = ({ word, translations, getColorByDifficulty,}) => {
+const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hideMeanings,showWord,showMeanings,onShowMeaning,
+    onShowWord}) => {
   const { t } = useTranslation();
   const ukAudioRef = useRef(null);
   const usAudioRef = useRef(null);
+  
 //   const [playing, setPlaying] = useState({ uk: false, us: false });
   const [masterText, setMasterText] = useState('Master');
 
@@ -22,6 +24,12 @@ const WordItem = ({ word, translations, getColorByDifficulty,}) => {
   const handleMaster = ()=>{
     if(masterText==='Master') setMasterText('Mastered');
     else setMasterText('Master');
+  }
+  const handleShowVocabulary=()=>{
+    onShowWord(word.id);
+  }
+  const handleShowMeaning=()=>{
+    onShowMeaning(word.id);
   }
 
   return (
@@ -50,10 +58,22 @@ const WordItem = ({ word, translations, getColorByDifficulty,}) => {
             <Box>
               {/* word */}
               <Box sx={{ display: 'flex', alignItems: 'center', pb: 1 }}>
+                {/* word */}
+                {(!hideVocabulary || showWord) &&(
                 <Typography className="word-text"
-                  sx={{ fontWeight: 'bold', fontSize: '18px', pr: 3, color: grey[800] }}>
+                  sx={{ fontWeight: 'bold', fontSize: '18px', pr: 3, py:1 ,color: grey[800],border:'1px solid', borderColor:'white'}}>
                   {word.word}
                 </Typography>
+                )}
+                {hideVocabulary && !showWord &&(
+                        <Typography 
+                        onClick={handleShowVocabulary}
+                        sx={{fontSize:'18px', color:blue[500],py:1, px:1.5, mr:3,
+                            backgroundColor:blue[50],borderRadius:2,border:'1px solid', borderColor:blue[500],
+                            "&:hover":{cursor:'pointer'}
+                        }}>{t('show word')}</Typography>
+                )}
+                {/* difficulty */}
                 <Typography sx={{
                   pr: 2,
                   fontSize: '14px',
@@ -61,6 +81,7 @@ const WordItem = ({ word, translations, getColorByDifficulty,}) => {
                 }}>
                   {word.difficultyLevel}
                 </Typography>
+                {/* id */}
                 <Typography sx={{ fontSize: '14px', opacity: 0.68, backgroundColor: grey[100], py: 0.5, px: 1 }}>
                   #{word.id}
                 </Typography>
@@ -107,6 +128,8 @@ const WordItem = ({ word, translations, getColorByDifficulty,}) => {
                 </Box>
               </Box>
               {/* translations */}
+              {(!hideMeanings || showMeanings) &&(
+                <>
               {translations.map((translateItem, translateIndex) => {
                 return (
                   <Box key={translateIndex} sx={{ width: '660px', }}>
@@ -114,6 +137,19 @@ const WordItem = ({ word, translations, getColorByDifficulty,}) => {
                   </Box>
                 );
               })}
+              </>
+              )}
+              {(hideMeanings && !showMeanings) &&(
+                <Box onClick={handleShowMeaning}
+                sx={{fontSize:'18px', color:blue[500],py:1, px:1.5, mr:3,
+                    backgroundColor:blue[50],borderRadius:2,border:'1px solid', borderColor:blue[500],
+                    width:'150px',
+                    "&:hover":{cursor:'pointer'}
+                }}>
+                    <Typography>{t('Show Meanings')}
+                    </Typography>
+                </Box>
+              )}
             </Box>
           </Grid>
           {/* master button*/}
@@ -149,6 +185,12 @@ WordItem.propTypes = {
     }).isRequired,
   translations: PropTypes.arrayOf(PropTypes.string).isRequired,
   getColorByDifficulty: PropTypes.func.isRequired,
+  hideVocabulary:PropTypes.bool.isRequired,
+  hideMeanings:PropTypes.bool.isRequired,
+  showWord:PropTypes.bool.isRequired,
+  showMeanings:PropTypes.bool.isRequired,
+  onShowMeaning:PropTypes.func.isRequired,
+  onShowWord:PropTypes.func.isRequired,
 };
 
 export default WordItem;

@@ -42,6 +42,11 @@ const WordBookFilter= ({questionTypeObject}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [hideVocabulary, setHideVocabulary] = useState(false);
+  const [hideMeanings, setHideMeanings] = useState(false);
+
+  
+
   useEffect(() => {
     console.log("questionTypeName is ", questionType);
     const fetchData = async () => {
@@ -77,6 +82,7 @@ const WordBookFilter= ({questionTypeObject}) => {
     setFilters(newFilters);
     setCurrentPage(1);  // Reset to the first page when filters change
   };
+  
 
   if (loading) {
     return <div></div>;
@@ -103,6 +109,10 @@ const WordBookFilter= ({questionTypeObject}) => {
           <WordBookList
             words={words}
             currentPage={currentPage}
+            hideVocabulary={hideVocabulary}
+            setHideVocabulary={setHideVocabulary}
+            hideMeanings={hideMeanings}
+            setHideMeanings={setHideMeanings}
           />
         </Item>
         <Item sx={{ width: "100%", display: 'flex', justifyContent: 'center', p: 2 }}>

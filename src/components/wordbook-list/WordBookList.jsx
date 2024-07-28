@@ -1,10 +1,15 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Box, List, Divider } from "@mui/material";
+import { Box, List, Divider, Switch,Typography } from "@mui/material";
 import { green, red, blue} from "@mui/material/colors";
 import WordItem from "./WordItem"; // Import the new WordItem component
+import { useTranslation } from "react-i18next";
+import { useState} from "react";
 
-const WordBookList = ({ words }) => {
+const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, setHideMeanings}) => {
+  const {t} = useTranslation();
+  const [showWords, setShowWords] = useState({});
+  const [showMeanings, setShowMeanings] = useState({});
   const getColorByDifficulty = (difficulty) => {
     switch (difficulty) {
       case "CEFR-C":
@@ -21,6 +26,24 @@ const WordBookList = ({ words }) => {
         return "inherit"; // Default color if none of the cases match
     }
   };
+  const handleHideVocabulary = (event) => {
+    setHideVocabulary(event.target.checked);
+    // Reset showWords state when hideVocabulary changes
+    setShowWords({});
+  };
+  
+  const handleHideMeanings = (event) => {
+    setHideMeanings(event.target.checked);
+    // Reset showMeanings state when hideVocabulary changes
+    setShowMeanings({});
+  };
+  const handleShowWord = (id) => {
+    setShowWords((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const handleShowMeaning = (id) => {
+    setShowMeanings((prev) => ({ ...prev, [id]: true }));
+  };
 
   return (
     <Box
@@ -28,6 +51,21 @@ const WordBookList = ({ words }) => {
         width: "100%",
       }}
     >
+        {/* hide vocabulary & meaning button */}
+        <Box sx={{display:'flex', mx:4,my:2}}>
+        <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', mr:2,pr:1,pl:2,fontWeight:'bold',
+            borderRadius:2,backgroundColor:blue[50]
+        }}>
+            <Typography sx={{fontSize:'16px', fontWeight:'bold', color:blue[500]}}>{t('Hide Vocabulary')}</Typography>
+            <Switch onChange={handleHideVocabulary}/>
+        </Box>
+        <Box sx={{display:'flex', justifyContent:'start', alignItems:'center', pr:1,pl:2,fontWeight:'bold',
+            borderRadius:2,backgroundColor:blue[50]
+        }}>
+            <Typography sx={{fontSize:'16px', fontWeight:'bold', color:blue[500]}}>{t('Hide Meanings')}</Typography>
+            <Switch onChange={handleHideMeanings}/>
+        </Box>
+        </Box>
       <List>
         {words.map((word, index) => {
           // Ensure translationCNList is parsed as an array
@@ -43,6 +81,12 @@ const WordBookList = ({ words }) => {
                 word={word}
                 translations={translations}
                 getColorByDifficulty={getColorByDifficulty}
+                hideMeanings={hideMeanings}
+                hideVocabulary={hideVocabulary}
+                showWord={showWords[word.id]}
+                showMeanings={showMeanings[word.id]}
+                onShowWord={handleShowWord}
+                onShowMeaning={handleShowMeaning}
               />
               {index < words.length - 1 && (
                 <Divider
@@ -75,9 +119,14 @@ WordBookList.propTypes = {
       americanAudioSrc: PropTypes.string.isRequired,
     })
   ).isRequired,
-  count: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  filters: PropTypes.object.isRequired,
+  hideVocabulary: PropTypes.bool.isRequired,
+  setHideVocabulary: PropTypes.func.isRequired,
+  hideMeanings: PropTypes.bool.isRequired,
+  setHideMeanings: PropTypes.func.isRequired,
+  showWords: PropTypes.object.isRequired,
+  showMeanings: PropTypes.object.isRequired,
+  onShowWord: PropTypes.func.isRequired,
+  onShowMeaning: PropTypes.func.isRequired,
 };
 
 export default WordBookList;
