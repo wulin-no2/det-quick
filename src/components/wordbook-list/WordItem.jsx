@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRef, useState,} from "react";
+import { useRef, useState,useEffect} from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, Grid, ListItem, Button} from "@mui/material";
 import { green, grey, orange,blue } from "@mui/material/colors";
@@ -12,9 +12,11 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
   const { t } = useTranslation();
   const ukAudioRef = useRef(null);
   const usAudioRef = useRef(null);
-  
-//   const [playing, setPlaying] = useState({ uk: false, us: false });
+
   const [masterText, setMasterText] = useState('Master');
+  useEffect(() => {
+    setMasterText(word.status ? 'Mastered' : 'Master');
+  }, [word.status]);
 
   const handlePlayAudio = (audioElement) => {
     if (audioElement.current) {
@@ -25,16 +27,14 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
 
   const fetchData = async (postData) => {
     const result = await changeWordStatus(postData);
-    console.log("fetchData in wordItem result is ",result)
-  }
-  const handleMaster = ()=>{
-    const postData = {wordId: word.id}
+    console.log("fetchData in wordItem result is ", result);
+  };
+
+  const handleMaster = () => {
+    const postData = { wordId: word.id };
     fetchData(postData);
-    if(masterText==='Master') {
-      setMasterText('Mastered');
-    }
-    else setMasterText('Master');
-  }
+    setMasterText((prevText) => (prevText === 'Master' ? 'Mastered' : 'Master'));
+  };
   const handleShowVocabulary=()=>{
     onShowWord(word.id);
   }
@@ -193,6 +193,7 @@ WordItem.propTypes = {
         britishAudioSrc: PropTypes.string.isRequired,
         americanPhoneticSymbols: PropTypes.string.isRequired,
         americanAudioSrc: PropTypes.string.isRequired,
+        status:PropTypes.bool
     }).isRequired,
   translations: PropTypes.arrayOf(PropTypes.string).isRequired,
   getColorByDifficulty: PropTypes.func.isRequired,
@@ -202,6 +203,7 @@ WordItem.propTypes = {
   showMeanings:PropTypes.bool.isRequired,
   onShowMeaning:PropTypes.func.isRequired,
   onShowWord:PropTypes.func.isRequired,
+
 };
 
 export default WordItem;

@@ -67,6 +67,7 @@ const WordBookFilter= ({questionTypeObject}) => {
           size: 10,
         };
         result = await fetchWordBookListResponseData(postData);
+        console.log('list result is: ',result)
       }
 
       setWords(result.content);
