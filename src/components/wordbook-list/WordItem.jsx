@@ -5,6 +5,7 @@ import { Box, Typography, Grid, ListItem, Button} from "@mui/material";
 import { green, grey, orange,blue } from "@mui/material/colors";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import { useTranslation } from "react-i18next";
+import { changeWordStatus } from "../../api/api-fetchWordBookList";
 
 const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hideMeanings,showWord,showMeanings,onShowMeaning,
     onShowWord}) => {
@@ -21,8 +22,17 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
       audioElement.current.onended = () => {};
     }
   };
+
+  const fetchData = async (postData) => {
+    const result = await changeWordStatus(postData);
+    console.log("fetchData in wordItem result is ",result)
+  }
   const handleMaster = ()=>{
-    if(masterText==='Master') setMasterText('Mastered');
+    const postData = {wordId: word.id}
+    fetchData(postData);
+    if(masterText==='Master') {
+      setMasterText('Mastered');
+    }
     else setMasterText('Master');
   }
   const handleShowVocabulary=()=>{

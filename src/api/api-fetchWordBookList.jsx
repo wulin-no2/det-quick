@@ -37,3 +37,7 @@ export const fetchWordBookListResponseData = async (postData) => {
 export const fetchWordBookSearchData = async (postData) => {
   return fetchData("/wordbook/search", postData);
 };
+
+export const changeWordStatus = async (postData) =>{
+  return fetchData("/wordbook/practice/status", postData);
+}
