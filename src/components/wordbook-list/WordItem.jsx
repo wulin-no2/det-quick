@@ -128,7 +128,7 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
                 </Box>
               </Box>
               {/* translations */}
-              {(!hideMeanings || showMeanings) &&(
+              {(!hideMeanings || showMeanings) && translations!=null &&(
                 <>
               {translations.map((translateItem, translateIndex) => {
                 return (
@@ -139,7 +139,7 @@ const WordItem = ({ word, translations, getColorByDifficulty,hideVocabulary,hide
               })}
               </>
               )}
-              {(hideMeanings && !showMeanings) &&(
+              {(hideMeanings && !showMeanings) && translations!=null &&(
                 <Box onClick={handleShowMeaning}
                 sx={{fontSize:'18px', color:blue[500],py:1, px:1.5, mr:3,
                     backgroundColor:blue[50],borderRadius:2,border:'1px solid', borderColor:blue[500],
@@ -178,7 +178,7 @@ WordItem.propTypes = {
         id: PropTypes.number.isRequired,
         word: PropTypes.string.isRequired,
         difficultyLevel: PropTypes.string.isRequired,
-        translationCNList: PropTypes.string.isRequired,
+        translationCNList: PropTypes.string,
         britishPhoneticSymbols: PropTypes.string.isRequired,
         britishAudioSrc: PropTypes.string.isRequired,
         americanPhoneticSymbols: PropTypes.string.isRequired,

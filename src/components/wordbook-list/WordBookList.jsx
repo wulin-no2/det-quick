@@ -74,7 +74,7 @@ const WordBookList = ({ words,hideVocabulary, setHideVocabulary, hideMeanings, s
             </Box>
           </Box>
           {/* search bar */}
-          <Box><SearchBar 
+          <Box sx={{pr:2}}><SearchBar 
           searchInput={searchInput} 
           setSearchInput={setSearchInput}
           handleSearch={handleSearch}
@@ -127,7 +127,7 @@ WordBookList.propTypes = {
       id: PropTypes.number.isRequired,
       word: PropTypes.string.isRequired,
       difficultyLevel: PropTypes.string.isRequired,
-      translationCNList: PropTypes.string.isRequired,
+      translationCNList: PropTypes.string,
       britishPhoneticSymbols: PropTypes.string.isRequired,
       britishAudioSrc: PropTypes.string.isRequired,
       americanPhoneticSymbols: PropTypes.string.isRequired,

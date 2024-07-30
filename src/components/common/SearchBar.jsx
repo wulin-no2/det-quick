@@ -17,7 +17,7 @@ const SearchBar = ({ searchInput, setSearchInput, handleSearch }) => {
     <Paper
       component="form"
       variant="outlined"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 300, height: 38, borderColor: blue[500], borderRadius: 6 }}
+      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 260, height: 38, borderColor: blue[500], borderRadius: 6 }}
       onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
     >
       <InputBase

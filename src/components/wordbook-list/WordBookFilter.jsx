@@ -45,46 +45,49 @@ const WordBookFilter= ({questionTypeObject}) => {
   const [hideVocabulary, setHideVocabulary] = useState(false);
   const [hideMeanings, setHideMeanings] = useState(false);
 
-  // const [searchResult, setSearchResult] = useState({});
   const [searchInput, setSearchInput] = useState('');
+  const [finalQuery, setFinalQuery] = useState('');
 
-  useEffect(() => {
-    console.log("questionTypeName is ", questionType);
-    const fetchData = async () => {
-      try {
-        setLoading(true);
+  // record if the list came from search
+  const [isSearch, setIsSearch] = useState(false);
+
+  const fetchData = async (page, filters, questionType, isSearch, finalQuery) => {
+    try {
+      setLoading(true);
+      let result;
+
+      if (isSearch) {
+        result = await fetchWordBookSearchData({ query: finalQuery, page, size: 10 });
+      } else {
         const cleanedFilters = cleanFilters(filters);
         const postData = {
           ...cleanedFilters,
           questionType,
-          page: currentPage,
+          page,
           size: 10,
         };
-        console.log("postData is ", postData);
-        const result = await fetchWordBookListResponseData(postData);
-        setWords(result.content);
-        setPages(result.totalPages);
-        setCount(result.totalElements);
-        console.log("result from api is: ", result);
-      } catch (error) {
-        setError(`Error: ${error.message}`);
-      } finally {
-        setLoading(false);
+        result = await fetchWordBookListResponseData(postData);
       }
-    };
-    fetchData();
-  }, [currentPage, filters, questionType]);
 
-  const handleSearch=async ()=>{
-    try {
-      const result = await fetchWordBookSearchData({ query: searchInput });
       setWords(result.content);
       setPages(result.totalPages);
       setCount(result.totalElements);
     } catch (error) {
       setError(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage, filters, questionType, isSearch, finalQuery);
+  }, [currentPage, filters, questionType, isSearch, finalQuery]);
+
+  const handleSearch = () => {
+    setIsSearch(true);
+    setCurrentPage(1);
+    setFinalQuery(searchInput);
+  };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -92,6 +95,8 @@ const WordBookFilter= ({questionTypeObject}) => {
 
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters);
+    setSearchInput('');
+    setIsSearch(false);
     setCurrentPage(1);  // Reset to the first page when filters change
   };
   

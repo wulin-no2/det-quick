@@ -1,11 +1,18 @@
 
 import axios from "axios";
 
+// Set default Authorization header
+const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmODZjNzUxOS0xYzMyLTQzOGYtOGIwNi00MTc3MGY0OWJjNzUiLCJpYXQiOjE3MjIzNTg4MzMsImV4cCI6MTcyMjQxMjgzM30.U3aHxIdyQgsQg4mpReEV0KuymddI60dgiukQHXwfPhuRtaEtujO0RvtSrTrZJJfEj6291ST8XCDQkbtZTgjrBQ';
+localStorage.setItem('accessToken', accessToken);
+
+const token = localStorage.getItem('accessToken');
+
 const ApiClient = axios.create({
   // baseURL: 'http://54.159.192.226:8080',
   baseURL: 'http://localhost:8080',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}` // Set the Authorization header
   }
 });
 export default ApiClient;
