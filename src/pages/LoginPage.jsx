@@ -11,16 +11,22 @@ import {
   Grid,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import { loginApi } from "../api/Profile/login";
 function LoginPage() {
   const { t } = useTranslation();
+  const [account, setAccount] = useState("");
+  const [password, setPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = (event) => event.preventDefault();
 
-  const handleLogin = (event) => {
-    event.preventDefault();
+  const handleLogin = async  (event) => {
+    console.log("account====", account);
+    // event.preventDefault();
+    const loginResponse = await loginApi(account, password);
+    console.log("loginResponse====", loginResponse);
     // Handle login logic here
   };
 
@@ -58,6 +64,8 @@ function LoginPage() {
               id="username"
               label="Username"
               name="username"
+              value={account}
+              onChange ={(e) => setAccount(e.target.value)}
               autoComplete="username"
               autoFocus
             />
@@ -70,6 +78,8 @@ function LoginPage() {
               label="Password"
               type={showPassword ? "text" : "password"}
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               InputProps={{
                 endAdornment: (

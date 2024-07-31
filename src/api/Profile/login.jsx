@@ -22,15 +22,18 @@ export const sendVerificationCode = async (phone) => {
   }
 };
 
-export const loginApi = async (phone, code, channel) => {
+export const loginApi = async (account, password) => {
+  console.log("account====", account);
+  console.log("password====,", password);
   try {
-    const formData = new FormData();
-    formData.append("phone", phone);
-    formData.append("code", code);
-    formData.append("channel", channel);
+    const params = {
+      account: account,
+      password: password
+  };
+  console.log("params====", params);
 
     // 由于响应拦截器的处理，这里直接获取结果
-    const data = await apiClient.post("/login/login", formData);
+    const data = await apiClient.post("/api/public/login", params);
 
     return { success: true, data: data };
   } catch (error) {

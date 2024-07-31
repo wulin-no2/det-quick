@@ -4,6 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import LoginPage from "./pages/LoginPage";
+import UserLoginPage from "./pages/UserLoginPage";
 import HomePage from "./pages/HomePage";
 import "./utils/languageSwitcher/i18n"; // import i18n to translate
 import Navbar from "./components/navbar/navbar";
@@ -24,7 +25,8 @@ function App() {
               <Box className="content">
                 <Routes>
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/login" element={<UserLoginPage/>} />
+                  {/* <Route path="/login" element={<LoginPage />} /> */}
                   {/* <Route path="/filter" element={<FilterComponent />} /> */}
                   <Route path="/practice" element={<PracticeListPage />} />
                   <Route path="/vocab" element={<WordBookPage />} />

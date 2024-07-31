@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // Set default Authorization header
-const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmODZjNzUxOS0xYzMyLTQzOGYtOGIwNi00MTc3MGY0OWJjNzUiLCJpYXQiOjE3MjIzNTg4MzMsImV4cCI6MTcyMjQxMjgzM30.U3aHxIdyQgsQg4mpReEV0KuymddI60dgiukQHXwfPhuRtaEtujO0RvtSrTrZJJfEj6291ST8XCDQkbtZTgjrBQ';
+const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNTQ1NTgwMC0zOWRkLTQyZjItOWNiNS1kNTIxMzkyZDRkYmQiLCJpYXQiOjE3MjI0MDU4MTQsImV4cCI6MTcyMjQ1OTgxNH0.URi_xxgZx1EqXCvi3Spy-gdWkQJNm71kPvbfRiOHr5vbyE2IvPVCZg6kc1CcEnnTWR_MT6DNlIY18uGS_U3Mwg';
 localStorage.setItem('accessToken', accessToken);
 
 const token = localStorage.getItem('accessToken');
@@ -12,7 +12,7 @@ const ApiClient = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}` // Set the Authorization header
+    // 'Authorization': `Bearer ${token}` // Set the Authorization header
   }
 });
 export default ApiClient;
