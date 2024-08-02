@@ -13,7 +13,8 @@ import QuestionPage from "./pages/QuestionPage";
 import Footer from "./components/common/Footer";
 import { QuestionStateProvider } from "./context/QuestionStateContext";
 import WordBookPage from "./pages/WordBookPage";
-
+import UserRegistrationPage from "./pages/UserRegistrationPage";
+import UserVerificationPage from "./pages/UserVerificationPage";
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -26,6 +27,8 @@ function App() {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/login" element={<UserLoginPage/>} />
+                  <Route path="/register" element={<UserRegistrationPage />} />
+                  <Route path="/verify" element={<UserVerificationPage />} />
                   {/* <Route path="/login" element={<LoginPage />} /> */}
                   {/* <Route path="/filter" element={<FilterComponent />} /> */}
                   <Route path="/practice" element={<PracticeListPage />} />

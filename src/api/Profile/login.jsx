@@ -35,14 +35,14 @@ export const loginApi = async (account, password) => {
     // 由于响应拦截器的处理，这里直接获取结果
     const data = await apiClient.post("/api/public/login", params);
 
-    return { success: true, data: data };
+    return { success: true, data: data.data };
   } catch (error) {
     // 所有错误现在都由拦截器处理
     console.error("Login error:", error.message || error);
     return {
       success: false,
       message: error.message || error,
-      code: error.code,
+      // code: error.code,
     };
   }
 };
