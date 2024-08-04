@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import DifficultyButton from "../../common/question-card-components/CardHeaderComponents/DifficultyButton";
 import { getNameBySubmoduleId } from "../../../utils/practice/questionListConstantAndFunc";
 import useQuestionStateContext from "../../../context/useQuestionStateContext";
+import PracticedButton from "../../common/question-card-components/CardHeaderComponents/PracticedButton";
 
 const baseQuestionsDetailURL = "questions/detail";
 
@@ -118,6 +119,7 @@ export default function QuestionList({
                             pr: 2,
                           }}
                         >
+                          {<PracticedButton isPracticed={question.practiced}/>}
                           <DifficultyButton
                             difficulty={question.difficultyLevel}
                           />
