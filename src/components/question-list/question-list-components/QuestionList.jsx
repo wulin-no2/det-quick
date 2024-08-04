@@ -66,12 +66,14 @@ export default function QuestionList({
             // border: "1px solid green"
           }}
         >
+
           <List
             sx={{
               width: "100%",
               // border: "1px solid red"
             }}
           >
+            {questionsArr.length===0 && <Typography variant="h7">{t('No result. Change your filter.')}</Typography>}
             {questionsArr.map((question, index) => {
               const newGlobalIndex = (currentPage - 1) * itemsPerPage + index + 1;
               return (
@@ -119,7 +121,7 @@ export default function QuestionList({
                             pr: 2,
                           }}
                         >
-                          {<PracticedButton isPracticed={question.practiced}/>}
+                          {<PracticedButton isPracticed={question.isPracticed}/>}
                           <DifficultyButton
                             difficulty={question.difficultyLevel}
                           />

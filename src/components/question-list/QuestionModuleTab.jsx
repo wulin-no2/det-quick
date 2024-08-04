@@ -7,7 +7,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabPanel from "../common/tab-filter-components/TabPanel";
 import SuperQuestionTypeContent from "./QuestionSubmoduleTab";
-import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
+// import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import {
   types,
   subTypesArr,
@@ -80,7 +80,7 @@ const QuestionListCard = () => {
           <SuperQuestionTypeContent />
         </TabPanel>
       ))}
-      <ShowLocalStorage componentName="QuestionListCard" />
+      {/* <ShowLocalStorage componentName="QuestionListCard" /> */}
     </Box>
   );
 };

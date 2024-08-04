@@ -9,7 +9,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { orange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { ShowLocalStorage } from '../../utils/ShowLocalStorage';
+// import { ShowLocalStorage } from '../../utils/ShowLocalStorage';
 import { subTypesArr } from '../../utils/practice/questionListConstantAndFunc';
 import useQuestionStateContext from '../../context/useQuestionStateContext';
 
@@ -100,7 +100,7 @@ function CustomCard() {
           </Typography>
         </Box>
       ))}
-      <ShowLocalStorage componentName='CustomCard'/>
+      {/* <ShowLocalStorage componentName='CustomCard'/> */}
     </Box>
   );
 }

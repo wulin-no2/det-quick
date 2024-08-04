@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../theme";
-import { blue } from '@mui/material/colors';
 
 const PracticedButton = ({isPracticed}) => {
   const {t} = useTranslation();
@@ -25,7 +24,7 @@ const PracticedButton = ({isPracticed}) => {
         px: 1,
         borderRadius: 1,
         mx:1,
-        backgroundColor:isPracticed?blue[500]:'none'
+        backgroundColor:isPracticed?theme.palette.primary.main:'none'
       }}
     >
       {t(isPracticed?'Practiced':'Unpracticed')}
