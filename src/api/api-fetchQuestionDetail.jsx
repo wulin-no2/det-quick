@@ -91,3 +91,8 @@ const sendApiRequestAnswer = async (endpoint, postData) => {
 export const submitUserAnswer = async (questionId, submoduleId, answer) => {
   return sendApiRequestAnswer('/questions/answer', { questionId, submoduleId, answer });
 };
+
+// Submit user answer
+export const submitUserAnswerWithFileUrl = async (questionId, submoduleId, blobUrl) => {
+  return sendApiRequestAnswer('/questions/answer', { questionId, submoduleId, answer: blobUrl });
+};
