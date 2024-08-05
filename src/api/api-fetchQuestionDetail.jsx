@@ -59,16 +59,18 @@ export const updatePracticeStatus = async (questionId, isPracticed) => {
   }
 };
 
-// Utility function to remove null values and send API request for get question apis
+// Utility function to remove null values and send API request for get question APIs
 const sendApiRequestAnswer = async (endpoint, postData) => {
   try {
-    // Remove null, undefined or "null" values
+    // Remove null, undefined, or "null" values
     const cleanData = Object.entries(postData).reduce((acc, [key, value]) => {
       if (value != null && value !== "null") acc[key] = value;
       return acc;
     }, {});
-    // print postData
-    console.log('postData after clean null is ',cleanData)
+    
+    // Print postData before and after cleaning
+    console.log('Original postData:', postData);
+    console.log('Cleaned postData:', cleanData);
 
     const response = await ApiClient.post(endpoint, cleanData);
     console.log(`Data from ${endpoint}:`, response.data);
@@ -77,15 +79,15 @@ const sendApiRequestAnswer = async (endpoint, postData) => {
       // Return entire response data object, not just the `data` field
       return response.data;
     } else {
-      throw new Error(response.message || `There was an error with the ${endpoint} API!`);
+      throw new Error(response.data.message || `There was an error with the ${endpoint} API!`);
     }
   } catch (error) {
-    console.error(`Error fetching data from ${endpoint}: `, error.message);
+    console.error(`Error fetching data from ${endpoint}: `, error.response ? error.response.data : error.message);
     return null;
   }
 };
 
-// submit user answer
-export const submitUserAnswer = async (questionId, submoduleId, userId, answer) => {
-  return sendApiRequestAnswer('/questions/answer', { questionId, submoduleId, userId, answer });
+// Submit user answer
+export const submitUserAnswer = async (questionId, submoduleId, answer) => {
+  return sendApiRequestAnswer('/questions/answer', { questionId, submoduleId, answer });
 };

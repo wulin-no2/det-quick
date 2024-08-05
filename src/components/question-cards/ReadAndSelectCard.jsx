@@ -8,7 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { green, red, grey } from "@mui/material/colors";
 // import Toast from "../common/Toast";
-import { updatePracticeStatus } from "../../api/api-fetchQuestionDetail";
+import { submitUserAnswer } from "../../api/api-fetchQuestionDetail";
 
 const ReadAndSelectCard = ({
   count,
@@ -34,8 +34,8 @@ const ReadAndSelectCard = ({
     setSelectedAnswer(answer);
     setIsCorrect(answer === questionDetail.correct);
     // setOpenToast(true);
-    // Update practice status
-    updatePracticeStatus(questionDetail.id, true);
+    // send answer
+    submitUserAnswer(questionDetail.questionId,questionDetail.submoduleId,answer)
 
     // Set practice status to true
     setIsPracticed(true);
