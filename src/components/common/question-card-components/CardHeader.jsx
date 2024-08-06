@@ -32,7 +32,9 @@ const CardHeader = ({
         } else {
           clearInterval(timerInterval);
           console.log("globalIndex ", globalIndex);
-          onTimeUp(); // Call onTimeUp when timer ends
+          if (onTimeUp) {
+            onTimeUp(); // Call onTimeUp when timer ends if it's passed as a prop
+          }
           return time_limit;
         }
       });

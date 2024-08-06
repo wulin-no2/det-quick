@@ -1,5 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 import { Box, Typography, List, ListItem, Grid, Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -20,6 +21,9 @@ export default function QuestionList({
   const navigate = useNavigate();
   const { currentPage, setGlobalIndex } = useQuestionStateContext();
   const itemsPerPage = 10;
+  useEffect(()=>{
+    console.log("filters in list component is ",filters)
+  },[filters])
 
   // remember the state with React Router for later use in QuestionPage
   const handleItemClick = (question, index) => {

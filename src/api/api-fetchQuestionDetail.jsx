@@ -31,13 +31,13 @@ export const fetchQuestionDetail = async (questionId, submoduleId) => {
 };
 
 // next question
-export const fetchNextQuestion = async (questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc) => {
-  return sendApiRequest('/questions/next', { questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc });
+export const fetchNextQuestion = async (questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc, isPracticed) => {
+  return sendApiRequest('/questions/next', { questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc, isPracticed });
 };
 
 // previous question
-export const fetchPreviousQuestion = async (questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc) => {
-  return sendApiRequest('/questions/previous', { questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc });
+export const fetchPreviousQuestion = async (questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc, isPracticed) => {
+  return sendApiRequest('/questions/previous', { questionId, submoduleId, difficultyLevel, templateType, isCorrect, isAsc, isPracticed });
 };
 
 

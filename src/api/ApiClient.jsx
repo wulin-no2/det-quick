@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // Set default Authorization header
-const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiNDQ3NDQxNy02MzM2LTRlYzQtOWRhNC04ODlmYzU5NjJmMjciLCJpYXQiOjE3MjI4NzY2MjAsImV4cCI6MTcyMjk2MzAyMH0.-my5_YN_Qt2ffOojUMP3TKZZYhKBFKjumIVUPDA0n7r6aVez4H-RQ7E8H4ccEe0--n8bUmWKFJx3s-KmuFA5nA';
+const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiNDQ3NDQxNy02MzM2LTRlYzQtOWRhNC04ODlmYzU5NjJmMjciLCJpYXQiOjE3MjI5NjY1OTIsImV4cCI6MTcyMzA1Mjk5Mn0.Bo2aggstmOGYhNHgherzsuZwUF-TPfUGEmE6mc_ewTEudZQJIHkDm9AWP5PbhmKma4_O115K-RfPXc9l7TGltA';
 localStorage.setItem('accessToken', accessToken);
 
 const token = localStorage.getItem('accessToken');
