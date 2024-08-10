@@ -20,7 +20,7 @@ import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 // import { requestLogin } from '../service/authAPiService'
 import globalSettingsConfig from '../globalSettingsConfig';
-import { requestRegister } from "../api/Profile/userApiService";
+import { requestRegister,requestLogout } from "../api/Profile/userApiService";
 // import { pubSub } from '../utils/pubSub';
 const UserRegistrationPage = () => {
   const theme = useTheme();
@@ -38,10 +38,15 @@ const UserRegistrationPage = () => {
     setPassword(event.target.value);
   };
 
-  const handleShowPasswordClick = () => {
+  const handleShowPasswordClick =  () => {
     setShowPassword(!showPassword);
-    console.log("response.data.accessToken===read from local=",localStorage.getItem(globalSettingsConfig.localStorageKeys.ACCESS_TOKEN));
-    console.log("response.data.refreshToken===read from local=",localStorage.getItem(globalSettingsConfig.localStorageKeys.REFRESH_TOKEN));
+   
+    // const response = await requestLogout();
+    // console.log("response==logout==", response);
+    // if (response.success) {
+    //   localStorage.removeItem(globalSettingsConfig.localStorageKeys.ACCESS_TOKEN);
+    //   localStorage.removeItem(globalSettingsConfig.localStorageKeys.REFRESH_TOKEN);
+    // }
   };
 
   const handleRegister = async () => {

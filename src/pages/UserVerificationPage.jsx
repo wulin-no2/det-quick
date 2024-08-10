@@ -21,7 +21,7 @@ import { useTheme } from '@mui/material/styles';
 import { useLocation, useNavigate } from "react-router-dom";
 // import { requestLogin } from '../service/authAPiService'
 import globalSettingsConfig from '../globalSettingsConfig';
-import { requestRegister } from "../api/Profile/userApiService";
+import { requestLogout, requestRegister } from "../api/Profile/userApiService";
 // import { pubSub } from '../utils/pubSub';
 const UserVerificationPage = () => {
   const theme = useTheme();
@@ -43,9 +43,11 @@ const UserVerificationPage = () => {
 
  
 
-  const handleLogin = async () => {
+  const handleVerify = async () => {
 
     console.log("account===xxxxx=", account);
+
+  
 
     // Perform login logic here
     // navigate('/dashboard');
@@ -123,7 +125,7 @@ const UserVerificationPage = () => {
           <Button
             variant="contained"
             type="submit"
-            onClick={handleLogin}
+            onClick={handleVerify}
             style={{ height: "55px", borderRadius: "6px", marginTop: "40px" }} // Adjust these values to fine-tune the spacing
             disabled={isLoginDisabled} // Disable the button if username or password is empty
           >

@@ -38,6 +38,6 @@ export const requestVerify = async (account, verifyCode) => {
 }
 
 export const requestLogout = async () => {
-    const response = await apiClient.post("/api/logout");
+    const response = await apiClient.post("/api/public/logout");
     return response.data;
 }
