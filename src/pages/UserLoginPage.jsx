@@ -50,9 +50,7 @@ const UserLoginPage = () => {
   };
 
   const handleForgotPasswordClick = () => {
-    // Example of using navigate with a dynamic URL
-    const gameName = "Some Game";
-    const gameId = "12345";
+ 
     navigate(`/`);
     // navigate(`/game-detail?gameName=${encodeURIComponent(gameName)}&gameId=${gameId}`);
   };

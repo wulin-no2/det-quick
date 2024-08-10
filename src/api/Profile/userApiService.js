@@ -20,20 +20,20 @@ export const requestLogin = async (account, password) => {
 }
 
 
-export const requestSendVerifyCode = async (account) => {
+export const requestSendVerificationCode = async (account) => {
     const params = {
         account: account,
     };
-    const response = await apiClient.post("/api/public/sendVerifyCode", params);
+    const response = await apiClient.post("/api/public/verification/send", params);
     return response.data;
 }
 
-export const requestVerify = async (account, verifyCode) => {
+export const requestVerifyCode = async (account, verifyCode) => {
     const params = {
         account: account,
         verifyCode: verifyCode,
     };
-    const response = await apiClient.post("/api/public/verify", params);
+    const response = await apiClient.post("/api/public/verification/verify", params);
     return response.data;
 }
 

@@ -1,7 +1,8 @@
 
 
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Container,
@@ -21,14 +22,14 @@ import { useTheme } from '@mui/material/styles';
 import { useLocation, useNavigate } from "react-router-dom";
 // import { requestLogin } from '../service/authAPiService'
 import globalSettingsConfig from '../globalSettingsConfig';
-import { requestLogout, requestRegister } from "../api/Profile/userApiService";
+import { requestSendVerificationCode, requestVerifyCode } from "../api/Profile/userApiService";
 // import { pubSub } from '../utils/pubSub';
 const UserVerificationPage = () => {
   const theme = useTheme();
 
   const [verifyCode, setVerifyCode] = useState("");
- 
-  // const navigate = useNavigate();
+
+  const navigate = useNavigate();
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -37,17 +38,69 @@ const UserVerificationPage = () => {
   const query = useQuery();
   const account = query.get("account");
 
+  useEffect(() => {
+    const fecthData = async () => {
+      try{  
+        const response = await requestSendVerificationCode(account);
+        if (response.success) {
+
+        }else{
+
+        }
+      } 
+      catch(error){
+        console.error(error);
+      }finally{
+  
+      }
+      
+    }
+    fecthData();
+  
+  }, []); // 
+
+
   const handleVerificationCodeChange = (event) => {
     setVerifyCode(event.target.value);
   };
 
- 
+
+
 
   const handleVerify = async () => {
 
     console.log("account===xxxxx=", account);
 
-  
+    try{
+      const response = await requestVerifyCode(account, verifyCode);
+      if (response.success) {
+        if (response.data) {
+          // Check if response.data.accessToken is not null or undefined
+          if (response.data.accessToken) {
+            const userAccessToken = response.data.accessToken;
+            localStorage.setItem(
+              globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
+              userAccessToken
+            );
+          }
+
+          // Check if response.data.refreshToken is not null or undefined
+          if (response.data.refreshToken) {
+            const userRefreshToken = response.data.refreshToken;
+            localStorage.setItem(
+              globalSettingsConfig.localStorageKeys.REFRESH_TOKEN,
+              userRefreshToken
+            );
+          }
+        }
+        navigate("/");       
+      }
+    }catch(error){
+
+    }finally{
+
+    }
+
 
     // Perform login logic here
     // navigate('/dashboard');
@@ -81,7 +134,7 @@ const UserVerificationPage = () => {
     // }
   };
 
-  const isLoginDisabled = !verifyCode ; // Check if username or password is empty
+  const isLoginDisabled = !verifyCode; // Check if username or password is empty
 
   return (
     <Container maxWidth="xl">
@@ -110,7 +163,7 @@ const UserVerificationPage = () => {
           >
             <p>We sent a verification code to</p>
             <p>{account}</p>
-            
+
           </Typography>
 
           <FormControl variant="outlined" style={{ marginTop: "40px" }}>
@@ -121,7 +174,7 @@ const UserVerificationPage = () => {
             />
           </FormControl>
 
-          
+
           <Button
             variant="contained"
             type="submit"
@@ -136,16 +189,16 @@ const UserVerificationPage = () => {
             variant="subtitle1"
             align="center"
             color="#083156"
-            style={{ marginBottom:"20px", marginTop:"20px", fontSize: "18px" }} // Adjust these values to fine-tune the spacing
+            style={{ marginBottom: "20px", marginTop: "20px", fontSize: "18px" }} // Adjust these values to fine-tune the spacing
           >
             {/* Don&apos;t have an account? */}
-            <Link to="/register" style={{ color:  theme.palette.primary.main, textDecoration: "none" }}>
+            <Link to="/register" style={{ color: theme.palette.primary.main, textDecoration: "none" }}>
               Resend verification code
             </Link>
           </Typography>
-       
 
-    
+
+
         </Box>
       </Box>
     </Container>
