@@ -160,7 +160,7 @@ const UserLoginPage = () => {
             }} // Adjust these values to fine-tune the spacing
           >
             <Link
-              to="/verify"
+              to="/password-reset"
               style={{
                 color: theme.palette.primary.main,
                 textDecoration: "none",

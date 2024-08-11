@@ -15,6 +15,7 @@ import { QuestionStateProvider } from "./context/QuestionStateContext";
 import WordBookPage from "./pages/WordBookPage";
 import UserRegistrationPage from "./pages/UserRegistrationPage";
 import UserVerificationPage from "./pages/UserVerificationPage";
+import PasswordResetPage from "./pages/PasswordResetPage";
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -29,6 +30,7 @@ function App() {
                   <Route path="/login" element={<UserLoginPage/>} />
                   <Route path="/register" element={<UserRegistrationPage />} />
                   <Route path="/verify" element={<UserVerificationPage />} />
+                  <Route path="/password-reset" element={<PasswordResetPage/>}/>
                   {/* <Route path="/login" element={<LoginPage />} /> */}
                   {/* <Route path="/filter" element={<FilterComponent />} /> */}
                   <Route path="/practice" element={<PracticeListPage />} />
