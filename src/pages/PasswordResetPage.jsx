@@ -65,10 +65,18 @@ function PasswordResetPage() {
         event.preventDefault();  // Prevent the button from being focused after the click
     };
 
-    const steps = ['输入邮箱', '设置新密码', '验证成功'];
+    const steps = ['Enter Email', 'Set Password', 'Confirmation'];
 
     const handleNext = () => {
+
+        if(activeStep === 0 && values.email === ''){
+            
+            return;
+        }
+
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+
     };
 
     const handleEdit = () => {
@@ -81,7 +89,7 @@ function PasswordResetPage() {
             case 0:
                 return (
                     <TextField
-                        label="Enter your email" 
+                        label="Enter your email"
                         name="email"
                         type="email"
                         fullWidth
@@ -104,6 +112,8 @@ function PasswordResetPage() {
                                     fontSize: 'inherit', // 继承字体大小
                                     padding: 0, // 移除内边距
                                     minWidth: 0, // 移除最小宽度限制
+                                    outline: 'none',  // 尝试在这里直接添加
+                                    border: 'none',
                                     backgroundColor: 'transparent', // 确保背景透明
                                     '&:hover': {
                                         backgroundColor: 'transparent' // 鼠标悬停时也保持透明背景
@@ -171,7 +181,7 @@ function PasswordResetPage() {
                                 // readOnly: false, // 设置为只读，如果需要修改这一行为，可以适当调整
                                 endAdornment: (
                                     <InputAdornment position="end">
-                                      
+
                                         <CountdownButton
                                             buttonText={"Get OTP"}
                                             onClick={handleGetOtpClick}
@@ -181,14 +191,14 @@ function PasswordResetPage() {
 
                                                 sx: {
                                                     color: 'primary.main', // 使用主题中的颜色
-                                                textTransform: 'none', // 移除大写字母样式
-                                                fontSize: 'inherit', // 继承字体大小
-                                                padding: 0, // 移除内边距
-                                                minWidth: 0, // 移除最小宽度限制
-                                                backgroundColor: 'transparent', // 确保背景透明
-                                                '&:hover': {
-                                                    backgroundColor: 'transparent' // 鼠标悬停时也保持透明背景
-                                                }
+                                                    textTransform: 'none', // 移除大写字母样式
+                                                    fontSize: 'inherit', // 继承字体大小
+                                                    padding: 0, // 移除内边距
+                                                    minWidth: 0, // 移除最小宽度限制
+                                                    backgroundColor: 'transparent', // 确保背景透明
+                                                    '&:hover': {
+                                                        backgroundColor: 'transparent' // 鼠标悬停时也保持透明背景
+                                                    }
 
                                                 },
                                             }}
@@ -203,9 +213,15 @@ function PasswordResetPage() {
                 );
             case 2:
                 return (
-                    <Typography variant="h5" sx={{ mt: 2 }}>
-                        您的密码已成功重置！
-                    </Typography>
+                    <Box>
+                        <Typography variant="h5" sx={{ mt: 2 }}>
+                            密码成功重置！
+                        </Typography>
+                        <Typography variant="h6" sx={{ mt: 2 }}>
+                            你的账户将退出登录，请使用新密码重新登录。
+                        </Typography>
+                    </Box>
+
                 );
             default:
                 return '未知步骤';
@@ -226,7 +242,7 @@ function PasswordResetPage() {
             </Stepper>
             <Box sx={{ margin: "50px" }}>
                 {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                     <Button
                         variant="contained"
                         color="primary"
@@ -235,7 +251,24 @@ function PasswordResetPage() {
                     >
                         {activeStep === steps.length - 1 ? '完成' : '下一步'}
                     </Button>
-                </Box>
+                    
+                </Box> */}
+                <Button
+                    variant="contained"
+                    type="submit"
+                    onClick={handleNext}
+                    style={{
+                        height: "55px",
+                        width: '100%',
+                        borderRadius: "6px",
+                        outline: 'none',  // 尝试在这里直接添加
+                        border: 'none',
+                        marginTop: "40px"
+                    }} // Adjust these values to fine-tune the spacing
+                // disabled={isLoginDisabled} // Disable the button if username or password is empty
+                >
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
             </Box>
         </Container>
     );
