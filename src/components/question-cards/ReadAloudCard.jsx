@@ -34,6 +34,13 @@ const ReadAloudCard = ({
     questionDetail.isPracticed || false
   );
 
+  useEffect(() => {
+    // Load the previous recording if `isPracticed` is true and the recording URL is provided
+    if (isPracticed && questionDetail.userRecordingUrl) {
+      setMediaBlobUrl(questionDetail.userRecordingUrl);
+    }
+  }, [isPracticed, questionDetail.userRecordingUrl]);
+
   const handleStartRecording = useCallback((startRecording) => {
     startRecording();
     setRecording(true);
