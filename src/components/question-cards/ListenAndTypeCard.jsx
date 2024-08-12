@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import AnswerButton from "../common/AnswerButton";
 import ReferenceButton from "../common/ReferenceButton";
 import CardHeader from "../common/question-card-components/CardHeader";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef,useEffect} from "react";
+import { submitUserAnswer } from "../../api/api-fetchQuestionDetail";
 
 const ListenAndTypeCard = ({
   count,
@@ -14,18 +15,21 @@ const ListenAndTypeCard = ({
   handleLast,
   handleNext,
 }) => {
-  const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
-  const [userAnswer, setUserAnswer] = useState("");
-  const [showUserAnswer, setShowUserAnswer] = useState(false);
   const { t } = useTranslation();
+  const [showReferenceAnswer, setShowReferenceAnswer] = useState(false);
+  const [userAnswer, setUserAnswer] = useState(questionDetail.userAnswer || "");
+  const [showUserAnswer, setShowUserAnswer] = useState(false);
+  const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);
 
   const audioRef = useRef(null); // Create a reference for the audio element
   const textFieldRef = useRef(null);
 
   useEffect(() => {
-    console.log("question detail is", questionDetail);
-    // console.log("questionImageUrl:", questionDetail.questionImageUrl);
-  }, [questionDetail]);
+    // If the question has already been practiced, immediately display the user's answer
+    if (isPracticed && userAnswer) {
+      setShowUserAnswer(true);
+    }
+  }, [isPracticed, userAnswer]);
 
   if (!questionDetail) {
     return <div></div>;
@@ -51,12 +55,18 @@ const ListenAndTypeCard = ({
     }
   };
 
-  // handle answer buttons
-  const handleSubmit = () => {
-    if (textFieldRef.current) {
-      setUserAnswer(textFieldRef.current.value);
-    }
-  };
+ // Handle answer submission
+ const handleSubmit = async () => {
+  const answer = textFieldRef.current ? textFieldRef.current.value : "";
+  setUserAnswer(answer);
+
+  // Submit the user's answer to the backend
+  await submitUserAnswer(questionDetail.questionId, questionDetail.submoduleId, answer);
+
+  // Mark the question as practiced
+  setIsPracticed(true);
+  setShowUserAnswer(true); // Display the user's answer after submission
+};
 
   return (
     <Box
@@ -76,6 +86,7 @@ const ListenAndTypeCard = ({
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
+        isPracticed={isPracticed}
       />
       {/* question */}
       <Box
