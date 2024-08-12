@@ -7,6 +7,7 @@ import AnswerButton from "../common/AnswerButton";
 import AudioButton from "../common/AudioButton";
 import ReferenceButton from "../common/ReferenceButton";
 import { grey, green, red } from "@mui/material/colors";
+import { submitUserAnswer } from "../../api/api-fetchQuestionDetail";
 
 const InteractiveListeningCard = ({
   count,
@@ -25,10 +26,22 @@ const InteractiveListeningCard = ({
   const [userSummary, setUserSummary] = useState("");
   const [showUserAnswer, setShowUserAnswer] = useState(false);
   const textFieldRef = useRef(null);
+  const [isPracticed, setIsPracticed] = useState(questionDetail.isPracticed || false);// add isPracticed
+  const [submittedAnswer, setSubmittedAnswer] = useState([]);// add submittedAnswer used to submit
 
   useEffect(() => {
-    console.log("question detail is", questionDetail);
-  }, [questionDetail]);
+    if (isSummarizing && userSummary) {
+      const summaryEntry = {
+        sequenceOrder: 0, // Assuming 0 indicates the summary in your case
+        userAnswer: userSummary,
+      };
+      const updatedAnswer = [...submittedAnswer, summaryEntry];
+      
+      submitUserAnswer(questionDetail.questionId, questionDetail.submoduleId, JSON.stringify(updatedAnswer));
+      // console.log('Submitted answers:', JSON.stringify(updatedAnswer));
+      setIsPracticed(true);
+    }
+  }, [questionDetail.questionId,questionDetail.submoduleId,isSummarizing, userSummary, submittedAnswer,]);
 
   if (!questionDetail) {
     return <div></div>;
@@ -40,7 +53,16 @@ const InteractiveListeningCard = ({
 
   const handleNextQuestion = () => {
     const isCorrect = selectedAnswer === currentQuestion.blankList.answer;
+    const newAnswer = {
+      sequenceOrder: currentQuestion.sequenceOrder,
+      userAnswer: selectedAnswer,
+      correct: isCorrect,
+    };
+    // Use functional update to ensure the state is updated correctly
+    setSubmittedAnswer((prev) => [...prev, newAnswer]);
+    // console.log('after next the submittedAnswer is ', submittedAnswer)
     setAnswers([...answers, { question: currentQuestion, answer: selectedAnswer, correct: isCorrect }]);
+  
     setSelectedAnswer(null); // Reset selected answer for next question
     setAudioPlayed(false); // Reset audio played status for next question
     setCurrentSequence(prev => prev + 1);
@@ -56,6 +78,16 @@ const InteractiveListeningCard = ({
 
   const handleFinalSubmit = () => {
     setIsSummarizing(true); // Show summarizing section
+    // add last sequenceOrder answer;
+    const isCorrect = selectedAnswer === currentQuestion.blankList.answer;
+    const newAnswer = {
+      sequenceOrder: currentQuestion.sequenceOrder,
+      userAnswer: selectedAnswer,
+      correct: isCorrect,
+    };
+    // Use functional update to ensure the state is updated correctly
+    setSubmittedAnswer((prev) => [...prev, newAnswer]);
+    // console.log("after last sequenceOrder, submittedAnswer is " , submittedAnswer)
   };
 
   const handleSummarySubmit = () => {
@@ -333,6 +365,7 @@ const InteractiveListeningCard = ({
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
+        isPracticed={isPracticed}
       />
       {currentSequence === 0 ? (
         <Paper elevation={0} variant="outlined" sx={{ my: 2, mx: 3, bgcolor: grey[50], borderRadius: 2 }}>
