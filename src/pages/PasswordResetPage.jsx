@@ -4,6 +4,9 @@ import { Container, Box, TextField, Button, Stepper, Step, StepLabel, Typography
 import { styled } from '@mui/system';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CountdownButton from '../components/common/CountdownButton';
+import globalSettingsConfig from '../globalSettingsConfig';
+import { pubSub } from '../utils/pubSub';
+import { requestCheckUserExist } from "../api/Profile/userApiService";
 
 // 自定义Stepper连接线组件
 const ColorlibConnector = styled(StepConnector)(({ theme, ownerState }) => {
@@ -67,14 +70,44 @@ function PasswordResetPage() {
 
     const steps = ['Enter Email', 'Set Password', 'Confirmation'];
 
-    const handleNext = () => {
 
-        if(activeStep === 0 && values.email === ''){
-            
-            return;
+
+    const handleNext = async () => {
+
+
+        if(activeStep === 0 ){
+            // email 不能是空
+            if (!values.email) {
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, "email cannot be empty");
+
+                return;
+            }
+            try {
+                // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+                console.log("response.data==rerere==");
+
+                const response = await requestCheckUserExist(values.email);
+                if (response.success) {
+                    if (response.data) {
+                        console.log("response.data====", response.data);
+                    }
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+                }else{
+                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+                }
+
+            } catch (error) {
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message);
+
+
+            } finally {
+                // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+
+            }
+
         }
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
 
     };

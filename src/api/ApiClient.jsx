@@ -18,28 +18,19 @@ const ApiClient = axios.create({
 });
 export default ApiClient;
 
+// 列出不需要认证令牌的接口
+const noAuthRequired = ["/login", "/register", "/verify", "/sendVerifyCode","/user/exist","/questions/list"];
+
+
 ApiClient.interceptors.request.use(
   (config) => {
-    // 列出不需要认证令牌的接口
-    const noAuthRequired = ["/login", "/register", "/verify", "/sendVerifyCode"];
-
-    // 检查当前请求的URL是否在这个列表中
-    const requiresAuth = !noAuthRequired.some((path) =>
-      config.url.includes(path)
-    );
-
-    // 如果不在列表中，则添加认证令牌
+    const requiresAuth = !noAuthRequired.some(path => config.url.includes(path));
     if (requiresAuth) {
-      const accessToken = localStorage.getItem(
-        globalSettingsConfig.localStorageKeys.ACCESS_TOKEN
-      );
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
+      const authTokens = JSON.parse(localStorage.getItem('authTokens'));
+      if (authTokens && authTokens.accessToken) {
+        config.headers.Authorization = `Bearer ${authTokens.accessToken}`;
       }
     }
-
-    //用于在发送请求之前处理请求，例如设置请求头、添加认证信息等。
-    // 这里可以添加认证令牌等
     return config;
   },
   (error) => {

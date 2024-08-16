@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import LanguageButton from "../common/LanguageButton";
 import NavBarItems from "./NavBarItems";
+import { useAuth } from '../../context/AuthContext'; // 确保路径正确
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,10 +14,13 @@ function Navbar() {
     navigate("/login"); // link to login
   };
 
+  const { authTokens, logout } = useAuth(); // 从 AuthContext 获取状态和方法
+
   const [showLanguageSwitcher, setShowLanguageSwitcher] = useState(true);
   const { t } = useTranslation();
 
   useEffect(() => {
+
     const handleScroll = () => {
       setShowLanguageSwitcher(window.scrollY <= 50);
     };
@@ -27,9 +31,11 @@ function Navbar() {
   return (
     <AppBar
       className="new-navbar"
-      sx={{ boxShadow: "none", 
-      borderBottom: 0.5, 
-      borderColor: "lightgrey" }}
+      sx={{
+        boxShadow: "none",
+        borderBottom: 0.5,
+        borderColor: "lightgrey"
+      }}
     >
       <Toolbar className="flex justify-between items-center w-full">
         {/* logo */}
@@ -44,19 +50,28 @@ function Navbar() {
 
         {/* buttons of the navbar*/}
         <div className="flex-none">
-          {/* todo: how can we make login center vertically */}
-          <button className="login-btn" onClick={handleLoginClick}>
-            {t("login")}
-          </button>
+
 
           {showLanguageSwitcher && (
             <IconButton className="weakButton">
               <LanguageButton />
             </IconButton>
           )}
-          <IconButton className="weakButton">
-            <AccountCircleIcon />
-          </IconButton>
+          {/* todo: how can we make login center vertically */}
+          {authTokens ? (
+
+            <IconButton className="weakButton">
+              <AccountCircleIcon />
+            </IconButton>
+
+          ) : (
+            <button className="login-btn" onClick={handleLoginClick}>
+              {t("login")}
+            </button>
+          )}
+
+
+
         </div>
       </Toolbar>
     </AppBar>

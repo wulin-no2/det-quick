@@ -41,3 +41,16 @@ export const requestLogout = async () => {
     const response = await apiClient.post("/api/public/logout");
     return response.data;
 }
+
+export const requestCheckUserExist = async (account) => {
+    const params = {
+        account: account,
+    };
+
+    console.log("=====");
+    console.log(account);
+    console.log(params);
+    console.log("=====");
+    const response = await apiClient.post("/api/public/user/exist", params);
+    return response.data;
+}

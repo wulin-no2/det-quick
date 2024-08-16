@@ -21,8 +21,11 @@ import { requestLogin } from "../api/Profile/userApiService";
 import globalSettingsConfig from "../globalSettingsConfig";
 // import { loginApi } from "../api/Profile/login";
 // import { pubSub } from '../utils/pubSub';
+import { useAuth } from "../context/AuthContext"
 const UserLoginPage = () => {
   const theme = useTheme();
+  const { login } = useAuth(); // 从 AuthContext 中获取 login 函数
+
 
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
@@ -66,28 +69,38 @@ const UserLoginPage = () => {
 
       // if (response.)
       console.log("response====", response);
-      if (response.success) {
-        if (response.data) {
-          // Check if response.data.accessToken is not null or undefined
-          if (response.data.accessToken) {
-            const userAccessToken = response.data.accessToken;
-            localStorage.setItem(
-              globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
-              userAccessToken
-            );
-          }
+      // if (response.success) {
+      //   if (response.data) {
+      //     // Check if response.data.accessToken is not null or undefined
+      //     // if (response.data.accessToken) {
+      //     //   const userAccessToken = response.data.accessToken;
+      //     //   localStorage.setItem(
+      //     //     globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
+      //     //     userAccessToken
+      //     //   );
+      //     // }
 
-          // Check if response.data.refreshToken is not null or undefined
-          if (response.data.refreshToken) {
-            const userRefreshToken = response.data.refreshToken;
-            localStorage.setItem(
-              globalSettingsConfig.localStorageKeys.REFRESH_TOKEN,
-              userRefreshToken
-            );
-          }
+      //     // // Check if response.data.refreshToken is not null or undefined
+      //     // if (response.data.refreshToken) {
+      //     //   const userRefreshToken = response.data.refreshToken;
+      //     //   localStorage.setItem(
+      //     //     globalSettingsConfig.localStorageKeys.REFRESH_TOKEN,
+      //     //     userRefreshToken
+      //     //   );
+      //     // }
+      //   }
+      //   navigate("/");
+      if (response.success && response.data) {
+        // 使用新的数据结构
+        if (response.data.accessToken && response.data.refreshToken) {
+          login({
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken,
+            expiresAt: response.data.expiresAt // 保存令牌过期时间
+          });
+          navigate("/");
         }
-        navigate("/");
-      } else {
+      }else {
         // pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
       }
     } catch (error) {
