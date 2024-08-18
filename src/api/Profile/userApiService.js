@@ -54,3 +54,11 @@ export const requestCheckUserExist = async (account) => {
     const response = await apiClient.post("/api/public/user/exist", params);
     return response.data;
 }
+
+export const requestUpdateNewToken = async (refreshToken) => {
+    const params = {
+        refreshToken: refreshToken,
+    };
+    const response = await apiClient.post("/api/public/updateNewToken", params);
+    return response.data;
+}

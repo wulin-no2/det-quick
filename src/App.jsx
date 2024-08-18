@@ -23,6 +23,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
 
+
   const { loading, toast } = useGlobalUIState();
   const showFooterPaths = ["/"];
   const shouldShowFooter = showFooterPaths.includes(location.pathname);
@@ -31,7 +32,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider>
+      <AuthProvider> 
         <QuestionStateProvider>
           <Router>
             <Navbar />
@@ -83,5 +84,7 @@ function App() {
     </ThemeProvider>
   );
 }
+
+
 
 export default App;

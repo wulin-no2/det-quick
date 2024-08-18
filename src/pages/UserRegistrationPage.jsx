@@ -20,7 +20,7 @@ import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 // import { requestLogin } from '../service/authAPiService'
 import globalSettingsConfig from '../globalSettingsConfig';
-import { requestRegister,requestLogout } from "../api/Profile/userApiService";
+import { requestRegister,requestLogout,requestUpdateNewToken } from "../api/Profile/userApiService";
 // import { pubSub } from '../utils/pubSub';
 const UserRegistrationPage = () => {
   const theme = useTheme();
@@ -38,8 +38,26 @@ const UserRegistrationPage = () => {
     setPassword(event.target.value);
   };
 
-  const handleShowPasswordClick =  () => {
+  const handleShowPasswordClick = async () => {
     setShowPassword(!showPassword);
+    // const refreshToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5Nzc0Njk4Zi1iZDI4LTRhNmUtYWE4YS1lMjFiMTRhYzVmMGUiLCJpYXQiOjE3MjM5MDEyMjcsImV4cCI6MTcyNDUwNjAyN30.WxfToZ9M4KESfF7H3xrXkY6ivFhevm2I0T7manTPei9ssho3RYBEol9F1G759MEe30Ad4GtDemqpjIEvTuVjdw";
+    // const response = await requestUpdateNewToken(refreshToken);
+    // console.log("response==in handleTokenRefresh=9999=", response);
+    
+
+    const tokens = localStorage.getItem('authTokens');
+    if (tokens) {
+      console.log("ttttttt");
+
+      // const parsedTokens = JSON.parse(tokens);
+      // if (parsedTokens.refreshToken) {
+      //   // 尝试使用 refreshToken 更新 accessToken
+      //   const response = await requestUpdateNewToken(refreshToken);
+      //   console.log("response==in handleTokenRefresh=9999=", response);
+      //   }
+    }
+  
+
    
     // const response = await requestLogout();
     // console.log("response==logout==", response);
