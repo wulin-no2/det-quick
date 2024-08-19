@@ -15,7 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 // import { requestLogin } from '../service/authAPiService'
 import { requestLogin } from "../api/Profile/userApiService";
 import globalSettingsConfig from "../globalSettingsConfig";
@@ -31,6 +31,10 @@ const UserLoginPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 尝试获取从哪里重定向过来的信息，如果没有则默认重定向到首页
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const handleAccountChange = (event) => {
     setAccount(event.target.value);
@@ -98,7 +102,7 @@ const UserLoginPage = () => {
             refreshToken: response.data.refreshToken,
             expiresAt: response.data.expiresAt // 保存令牌过期时间
           });
-          navigate("/");
+          navigate(from.pathname); // 使用保存的路径进行重定向
         }
       }else {
         // pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
