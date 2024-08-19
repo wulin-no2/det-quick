@@ -23,7 +23,7 @@ export const QuestionStateProvider = ({ children }) => {
   });
   const [filters, setFilters] = useState(() => {
     const saved = localStorage.getItem("filters");
-    return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null" };
+    return saved ? JSON.parse(saved) : { isAsc: false, difficultyLevel: "null", isPracticed:"null" };
   });
 
   // use useEffect ,when states change, update localStorage

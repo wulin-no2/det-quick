@@ -13,6 +13,7 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import AnswerButton from "../common/AnswerButton";
 import CardHeader from "../common/question-card-components/CardHeader";
 import styles from "../common/Record.module.css";
+import {  submitUserAnswerWithFileUrl } from "../../api/api-fetchQuestionDetail";
 
 const ReadAloudCard = ({
   count,
@@ -29,6 +30,16 @@ const ReadAloudCard = ({
   const audioRef = useRef(null);
   const recordedAudioRef = useRef(null);
   const stopRecordingRef = useRef(null);
+  const [isPracticed, setIsPracticed] = useState(
+    questionDetail.isPracticed || false
+  );
+
+  useEffect(() => {
+    // Load the previous recording if `isPracticed` is true and the recording URL is provided
+    if (isPracticed && questionDetail.userRecordingUrl) {
+      setMediaBlobUrl(questionDetail.userRecordingUrl);
+    }
+  }, [isPracticed, questionDetail.userRecordingUrl]);
 
   const handleStartRecording = useCallback((startRecording) => {
     startRecording();
@@ -59,8 +70,10 @@ const ReadAloudCard = ({
   useEffect(() => {
     if (!recording && mediaBlobUrl) {
       console.log("Recording stopped, mediaBlobUrl available");
+      submitUserAnswerWithFileUrl(questionDetail.questionId,questionDetail.submoduleId,mediaBlobUrl)
+      setIsPracticed(true);
     }
-  }, [recording, mediaBlobUrl]);
+  }, [mediaBlobUrl,questionDetail.questionId,questionDetail.submoduleId,recording]);
 
   if (!questionDetail) {
     return <div></div>;
@@ -78,6 +91,7 @@ const ReadAloudCard = ({
         handleBack={handleBack}
         globalIndex={globalIndex}
         onTimeUp={handleTimeUp}
+        isPracticed={isPracticed}
       />
       {/* question */}
       <Box sx={{ m: 4 }}>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo} from "react";
 import { Box } from "@mui/material";
 import ProgressBar from "./CardHeaderComponents/ProgressBar";
 import Timer from "./CardHeaderComponents/Timer";
@@ -15,9 +15,10 @@ const CardHeader = ({
   handleLast,
   handleNext,
   isPracticed,
-  // , onTimeUp
+  onTimeUp
 }) => {
-  const time_limit = timeLimitBySubmoduleId(questionDetail.submoduleId);
+  // const time_limit = timeLimitBySubmoduleId(questionDetail.submoduleId);
+  const time_limit = useMemo(() => timeLimitBySubmoduleId(questionDetail.submoduleId), [questionDetail.submoduleId]);
 
   // set timer and progressBar based on time_limit
   const [timer, setTimer] = useState(time_limit);
@@ -30,9 +31,10 @@ const CardHeader = ({
           return prev - 1;
         } else {
           clearInterval(timerInterval);
-          // handleNext(); // Automatically go to next question when timer ends
           console.log("globalIndex ", globalIndex);
-          // onTimeUp(); // Call onTimeUp when timer ends
+          if (onTimeUp) {
+            onTimeUp(); // Call onTimeUp when timer ends if it's passed as a prop
+          }
           return time_limit;
         }
       });
@@ -41,11 +43,13 @@ const CardHeader = ({
     return () => clearInterval(timerInterval);
   }, [
     time_limit,
-    // onTimeUp,
+    onTimeUp,
     globalIndex,
   ]);
 
-  const progress = ((time_limit - timer) / time_limit) * 100;
+  // const progress = ((time_limit - timer) / time_limit) * 100;
+  const progress = useMemo(() => ((time_limit - timer) / time_limit) * 100, [time_limit, timer]);
+
 
   return (
     <Box

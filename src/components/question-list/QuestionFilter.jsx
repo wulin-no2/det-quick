@@ -8,7 +8,7 @@ import FilterMenu from "../common/tab-filter-components/FilterMenu";
 import QuestionList from "./question-list-components/QuestionList";
 import PaginationRounded from "../common/PaginationRounded";
 import { fetchQuestionListResponseData } from "../../api/api-fetchQuestionList";
-import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
+// import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import { buttonGroupsForQuestionFilter,displayedQuestionFilter } from "../../utils/practice/questionListConstantAndFunc";
 import useQuestionStateContext from "../../context/useQuestionStateContext";
 
@@ -51,6 +51,7 @@ const SubQuestionTypeContent = ({ submoduleId }) => {
           page: currentPage,
           size: 10,
         };
+        console.log('filter is ',postData)
         const result = await fetchQuestionListResponseData(postData);
         setQuestions(result.content);
         setPages(result.totalPages);
@@ -117,7 +118,7 @@ const SubQuestionTypeContent = ({ submoduleId }) => {
           />
         </Item>
       </Stack>
-      <ShowLocalStorage componentName="SubQuestionTypeContent" />
+      {/* <ShowLocalStorage componentName="SubQuestionTypeContent" /> */}
     </Box>
   );
 };

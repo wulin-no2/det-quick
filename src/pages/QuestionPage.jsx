@@ -47,6 +47,7 @@ const questionCardComponents = {
 function QuestionPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  
 
   const state =
     location.state ||
@@ -125,7 +126,8 @@ function QuestionPage() {
           filters.difficultyLevel,
           filters.templateType,
           filters.isCorrect,
-          filters.isAsc
+          filters.isAsc,
+          filters.isPracticed 
         );
         if (question) {
           setCurrentState({

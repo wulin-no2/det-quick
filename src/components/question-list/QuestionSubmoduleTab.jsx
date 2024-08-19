@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabPanel from "../common/tab-filter-components/TabPanel";
-import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
+// import { ShowLocalStorage } from "../../utils/ShowLocalStorage";
 import useQuestionStateContext from "../../context/useQuestionStateContext";
 import { subTypesArr } from "../../utils/practice/questionListConstantAndFunc";
 
@@ -88,7 +88,7 @@ const SuperQuestionTypeContent = () => {
           <SubQuestionTypeContent submoduleId={submoduleId} />
         </TabPanel>
       ))}
-      <ShowLocalStorage componentName="SuperQuestionTypeContent" />
+      {/* <ShowLocalStorage componentName="SuperQuestionTypeContent" /> */}
     </Box>
   );
 };

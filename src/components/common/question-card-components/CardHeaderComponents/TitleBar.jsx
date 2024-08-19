@@ -21,7 +21,7 @@ const TitleBar = ({ id, name, onClick, difficulty ,isPracticed}) => {
       <CloseButton onClick={onClick} />
       <CardTitle id={id} name={name} />
       <DifficultyButton difficulty={difficulty} />
-      {isPracticed===true && <PracticedButton/>}
+      {isPracticed===true && <PracticedButton isPracticed={isPracticed}/>}
     </Box>
   );
 };

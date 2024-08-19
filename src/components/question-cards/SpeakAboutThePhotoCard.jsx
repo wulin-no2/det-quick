@@ -7,6 +7,7 @@ import CardHeader from "../common/question-card-components/CardHeader";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import AudioButton from "../common/AudioButton";
+import { submitUserAnswerWithFileUrl } from "../../api/api-fetchQuestionDetail";
 
 const SpeakAboutThePhotoCard = ({
   count,
@@ -21,11 +22,16 @@ const SpeakAboutThePhotoCard = ({
   const [recording, setRecording] = useState(false);
   const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
   const stopRecordingRef = useRef(null);
+  const [isPracticed, setIsPracticed] = useState(
+    questionDetail.isPracticed || false
+  );
 
   useEffect(() => {
-    console.log("question detail is", questionDetail);
-    console.log("questionImageUrl:", questionDetail.questionImageUrl);
-  }, [questionDetail]);
+    // Load the previous recording if `isPracticed` is true and the recording URL is provided
+    if (isPracticed && questionDetail.userRecordingUrl) {
+      setMediaBlobUrl(questionDetail.userRecordingUrl);
+    }
+  }, [isPracticed, questionDetail.userRecordingUrl]);
 
   const handleStartRecording = useCallback((startRecording) => {
     startRecording();
@@ -37,11 +43,23 @@ const SpeakAboutThePhotoCard = ({
     setRecording(false);
   }, []);
 
+  const handleTimeUp = useCallback(() => {
+    console.log("Time is up, stopping recording");
+    if (stopRecordingRef.current) {
+      stopRecordingRef.current();
+    }
+  }, []);
+
+
   useEffect(() => {
+    // Submit the answer only if recording is stopped and `isPracticed` was initially false
     if (!recording && mediaBlobUrl) {
       console.log("Recording stopped, mediaBlobUrl available");
+      submitUserAnswerWithFileUrl(questionDetail.questionId, questionDetail.submoduleId, mediaBlobUrl);
+      setIsPracticed(true);
     }
-  }, [recording, mediaBlobUrl]);
+  }, [mediaBlobUrl, questionDetail.questionId, questionDetail.submoduleId, recording]);
+
 
   const handleReferenceAnswerClick = () => {
     setShowReferenceAnswer(!showReferenceAnswer);
@@ -69,6 +87,8 @@ const SpeakAboutThePhotoCard = ({
         totalWords={count}
         handleBack={handleBack}
         globalIndex={globalIndex}
+        onTimeUp={handleTimeUp}
+        isPracticed={isPracticed}
       />
       {/* question */}
       <Box sx={{ display: "flex", flexDirection: "column", m: 4 }}>

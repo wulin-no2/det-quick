@@ -1,5 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 import { Box, Typography, List, ListItem, Grid, Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -7,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import DifficultyButton from "../../common/question-card-components/CardHeaderComponents/DifficultyButton";
 import { getNameBySubmoduleId } from "../../../utils/practice/questionListConstantAndFunc";
 import useQuestionStateContext from "../../../context/useQuestionStateContext";
+import PracticedButton from "../../common/question-card-components/CardHeaderComponents/PracticedButton";
 
 const baseQuestionsDetailURL = "questions/detail";
 
@@ -19,6 +21,9 @@ export default function QuestionList({
   const navigate = useNavigate();
   const { currentPage, setGlobalIndex } = useQuestionStateContext();
   const itemsPerPage = 10;
+  useEffect(()=>{
+    console.log("filters in list component is ",filters)
+  },[filters])
 
   // remember the state with React Router for later use in QuestionPage
   const handleItemClick = (question, index) => {
@@ -65,12 +70,14 @@ export default function QuestionList({
             // border: "1px solid green"
           }}
         >
+
           <List
             sx={{
               width: "100%",
               // border: "1px solid red"
             }}
           >
+            {questionsArr.length===0 && <Typography variant="h7">{t('No result. Change your filter.')}</Typography>}
             {questionsArr.map((question, index) => {
               const newGlobalIndex = (currentPage - 1) * itemsPerPage + index + 1;
               return (
@@ -118,6 +125,7 @@ export default function QuestionList({
                             pr: 2,
                           }}
                         >
+                          {<PracticedButton isPracticed={question.isPracticed}/>}
                           <DifficultyButton
                             difficulty={question.difficultyLevel}
                           />
