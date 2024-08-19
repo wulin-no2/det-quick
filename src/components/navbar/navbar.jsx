@@ -7,14 +7,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import LanguageButton from "../common/LanguageButton";
 import NavBarItems from "./NavBarItems";
 import { useAuth } from '../../context/AuthContext'; // 确保路径正确
-
+import { pubSub } from '../../utils/pubSub';
+import globalSettingsConfig from '../../globalSettingsConfig';
 function Navbar() {
   const navigate = useNavigate();
   const handleLoginClick = () => {
     navigate("/login"); // link to login
   };
 
-  const { authTokens, logout } = useAuth(); // 从 AuthContext 获取状态和方法
+  const { logout,setIsLoggedIn,isLoggedIn } = useAuth(); // 从 AuthContext 获取状态和方法
 
   const [showLanguageSwitcher, setShowLanguageSwitcher] = useState(true);
   const { t } = useTranslation();
@@ -26,6 +27,28 @@ function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  // 处理登录状态变更的 useEffect
+  useEffect(() => {
+    const handleLoginSuccess = (data) => {
+      console.log("login success998998");
+      setIsLoggedIn(data.loggedIn);
+    };
+
+    const handleLoginFailure = (data) => {
+      setIsLoggedIn(data.loggedIn);
+      
+      console.log("login failed998998");
+    }
+
+    pubSub.subscribe(globalSettingsConfig.event.AUTH_LOGIN_SUCCESS, handleLoginSuccess);
+    pubSub.subscribe(globalSettingsConfig.event.AUTH_LOGIN_FAILURE, handleLoginFailure);
+
+    return () => {
+      pubSub.unsubscribe(globalSettingsConfig.event.AUTH_LOGIN_SUCCESS, handleLoginSuccess);
+      pubSub.unsubscribe(globalSettingsConfig.event.AUTH_LOGIN_FAILURE, handleLoginFailure);
+    };
   }, []);
 
   return (
@@ -58,7 +81,7 @@ function Navbar() {
             </IconButton>
           )}
           {/* todo: how can we make login center vertically */}
-          {authTokens ? (
+          {isLoggedIn ? (
 
             <IconButton className="weakButton">
               <AccountCircleIcon />

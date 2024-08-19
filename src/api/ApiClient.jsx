@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import globalSettingsConfig  from "../globalSettingsConfig";  
-
+import { pubSub } from "../utils/pubSub";
 // Set default Authorization header
 // const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNTQ1NTgwMC0zOWRkLTQyZjItOWNiNS1kNTIxMzkyZDRkYmQiLCJpYXQiOjE3MjI0MDU4MTQsImV4cCI6MTcyMjQ1OTgxNH0.URi_xxgZx1EqXCvi3Spy-gdWkQJNm71kPvbfRiOHr5vbyE2IvPVCZg6kc1CcEnnTWR_MT6DNlIY18uGS_U3Mwg';
 // localStorage.setItem('accessToken', accessToken);
@@ -58,6 +58,8 @@ ApiClient.interceptors.response.use(
 
         const tokenRefreshedResult = await refreshAccessToken(); // 尝试刷新令牌
         if (tokenRefreshedResult) {
+          pubSub.publish(globalSettingsConfig.event.AUTH_LOGIN_SUCCESS, { loggedIn: true });
+
           return ApiClient(originalRequest); // 令牌刷新成功，重新发送原始请求
         }
 
@@ -107,9 +109,12 @@ async function refreshAccessToken() {
 }
 
 function redirectToLogin() {
+
+  pubSub.publish(globalSettingsConfig.event.AUTH_LOGIN_FAILURE, { loggedIn: false });
+
   // 实现重定向到登录页的逻辑
   console.log("Redirecting to login page...");
-  window.location.href = '/login';
+  // window.location.href = '/login';
 }
 
 

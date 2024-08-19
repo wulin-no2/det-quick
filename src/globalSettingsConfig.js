@@ -12,6 +12,9 @@ const globalSettingsConfig = {
         SHOW_LOADING: 'show_loading',
         SHOW_TOAST: 'show_toast',
         HIDE_TOAST: 'hide_toast', // 确保添加了这个事件
+
+        AUTH_LOGIN_SUCCESS: 'auth_login_success',
+        AUTH_LOGIN_FAILURE: 'auth_login_failure',
     
         api_token_expire: 'api_token-expire',
         // 其他事件名称...
