@@ -46,14 +46,7 @@ const UserLoginPage = () => {
 
   const handleShowPasswordClick = () => {
     setShowPassword(!showPassword);
-    console.log(
-      "response.data.accessToken===read from local=",
-      localStorage.getItem(globalSettingsConfig.localStorageKeys.ACCESS_TOKEN)
-    );
-    console.log(
-      "response.data.refreshToken===read from local=",
-      localStorage.getItem(globalSettingsConfig.localStorageKeys.REFRESH_TOKEN)
-    );
+
   };
 
   const handleForgotPasswordClick = () => {
@@ -73,33 +66,13 @@ const UserLoginPage = () => {
 
       // if (response.)
       console.log("response====", response);
-      // if (response.success) {
-      //   if (response.data) {
-      //     // Check if response.data.accessToken is not null or undefined
-      //     // if (response.data.accessToken) {
-      //     //   const userAccessToken = response.data.accessToken;
-      //     //   localStorage.setItem(
-      //     //     globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
-      //     //     userAccessToken
-      //     //   );
-      //     // }
+   
 
-      //     // // Check if response.data.refreshToken is not null or undefined
-      //     // if (response.data.refreshToken) {
-      //     //   const userRefreshToken = response.data.refreshToken;
-      //     //   localStorage.setItem(
-      //     //     globalSettingsConfig.localStorageKeys.REFRESH_TOKEN,
-      //     //     userRefreshToken
-      //     //   );
-      //     // }
-      //   }
-      //   navigate("/");
       if (response.success && response.data) {
         // 使用新的数据结构
-        if (response.data.accessToken && response.data.refreshToken) {
+        if (response.data.accessToken) {
           login({
             accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken,
             expiresAt: response.data.expiresAt // 保存令牌过期时间
           });
           navigate(from.pathname); // 使用保存的路径进行重定向

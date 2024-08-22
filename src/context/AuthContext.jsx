@@ -31,11 +31,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);  // 设置加载完成
 
 
-       } else if (parsedTokens.refreshToken) {
-      //   // 尝试使用 refreshToken 更新 accessToken
-        console.log("parsedTokens.authTokens=====99999999");
-         handleTokenRefresh(parsedTokens.refreshToken);
+       
       } else{
+        handleTokenRefresh();
+
         setIsLoggedIn(false);  // 更新登录状态为true
         setLoading(false);  // 设置加载完成
       }
@@ -51,20 +50,17 @@ export const AuthProvider = ({ children }) => {
 
   }, []);
 
-  const handleTokenRefresh = async (refreshToken) => {
-    console.log("parsedTokens.refreshToken===99999999");
+  const handleTokenRefresh = async () => {
     try {
       setLoading(true);  // 设置加载完成
 
       // 调用刷新令牌的 API
-      const response = await requestUpdateNewToken(refreshToken);
-      // console.log("response==in handleTokenRefresh=9999=", response);
+      const response = await requestUpdateNewToken();
       if(response.success){
         if (response.data) {
-          // 更新本地存储的accessToken和refreshToken
+          // 更新本地存储的accessToken。
           localStorage.setItem('authTokens', JSON.stringify({
             accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken,
             expiresAt: response.data.expiresAt // 保存令牌过期时间
           }));
           setIsLoggedIn(true);  // 更新登录状态为false
@@ -78,18 +74,7 @@ export const AuthProvider = ({ children }) => {
 
       }
 
-      // if (response && response.accessToken) {
-      //   const newTokens = {
-      //     accessToken: response.accessToken,
-      //     refreshToken: response.refreshToken || refreshToken,
-      //   };
-
-      //   localStorage.setItem('authTokens', JSON.stringify(newTokens));
-      //   setAuthTokens(newTokens);
-      //   pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false); // 刷新成功，停止 loading
-      // } else {
-      //   logout(); // 刷新失败，重定向到登录
-      // }
+    
 
       // setLoading(false); // 刷新成功，加载完成
       pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);

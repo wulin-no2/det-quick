@@ -48,8 +48,10 @@ function App() {
                   <Route path="/password-reset" element={<PasswordResetPage />} />
 
                   <Route path="/practice" element={ <PracticeListPage />} />
+                  {/* <Route path="/vocab" element={<WordBookPage />} /> */}
+
                   {/* <Route path="/practice" element={<PracticeListPage />} />
-                  <Route path="/vocab" element={<WordBookPage />} />
+
                   <Route path="/practice/questions/detail" element={<QuestionPage />} /> */}
 
                   {/* 需要登录的页面 */}
@@ -62,14 +64,16 @@ function App() {
                     }
                   />
 
-                  <Route
-                    path="/vocab"
+                  <Route 
+                    path="/vocab" 
                     element={
                       <ProtectedRoute>
                         <WordBookPage />
                       </ProtectedRoute>
                     }
                   />
+
+            
 
 
                   <Route path="*" element={<h1>Page not found</h1>} />

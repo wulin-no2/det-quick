@@ -9,6 +9,8 @@ import NavBarItems from "./NavBarItems";
 import { useAuth } from '../../context/AuthContext'; // 确保路径正确
 import { pubSub } from '../../utils/pubSub';
 import globalSettingsConfig from '../../globalSettingsConfig';
+import ProfileMenu from '../common/ProfileMenu';
+
 function Navbar() {
   const navigate = useNavigate();
   const handleLoginClick = () => {
@@ -75,17 +77,14 @@ function Navbar() {
         <div className="flex-none">
 
 
-          {showLanguageSwitcher && (
-            <IconButton className="weakButton">
-              <LanguageButton />
-            </IconButton>
-          )}
-          {/* todo: how can we make login center vertically */}
+        {showLanguageSwitcher && !isLoggedIn && (  // Check if not logged in to show the language button
+          <IconButton className="weakButton">
+            <LanguageButton />
+          </IconButton>
+        )}
           {isLoggedIn ? (
-
-            <IconButton className="weakButton">
-              <AccountCircleIcon />
-            </IconButton>
+        
+            <ProfileMenu />
 
           ) : (
             <button className="login-btn" onClick={handleLoginClick}>

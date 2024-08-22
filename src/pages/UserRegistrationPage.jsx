@@ -40,31 +40,7 @@ const UserRegistrationPage = () => {
 
   const handleShowPasswordClick = async () => {
     setShowPassword(!showPassword);
-    // const refreshToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5Nzc0Njk4Zi1iZDI4LTRhNmUtYWE4YS1lMjFiMTRhYzVmMGUiLCJpYXQiOjE3MjM5MDEyMjcsImV4cCI6MTcyNDUwNjAyN30.WxfToZ9M4KESfF7H3xrXkY6ivFhevm2I0T7manTPei9ssho3RYBEol9F1G759MEe30Ad4GtDemqpjIEvTuVjdw";
-    // const response = await requestUpdateNewToken(refreshToken);
-    // console.log("response==in handleTokenRefresh=9999=", response);
-    
 
-    const tokens = localStorage.getItem('authTokens');
-    if (tokens) {
-      console.log("ttttttt");
-
-      // const parsedTokens = JSON.parse(tokens);
-      // if (parsedTokens.refreshToken) {
-      //   // 尝试使用 refreshToken 更新 accessToken
-      //   const response = await requestUpdateNewToken(refreshToken);
-      //   console.log("response==in handleTokenRefresh=9999=", response);
-      //   }
-    }
-  
-
-   
-    // const response = await requestLogout();
-    // console.log("response==logout==", response);
-    // if (response.success) {
-    //   localStorage.removeItem(globalSettingsConfig.localStorageKeys.ACCESS_TOKEN);
-    //   localStorage.removeItem(globalSettingsConfig.localStorageKeys.REFRESH_TOKEN);
-    // }
   };
 
   const handleRegister = async () => {
@@ -79,18 +55,8 @@ const UserRegistrationPage = () => {
       // if (response.)
       console.log("response====", response);
       if (response.success) {
-        // if (response.data) {
-        //   console.log("response.data====", response.data);
-        //   console.log("response.data.accessToken====", response.data.data.accessToken);
-        //   console.log("response.data.refreshToken====", response.data.refreshToken);
-        //   console.log("-0000===",globalSettingsConfig.localStorageKeys.ACCESS_TOKEN);
-        //   localStorage.setItem(globalSettingsConfig.localStorageKeys.ACCESS_TOKEN, response.data.accessToken);
-        //   localStorage.setItem(globalSettingsConfig.localStorageKeys.REFRESH_TOKEN, response.data.refreshToken);
-
-        //   // console.log("response.data.accessToken===read from local=",localStorage.getItem(globalSettingsConfig.localStorageKeys.ACCESS_TOKEN));
-        //   // console.log("response.data.refreshToken===read from local=",localStorage.getItem(globalSettingsConfig.localStorageKeys.REFRESH_TOKEN));
-        // }
-        // navigate('/dashboard');
+      
+     
         navigate(`/verify?account=${encodeURIComponent(account)}`);
 
       } else {
@@ -156,6 +122,14 @@ const UserRegistrationPage = () => {
               label="Password"
             />
           </FormControl>
+
+          {/* <FormControl variant="outlined" style={{ marginTop: "25px" }}>
+            <TextField
+              label="Invitation Code (Optional)"
+              value={account}
+              onChange={handleAccountChange}
+            />
+          </FormControl> */}
 
           
           <Button

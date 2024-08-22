@@ -13,8 +13,8 @@ const ApiClient = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
-    // 'Authorization': `Bearer ${token}` // Set the Authorization header
-  }
+  },
+  // withCredentials: true  // 添加这行
 });
 export default ApiClient;
 
@@ -64,12 +64,10 @@ ApiClient.interceptors.response.use(
         }
 
       } catch (refreshError) {
-        // 如果刷新accessToken失败，可能是refreshToken无效
         redirectToLogin();
         return Promise.reject(refreshError);
       }
     } else if (error.response.status === 403) {
-      // accessToken无效或refreshToken过期/无效
       redirectToLogin();
     }
     return Promise.reject(error);
@@ -77,23 +75,20 @@ ApiClient.interceptors.response.use(
 );
 
 async function refreshAccessToken() {
-  const authTokens = JSON.parse(localStorage.getItem('authTokens'));
-  const localRefreshToken = authTokens.refreshToken;
 
 
 
     try {
-      const params = {
-        refreshToken: localRefreshToken,
-      };
-      const result = await ApiClient.post("/api/public/updateNewToken", params);
+     
+      const result = await ApiClient.post("/api/public/updateNewToken", {}, {
+        withCredentials: true  // 确保携带 Cookie
+    });
       const response = result.data;
     if (response.success) {
       if (response.data) {
-        // 更新本地存储的accessToken和refreshToken
+        // 更新本地存储的accessToken
         localStorage.setItem('authTokens', JSON.stringify({
           accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
           expiresAt: response.data.expiresAt // 保存令牌过期时间
         }));
         return true; // 刷新成功，返回 true

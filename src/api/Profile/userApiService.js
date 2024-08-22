@@ -15,7 +15,9 @@ export const requestLogin = async (account, password) => {
         account: account,
         password: password,
     };
-    const response = await apiClient.post("/api/public/login", params);
+    const response = await apiClient.post("/api/public/login", params, {
+        withCredentials: true  // 确保请求时包括凭证
+    });
     return response.data;
 }
 
@@ -55,10 +57,8 @@ export const requestCheckUserExist = async (account) => {
     return response.data;
 }
 
-export const requestUpdateNewToken = async (refreshToken) => {
-    const params = {
-        refreshToken: refreshToken,
-    };
+export const requestUpdateNewToken = async () => {
+  
     const response = await apiClient.post("/api/public/updateNewToken", params);
     return response.data;
 }
