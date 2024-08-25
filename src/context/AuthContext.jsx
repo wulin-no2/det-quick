@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
 
     // 尝试从 localStorage 获取令牌
-    const tokens = localStorage.getItem('authTokens');
+    const tokens = localStorage.getItem(globalSettingsConfig.localStorageKeys.AUTH_TOKEN);
     if (tokens) {
       console.log("authTokens==7777788=", );
 
@@ -35,8 +35,8 @@ export const AuthProvider = ({ children }) => {
       } else{
         handleTokenRefresh();
 
-        setIsLoggedIn(false);  // 更新登录状态为true
-        setLoading(false);  // 设置加载完成
+        // setIsLoggedIn(false);  // 更新登录状态为true
+        // setLoading(false);  // 设置加载完成
       }
     }else{
       console.log("authTokens==66666688=", );
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
       if(response.success){
         if (response.data) {
           // 更新本地存储的accessToken。
-          localStorage.setItem('authTokens', JSON.stringify({
+          localStorage.setItem(globalSettingsConfig.localStorageKeys.AUTH_TOKEN, JSON.stringify({
             accessToken: response.data.accessToken,
             expiresAt: response.data.expiresAt // 保存令牌过期时间
           }));
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
 
   // 登出逻辑
   const logout = () => {
-    localStorage.removeItem('authTokens');
+    localStorage.removeItem(globalSettingsConfig.localStorageKeys.AUTH_TOKEN);
     setAuthTokens(null);
     setIsLoggedIn(false);  // 更新登录状态为false
     setLoading(false);  // 设置加载完成
@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
 
   // 登入逻辑，通常是在登录成功后调用
   const login = (newTokens) => {
-    localStorage.setItem('authTokens', JSON.stringify(newTokens));
+    localStorage.setItem(globalSettingsConfig.localStorageKeys.AUTH_TOKEN, JSON.stringify(newTokens));
     setAuthTokens(newTokens);
     setIsLoggedIn(true);  // 更新登录状态为true
 

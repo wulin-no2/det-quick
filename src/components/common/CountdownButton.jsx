@@ -40,15 +40,14 @@ const CountdownButton = ({
       {...buttonProps} // 展开其他所有Button属性
       onClick={handleButtonClick}
       disabled={isCountingDown || disabled} // 如果正在倒计时或者外部已禁用，则禁用按钮
+      disableRipple // 禁用点击涟漪效果
       sx={{
-        // width: '100%', // 使用百分比宽度
-        // height: '100%',
-        // fontWeight: "bold",
-        // fontSize: "1.3rem",
-        // borderRadius: "0.5rem",
-        // textTransform: "none",
         ...buttonProps.sx,
+        '&:active': {
+          backgroundColor: 'transparent !important', // 点击时确保背景透明
+        },
       }}
+    
     >
       {isCountingDown ? `${timeLeft}s` : buttonText}
     </Button>

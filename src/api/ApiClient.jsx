@@ -19,14 +19,14 @@ const ApiClient = axios.create({
 export default ApiClient;
 
 // 列出不需要认证令牌的接口
-const noAuthRequired = ["/login", "/register", "/verify", "/sendVerifyCode","/user/exist","/questions/list","/api/public/updateNewToken"];
+const noAuthRequired = ["/public","/questions/list"];
 
 
 ApiClient.interceptors.request.use(
   (config) => {
     const requiresAuth = !noAuthRequired.some(path => config.url.includes(path));
     if (requiresAuth) {
-      const authTokens = JSON.parse(localStorage.getItem('authTokens'));
+      const authTokens = JSON.parse(localStorage.getItem(globalSettingsConfig.localStorageKeys.AUTH_TOKEN));
       if (authTokens && authTokens.accessToken) {
         config.headers.Authorization = `Bearer ${authTokens.accessToken}`;
       }
@@ -87,7 +87,7 @@ async function refreshAccessToken() {
     if (response.success) {
       if (response.data) {
         // 更新本地存储的accessToken
-        localStorage.setItem('authTokens', JSON.stringify({
+        localStorage.setItem(globalSettingsConfig.localStorageKeys.AUTH_TOKEN, JSON.stringify({
           accessToken: response.data.accessToken,
           expiresAt: response.data.expiresAt // 保存令牌过期时间
         }));

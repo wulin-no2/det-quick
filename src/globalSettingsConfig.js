@@ -21,7 +21,8 @@ const globalSettingsConfig = {
     },
 
     localStorageKeys: {
-        ACCESS_TOKEN: 'userAccessToken',
+        // ACCESS_TOKEN: 'userAccessToken',
+        AUTH_TOKEN: 'authToken',
         // 其他localStorage键名...
     },
 

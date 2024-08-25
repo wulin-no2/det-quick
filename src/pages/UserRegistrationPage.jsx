@@ -20,8 +20,8 @@ import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 // import { requestLogin } from '../service/authAPiService'
 import globalSettingsConfig from '../globalSettingsConfig';
-import { requestRegister,requestLogout,requestUpdateNewToken } from "../api/Profile/userApiService";
-// import { pubSub } from '../utils/pubSub';
+import { requestRegister, requestLogout, requestUpdateNewToken } from "../api/Profile/userApiService";
+import { pubSub } from '../utils/pubSub';
 const UserRegistrationPage = () => {
   const theme = useTheme();
 
@@ -48,24 +48,31 @@ const UserRegistrationPage = () => {
     // navigate('/dashboard');
     console.log("account===xxxxx=", account);
     try {
-      // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+      pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
 
       const response = await requestRegister(account, password);
 
       // if (response.)
       console.log("response====", response);
       if (response.success) {
-      
-     
+
+
         navigate(`/verify?account=${encodeURIComponent(account)}`);
 
       } else {
-        // pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
       }
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        // 访问具体的错误信息和数据
+        console.log("Error response data:", error.response.data);
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+      } else {
+        // 处理无响应体的其他错误（网络问题等）
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+      }
     } finally {
-      // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+      pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
     }
   };
 
@@ -131,7 +138,7 @@ const UserRegistrationPage = () => {
             />
           </FormControl> */}
 
-          
+
           <Button
             variant="contained"
             type="submit"
@@ -148,9 +155,9 @@ const UserRegistrationPage = () => {
             color="#083156"
             style={{ marginTop: "25px", fontSize: "18px" }} // Adjust these values to fine-tune the spacing
           >
-            Already have an account? 
-            <Link to="/login" style={{ color:  theme.palette.primary.main, textDecoration: "none" ,marginLeft:"10px"}}>
-            Login
+            Already have an account?
+            <Link to="/login" style={{ color: theme.palette.primary.main, textDecoration: "none", marginLeft: "10px" }}>
+              Login
             </Link>
           </Typography>
 

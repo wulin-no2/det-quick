@@ -6,7 +6,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CountdownButton from '../components/common/CountdownButton';
 import globalSettingsConfig from '../globalSettingsConfig';
 import { pubSub } from '../utils/pubSub';
-import { requestCheckUserExist } from "../api/Profile/userApiService";
+import { requestCheckUserExist, requestResetPasswordSendCode, requestResetPasswordVerifyCode } from "../api/Profile/userApiService";
+import { useNavigate } from 'react-router-dom';
 
 // 自定义Stepper连接线组件
 const ColorlibConnector = styled(StepConnector)(({ theme, ownerState }) => {
@@ -42,6 +43,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 function PasswordResetPage() {
+    const navigate = useNavigate();
+
     const [activeStep, setActiveStep] = useState(0);
 
     const [values, setValues] = useState({
@@ -49,14 +52,40 @@ function PasswordResetPage() {
         password: '',
         confirmPassword: '',
         showPassword: false,
-        showConfirmPassword: false
+        showConfirmPassword: false,
+        otp: ''  // 添加验证码状态
+
     });
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleGetOtpClick = () => {
+    const handleGetOtpClick = async () => {
+        try {
+            pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+
+            const response = await requestResetPasswordSendCode(values.email);
+            if (!response.success) {
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+            }
+
+        } catch (error) {
+
+            // 检查 error 对象以确保它包含响应体
+            if (error.response) {
+                // 访问具体的错误信息和数据
+                console.log("Error response data:", error.response.data);
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+            } else {
+                // 处理无响应体的其他错误（网络问题等）
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+            }
+
+        } finally {
+            pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+
+        }
 
     }
 
@@ -73,47 +102,100 @@ function PasswordResetPage() {
 
 
     const handleNext = async () => {
+        if (activeStep === steps.length - 1) {
+            // 假设步骤索引从0开始，最后一步的处理逻辑
+            // 完成所有处理后
+            resetForm();  // 重置表单
+            navigate('/login');  // 导航到登录页
+            // setActiveStep(0);  // 可选：自动返回到第一步
+        } else {
+            if (activeStep === 0) {
+                // email 不能是空
+                if (!values.email) {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, "Email cannot be empty.");
 
+                    return;
+                }
+                try {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
 
-        if(activeStep === 0 ){
-            // email 不能是空
-            if (!values.email) {
-                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, "email cannot be empty");
+                    const response = await requestCheckUserExist(values.email);
+                    if (response.success) {
 
-                return;
-            }
-            try {
-                // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
-                console.log("response.data==rerere==");
+                        setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-                const response = await requestCheckUserExist(values.email);
-                if (response.success) {
-                    if (response.data) {
-                        console.log("response.data====", response.data);
+                    } else {
+
+                        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
                     }
-                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-                }else{
-                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+                } catch (error) {
+
+                    // 检查 error 对象以确保它包含响应体
+                    if (error.response) {
+                        // 访问具体的错误信息和数据
+                        console.log("Error response data:", error.response.data);
+                        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+                    } else {
+                        // 处理无响应体的其他错误（网络问题等）
+                        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+                    }
+
+                } finally {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+
                 }
 
-            } catch (error) {
-                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message);
+            } else if (activeStep === 1) {
+                if (!values.password || !values.confirmPassword || values.password !== values.confirmPassword) {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, "Password and confirm password must match.");
+                    return;
+                }
 
+                try {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+                    const response = await requestResetPasswordVerifyCode(values.email, values.otp, values.password);
+                    if (response.success) {
+                        // 可以在这里添加检查验证码正确性的API调用逻辑
+                        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                    } else {
+                        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
 
-            } finally {
-                // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+                    }
+
+                } catch (error) {
+                    // 检查 error 对象以确保它包含响应体
+                    if (error.response) {
+                        // 访问具体的错误信息和数据
+                        console.log("Error response data:", error.response.data);
+                        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+                    } else {
+                        // 处理无响应体的其他错误（网络问题等）
+                        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+                    }
+                } finally {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+
+                }
 
             }
-
         }
-
-
 
     };
 
     const handleEdit = () => {
         setActiveStep(0);  // 返回第一步
+    };
+
+    const resetForm = () => {
+        setValues({
+            email: '',
+            password: '',
+            confirmPassword: '',
+            showPassword: false,
+            showConfirmPassword: false,
+            otp: ''
+        });
     };
 
 
@@ -208,6 +290,9 @@ function PasswordResetPage() {
                             fullWidth
                             label="Enter OTP"
                             variant="outlined"
+                            value={values.otp}
+                            onChange={handleChange('otp')}
+
                             style={{ marginTop: "20px" }}
 
                             InputProps={{
@@ -221,7 +306,6 @@ function PasswordResetPage() {
                                             disabled={false}
                                             buttonProps={{
 
-
                                                 sx: {
                                                     color: 'primary.main', // 使用主题中的颜色
                                                     textTransform: 'none', // 移除大写字母样式
@@ -229,10 +313,10 @@ function PasswordResetPage() {
                                                     padding: 0, // 移除内边距
                                                     minWidth: 0, // 移除最小宽度限制
                                                     backgroundColor: 'transparent', // 确保背景透明
-                                                    '&:hover': {
-                                                        backgroundColor: 'transparent' // 鼠标悬停时也保持透明背景
-                                                    }
-
+                                                    border: 'none', // 移除边框
+                                                    '&:hover': { backgroundColor: 'transparent' },
+                                                    '&:active': { backgroundColor: 'transparent !important' },
+                                                    '&:focus': { outline: 'none' }
                                                 },
                                             }}
                                         />
@@ -248,23 +332,37 @@ function PasswordResetPage() {
                 return (
                     <Box>
                         <Typography variant="h5" sx={{ mt: 2 }}>
-                            密码成功重置！
+                            {/* 密码成功重置！ */}
+                            Password reset successfully!
                         </Typography>
                         <Typography variant="h6" sx={{ mt: 2 }}>
-                            你的账户将退出登录，请使用新密码重新登录。
+                            {/* 你的账户将退出登录，请使用新密码重新登录。 */}
+                            Your account will be logged out, please log in again with the new password.
                         </Typography>
                     </Box>
 
                 );
             default:
-                return '未知步骤';
+                // return '未知步骤';
+                return 'Unknown step';
+        }
+    };
+
+    const isNextDisabled = () => {
+        if (activeStep === 0) {
+            return !values.email;  // 第一步要求有 Email
+        } else if (activeStep === 1) {
+            return !values.password || !values.confirmPassword || !values.otp;
+            // 第二步要求密码、确认密码存在且相同，且OTP非空
+        } else {
+            return false;  // 最后一步，默认不禁用
         }
     };
 
     return (
         <Container component="main" maxWidth="sm" sx={{ bgcolor: 'white', p: "40px", borderRadius: 2, boxShadow: 3, margin: "30px 0 50px 0" }}>
             <Typography variant="h4" component="h1" sx={{ textAlign: 'center', mb: 2 }}>
-                重置密码
+                Reset Password
             </Typography>
             <Stepper activeStep={activeStep} alternativeLabel connector={<ColorlibConnector ownerState={{ activeStep }} />}>
                 {steps.map((label, index) => (
@@ -290,6 +388,8 @@ function PasswordResetPage() {
                     variant="contained"
                     type="submit"
                     onClick={handleNext}
+                    disabled={isNextDisabled()}
+
                     style={{
                         height: "55px",
                         width: '100%',
@@ -298,7 +398,6 @@ function PasswordResetPage() {
                         border: 'none',
                         marginTop: "40px"
                     }} // Adjust these values to fine-tune the spacing
-                // disabled={isLoginDisabled} // Disable the button if username or password is empty
                 >
                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>

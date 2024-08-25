@@ -20,7 +20,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { requestLogin } from "../api/Profile/userApiService";
 import globalSettingsConfig from "../globalSettingsConfig";
 // import { loginApi } from "../api/Profile/login";
-// import { pubSub } from '../utils/pubSub';
+import { pubSub } from '../utils/pubSub';
 import { useAuth } from "../context/AuthContext"
 const UserLoginPage = () => {
   const theme = useTheme();
@@ -60,7 +60,7 @@ const UserLoginPage = () => {
     // navigate('/dashboard');
     console.log("account===xxxxx=", account);
     try {
-      // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+      pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
 
       const response = await requestLogin(account, password);
 
@@ -78,12 +78,19 @@ const UserLoginPage = () => {
           navigate(from.pathname); // 使用保存的路径进行重定向
         }
       }else {
-        // pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
       }
     } catch (error) {
-      console.error(error);
-    } finally {
-      // pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+      if (error.response) {
+        // 访问具体的错误信息和数据
+        console.log("Error response data:", error.response.data);
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+      } else {
+        // 处理无响应体的其他错误（网络问题等）
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+      }   
+     } finally {
+      pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
     }
   };
 

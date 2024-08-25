@@ -78,10 +78,10 @@ const UserVerificationPage = () => {
           // Check if response.data.accessToken is not null or undefined
           if (response.data.accessToken) {
             const userAccessToken = response.data.accessToken;
-            localStorage.setItem(
-              globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
-              userAccessToken
-            );
+            // localStorage.setItem(
+            //   globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
+            //   userAccessToken
+            // );
           }
 
         }
