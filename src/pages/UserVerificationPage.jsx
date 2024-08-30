@@ -23,13 +23,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 // import { requestLogin } from '../service/authAPiService'
 import globalSettingsConfig from '../globalSettingsConfig';
 import { requestSendVerificationCode, requestVerifyCode } from "../api/Profile/userApiService";
-// import { pubSub } from '../utils/pubSub';
+import { pubSub } from '../utils/pubSub';
+import { useAuth } from "../context/AuthContext"
+
 const UserVerificationPage = () => {
   const theme = useTheme();
 
   const [verifyCode, setVerifyCode] = useState("");
 
   const navigate = useNavigate();
+  const { login } = useAuth(); // 从 AuthContext 中获取 login 函数
+
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -69,28 +73,33 @@ const UserVerificationPage = () => {
 
   const handleVerify = async () => {
 
-    console.log("account===xxxxx=", account);
-
     try {
-      const response = await requestVerifyCode(account, verifyCode);
-      if (response.success) {
-        if (response.data) {
-          // Check if response.data.accessToken is not null or undefined
-          if (response.data.accessToken) {
-            const userAccessToken = response.data.accessToken;
-            // localStorage.setItem(
-            //   globalSettingsConfig.localStorageKeys.ACCESS_TOKEN,
-            //   userAccessToken
-            // );
-          }
+      pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
 
+      const response = await requestVerifyCode(account, verifyCode);
+      if (response.success && response.data) {
+        // 使用新的数据结构
+        if (response.data.accessToken) {
+          login({
+            accessToken: response.data.accessToken,
+            expiresAt: response.data.expiresAt // 保存令牌过期时间
+          });
+          navigate("/"); 
         }
-        navigate("/");
+      }else {
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
       }
     } catch (error) {
-
-    } finally {
-
+      if (error.response) {
+        // 访问具体的错误信息和数据
+        console.log("Error response data:", error.response.data);
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+      } else {
+        // 处理无响应体的其他错误（网络问题等）
+        pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+      }   
+     } finally {
+      pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
     }
   };
 
