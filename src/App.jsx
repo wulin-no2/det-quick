@@ -20,7 +20,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 import { useGlobalUIState } from './hooks/useGlobalUIState';
 import MySnackBarMessage from './components/MySnackBarMessage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-
+import ContactUsPage from "./pages/company-pages/ContactUsPage";
 function App() {
 
 
@@ -46,8 +46,10 @@ function App() {
                   <Route path="/register" element={<UserRegistrationPage />} />
                   <Route path="/verify" element={<UserVerificationPage />} />
                   <Route path="/password-reset" element={<PasswordResetPage />} />
+                  <Route path="/contact-us" element={<ContactUsPage />} />
 
                   <Route path="/practice" element={ <PracticeListPage />} />
+                
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />
@@ -79,7 +81,8 @@ function App() {
                   <Route path="*" element={<h1>Page not found</h1>} />
 
                 </Routes>
-                {shouldShowFooter && <HomeFooter />}
+                {/* {shouldShowFooter && <HomeFooter />} */}
+                <HomeFooter />
               </Box>
             </Container>
           </Router>

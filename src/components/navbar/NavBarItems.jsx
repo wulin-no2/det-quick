@@ -41,10 +41,10 @@ export default function NavBarItems() {
       </li>
       <li>
         <Link
-          to="/about-us"
-          className={location.pathname === "/about-us" ? "active-link" : ""}
+          to="/contact-us"
+          className={location.pathname === "/contact-us" ? "active-link" : ""}
         >
-          {t("about_us")}
+          {t("contact_us")}
         </Link>
       </li>
     </ul>

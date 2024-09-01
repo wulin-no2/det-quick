@@ -7,14 +7,13 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
-
+import globalSettingsConfig from '../../globalSettingsConfig';
 
 const StyledLink = ({ children, href }) => (
     <Link href={href} 
     variant="body2" 
     display="block"
     sx={{
-            // marginLeft: '50px',
             marginTop: '10px',
             textDecoration: children === 'show more' ? 'underline' : 'none', // 根据内容决定是否加下划线
             color: 'black', // 默认颜色
@@ -44,7 +43,7 @@ const HomeFooter = () => {
 
 
     return (
-        <Box sx={{ width: '100%', bgcolor: 'background.paper', m: 0, p: 0, px: '50px' }}> {/* px is padding on the left and right */}
+        <Box sx={{ width: '100%', bgcolor: 'background.paper', m: 0, p: 0, px:  globalSettingsConfig.layoutMargins.horizontalWindowMargin }}> {/* px is padding on the left and right */}
             <Grid container spacing={10} sx={{ justifyContent: 'flex-start' }}>
                 {/* Products Section */}
                 <Grid item style={{ flexGrow: 1 }}>
@@ -88,8 +87,8 @@ const HomeFooter = () => {
                 width: '100%',
                 height: '1px',
                 backgroundColor: "#ccc",
-                marginTop: '40px',
-                marginBottom: '50px'
+                marginTop: '60px',
+                marginBottom: '25px'
             }}></Box>
 
             {/* Footer Bottom */}

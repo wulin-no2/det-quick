@@ -30,6 +30,10 @@ const globalSettingsConfig = {
         errorPage: 2000,
         subscriptionPopConfirmBg: 1000,
         loadingSpinner:3000,
+    },
+
+    layoutMargins: {
+        horizontalWindowMargin: '100px',  // 距离窗口左右边缘的距离
     }
 };
 
