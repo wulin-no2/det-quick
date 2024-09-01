@@ -18,7 +18,8 @@ html,
 }
 
 .content {
-  margin: auto;
+  /* margin: auto; */
+  margin: 0px; /* 设置为0，确保没有外边距 */
   padding-top: 70px; /* Adjust this value to match the height of your Navbar */
   display: flex;
   justify-content: center;
@@ -27,7 +28,6 @@ html,
     100vh - 70px
   ); /* Adjust 70px based on the navbar's actual height */
   text-align: center;
-  margin: 16px;
   flex-wrap: wrap;
 }
 

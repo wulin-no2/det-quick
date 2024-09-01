@@ -22,6 +22,7 @@ import globalSettingsConfig from "../globalSettingsConfig";
 // import { loginApi } from "../api/Profile/login";
 import { pubSub } from '../utils/pubSub';
 import { useAuth } from "../context/AuthContext"
+
 const UserLoginPage = () => {
   const theme = useTheme();
   const { login } = useAuth(); // 从 AuthContext 中获取 login 函数
@@ -75,6 +76,7 @@ const UserLoginPage = () => {
             accessToken: response.data.accessToken,
             expiresAt: response.data.expiresAt // 保存令牌过期时间
           });
+          // <Redirect to={from.pathname} />;
           navigate(from.pathname); // 使用保存的路径进行重定向
         }
       }else {

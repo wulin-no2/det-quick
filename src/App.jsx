@@ -10,7 +10,7 @@ import "./utils/languageSwitcher/i18n"; // import i18n to translate
 import Navbar from "./components/navbar/navbar";
 import PracticeListPage from "./pages/PracticeListPage";
 import QuestionPage from "./pages/QuestionPage";
-import Footer from "./components/common/Footer";
+import HomeFooter from "./components/common/HomeFooter";
 import { QuestionStateProvider } from "./context/QuestionStateContext";
 import WordBookPage from "./pages/WordBookPage";
 import UserRegistrationPage from "./pages/UserRegistrationPage";
@@ -36,8 +36,8 @@ function App() {
         <QuestionStateProvider>
           <Router>
             <Navbar />
-            <Container maxWidth="llg">
-              <Box className="content">
+            <Container maxWidth={false} disableGutters sx={{ p: 0, m: 0 }}>
+            <Box className="content">
                 <LoadingSpinner />
                 <MySnackBarMessage open={toast.open} message={toast.message} />
                 <Routes>
@@ -79,7 +79,7 @@ function App() {
                   <Route path="*" element={<h1>Page not found</h1>} />
 
                 </Routes>
-                {shouldShowFooter && <Footer />}
+                {shouldShowFooter && <HomeFooter />}
               </Box>
             </Container>
           </Router>
