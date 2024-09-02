@@ -21,6 +21,8 @@ import { useGlobalUIState } from './hooks/useGlobalUIState';
 import MySnackBarMessage from './components/MySnackBarMessage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ContactUsPage from "./pages/company-pages/ContactUsPage";
+import AboutUsPage from "./pages/company-pages/AboutUsPage";
+
 function App() {
 
 
@@ -47,6 +49,7 @@ function App() {
                   <Route path="/verify" element={<UserVerificationPage />} />
                   <Route path="/password-reset" element={<PasswordResetPage />} />
                   <Route path="/contact-us" element={<ContactUsPage />} />
+                  <Route path="/about-us" element={<AboutUsPage />} />
 
                   <Route path="/practice" element={ <PracticeListPage />} />
                 

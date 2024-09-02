@@ -33,7 +33,7 @@ function ContactUsPage() {
                     marginX: globalSettingsConfig.layoutMargins.horizontalWindowMargin,
                     px: '290px',
                 }}>
-                    <Typography component="h1" variant="h2" sx={{ mb: 2, pt: '30px', fontFamily: 'Suisse Works, Georgia, PingFang TC, serif' }}>
+                    <Typography component="h1" variant="h2" sx={{ mb: 2, pt: '30px', Family:font 'Suisse Works, Georgia, PingFang TC, serif' }}>
                         Contact us
                     </Typography>
                     <Typography variant="body1" sx={{ mb: 4 }}>
