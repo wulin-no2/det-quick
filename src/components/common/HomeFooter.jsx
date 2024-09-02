@@ -75,7 +75,7 @@ const HomeFooter = () => {
                 {/* Company Section */}
                 <Grid item style={{ flexGrow: 1 }}>
                     <StyledTypography>Company</StyledTypography>
-                    <StyledLink href="#">About us</StyledLink>
+                    <StyledLink href="about-us">About us</StyledLink>
                     <StyledLink href="contact-us">Contact us</StyledLink>
                     <StyledLink href="#">Privacy Policy</StyledLink>
                     <StyledLink href="#">Terms and Conditions</StyledLink>

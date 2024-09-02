@@ -95,7 +95,7 @@ function AboutUsPage() {
             </Box>
             <Box sx={{
                 marginX: globalSettingsConfig.layoutMargins.horizontalWindowMargin ,
-                marginBottom: '100px',
+                marginBottom: '70px',
                 paddingX: '0px',
                 paddingTop: '80px',
             }}>
