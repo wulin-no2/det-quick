@@ -49,8 +49,8 @@ const HomeFooter = () => {
                 <Grid item style={{ flexGrow: 1 }}>
                     <StyledTypography>Products</StyledTypography>
                     <StyledLink href="#" >DET Practice</StyledLink>
-                    <StyledLink href="#">DET Writing AI Correction</StyledLink>
-                    <StyledLink href="#">DET Speaking AI Correction</StyledLink>
+                    <StyledLink href="#">DET Writing AI </StyledLink>
+                    <StyledLink href="/products/speaking-ai">DET Speaking AI </StyledLink>
                     <StyledLink href="#">DET Mock</StyledLink>
                     <StyledLink href="#">DET Vocabulary</StyledLink>
                 </Grid>
@@ -75,10 +75,10 @@ const HomeFooter = () => {
                 {/* Company Section */}
                 <Grid item style={{ flexGrow: 1 }}>
                     <StyledTypography>Company</StyledTypography>
-                    <StyledLink href="about-us">About us</StyledLink>
-                    <StyledLink href="contact-us">Contact us</StyledLink>
-                    <StyledLink href="privacy-policy">Privacy Policy</StyledLink>
-                    <StyledLink href="terms-and-conditions">Terms and Conditions</StyledLink>
+                    <StyledLink href="/about-us">About us</StyledLink>
+                    <StyledLink href="/contact-us">Contact us</StyledLink>
+                    <StyledLink href="/privacy-policy">Privacy Policy</StyledLink>
+                    <StyledLink href="/terms-and-conditions">Terms and Conditions</StyledLink>
                 </Grid>
             </Grid>
 

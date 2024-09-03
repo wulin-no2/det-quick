@@ -24,6 +24,7 @@ import ContactUsPage from "./pages/company-pages/ContactUsPage";
 import AboutUsPage from "./pages/company-pages/AboutUsPage";
 import TermsAndConditionsPage from "./pages/company-pages/TermsAndConditionsPage";
 import PrivacyPolicyPage from "./pages/company-pages/PrivacyPolicyPage";
+import SpeakingAIPage from "./pages/products/SpeakingAIPage";
 
 function App() {
 
@@ -55,7 +56,7 @@ function App() {
                   <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                   <Route path="/practice" element={ <PracticeListPage />} />
-                
+                  <Route path="/products/speaking-ai" element={<SpeakingAIPage />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />
