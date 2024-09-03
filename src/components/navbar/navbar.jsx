@@ -77,18 +77,18 @@ function Navbar() {
         <div className="flex-none">
 
 
-        {showLanguageSwitcher && !isLoggedIn && (  // Check if not logged in to show the language button
+        {/* {showLanguageSwitcher && !isLoggedIn && (  // Check if not logged in to show the language button
           <IconButton className="weakButton">
             <LanguageButton />
           </IconButton>
-        )}
+        )} */}
           {isLoggedIn ? (
         
             <ProfileMenu />
 
           ) : (
             <button className="login-btn" onClick={handleLoginClick}>
-              {t("login")}
+              {t("Sign  in")}
             </button>
           )}
 

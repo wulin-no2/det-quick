@@ -57,13 +57,13 @@
 }
 
 .login-btn {
-  padding: 10px 20px;
-  margin-right: 10px;
+  /* padding: 10px 20px; */
+  /* margin-right: 10px; */
   border: none;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 30px; /* 增加border-radius实现更圆的边角 */
   font-size: 18px;
 }
 

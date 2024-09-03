@@ -207,11 +207,11 @@ const UserLoginPage = () => {
               fontSize: "14px",
             }} // Adjust these values to fine-tune the spacing
           >
-            <Link to="/" style={{ color: "#777777", textDecoration: "none" }}>
-              Terms of Use
+            <Link to="/terms-and-conditions" style={{ color: "#777777", textDecoration: "none" }}>
+            Terms and Conditions
             </Link>
             <span style={{ margin: "0 15px" }}> | </span>
-            <Link to="/" style={{ color: "#777777", textDecoration: "none" }}>
+            <Link to="/privacy-policy" style={{ color: "#777777", textDecoration: "none" }}>
               Privacy Policy
             </Link>
           </Typography>
