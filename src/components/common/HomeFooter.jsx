@@ -77,8 +77,8 @@ const HomeFooter = () => {
                     <StyledTypography>Company</StyledTypography>
                     <StyledLink href="about-us">About us</StyledLink>
                     <StyledLink href="contact-us">Contact us</StyledLink>
-                    <StyledLink href="#">Privacy Policy</StyledLink>
-                    <StyledLink href="#">Terms and Conditions</StyledLink>
+                    <StyledLink href="privacy-policy">Privacy Policy</StyledLink>
+                    <StyledLink href="terms-and-conditions">Terms and Conditions</StyledLink>
                 </Grid>
             </Grid>
 

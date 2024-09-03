@@ -22,6 +22,8 @@ import MySnackBarMessage from './components/MySnackBarMessage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ContactUsPage from "./pages/company-pages/ContactUsPage";
 import AboutUsPage from "./pages/company-pages/AboutUsPage";
+import TermsAndConditionsPage from "./pages/company-pages/TermsAndConditionsPage";
+import PrivacyPolicyPage from "./pages/company-pages/PrivacyPolicyPage";
 
 function App() {
 
@@ -50,7 +52,8 @@ function App() {
                   <Route path="/password-reset" element={<PasswordResetPage />} />
                   <Route path="/contact-us" element={<ContactUsPage />} />
                   <Route path="/about-us" element={<AboutUsPage />} />
-
+                  <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                   <Route path="/practice" element={ <PracticeListPage />} />
                 
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
