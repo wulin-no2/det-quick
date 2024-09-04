@@ -28,16 +28,16 @@ const theme = createTheme({
           padding: "8px 20px", // Uniform padding
           // fontSize: "1rem", // Standard font size
         },
-        outlined: {
-          borderColor: "#357af5", // boarder color
-          color: "#357af5", // text color
-          backgroundColor: "transparent", // background color transparent
-        },
-        myOutlinedButton: {
-          borderColor: "#357af5", // boarder color
-          color: "#357af5", // text color
-          backgroundColor: "transparent", // background color transparent
-        },
+        // outlined: {
+        //   borderColor: "#357af5", // boarder color
+        //   color: "#357af5", // text color
+        //   backgroundColor: "transparent", // background color transparent
+        // },
+        // myOutlinedButton: {
+        //   borderColor: "#357af5", // boarder color
+        //   color: "#357af5", // text color
+        //   backgroundColor: "transparent", // background color transparent
+        // },
       },
     },
   },

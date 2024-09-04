@@ -26,7 +26,7 @@ export default function NavBarItems() {
       <li>
         <Link
           to="/courses"
-          className={location.pathname === "/live-course" ? "active-link" : ""}
+          className={location.pathname === "/courses" ? "active-link" : ""}
         >
           {t("Courses")}
         </Link>

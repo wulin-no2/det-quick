@@ -1,9 +1,13 @@
+
 import React from 'react';
 import { Container, Grid, Box, Typography } from '@mui/material';
-import globalSettingsConfig from '../../globalSettingsConfig';
+import globalSettingsConfig from '../globalSettingsConfig';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import RoundedButton from '../../components/common/RoundedButton';
-function SpeakingAIPage() {
+import RoundedButton from '../components/common/RoundedButton';
+import CourseTypeSelector from '../components/common/CourseTypeSelector';
+import VideoCoursesComponentPartOne from '../components/courses/VideoCoursesComponentPartOne';
+import LiveSessionsComponent from '../components/courses/LiveSessionsComponent';
+function CoursesPage() {
 
     const TitleTypography = ({ children, sx }) => (
         <Typography
@@ -84,13 +88,29 @@ function SpeakingAIPage() {
             <Box sx={{ bgcolor: '#FFFDFA', }}>
                 <Box sx={{
                     marginX: globalSettingsConfig.layoutMargins.horizontalWindowMargin,
-                    paddingY: '50px',
+                    paddingY: '60px',
                     // paddingX: '100px',
                 }}>
-                    <Grid container spacing={10} alignItems="center">
+                    <Box sx={{
+                        mb:'40px',
+                        width: '61.8%', // 调整宽度为容器的50%，可以根据需要调整
+                        mx: 'auto'  // 使用左右自动边距实现水平居中
+                    }}>
+                    <CourseTypeSelector />
+                    </Box>
+
+
+                    {/* <VideoCoursesComponentPartOne>
+
+                    </VideoCoursesComponentPartOne> */}
+                   
+                        <LiveSessionsComponent />
+
+
+                    {/* <Grid container spacing={10} alignItems="center">
                         <Grid item xs={12} md={5} sx={{ textAlign: 'left' }} >
                             <TitleTypography sx={{ fontSize: '48px' }}>
-                                DET Speaking AI
+                                Video Courses
                             </TitleTypography>
                             <ContentTypography>
                                 DET Speaking AI Correction service provided by powerful AI. Support all speaking question types, and provides professional guidance to help you easily improve your DET speaking score.
@@ -104,20 +124,10 @@ function SpeakingAIPage() {
 
                         </Grid>
                         <Grid item xs={12} md={7}>
-                            {/* <Box
-                                sx={{
-                                    height: '100%',
-                                    width: '100%',
-                                    backgroundImage: 'url("/images/about-us-who.png")',  // 换成你的图片路径
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    borderRadius: '12px',
-                                    paddingY:'20px'
-                                }}
-                            /> */}
+                          
                             <Box
                                 sx={{
-                                    height: '435px',  // 指定高度
+                                    height: '400px',  
                                     width: '100%',
                                     display: 'flex',
                                     justifyContent: 'center',
@@ -127,19 +137,19 @@ function SpeakingAIPage() {
                                 }}
                             >
                                 <img
-                                    src="/images/products/speaking_ai_part1.jpg"  // 更改为你的图片路径
+                                    src="https://www.scholarhat.com/images/video-course.png"  // 更改为你的图片路径
                                     alt="speaking ai"
                                     style={{
                                         height: '100%',
                                         width: '100%',
-                                        objectFit: 'cover',  // 确保图片覆盖但不变形
+                                        objectFit: 'cover',  
                                         borderRadius: '20px',
 
                                     }}
                                 />
                             </Box>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </Box>
             </Box>
             <Box sx={{
@@ -243,4 +253,4 @@ function SpeakingAIPage() {
     );
 }
 
-export default SpeakingAIPage;
+export default CoursesPage;

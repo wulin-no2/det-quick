@@ -33,6 +33,7 @@ const StyledTypography = ({ children }) => (
         textAlign: 'left',
         marginTop: '50px',
         marginBottom: '20px',
+        color: 'black',
     }}>
         {children}
     </Typography>
