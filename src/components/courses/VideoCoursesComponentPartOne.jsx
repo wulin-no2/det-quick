@@ -82,7 +82,7 @@ function VideoCoursesComponentPartOne() {
     );
 
   return (
-    <Box>
+    <Box sx={{}}>
          <Grid container spacing={10} alignItems="center">
                         <Grid item xs={12} md={5} sx={{ textAlign: 'left' }} >
                             <TitleTypography sx={{ fontSize: '48px' }}>

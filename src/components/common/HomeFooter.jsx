@@ -107,15 +107,15 @@ const HomeFooter = () => {
                     <MenuItem value="English">English</MenuItem>
                     <MenuItem value="Chinese">Chinese</MenuItem>
                 </Select>
-                <Typography variant="body2" sx={{ mr: 'auto', ml: '30px' }}>
+                <Typography variant="body2" sx={{ mr: 'auto', ml: '30px' ,color:'black'}}>
                     Copyright © 2024 Grimlingo Limited, Ireland.
                 </Typography>
                 <Box>
-                    <IconButton href="#" color="inherit"><FacebookIcon /></IconButton>
-                    <IconButton href="#" color="inherit"><TwitterIcon /></IconButton>
-                    <IconButton href="#" color="inherit"><LinkedInIcon /></IconButton>
-                    <IconButton href="#" color="inherit"><YouTubeIcon /></IconButton>
-                    <IconButton href="#" color="inherit"><InstagramIcon /></IconButton>
+                    <IconButton href="#" color="black"><FacebookIcon /></IconButton>
+                    <IconButton href="#" color="black"><TwitterIcon /></IconButton>
+                    <IconButton href="#" color="black"><LinkedInIcon /></IconButton>
+                    <IconButton href="#" color="black"><YouTubeIcon /></IconButton>
+                    <IconButton href="#" color="black"><InstagramIcon /></IconButton>
                 </Box>
             </Box>
 

@@ -82,53 +82,54 @@ function LiveSessionsComponent() {
         </Box>
     );
 
-  return (
-    <Box>
-         <Grid container spacing={10} alignItems="center">
-         <Grid item xs={12} md={6.5}>
-                          
-                          <Box
-                              sx={{
-                                  height: '420px',  // 指定高度
-                                  width: '100%',
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  overflow: 'hidden',
-                                  borderRadius: '12px',
-                              }}
-                          >
-                              <img
-                                  src="https://www.englishclub.com/efl/wp-content/uploads/2018/08/teacher-student-one-to-one.jpg"  // 更改为你的图片路径
-                                  alt="speaking ai"
-                                  style={{
-                                      height: '100%',
-                                      width: '100%',
-                                      objectFit: 'cover',  // 确保图片覆盖但不变形
-                                      borderRadius: '20px',
+    return (
+        <Box sx={{}}>
+            <Grid container spacing={5} alignItems="center">
+                <Grid item xs={12} md={5.5} sx={{ textAlign: 'left' }} >
+                    <TitleTypography sx={{ fontSize: '48px' }}>
+                        1-on-1 Live Teaching
+                    </TitleTypography>
+                    <ContentTypography>
+                        DET Speaking AI Correction service provided by powerful AI. Support all speaking question types, and provides professional guidance to help you easily improve your DET speaking score.
+                    </ContentTypography>
+                    <RoundedButton
+                        text="Get Started"
+                        onClick={() => console.log("Button clicked!")}
+                        showArrow={true}
+                        sx={{ mt: '5px' }} // Example of overriding width
+                    />
+                </Grid>
 
-                                  }}
-                              />
-                          </Box>
-                      </Grid>
-                        <Grid item xs={12} md={5.5} sx={{ textAlign: 'left' }} >
-                            <TitleTypography sx={{ fontSize: '48px' }}>
-                                Video Courses
-                            </TitleTypography>
-                            <ContentTypography>
-                                DET Speaking AI Correction service provided by powerful AI. Support all speaking question types, and provides professional guidance to help you easily improve your DET speaking score.
-                            </ContentTypography>
-                            <RoundedButton
-                                text="Get Started"
-                                onClick={() => console.log("Button clicked!")}
-                                showArrow={true}
-                                sx={{mt:'5px'}} // Example of overriding width
-                            />
-                        </Grid>
-                      
-                    </Grid>
-    </Box>
-  );
+                <Grid item xs={12} md={6.5}>
+
+                    <Box
+                        sx={{
+                            height: '400px',  // 指定高度
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            overflow: 'hidden',
+                            borderRadius: '12px',
+                        }}
+                    >
+                        <img
+                            src="https://ik.imagekit.io/mepl/wp-content/uploads/2021/08/Feature-Image-1.png"  // 更改为你的图片路径
+                            alt="speaking ai"
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                objectFit: 'cover',  // 确保图片覆盖但不变形
+                                borderRadius: '20px',
+
+                            }}
+                        />
+                    </Box>
+                </Grid>
+
+            </Grid>
+        </Box>
+    );
 }
 
 export default LiveSessionsComponent;

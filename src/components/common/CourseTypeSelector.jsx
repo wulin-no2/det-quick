@@ -15,7 +15,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
 
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   flex: 1,
-  fontSize: '20px',  // Adjust font size as needed
+  fontSize: '18px',  // Adjust font size as needed
   margin: '4px',  // Adds small space between buttons to visually separate them
   borderRadius: borderRadiusValue,  // Ensures all sides are rounded
   border: 'none !important',  // Ensures no borders
@@ -40,12 +40,14 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 }));
 
 
-function CourseTypeSelector() {
+function CourseTypeSelector({ onChange }) {
   const [alignment, setAlignment] = React.useState('Video Courses'); // Initial state
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
+      onChange(newAlignment);  // 调用传入的 onChange 回调函数
+
     }
   };
 
