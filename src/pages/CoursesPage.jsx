@@ -9,6 +9,8 @@ import VideoCoursesComponentPartOne from '../components/courses/VideoCoursesComp
 import LiveSessionsComponent from '../components/courses/LiveSessionsComponent';
 import VideoCourseAudienceSection from '../components/courses/VideoCourseAudienceSection';
 import LiveSessionsAudienceSection from '../components/courses/LiveSessionsAudienceSection';
+import LiveSessionsCourseOverview from '../components/courses/LiveSessionsCourseOverview';
+import VideoCourseOverview from '../components/courses/VideoCourseOverview';
 function CoursesPage() {
 
     const [selectedCourse, setSelectedCourse] = React.useState('video');
@@ -209,93 +211,18 @@ function CoursesPage() {
                 </Grid> */}
             </Box>
 
+            {/* <Box sx={{ bgcolor: '#FFFDFA', }}> */}
             <Box sx={{ bgcolor: '#FFFDFA', }}>
+
             <Box sx={{
                 marginX: globalSettingsConfig.layoutMargins.horizontalWindowMargin ,
                 // marginBottom: '70px',
                 paddingX: '0px',
                 paddingY: '80px',
             }}>
-                <Box sx={{
-                }}>
-                    <TitleTypography sx={{marginBottom:'60px'}}>
-                    Course Overview
-                    </TitleTypography>
-                    {/* <ContentTypography sx={{fontSize:'22px',marginBottom:'60px'}}>
-                    Discover the values, vision, and mission that guide every step we take.                    
-                    </ContentTypography> */}
-                </Box>
-                <Grid container alignItems="center" spacing={6}>
-                    {/* 第一个部分：Care */}
-                    <Grid item xs={12} md={6}>
-                        <Box
-                            sx={{
-                                height: 300,
-                                backgroundImage: 'url("https://ichef.bbci.co.uk/news/976/cpsprodpb/1839E/production/_111203299_gettyimages-1146240359.jpg")',  // 更改为适当的图片路径
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                borderRadius: '12px',
-                                // marginTop: '40px'
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6} sx={{ textAlign: 'left', }}>
-                    <TitleTypography sx={{ fontSize: '32px'}}>
-                    Performance Assessment
-                                            </TitleTypography>
-                        <ContentTypography>
-                        Evaluate students' capabilities through mock or actual test scores, pinpointing areas needing improvement for targeted enhancement.                          </ContentTypography>
-                    </Grid>
-                 
-
-                    {/* 第二个部分：Continuous Improvement */}
-                  
-                    <Grid item xs={12} md={6} sx={{ textAlign: 'left' }}>
-                    <TitleTypography sx={{ fontSize: '32px',}}>
-                    Customized Teaching
-                        </TitleTypography>
-                        <ContentTypography>
-                        Deliver personalized instruction based on individual student profiles and score goals, integrated with a tailored learning plan.                        </ContentTypography>
-                    </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Box
-                            sx={{
-                                height: 300,
-                                backgroundImage: 'url("https://stories.uq.edu.au/medicine/2023/changes-to-uq-academic-titles-for-health-professionals/assets/sKyDCJzptP/adobestock_512024851-750x563.webp")',  // 更改为适当的图片路径
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                borderRadius: '12px',
-                                // marginTop: '40px'
-
-
-                            }}
-                        />
-                    </Grid>
-
-                        {/* 第3个部分：Care */}
-                        <Grid item xs={12} md={6}>
-                        <Box
-                            sx={{
-                                height: 300,
-                                backgroundImage: 'url("https://www.schooliseasy.com/wp-content/uploads/jpeg-optimizer_Tutor-01-1-1536x1024-1.jpg")',  // 更改为适当的图片路径
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                borderRadius: '12px',
-                                // marginTop: '40px'
-                            }}
-                        />
-                    </Grid>
-                        <Grid item xs={12} md={6} sx={{ textAlign: 'left' }}>
-                        <TitleTypography sx={{ fontSize: '32px',}}>
-                        Dedicated Tutoring and Support
-                        </TitleTypography>
-                        <ContentTypography>
-                        Offer one-on-one tutoring for queries and assignment corrections, including last-minute exam guidance, ensuring thorough preparation.                        </ContentTypography>
-
-                        </Grid>
-                   
-
-                </Grid>
+           {/* <LiveSessionsCourseOverview />   
+           <VideoCourseOverview />  */}
+            {selectedCourse === 'video' ? <VideoCourseOverview /> : <LiveSessionsCourseOverview />}
             </Box>
             </Box>
 
