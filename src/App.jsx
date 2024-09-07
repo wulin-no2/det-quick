@@ -26,7 +26,7 @@ import TermsAndConditionsPage from "./pages/company-pages/TermsAndConditionsPage
 import PrivacyPolicyPage from "./pages/company-pages/PrivacyPolicyPage";
 import SpeakingAIPage from "./pages/products/SpeakingAIPage";
 import CoursesPage from "./pages/CoursesPage";
-
+import PricingPage from "./pages/PricingPage";
 function App() {
 
 
@@ -59,6 +59,7 @@ function App() {
                   <Route path="/practice" element={ <PracticeListPage />} />
                   <Route path="/products/speaking-ai" element={<SpeakingAIPage />} />
                   <Route path="/courses" element={<CoursesPage />} />
+                  <Route path="/pricing" element={<PricingPage />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />
