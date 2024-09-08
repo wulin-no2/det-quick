@@ -148,7 +148,14 @@ const PackageCard = ({
                 </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-                <Button variant="contained" sx={{ backgroundColor: isSelected ? color : '#D9D9D9', color: isSelected ? '#ffffff' : '#ffffff', '&:hover': { backgroundColor: isSelected ? color : '#D9D9D9' } }}>
+                <Button variant="contained" sx={{ 
+                    textTransform: 'none',
+                    fontSize: '18px',
+                    borderRadius: '24px',
+
+                    backgroundColor: isSelected ? color : '#D9D9D9', 
+                    color: isSelected ? '#ffffff' : '#ffffff', 
+                    '&:hover': { backgroundColor: isSelected ? color : '#D9D9D9' } }}>
                     Purchase
                 </Button>
             </Box>
@@ -164,8 +171,8 @@ const VIPSubscriptions = () => {
             id: 1,
             title: "30-Day VIP",
             description: "Includes 60 AI-powered Correction Services",
-            price: 100,
-            color: "#72BCC7",
+            price: 30,
+            color: "#357AF5",
             imagePathSelected: '/images/pricing/vip-crown.png',
             imagePathUnselected: '/images/pricing/vip-crown-unselected.png'
         },
@@ -173,8 +180,8 @@ const VIPSubscriptions = () => {
             id: 2,
             title: "15-Day VIP",
             description: "Includes 30 AI-powered Correction Services",
-            price: 60,
-            color: "#7637F1",
+            price: 20,
+            color: "#72BCC7",
             imagePathSelected: '/images/pricing/vip-rocket.png',
             imagePathUnselected: '/images/pricing/vip-rocket-unselected.png'
         },
@@ -182,7 +189,7 @@ const VIPSubscriptions = () => {
             id: 3,
             title: "7-Day VIP",
             description: "Includes 10 AI-powered Correction Services",
-            price: 30,
+            price: 10,
             color: "#E4943B",
             imagePathSelected: '/images/pricing/vip-tag.png',
             imagePathUnselected: '/images/pricing/vip-tag-unselected.png'
