@@ -29,6 +29,7 @@ import CoursesPage from "./pages/CoursesPage";
 import PricingPage from "./pages/PricingPage";
 import WritingAIPage from "./pages/products/WritingAIPage";
 import BlogListPage from "./pages/blog-pages/BlogListPage";
+import BlogCardPage from "./pages/blog-pages/BlogCardPage";
 
 
 function App() {
@@ -65,7 +66,8 @@ function App() {
                   <Route path="/products/writing-ai" element={<WritingAIPage />} />
                   <Route path="/courses" element={<CoursesPage />} />
                   <Route path="/pricing" element={<PricingPage />} />
-                  <Route path="/blog" element={<BlogListPage />} />
+                  {/* <Route path="/blog" element={<BlogListPage />} /> */}
+                  <Route path="/blog" element={<BlogCardPage />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />
