@@ -50,7 +50,7 @@ const HomeFooter = () => {
                 <Grid item style={{ flexGrow: 1 }}>
                     <StyledTypography>Products</StyledTypography>
                     <StyledLink href="#" >DET Practice</StyledLink>
-                    <StyledLink href="#">DET Writing AI </StyledLink>
+                    <StyledLink href="/products/writing-ai">DET Writing AI </StyledLink>
                     <StyledLink href="/products/speaking-ai">DET Speaking AI </StyledLink>
                     <StyledLink href="#">DET Mock</StyledLink>
                     <StyledLink href="#">DET Vocabulary</StyledLink>
@@ -58,9 +58,9 @@ const HomeFooter = () => {
                 {/* Learn Section */}
                 <Grid item style={{ flexGrow: 1 }}>
                     <StyledTypography>Course</StyledTypography>
-                    <StyledLink href="#">Recorded Video Course</StyledLink>
-                    <StyledLink href="#">Live One-on-One Course</StyledLink>
-                    <StyledLink href="#">Group Interactive Live Course</StyledLink>
+                    <StyledLink href="/courses">Video Courses</StyledLink>
+                    <StyledLink href="/courses">One-on-One Live Teaching</StyledLink>
+                    {/* <StyledLink href="#">Group Interactive Live Course</StyledLink> */}
                 </Grid>
                 {/* Blog Section */}
                 <Grid item style={{ flexGrow: 1 }}>

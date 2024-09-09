@@ -93,7 +93,6 @@
 
 import React, { useState } from 'react';
 import { Box, Container, Card, CardContent, Typography, Button } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const PackageCard = ({
     title,

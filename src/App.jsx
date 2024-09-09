@@ -27,6 +27,10 @@ import PrivacyPolicyPage from "./pages/company-pages/PrivacyPolicyPage";
 import SpeakingAIPage from "./pages/products/SpeakingAIPage";
 import CoursesPage from "./pages/CoursesPage";
 import PricingPage from "./pages/PricingPage";
+import WritingAIPage from "./pages/products/WritingAIPage";
+import BlogListPage from "./pages/blog-pages/BlogListPage";
+
+
 function App() {
 
 
@@ -58,8 +62,10 @@ function App() {
                   <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                   <Route path="/practice" element={ <PracticeListPage />} />
                   <Route path="/products/speaking-ai" element={<SpeakingAIPage />} />
+                  <Route path="/products/writing-ai" element={<WritingAIPage />} />
                   <Route path="/courses" element={<CoursesPage />} />
                   <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/blog" element={<BlogListPage />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />

@@ -3,7 +3,7 @@ import { Container, Grid, Box, Typography } from '@mui/material';
 import globalSettingsConfig from '../../globalSettingsConfig';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import RoundedButton from '../../components/common/RoundedButton';
-function SpeakingAIPage() {
+function WritingAIPage() {
 
     const TitleTypography = ({ children, sx }) => (
         <Typography
@@ -60,22 +60,22 @@ function SpeakingAIPage() {
                             right: 0,
                             bottom: '-1px',  // 控制下划线与文字之间的距离
                             height: '1px',
-                            backgroundColor: 'primary.main',  // 使用主题中的主要颜色
+                            backgroundColor: '#E56D4D',  // 使用主题中的主要颜色
                             width: '100%',
                         }
                     },
                     '& svg': {
                         transform: 'translateX(4px)',
-                        color: 'primary.main'  // 确保箭头使用主题颜色
+                        color: '#E56D4D'  // 确保箭头使用主题颜色
                     }
                 }
             }}
             onClick={onClick}
         >
-            <Typography component="p" color="primary" sx={{ fontSize: '20px', }}>
+            <Typography component="p" color='#E56D4D' sx={{ fontSize: '20px', }}>
                 Start experiencing
             </Typography>
-            <ArrowForwardIcon sx={{ fontSize: '22px', ml: '8px', color: 'primary.main' }} />
+            <ArrowForwardIcon sx={{ fontSize: '22px', ml: '8px', color: '#E56D4D' }} />
         </Box>
     );
 
@@ -87,14 +87,13 @@ function SpeakingAIPage() {
                     paddingY: '50px',
                     // paddingX: '100px',
                 }}>
-                    <Grid container spacing={10} alignItems="center">
+                    <Grid container spacing={3} alignItems="center">
                         <Grid item xs={12} md={5} sx={{ textAlign: 'left' }} >
                             <TitleTypography sx={{ fontSize: '48px' }}>
-                                DET Speaking AI
+                                DET Writing AI
                             </TitleTypography>
                             <ContentTypography>
-                                DET Speaking AI Correction service provided by powerful AI. Support all speaking question types, and provides professional guidance to help you easily improve your DET speaking score.
-                            </ContentTypography>
+                            DET Writing AI  service provided by AI comparable to professional teachers. Your essay will be corrected based on DET scoring rules, and you will receive detailed feedback within 1-5 mins.                            </ContentTypography>
                             <RoundedButton
                                 text="Get Started"
                                 onClick={() => console.log("Button clicked!")}
@@ -117,7 +116,7 @@ function SpeakingAIPage() {
                             /> */}
                             <Box
                                 sx={{
-                                    height: '435px',  // 指定高度
+                                    height: '430px',  // 指定高度
                                     width: '100%',
                                     display: 'flex',
                                     justifyContent: 'center',
@@ -127,8 +126,8 @@ function SpeakingAIPage() {
                                 }}
                             >
                                 <img
-                                    src="/images/products/speaking_ai_part1.jpg"  // 更改为你的图片路径
-                                    alt="speaking ai"
+                                    src="https://cdn.prod.website-files.com/627a5f477d5ec9079c88f0e2/63a94e0560216a80439d30cc_AI-Automatic-Writing-Tools.jpg"  // 更改为你的图片路径
+                                    alt="writing ai"
                                     style={{
                                         height: '100%',
                                         width: '100%',
@@ -163,7 +162,7 @@ function SpeakingAIPage() {
                         <Box
                             sx={{
                                 height: 350,
-                                backgroundImage: 'url("/images/products/speaking_ai_part2_01.jpg")',  // 更改为适当的图片路径
+                                backgroundImage: 'url("/images/products/writing_ai_part2_01.webp")',  // 更改为适当的图片路径
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 borderRadius: '12px',
@@ -178,7 +177,7 @@ function SpeakingAIPage() {
                             Accurate score
                         </TitleTypography>
                         <ContentTypography>
-                            Submit your essay by inputting or from the question bank, and you can receive a clear and detailed report and score immediately.
+                        Submit your essay from the question bank, and you can receive a clear and detailed report and score within 1-5 mins.
                         </ContentTypography>
 
                         <HoverButton onClick={handleClick} />
@@ -188,11 +187,10 @@ function SpeakingAIPage() {
                     {/* 第2个部分：Care */}
                     <Grid item xs={12} md={6} sx={{ textAlign: 'left', }}>
                         <TitleTypography sx={{ fontSize: '32px' }}>
-                            Speaking Evaluation
+                        Writing correction
                         </TitleTypography>
                         <ContentTypography>
-                            You can immediately see your pronunciation error, unexpected interruption, missing pause,suspected reading aloud, suspected repetition, and learn how to avoid them.
-                        </ContentTypography>
+                        You can immediately see your vocabulary mistakes, grammar errors, and learn how to avoid them.                        </ContentTypography>
                         <HoverButton onClick={handleClick} />
 
                     </Grid>
@@ -200,7 +198,7 @@ function SpeakingAIPage() {
                         <Box
                             sx={{
                                 height: 350,
-                                backgroundImage: 'url("/images/products/speaking_ai_part2_02.jpg")',  // 更改为适当的图片路径
+                                backgroundImage: 'url("/images/products/writing_ai_part2_02.webp")',  // 更改为适当的图片路径
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 borderRadius: '12px',
@@ -216,7 +214,7 @@ function SpeakingAIPage() {
                         <Box
                             sx={{
                                 height: 350,
-                                backgroundImage: 'url("/images/products/speaking_ai_part2_03.jpg")',  // 更改为适当的图片路径
+                                backgroundImage: 'url("/images/products/writing_ai_part2_03.webp")',  // 更改为适当的图片路径
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 borderRadius: '12px',
@@ -231,7 +229,7 @@ function SpeakingAIPage() {
                             Professional guidance
                         </TitleTypography>
                         <ContentTypography>
-                            According to the DET scoring elements, we provide professional guidance to help you identify the weaknesses in your speaking and make it perfect.
+                        According to the DET scoring elements, we provide professional guidance to help you identify the weaknesses in your paper and make it perfect.
                         </ContentTypography>
                         <HoverButton onClick={handleClick} />
 
@@ -243,4 +241,4 @@ function SpeakingAIPage() {
     );
 }
 
-export default SpeakingAIPage;
+export default WritingAIPage;
