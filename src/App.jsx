@@ -30,8 +30,12 @@ import PricingPage from "./pages/PricingPage";
 import WritingAIPage from "./pages/products/WritingAIPage";
 import BlogListPage from "./pages/blog-pages/BlogListPage";
 import BlogCardPage from "./pages/blog-pages/BlogCardPage";
-
-
+import Blog01Page from "./pages/blog-pages/Blog01Page";
+import Blog02Page from "./pages/blog-pages/Blog02Page";
+import Blog03Page from "./pages/blog-pages/Blog03Page";
+import Blog04Page from "./pages/blog-pages/Blog04Page";
+import Blog05Page from "./pages/blog-pages/Blog05Page";
+import Blog06Page from "./pages/blog-pages/Blog06Page";
 function App() {
 
 
@@ -68,6 +72,12 @@ function App() {
                   <Route path="/pricing" element={<PricingPage />} />
                   {/* <Route path="/blog" element={<BlogListPage />} /> */}
                   <Route path="/blog" element={<BlogCardPage />} />
+                  <Route path="/blog/001" element={<Blog01Page />} />
+                  <Route path="/blog/002" element={<Blog02Page />} />
+                  <Route path="/blog/003" element={<Blog03Page />} />
+                  <Route path="/blog/004" element={<Blog04Page />} />
+                  <Route path="/blog/005" element={<Blog05Page />} />
+                  <Route path="/blog/006" element={<Blog06Page />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />

@@ -4,6 +4,8 @@
 import React from 'react';
 import { Box, Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import globalSettingsConfig from '../../globalSettingsConfig';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+
 const BlogCardPage = () => {
 
     const TitleTypography = ({ children, sx }) => (
@@ -30,43 +32,51 @@ const BlogCardPage = () => {
             date: '09-06-2024',
             intro: 'The Duolingo English Test is often considered easier than IELTS. It\'s adaptive, typically shorter in duration, and can be taken online. This blog post offers a detailed comparison between IELTS and the Duolingo English Test.',
             imageUrl: 'https://blog.adobe.com/en/publish/2024/09/06/media_140fce60728863f907b6092ef2d50ab2a4e820538.jpeg?width=750&format=webply&optimize=medium',
-            author: 'Sophie Wodzak'
+            author: 'Sophie Wodzak',
+            link: '/blog/001' // Example link for the blog post
+
         },
         {
             title: 'How many Questions in Duolingo English Test?',
             date: '09-06-2024',
             intro: 'Each exam typically has about 45 to 60 questions. The Duolingo English Test (DET) does not have a set number of questions. The test concludes based on the scoring system\'s assessment of your score. This blog introduces the frequency of each question type and the features of the exam structure.',
             imageUrl: 'https://blog.adobe.com/en/publish/2024/07/15/media_1bbc13a935de815ac5102260b51a583b614e747b0.jpeg?width=750&format=webply&optimize=medium',
-            author: 'Vineet Sood'
+            author: 'Vineet Sood',
+            link: '/blog/002'
         },
-        {
-            title: 'Where to Practice Duolingo English Test?',
-            date: '09-05-2024',
-            intro: 'Websites like Grimlingo DET and the official DET website provide customized practice questions and full-scale mock exams. It\'s vital to choose study materials that align with your current proficiency level to ensure your practice is productive.',
-            imageUrl: 'https://blog.adobe.com/en/publish/2024/06/26/media_182b47c9fc6d56de0f020b05232591e629eaa65fa.jpeg?width=750&format=webply&optimize=medium',
-            author: 'Jamie Kirkpatrick'
-        }, 
+
         {
             title: 'What is Duolingo English Test Score?',
             date: '09-06-2024',
             intro: 'Duolingo tests use a scoring system that ranges from 10 to 160 points, with scores being whole numbers and multiples of 5, with the maximum score being 160 points. This article will explore the intricacies of the DET\'s scoring mechanism, clarifying the structure of the scores and their implications.',
             imageUrl: 'https://blog.adobe.com/en/publish/2024/07/30/media_131eddd1f6ae399f3f506c13f8850bb1cd04930f4.jpeg?width=750&format=webply&optimize=medium',
-            author: 'Masha Kostromitina, Ph.D.'
+            author: 'Masha Kostromitina, Ph.D.',
+            link: '/blog/003'
         },
         {
             title: 'How much does Duolingo English test cost?',
             date: '09-06-2024',
             intro: 'The Duolingo English Test fee for the year 2024 is $65. If you purchase the discount package, the price for two tests is $110, which is equivalent to $55 per test. Additionally, if you wish to receive your test results within 12 hours, there is an additional charge of $39. This blog post introduces a comparison of the DET (Duolingo English Test) fees with those of other traditional exams.',
             imageUrl: 'https://blog.adobe.com/en/publish/2024/08/27/media_1b3befdb2f3204981025fb97c596ba01407e0ff72.jpeg?width=750&format=webply&optimize=medium',
-            author: 'Julie Collins'
+            author: 'Julie Collins',
+            link: '/blog/004'
         },
         {
             title: 'How many times can I take Duolingo English Test?',
             date: '09-05-2024',
             intro: 'According to Duolingo\'s regulations, you can purchase and take the Duolingo English Test (DET) up to three times within a 21-day period. If your test results are not certified, you may be required to retake the test, and this does not count towards the three-test limit. Additionally, with each test purchase, you have three attempts, meaning you can retry twice without needing to repurchase.',
             imageUrl: 'https://blog.adobe.com/en/publish/2024/07/11/media_113e15d6bc3f720b28cba7192be08df9b3e0672ba.jpeg?width=750&format=webply&optimize=medium',
-            author: 'Sophie Wodzak'
-        }
+            author: 'Sophie Wodzak',
+            link: '/blog/005'
+        },       
+        {
+            title: 'How Long is the Duolingo English Test?',
+            date: '09-05-2024',
+            intro: 'The Duolingo English Test is approximately 1 hour long, and you will receive the results within 48 hours. It includes a variety of sections that assess different language skills, such as reading, writing, speaking, and listening. The test is designed to be flexible and can be taken online at your convenience.',
+            imageUrl: 'https://blog.adobe.com/en/publish/2024/06/26/media_182b47c9fc6d56de0f020b05232591e629eaa65fa.jpeg?width=750&format=webply&optimize=medium',
+            author: 'Jamie Kirkpatrick',
+            link: '/blog/006'
+        }, 
     ];
 
     return (
@@ -86,6 +96,8 @@ const BlogCardPage = () => {
                         <Grid container spacing={4}>
                             {blogPosts.map((post, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
+                                    <Link to={post.link} style={{ textDecoration: 'none' }}> {/* Wrap Card in Link */}
+
                                     <Card sx={{
                                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.12)',  // 添加阴影效果
                                         borderRadius: '12px',  // 添加圆角效果
@@ -148,6 +160,7 @@ const BlogCardPage = () => {
                                             </Typography>
                                         </CardContent>
                                     </Card>
+                                    </Link>
                                 </Grid>
                             ))}
                         </Grid>

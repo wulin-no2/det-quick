@@ -65,11 +65,11 @@ const HomeFooter = () => {
                 {/* Blog Section */}
                 <Grid item style={{ flexGrow: 1 }}>
                     <StyledTypography>Blog</StyledTypography>
-                    <StyledLink href="#">How many Questions in Duolingo English Test?</StyledLink>
-                    <StyledLink href="#">Where to Practice Duolingo English Test?</StyledLink>
-                    <StyledLink href="#">What is Duolingo English Test Score?</StyledLink>
-                    <StyledLink href="#">How much does Duolingo English test cost?</StyledLink>
-                    <StyledLink href="#" style={{ textDecoration: 'underline' }}>
+                    <StyledLink href="/blog/001">Is Duolingo English Test Harder than IELTS?</StyledLink>
+                    <StyledLink href="/blog/002">How many Questions in Duolingo English Test?</StyledLink>
+                    <StyledLink href="/blog/003">What is Duolingo English Test Score?</StyledLink>
+                    <StyledLink href="/blog/004">How much does Duolingo English test cost?</StyledLink>
+                    <StyledLink href="/blog" style={{ textDecoration: 'underline' }}>
                         show more
                     </StyledLink>
                 </Grid>
