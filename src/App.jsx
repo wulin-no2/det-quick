@@ -36,6 +36,9 @@ import Blog03Page from "./pages/blog-pages/Blog03Page";
 import Blog04Page from "./pages/blog-pages/Blog04Page";
 import Blog05Page from "./pages/blog-pages/Blog05Page";
 import Blog06Page from "./pages/blog-pages/Blog06Page";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import MockTestPage from "./pages/products/MockTestPage";
+import NewHomePage from "./pages/NewHomePage";
 function App() {
 
 
@@ -50,13 +53,16 @@ function App() {
       <AuthProvider> 
         <QuestionStateProvider>
           <Router>
-            <Navbar />
+            {/* <Navbar /> */}
+            <ResponsiveAppBar />
             <Container maxWidth={false} disableGutters sx={{ p: 0, m: 0 }}>
             <Box className="content">
                 <LoadingSpinner />
                 <MySnackBarMessage open={toast.open} message={toast.message} />
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
+                  {/* <Route path="/" element={<HomePage />} /> */}
+                  <Route path="/" element={<NewHomePage />} />
+
                   <Route path="/login" element={<UserLoginPage />} />
                   <Route path="/register" element={<UserRegistrationPage />} />
                   <Route path="/verify" element={<UserVerificationPage />} />
@@ -78,6 +84,9 @@ function App() {
                   <Route path="/blog/004" element={<Blog04Page />} />
                   <Route path="/blog/005" element={<Blog05Page />} />
                   <Route path="/blog/006" element={<Blog06Page />} />
+                
+
+                  <Route path="/products/mock-test" element={<MockTestPage />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
 
                   {/* <Route path="/practice" element={<PracticeListPage />} />

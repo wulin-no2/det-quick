@@ -360,7 +360,7 @@ function PasswordResetPage() {
     };
 
     return (
-        <Container component="main" maxWidth="sm" sx={{ bgcolor: 'white', p: "40px", borderRadius: 2, boxShadow: 3, margin: "30px 0 50px 0" }}>
+        <Container component="main" maxWidth="sm" sx={{ bgcolor: 'white', p: "40px", borderRadius: 2, boxShadow: 3, mt:'100px',mb:'170px' }}>
             <Typography variant="h4" component="h1" sx={{ textAlign: 'center', mb: 2 }}>
                 Reset Password
             </Typography>

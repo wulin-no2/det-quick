@@ -52,7 +52,7 @@ const HomeFooter = () => {
                     <StyledLink href="#" >DET Practice</StyledLink>
                     <StyledLink href="/products/writing-ai">DET Writing AI </StyledLink>
                     <StyledLink href="/products/speaking-ai">DET Speaking AI </StyledLink>
-                    <StyledLink href="#">DET Mock</StyledLink>
+                    <StyledLink href="/products/mock-test">DET Mock</StyledLink>
                     <StyledLink href="#">DET Vocabulary</StyledLink>
                 </Grid>
                 {/* Learn Section */}

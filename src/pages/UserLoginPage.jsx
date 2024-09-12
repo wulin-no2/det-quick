@@ -105,6 +105,9 @@ const UserLoginPage = () => {
         justifyContent="center"
         alignItems="center"
         minHeight="100vh"
+        sx={{
+          marginBottom:'60px'
+        }}
       >
         <Box
           display="flex"

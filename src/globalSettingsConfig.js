@@ -33,7 +33,7 @@ const globalSettingsConfig = {
     },
 
     layoutMargins: {
-        horizontalWindowMargin: '100px',  // 距离窗口左右边缘的距离
+        horizontalWindowMargin: '5rem',  // 距离窗口左右边缘的距离
     }
 };
 

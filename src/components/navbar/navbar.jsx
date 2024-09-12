@@ -22,14 +22,14 @@ function Navbar() {
   const [showLanguageSwitcher, setShowLanguageSwitcher] = useState(true);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const handleScroll = () => {
-      setShowLanguageSwitcher(window.scrollY <= 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  //   const handleScroll = () => {
+  //     setShowLanguageSwitcher(window.scrollY <= 50);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
   
   // 处理登录状态变更的 useEffect
   useEffect(() => {

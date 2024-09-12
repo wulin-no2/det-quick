@@ -14,19 +14,18 @@ html,
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1100; /* Ensure it's above other content */
+  z-index: 1100;
 }
 
 .content {
   /* margin: auto; */
   margin: 0px; /* 设置为0，确保没有外边距 */
-  padding-top: 70px; /* Adjust this value to match the height of your Navbar */
-  display: flex;
+  padding-top: 70px; 
   justify-content: center;
   align-items: flex-start;
   height: calc(
-    100vh - 70px
-  ); /* Adjust 70px based on the navbar's actual height */
+    100vh + 70px
+  ); 
   text-align: center;
   flex-wrap: wrap;
 }
