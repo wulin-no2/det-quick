@@ -90,7 +90,7 @@ function LiveSessionsComponent() {
                         1-on-1 Live Teaching
                     </TitleTypography>
                     <ContentTypography>
-                        DET Speaking AI Correction service provided by powerful AI. Support all speaking question types, and provides professional guidance to help you easily improve your DET speaking score.
+                    Perfect for students seeking individualized learning plans, our live courses offer targeted strategies, performance assessments, and dedicated tutoring to help you reach your exam goals.
                     </ContentTypography>
                     <RoundedButton
                         text="Get Started"

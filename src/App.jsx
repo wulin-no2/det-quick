@@ -39,7 +39,9 @@ import Blog06Page from "./pages/blog-pages/Blog06Page";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import MockTestPage from "./pages/products/MockTestPage";
 import NewHomePage from "./pages/NewHomePage";
+
 function App() {
+
 
 
   const { loading, toast } = useGlobalUIState();
@@ -50,13 +52,16 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider> 
+      <AuthProvider>
         <QuestionStateProvider>
           <Router>
-            {/* <Navbar /> */}
+
             <ResponsiveAppBar />
             <Container maxWidth={false} disableGutters sx={{ p: 0, m: 0 }}>
-            <Box className="content">
+              <Box className="content" >
+
+
+
                 <LoadingSpinner />
                 <MySnackBarMessage open={toast.open} message={toast.message} />
                 <Routes>
@@ -71,7 +76,7 @@ function App() {
                   <Route path="/about-us" element={<AboutUsPage />} />
                   <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-                  <Route path="/practice" element={ <PracticeListPage />} />
+                  {/* <Route path="/practice" element={ <PracticeListPage />} /> */}
                   <Route path="/products/speaking-ai" element={<SpeakingAIPage />} />
                   <Route path="/products/writing-ai" element={<WritingAIPage />} />
                   <Route path="/courses" element={<CoursesPage />} />
@@ -84,7 +89,7 @@ function App() {
                   <Route path="/blog/004" element={<Blog04Page />} />
                   <Route path="/blog/005" element={<Blog05Page />} />
                   <Route path="/blog/006" element={<Blog06Page />} />
-                
+
 
                   <Route path="/products/mock-test" element={<MockTestPage />} />
                   {/* <Route path="/vocab" element={<WordBookPage />} /> */}
@@ -103,8 +108,8 @@ function App() {
                     }
                   />
 
-                  <Route 
-                    path="/vocab" 
+                  <Route
+                    path="/vocab"
                     element={
                       <ProtectedRoute>
                         <WordBookPage />
@@ -112,7 +117,16 @@ function App() {
                     }
                   />
 
-            
+                  <Route
+                    path="/practice"
+                    element={
+                      <ProtectedRoute>
+                        <PracticeListPage />
+                      </ProtectedRoute>
+                    }
+                  />
+
+
 
 
                   <Route path="*" element={<h1>Page not found</h1>} />
@@ -121,6 +135,7 @@ function App() {
                 {/* {shouldShowFooter && <HomeFooter />} */}
                 <HomeFooter />
               </Box>
+
             </Container>
           </Router>
         </QuestionStateProvider>

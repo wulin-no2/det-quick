@@ -234,10 +234,26 @@ function CoursesPage() {
                 paddingY: '80px',
             }}>
                 <Box sx={{
+                    
                 }}>
-                    <TitleTypography sx={{marginBottom:'60px'}}>
-                    Contact Us
-                    </TitleTypography>
+                    <Typography sx={{
+                      color: '#212833',
+                      fontFamily: 'Suisse Works, Georgia, PingFang TC, serif',
+                      fontWeight: 'bold',  // 加粗
+                      fontSize: '40px',  // 字体大小为36px
+                }}>
+                    Learn More About Courses 
+                    
+                    </Typography>
+                    <Typography sx={{
+                      color: '#212833',
+                      fontFamily: 'Suisse Works, Georgia, PingFang TC, serif',
+                      fontWeight: 'bold',  // 加粗
+                      fontSize: '40px',  // 字体大小为36px
+                      marginBottom:'80px'
+                }}>
+                    info@grimlingo.com                    
+                    </Typography>
                     {/* <ContentTypography sx={{fontSize:'22px',marginBottom:'60px'}}>
                     Discover the values, vision, and mission that guide every step we take.                    
                     </ContentTypography> */}

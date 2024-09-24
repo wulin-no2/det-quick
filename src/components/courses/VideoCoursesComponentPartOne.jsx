@@ -89,7 +89,7 @@ function VideoCoursesComponentPartOne() {
                                 Video Courses
                             </TitleTypography>
                             <ContentTypography>
-                                DET Speaking AI Correction service provided by powerful AI. Support all speaking question types, and provides professional guidance to help you easily improve your DET speaking score.
+                            Gain confidence in the Duolingo English Test with structured video tutorials, advanced writing and speaking templates, and a 12-month access to updated learning materials.
                             </ContentTypography>
                             <RoundedButton
                                 text="Get Started"

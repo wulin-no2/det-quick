@@ -35,11 +35,14 @@ function PricingPage() {
                     </Typography>
                     <VIPSubscriptions />
                     {/* <FeatureList /> */}
+                    <Box sx={{}}>
                     <FeatureList
                         features={features}
                         // textColor="blue" // 设置文本颜色为蓝色
-                        // iconColor="primary" // 设置对勾图标颜色为主题的 primary 色
+                        iconColor="success" // 设置对勾图标颜色为主题的 primary 色
                     />
+                    </Box>
+                   
 
                 </Box>
             </Box>
