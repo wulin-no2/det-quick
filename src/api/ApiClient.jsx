@@ -9,8 +9,10 @@ import { pubSub } from "../utils/pubSub";
 // const token = localStorage.getItem('accessToken');
 
 const ApiClient = axios.create({
-  // baseURL: 'http://54.159.192.226:8080',
-  baseURL: 'http://localhost:8080',
+  // baseURL: 'http://43.199.68.201:8080',
+  baseURL: 'http://api.grimlingo.com:8080',
+
+  // baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
   },
