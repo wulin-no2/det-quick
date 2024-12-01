@@ -39,6 +39,8 @@ import Blog06Page from "./pages/blog-pages/Blog06Page";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import MockTestPage from "./pages/products/MockTestPage";
 import NewHomePage from "./pages/NewHomePage";
+import PaySuccessPage from "./pages/order-pages/PaySuccessPage";
+import PayCancelPage from "./pages/order-pages/PayCancelPage";
 
 function App() {
 
@@ -67,7 +69,9 @@ function App() {
                 <Routes>
                   {/* <Route path="/" element={<HomePage />} /> */}
                   <Route path="/" element={<NewHomePage />} />
-
+                  <Route path="/pay/success" element={<PaySuccessPage />} />
+                  <Route path="/pay/cancel" element={<PayCancelPage />} />
+                  
                   <Route path="/login" element={<UserLoginPage />} />
                   <Route path="/register" element={<UserRegistrationPage />} />
                   <Route path="/verify" element={<UserVerificationPage />} />

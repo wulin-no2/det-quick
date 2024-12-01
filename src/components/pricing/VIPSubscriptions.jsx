@@ -1,213 +1,137 @@
 
-
-// import React, { useState } from 'react';
-// import { Box, Container, Card, CardContent, Typography, Button } from '@mui/material';
-// import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-
-// const PackageCard = ({ title, description, price, color, imagePath, isSelected, onSelect }) => {
-//     // 根据是否选中设置文字和价格的颜色
-//     const textColor = isSelected ? color : '#e0e0e0';  // 选中则显示设定的颜色，否则显示浅灰色
-
-//     return (
-//         <Card 
-//             sx={{ 
-//                 minWidth: 240,
-//                 maxWidth: 240,
-//                 margin: 2,
-//                 boxShadow: 3,
-//                 borderColor: isSelected ? color : '#e0e0e0',
-//                 borderWidth: 2,
-//                 borderRadius: '16px',
-//                 cursor: 'pointer'
-//             }}
-//             onClick={onSelect}
-//         >
-//             <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-//                 <Typography variant="h5" component="div" gutterBottom sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: textColor }}>
-//                     <img src={imagePath} alt="VIP Icon" style={{ verticalAlign: 'middle', width: '24px', height: '24px', marginRight: '8px' }} />{title}
-//                 </Typography>
-//                 <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-//                     <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle', color: 'green' }} /> {description}
-//                 </Typography>
-//                 <Typography variant="h4" component="div" sx={{ mt: 2, color: textColor }}>
-//                     ${price}
-//                 </Typography>
-//             </CardContent>
-//             <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-//                 <Button variant="contained" sx={{ backgroundColor: isSelected ? color : '#e0e0e0', color: isSelected ? '#ffffff' : '#000000', '&:hover': { backgroundColor: isSelected ? color : '#e0e0e0' } }}>
-//                     Purchase
-//                 </Button>
-//             </Box>
-//         </Card>
-//     );
-// };
-
-// const VIPSubscriptions = () => {
-//     const [selectedId, setSelectedId] = useState(1); // 默认第一个被选中
-
-//     const packages = [
-//         {
-//             id: 1,
-//             title: "30天VIP",
-//             description: "包含AI-powered Correction Service 60次",
-//             price: 100,
-//             color: "#72BCC7",
-//             imagePath: '/images/pricing/vip-crown.png'
-//         },
-//         {
-//             id: 2,
-//             title: "15天VIP",
-//             description: "包含AI-powered Correction Service 30次",
-//             price: 60,
-//             color: "#7637F1",
-//             imagePath: '/images/pricing/vip-rocket.png'
-//         },
-//         {
-//             id: 3,
-//             title: "7天VIP",
-//             description: "包含AI-powered Correction Service 10次",
-//             price: 30,
-//             color: "#E4943B",
-//             imagePath: '/images/pricing/vip-tag.png'
-//         }
-//     ];
-
-//     return (
-//         <Container>
-//             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-//                 {packages.map((packageItem) => (
-//                     <PackageCard 
-//                         key={packageItem.id}
-//                         {...packageItem}
-//                         isSelected={selectedId === packageItem.id}
-//                         onSelect={() => setSelectedId(packageItem.id)}
-//                     />
-//                 ))}
-//             </Box>
-//         </Container>
-//     );
-// };
-
-// export default VIPSubscriptions;
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Container, Card, CardContent, Typography, Button } from '@mui/material';
-
-const PackageCard = ({
-    title,
-    description,
-    price,
-    color,
-    imagePathSelected,
-    imagePathUnselected,
-    isSelected,
-    onSelect
-}) => {
-    // 根据选中状态选择图片路径
-    const imagePath = isSelected ? imagePathSelected : imagePathUnselected;
-    const textColor = isSelected ? color : '#D9D9D9';  // 选中则显示设定的颜色，否则显示浅灰色
-    return (
-        <Card
-            sx={{
-                minWidth: 240,
-                maxWidth: 240,
-                margin: 2,
-                boxShadow: 3,
-                borderColor: isSelected ? color : '#D9D9D9',
-                borderWidth: 2,
-                borderRadius: '16px',
-                cursor: 'pointer'
-            }}
-            onClick={onSelect}
-        >
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginY: '20px' }}>
-                    <img src={imagePath} alt="VIP Icon" style={{ width: '60px', height: '60px' }} />
-                </Box>
-                {/* 标题容器 */}
-                <Typography variant="h3" component="h3" gutterBottom sx={{
-                    fontSize: '32px',
-                    fontWeight: 'bold',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: textColor,
-                    marginTop: '8px'  // 根据需要调整
-                }}>
-                    {title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-                    {/* <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle', color: 'green' }} />  */}
-                    {description}
-                </Typography>
-                <Typography variant="h4" component="div" sx={{ mt: 2, color: textColor }}>
-                    ${price}
-                </Typography>
-            </CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-                <Button variant="contained" sx={{ 
-                    textTransform: 'none',
-                    fontSize: '18px',
-                    borderRadius: '24px',
-
-                    backgroundColor: isSelected ? color : '#D9D9D9', 
-                    color: isSelected ? '#ffffff' : '#ffffff', 
-                    '&:hover': { backgroundColor: isSelected ? color : '#D9D9D9' } }}>
-                    Purchase
-                </Button>
-            </Box>
-        </Card>
-    );
-};
+import PackageCard from './PackageCard';
+import { getSubscriptionPriceList, startStripeCheckout } from '../../api/order/product-order';
+import globalSettingsConfig from '../../globalSettingsConfig';
+import { pubSub } from '../../utils/pubSub';
 
 const VIPSubscriptions = () => {
-    const [selectedId, setSelectedId] = useState(1); // 默认第一个被选中
+    const [selectedId, setSelectedId] = useState(null);
+    const [packages, setPackages] = useState([]);
+    const [isProcessing, setIsProcessing] = useState(false); // 追踪请求的状态  
 
-    const packages = [
-        {
-            id: 1,
-            title: "30-Day VIP",
-            description: "Includes 60 AI-powered Correction Services",
-            price: 30,
-            color: "#357AF5",
-            imagePathSelected: '/images/pricing/vip-crown.png',
-            imagePathUnselected: '/images/pricing/vip-crown-unselected.png'
-        },
-        {
-            id: 2,
-            title: "15-Day VIP",
-            description: "Includes 30 AI-powered Correction Services",
-            price: 20,
-            color: "#72BCC7",
-            imagePathSelected: '/images/pricing/vip-rocket.png',
-            imagePathUnselected: '/images/pricing/vip-rocket-unselected.png'
-        },
-        {
-            id: 3,
-            title: "7-Day VIP",
-            description: "Includes 10 AI-powered Correction Services",
-            price: 10,
-            color: "#E4943B",
-            imagePathSelected: '/images/pricing/vip-tag.png',
-            imagePathUnselected: '/images/pricing/vip-tag-unselected.png'
+    const isPurchasing = useRef(false); // 使用 useRef 跟踪购买状态
+
+
+
+    useEffect(() => {
+
+        const fecthData = async () => {
+            try {
+                pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+
+                const response = await getSubscriptionPriceList();
+                if (response.success && response.data) {
+                    // console.log("=====0909090==");
+                    // console.log(response.data);
+
+                    // 定义颜色和图片数组，按照顺序与套餐对应
+                    const colors = ["#357AF5", "#72BCC7", "#E4943B"];
+                    const imagePathsSelected = [
+                        '/images/pricing/vip-crown.png',
+                        '/images/pricing/vip-rocket.png',
+                        '/images/pricing/vip-tag.png'
+                    ];
+                    const imagePathsUnselected = [
+                        '/images/pricing/vip-crown-unselected.png',
+                        '/images/pricing/vip-rocket-unselected.png',
+                        '/images/pricing/vip-tag-unselected.png'
+                    ];
+
+                    const formattedPackages = response.data.pricings.map((pricing, index) => ({
+                        id: pricing.pricingId,
+                        title: `${pricing.chargeValue}-Day VIP`,
+                        description: `Includes ${pricing.includedAiCorrections} AI-powered Correction Services`,
+                        price: pricing.price,
+                        color: colors[index] || '#D9D9D9', // 防止索引超出范围
+                        imagePathSelected: imagePathsSelected[index] || '/images/default-selected.png',
+                        imagePathUnselected: imagePathsUnselected[index] || '/images/default-unselected.png',
+                    }));
+
+                    setPackages(formattedPackages);
+                    // 默认选中第一个套餐
+                    setSelectedId(formattedPackages[0]?.id || null);
+
+                } else {
+                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+                }
+            } catch (error) {
+                if (error.response) {
+                    // 访问具体的错误信息和数据
+                    console.log("Error response data:", error.response.data);
+                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+                } else {
+                    // 处理无响应体的其他错误（网络问题等）
+                    pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+                }
+            } finally {
+                pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+            }
+
         }
-    ];
+        fecthData();
+
+    }, []); // 
+
+    const handlePurchase = async (priceId) => {
+        if (isPurchasing.current) return; // 如果正在处理，直接返回
+        isPurchasing.current = true; // 设置为正在处理
+
+        try {
+            setIsProcessing(true); // 更新状态以更新 UI
+
+            pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, true);
+            const response = await startStripeCheckout(priceId);
+            if (response.success) {
+                // 跳转到 Stripe 支付页面
+                console.log("response.data.url=999==", response.data.url);
+                
+                window.location.href = response.data.url;
+
+
+            } else {
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, response.message);
+
+            }
+        } catch (error) {
+            if (error.response) {
+                // 访问具体的错误信息和数据
+                console.log("Error response data:", error.response.data);
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.response.data.message);
+            } else {
+                // 处理无响应体的其他错误（网络问题等）
+                pubSub.publish(globalSettingsConfig.event.SHOW_TOAST, error.message || "An unknown error occurred");
+            }
+
+        } finally {
+            isPurchasing.current = false; // 重置购买状态
+            setIsProcessing(false); // 更新状态以更新 UI
+
+            pubSub.publish(globalSettingsConfig.event.SHOW_LOADING, false);
+        }
+
+       
+    };
 
     return (
-       
-            <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-                {packages.map((packageItem) => (
-                    <PackageCard
-                        key={packageItem.id}
-                        {...packageItem}
-                        isSelected={selectedId === packageItem.id}
-                        onSelect={() => setSelectedId(packageItem.id)}
-                    />
-                ))}
-            </Box>
-        
+
+        <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+          
+
+            {packages.map((packageItem) => (
+               <PackageCard
+               key={packageItem.id}
+               {...packageItem}
+               isSelected={selectedId === packageItem.id}
+               onSelect={() => setSelectedId(packageItem.id)}
+               onPurchase={() => handlePurchase(packageItem.id)}
+               isProcessing={isProcessing} // 将 isProcessing 状态传递给子组件
+             />
+            ))}
+
+        </Box>
+
     );
 };
 
