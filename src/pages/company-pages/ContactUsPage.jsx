@@ -173,7 +173,7 @@ function ContactUsPage() {
 
 
             {/* 下部分：左边地图 + 右边联系信息 */}
-            <Box sx={{ margin: globalSettingsConfig.layoutMargins.horizontalWindowMargin }}> {/* 设置外边距 */}
+            <Box sx={{ margin: globalSettingsConfig.layoutMargins.horizontalWindowMargin ,pb:'80px'}}> {/* 设置外边距 */}
 
                 <Grid container >
                     <Grid item xs={12} md={8} sx={{ pr: '30px', }}>
@@ -194,10 +194,16 @@ function ContactUsPage() {
                     </Grid>
                     <Grid item xs={12} md={4} sx={{ bgcolor: '#F3EDE6', borderRadius: '30px', textAlign: 'left', pt: '30px', pl: '30px', pr: '30px' }}>
                         <LabelTypography  >
-                            Address
+                            Registered Address
                         </LabelTypography>
                         <ValueTypography sx={{ wordWrap: 'break-word' }}>
-                            UNIT 3D NORTH POINT HOUSE, NORTH POINT BUSINESS PARK, NEW MALLOW ROAD, CORK, IRELAND
+                        Unit 3D North Point House, North Point Business Park, New Mallow Road, Cork, T23 AT2P, Ireland
+                        </ValueTypography>
+                        <LabelTypography>
+                        Trading address
+                        </LabelTypography>
+                        <ValueTypography sx={{ wordWrap: 'break-word' }}>
+                        Office 1C North Valley Business Park, Old Mallow Road, Cork, T23 WN15, Ireland
                         </ValueTypography>
                         <LabelTypography variant="h6" gutterBottom sx={{ mt: 3 }}>
                             Email address

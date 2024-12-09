@@ -41,7 +41,8 @@ import MockTestPage from "./pages/products/MockTestPage";
 import NewHomePage from "./pages/NewHomePage";
 import PaySuccessPage from "./pages/order-pages/PaySuccessPage";
 import PayCancelPage from "./pages/order-pages/PayCancelPage";
-
+import CareersPage from "./pages/company-pages/CareersPage";
+import JobDetailsPage from "./pages/company-pages/JobDetailsPage";
 function App() {
 
 
@@ -93,6 +94,10 @@ function App() {
                   <Route path="/blog/004" element={<Blog04Page />} />
                   <Route path="/blog/005" element={<Blog05Page />} />
                   <Route path="/blog/006" element={<Blog06Page />} />
+
+                  <Route path="/careers" element={<CareersPage />} />
+                  <Route path="/job-details/:title" element={<JobDetailsPage />} />
+
 
 
                   <Route path="/products/mock-test" element={<MockTestPage />} />
