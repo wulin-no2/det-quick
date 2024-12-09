@@ -3,6 +3,9 @@ import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   palette: {
+    text: {
+      primary: '#212833' // 统一设置文本颜色为深色
+    },
     primary: {
       main: "#357af5", // blue
     },
