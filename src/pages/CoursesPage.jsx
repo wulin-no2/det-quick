@@ -252,7 +252,7 @@ function CoursesPage() {
                       fontSize: '40px',  // 字体大小为36px
                       marginBottom:'80px'
                 }}>
-                    info@grimlingo.com                    
+                    info@detquick.com                    
                     </Typography>
                     {/* <ContentTypography sx={{fontSize:'22px',marginBottom:'60px'}}>
                     Discover the values, vision, and mission that guide every step we take.                    

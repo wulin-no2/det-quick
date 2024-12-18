@@ -129,7 +129,7 @@ function NewHomePage() {
 
             {/* Subtitle */}
             <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold', color: "#6fa0f8",fontSize:'66px' }}>
-                Grimlingo DET
+            DET Quick
             </Typography>
             <Button
                 variant="outlined"

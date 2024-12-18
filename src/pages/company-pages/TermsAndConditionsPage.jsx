@@ -75,7 +75,7 @@ function TermsAndConditionsPage() {
                     Introduction
                 </SubTitleTypography>
                 <ContentTypography>
-                    Please read these Terms of Service (“Terms”, “TOS”) carefully before using the https://www.grimlingo.com website (the “Service”) operated by Grimlingo  (“us”, “we”, or “our”).
+                    Please read these Terms of Service (“Terms”, “TOS”) carefully before using the https://www.detquick.com website (the “Service”) operated by DETQuick  (“us”, “we”, or “our”).
                 </ContentTypography>
                 <ContentTypography>
                     Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service.
@@ -101,10 +101,10 @@ function TermsAndConditionsPage() {
                 Links To Other Web Sites
                 </SubTitleTypography>
                 <ContentTypography>
-                Our Service may contain links to third-party websites or services that are not owned or controlled by Grimlingo.
+                Our Service may contain links to third-party websites or services that are not owned or controlled by DETQuick.
                 </ContentTypography>
                 <ContentTypography>
-                Grimlingo has no control over and assumes no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that Grimlingo shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such web sites or services.                </ContentTypography>
+                DETQuick has no control over and assumes no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that DETQuick shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such web sites or services.                </ContentTypography>
                 <ContentTypography>
                 We strongly advise you to read the terms and conditions and privacy policies of any third-party websites or services that you visit.
                 </ContentTypography>

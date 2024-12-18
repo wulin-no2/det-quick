@@ -90,7 +90,7 @@ const BlogCardPage = () => {
                     // paddingX: '100px',
                 }}>
                     <TitleTypography >
-                Grimlingo DET Blog
+                DET Quick Blog
                 </TitleTypography>
                     <Box sx={{ flexGrow: 1, p: 2 }}>
                         <Grid container spacing={4}>

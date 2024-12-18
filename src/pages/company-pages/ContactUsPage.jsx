@@ -208,7 +208,7 @@ function ContactUsPage() {
                         <LabelTypography variant="h6" gutterBottom sx={{ mt: 3 }}>
                             Email address
                         </LabelTypography>
-                        <ValueTypography>info@grimlingo.com</ValueTypography>
+                        <ValueTypography>info@detquick.com</ValueTypography>
                         <LabelTypography variant="h6" gutterBottom sx={{ mt: 3 }}>
                             Phone
                         </LabelTypography>

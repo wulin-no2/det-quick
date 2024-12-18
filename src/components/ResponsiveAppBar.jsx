@@ -148,7 +148,7 @@ const handleProductsClick = () => {
 
                             {/* <img src="logo.png" alt="Logo" style={{ height: '50px', marginRight: '10px' }} /> */}
                             <Typography variant="h5" noWrap component="div" sx={{ fontWeight: '700', ml: '20px' }}>
-                                Grimlingo DET
+                            DET Quick
                             </Typography>
                         </Box>
                         <Box sx={{
@@ -288,7 +288,7 @@ const handleProductsClick = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 20px' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <img src="logo.png" alt="Logo" style={{ height: '40px', marginRight: '10px' }} />
-                        <Typography variant="h6">Grimlingo DET</Typography>
+                        <Typography variant="h6">DET Quick</Typography>
                     </Box>
                     <IconButton onClick={handleMobileMenuClose}>
                         <CloseIcon />
@@ -339,7 +339,7 @@ const handleProductsClick = () => {
               alt="Logo"
               style={{ height: '40px', marginRight: '10px' }}
             />
-            <Typography variant="h6">Grimlingo DET</Typography>
+            <Typography variant="h6">GDET Quick</Typography>
           </Box>
           <IconButton onClick={handleMobileMenuClose}>
             <CloseIcon />

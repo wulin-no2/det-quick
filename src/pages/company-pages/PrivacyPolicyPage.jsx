@@ -75,7 +75,7 @@ function PrivacyPolicyPage() {
                     Introduction
                 </SubTitleTypography>
                 <ContentTypography>
-                Grimlingo  (“us”, “we”, or “our”) operates the Grimlingo website (the “Service”).
+                DETQuick  (“us”, “we”, or “our”) operates the DETQuick website (the “Service”).
                 </ContentTypography>
                 <ContentTypography>
                 This page informs you of our policies regarding the collection, use, and disclosure of Personal Information when you use our Service.

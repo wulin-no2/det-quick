@@ -99,7 +99,7 @@ function CareersPage() {
                   fontSize: '36px',  // 字体大小为36px
 
                 }}>               
-                Ready to join Grimlingo?
+                Ready to join DET Quick?
               </Typography>
               <Typography
           variant="body1"
@@ -111,7 +111,7 @@ function CareersPage() {
             wordWrap: 'break-word',
             pb: "20px",
           }}>
-              Reach out at info@grimlingo.com to discover more about our career opportunities and help shape the future of English learning.
+              Reach out at info@detquick.com to discover more about our career opportunities and help shape the future of English learning.
               </Typography>
              
             </Grid>

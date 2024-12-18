@@ -279,16 +279,16 @@ function JobDetailsPage() {
 
                     <Divider sx={{ my: 2, bgcolor: '#666666', height: '1px' }} />
                     <TitleTypography sx={{ mt: 1, mb: 1, textAlign: 'left', fontSize: '36px' }}>
-                        About the Grimlingo Team
+                        About the DETQuick Team
                     </TitleTypography>
                     <ContentTypography sx={{ textAlign: 'left', }}>
-                        At Grimlingo, we are integrating AI into English language learning to enhance the educational experience. We specialize in developing tailored applications for the Duolingo English Test, offering a range of powerful tools including innovative memory aids and personalized speaking practices designed to make learning English both engaging and effective. Our mission is to simplify the journey to English proficiency for learners worldwide.
+                        At DETQuick, we are integrating AI into English language learning to enhance the educational experience. We specialize in developing tailored applications for the Duolingo English Test, offering a range of powerful tools including innovative memory aids and personalized speaking practices designed to make learning English both engaging and effective. Our mission is to simplify the journey to English proficiency for learners worldwide.
                     </ContentTypography>
                     <ContentTypography sx={{ textAlign: 'left', }}>
-                        Behind every innovation at Grimlingo is our dedicated team. Though small, our team is driven by a shared passion for redefining language learning through creativity and cutting-edge technology. Each member plays a crucial role in crafting solutions that not only address immediate educational needs but also anticipate and influence future trends in language learning.
+                        Behind every innovation at DETQuick is our dedicated team. Though small, our team is driven by a shared passion for redefining language learning through creativity and cutting-edge technology. Each member plays a crucial role in crafting solutions that not only address immediate educational needs but also anticipate and influence future trends in language learning.
                     </ContentTypography>
                     <ContentTypography sx={{ textAlign: 'left', }}>
-                        Joining the Grimlingo team means entering an entrepreneurial environment where your contributions have a direct impact on our progress and success. We provide a platform for tackling complex challenges and developing groundbreaking solutions in educational technology. We seek dynamic individuals who are ready to thrive in a rapidly evolving startup culture and are committed to pushing the boundaries of what's possible in English education. Together, we strive to make a significant and lasting impact on global English learning, making it more accessible and transformative for all.
+                        Joining the DETQuick team means entering an entrepreneurial environment where your contributions have a direct impact on our progress and success. We provide a platform for tackling complex challenges and developing groundbreaking solutions in educational technology. We seek dynamic individuals who are ready to thrive in a rapidly evolving startup culture and are committed to pushing the boundaries of what's possible in English education. Together, we strive to make a significant and lasting impact on global English learning, making it more accessible and transformative for all.
                     </ContentTypography>
 
                 </Box>

@@ -103,13 +103,13 @@ const HomeFooter = () => {
                 mt: 2, // 上边距
                 mb: 2 // 下边距
             }}>
-                <img src="/images/Grimlingo-logo.png" alt="Grimlingo Logo" style={{ height: '80px', marginRight: '20px' }} />
+                <img src="logo.png" alt="DETQuick Logo" style={{ height: '80px', marginRight: '20px' }} />
                 <Select defaultValue="English" size="small">
                     <MenuItem value="English">English</MenuItem>
                     <MenuItem value="Chinese">Chinese</MenuItem>
                 </Select>
                 <Typography variant="body2" sx={{ mr: 'auto', ml: '30px' ,color:'black'}}>
-                    Copyright © 2024 Grimlingo Limited, Ireland.
+                    Copyright © 2024 DET Quick.
                 </Typography>
                 <Box>
                     <IconButton href="#" color="black"><FacebookIcon /></IconButton>

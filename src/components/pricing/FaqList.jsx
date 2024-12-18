@@ -74,7 +74,7 @@ const FaqList = () => {
 
 const faqData = [
   {
-    question: 'How does Grimlingo DET’s plans and pricing work?',
+    question: 'How does DET Quick’s plans and pricing work?',
     answer: 'We provide transparent plans and pricing for our users, with no hidden fees. Additionally, we offer add-on subscription packages so that you can choose services according to your needs.'
   },
   {
@@ -83,15 +83,15 @@ const faqData = [
   },
   {
     question:'My payment was successful, but the upgrade failed.',
-    answer:'Please contact us via chat or email: info@grimlingo.com. This is the simplest and fastest way to address your concerns.'
+    answer:'Please contact us via chat or email: info@detquick.com. This is the simplest and fastest way to address your concerns.'
   },
   {
     question:'Where do I send my feedback?',
-    answer:'You can send feedback through the support chat in the bottom right corner, or contact us via email at info@grimlingo.com. Alternatively, you can leave a message directly in the "Contact Us" section.'
+    answer:'You can send feedback through the support chat in the bottom right corner, or contact us via email at info@detquick.com. Alternatively, you can leave a message directly in the "Contact Us" section.'
   },
   {
     question:'What is your refund policy?',
-    answer:'For information and instructions on how to get a refund, you can refer to the "Refund Policy" link at the bottom of the page as a matter of priority, or contact us at info@grimlingo.com .'
+    answer:'For information and instructions on how to get a refund, you can refer to the "Refund Policy" link at the bottom of the page as a matter of priority, or contact us at info@detquick.com .'
   }
 ];
 

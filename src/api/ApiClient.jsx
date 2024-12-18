@@ -10,7 +10,7 @@ import { pubSub } from "../utils/pubSub";
 
 const ApiClient = axios.create({
   // baseURL: 'http://43.199.68.201:8080',
-  baseURL: 'https://api.grimlingo.com',
+  baseURL: 'https://api.detquick.com',
 
   // baseURL: 'http://localhost:8080',
   headers: {
