@@ -143,7 +143,9 @@ const handleProductsClick = () => {
                         <Box sx={{ display: 'flex', alignItems: 'center', color: 'black' }}
                             onClick={handleLogoClick}
                             style={{ cursor: 'pointer' }}>
-                            <LogoSVG />
+                            {/* <LogoSVG /> */}
+                            <img src="logo.png" alt="DETQuick Logo" style={{ height: '40px', marginRight: '0px' }} />
+
 
 
                             {/* <img src="logo.png" alt="Logo" style={{ height: '50px', marginRight: '10px' }} /> */}
